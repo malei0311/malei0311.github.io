@@ -1,0 +1,49 @@
+---
+layout: default
+title: Tags
+description: 标签分类
+keywords: webcraft,github,jekyll,ruby,css,javascripts,tags
+isTags: true
+---
+<div class="content-cnt clearfix" id="nav-tags-html">
+    <div id="all-articles" class="left">
+    {% for tag in site.tags %}
+    <div class="articles-for-the-tag none" id="{{ tag[0] }}-ref">
+        <h3 class="tag-name">{{ tag[0] }}</h3>
+        {% assign articles_list = tag[1] %}  
+        {% for node in articles_list %}
+            {% if node.title != null %}
+                <article>
+                    <div class="article-head">
+                        <h3><a href="{{ node.url }}">{{ node.title }}</a></h3>
+                        <div class="clearfix">
+                            <div class="article-post-time left">
+                                <span>&#8227;</span>
+                                <time pubdate="{{ node.date | date: '%b %d, %Y' }}">{{ node.date | date: '%b %d, %Y' }}</time>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        <p>{{ node.description }}</p>
+                    </div>
+                </article>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+    </div>
+    <div id="all-tags" class="clearfix left">
+        <ul class="tag-box">
+            {% assign tags_list = site.tags %}  
+            {% if tags_list.first[0] == null %}
+                {% for tag in tags_list %} 
+                    <li><a href="/tags.html#{{ tag }}"><span class="tag-name">{{ tag }}</span> <span>({{ site.tags[tag].size }})</span></a></li>
+                {% endfor %}
+            {% else %}
+                {% for tag in tags_list %} 
+                    <li><a href="/tags.html#{{ tag[0] }}"><span class="tag-name">{{ tag[0] }}</span> <span>({{ tag[1].size }})</span></a></li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+</div>

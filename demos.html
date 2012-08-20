@@ -1,0 +1,36 @@
+---
+layout: default
+title: Demos
+description: demos
+isNavDemos: true
+keywords: webcraft,github,jekyll,ruby,css,javascripts,demos
+---
+<div class="content-cnt clearfix" id="demos-list">
+    <div id="waterFallContainer"></div>
+    <article id="demo-index-0">
+        {% capture list_size %}{{ site.categories.demos | size }}{% endcapture %}
+        <h3>
+            All demos:
+            (<span>
+                {{list_size}}
+            </span>)
+        </h3>         
+    </article>
+    {% assign index = 0 %}
+    {% for post in site.categories.demos %}
+    {% capture index %}{{ index | plus:1 }}{% endcapture %}
+    {% capture demo_index %}demo-index-{{ index }}{% endcapture %}
+        <article id="{{ demo_index }}">
+            
+                <div class="demo-title">
+                
+                    <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                    <p>{{ post.description }}</p>
+                </div>
+                <div class="demo-time">
+                    <p><span>&#8227;</span><time pubdate="{{ post.date | date: '%b %d, %Y' }}">{{ post.date | date: '%b %d, %Y' }}</time></p>
+                </div>
+            
+        </article>
+    {% endfor %}
+</div>

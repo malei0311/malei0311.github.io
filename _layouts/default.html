@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<!-- 
+    @author <a href="mailto:leiman0311@gmail.com">Lei Ma</a>
+    @time  Aug 2, 2012
+-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="generator" content="Jekyll" />
+    <meta name="author" content="{{ site.author.name }}" />
+    <meta name="description" content="{{ page.description }} | {{ site.description }}" />
+    <meta name="keywords" content="{{ page.keywords | join: ',' }}" />
+    <link rel="stylesheet" href="/css/default.css" type="text/css" />
+    {% if(page.isArticlesLayout) %}
+        <link rel="stylesheet" href="/js/lib/prettify/prettify.css" type="text/css" />
+    {% endif %}
+    {% if(page.isCssDemo) %}
+    <link rel="stylesheet" href="/css/{{ page.demoCss }}" type="text/css" />
+    {% endif %}
+    <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="{{ site.feed }}" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <script src="/js/lib/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <header>
+        <div id="header">
+            <div class="head-cnt clearfix">
+                <div id="logo-bg">
+                    <span id="logo-bg-top"></span>
+                    <span id="logo-bg-bottom"></span>
+                </div>
+                <hgroup id="caption">
+                    <h1><a href="/">WebCraft</a></h1>
+                    <h2>开源有意思，不断学习ing...</h2>
+                </hgroup>
+            </div> 
+        </div>
+        <div id="loading-bar">
+            <div></div>
+        </div>
+        <script>
+            $('#loading-bar div').animate({width:"15%"},500,"linear");
+        </script>
+        <nav id="top-nav">
+            <div class="head-cnt">
+                <ul>
+                    <li><a href="/" class="current" rel="nofollow">Home</a></li>
+                    <li><a href="/articles.html">Articles</a></li>
+                    <li><a href="/tags.html">Tags</a></li>
+                    <li><a href="/demos.html" >Demos</a></li>
+                    <li><a href="/about.html" >About</a></li>
+                </ul>
+            </div>
+        </nav> 
+    </header>
+    {% if(page.isHome) %}
+    <section id="banner">
+        
+            <!-- <div id="slides">
+                <div class="slides_container">
+                    <div id="slide1">
+                        <h1>Slide 1</h1>
+                        <p>11</p>
+                    </div>
+                    <div id="slide2">
+                        <h1>Slide 2</h1>
+                        <p>2</p>
+                    </div>
+                    <div id="slide3">
+                        <h1>Slide 3</h1>
+                        <p>3</p>
+                    </div>
+                    <div id="slide4">
+                        <h1>Slide 4</h1>
+                        <p>4</p>
+                    </div>
+                </div>
+            </div> -->
+        
+       
+    </section>
+    {% endif %}
+    <section id="main">
+        {{ content }}
+    </section>
+    <div class="go-top">
+        <a href="#i-will-top" id="go-top" class="clearfix"><span class="go-top-icon"></span></a>
+    </div>
+    <footer>
+        <div class="footer-cnt">
+            <section class="chocolate-theme left">
+                <p>Powered by <a href="http://jekyllrb.com" target="_blank" rel="nofollow">Jekyll</a>. &lceil;Chocolate&rfloor; is designed by <a href="http://webcraft.malei.tk" rel="nofollow">Lei Ma</a>.</p>
+            </section>
+            <section class="chocorate-copyright right">
+                <p>© 2012 WebCraft All rights reserved.</p>
+            </section>
+            <a href="https://github.com/malei0311/malei0311.github.com" target="_blank" id="forkme">Fork Me</a>
+        </div>
+    </footer>
+    <div id="footer-scripts" class="none">
+        <script src="/js/lib/slides.min.jquery.js"></script>
+        <script src="/js/chocolate.js"></script>
+        {% if(page.isArticlesLayout) %}
+            <script src="/js/lib/prettify/prettify.js"></script>
+            <script>
+                $(function(){
+                    $('pre').addClass('prettyprint linenums'); //添加Google code Hight需要的class
+                    prettyPrint();
+                    if($('.article-div-content>h2').length > 2){
+                        var h2 = [],h3 = [],tmpl = '<ul>',h2index = 0;
+            
+                        $.each($('.article-div-content>h2,.article-div-content>h3'),function(index,item){
+                            if(item.tagName.toLowerCase() == 'h2'){
+                                var h2item = {};
+                                h2item.name = $(item).text();
+                                h2item.id = 'menuIndex'+index;
+                                h2.push(h2item);
+                                h2index++;
+                            }else{
+                                var h3item = {};
+                                h3item.name = $(item).text();
+                                h3item.id = 'menuIndex'+index;
+                                if(!h3[h2index-1]){
+                                    h3[h2index-1] = [];
+                                }
+                                h3[h2index-1].push(h3item);
+                            }
+                            item.id = 'menuIndex' + index
+                        });
+            
+                        //添加h1
+                        tmpl += '<li class="h1"><a href="#" data-top="0">'+$('.article-title>h1').text()+'</a></li>';
+            
+                        for(var i=0;i<h2.length;i++){
+                            tmpl += '<li><a href="#" data-id="'+h2[i].id+'">'+h2[i].name+'</a></li>';
+                            if(h3[i]){
+                                for(var j=0;j<h3[i].length;j++){
+                                    tmpl += '<li class="h3"><a href="#" data-id="'+h3[i][j].id+'">'+h3[i][j].name+'</a></li>';
+                                }
+                            }
+                        }
+                        tmpl += '</ul>';
+            
+                        var $scrollable = Chocolate.findScrollableElement('body','html');
+                        // alert($scrollable);
+                        // $('body').append('<div id="menuIndex"></div>');
+                        $('#menuIndex').append($(tmpl)).delegate('a','click',function(e){
+                            e.preventDefault();
+                            var scrollNum = $(this).attr('data-top') || $('#'+$(this).attr('data-id')).offset().top;
+                            //window.scrollTo(0,scrollNum-30);
+                            // $(window).scrollTop(scrollNum-30);
+                            // Chocolate.goThere(scrollNum-30,$(window).scrollTop(),0);
+                            $scrollable.animate({ scrollTop: scrollNum-30 }, 400, 'swing');
+                        })
+            
+                        $(window).load(function(){
+                            var scrollTop = [];
+                            $.each($('#menuIndex li a'),function(index,item){
+                                if(!$(item).attr('data-top')){
+                                    var top = $('#'+$(item).attr('data-id')).offset().top;
+                                    scrollTop.push(top);
+                                    $(item).attr('data-top',top);
+                                }
+                            });
+                            $(window).bind('scroll',function(){
+                                // alert($('body').scrollTop());
+                                var nowTop = $(window).scrollTop(),index,length = scrollTop.length;
+                                if(nowTop+60 > scrollTop[length-1]){
+                                    index = length
+                                }else{
+                                    for(var i=0;i<length;i++){
+                                        if(nowTop+60 <= scrollTop[i]){
+                                            index = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                                $('#menuIndex li').removeClass('on')
+                                $('#menuIndex li').eq(index).addClass('on')
+                            });
+                        });
+            
+                        // //用js计算屏幕的高度
+                        // $('#menuIndex').css('max-height',$(window).height()-140);
+                    }
+                });
+                $(function() {
+                    // $(window).bind("scroll", function(){
+                    //     var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
+                    //     if(menuIndex_scrHeight > 140 && ($(window).height()-60)>$('#menuIndex').height()) {
+                    //         menuIndex_topHeight = menuIndex_scrHeight-140;
+                    //         $('#menuIndex').animate({top: menuIndex_topHeight},10);
+                    //     } 
+                    //     else{
+                    //         $('#menuIndex').animate({top: 0},10);
+                    //     }
+                    // });
+                    $(window).bind("scroll", function(){
+                        var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
+                        var footerOffsetTop=$('footer').offset().top;
+                        if(menuIndex_scrHeight > 140 && menuIndex_scrHeight<(footerOffsetTop-$('#menuIndex').height()) ) {
+                            menuIndex_topHeight = menuIndex_scrHeight-140;
+                            $('#menuIndex').animate({top: menuIndex_topHeight},10);
+                        } 
+                        else{
+                            $('#menuIndex').animate({top: 0},10);
+                        }
+                    });
+                });
+                $(function(){ 
+                    var originArticles=$('#relatedArticles ul li');
+                    for(var i=0;i<originArticles.length-1;i++){
+                        for(var j=i+1;j<originArticles.length;j++){
+                            if(originArticles.eq(i).children('a').attr('href') == originArticles.eq(j).children('a').attr('href')){
+                                originArticles.eq(j).remove();
+                            }
+                        }
+                    }
+                    var secondArticles=$('#relatedArticles ul li');
+                    for(var i=0;i<secondArticles.length;i++){
+                        if(secondArticles.length == 1){
+                            $('#relatedArticles ul').html("<li>&raquo;&nbsp;悲剧了，与之相关的文章还没生出来呢</li>");
+                        }
+                        if(secondArticles.eq(i).children('a').attr('href') == $('div.article-title>h1>a').attr('href')){
+                            secondArticles.eq(i).remove();
+                        }
+                    }
+                    var thirdArticles=$('#relatedArticles ul li');
+                    if(thirdArticles.length > 10){
+                        for(var i=10;i<thirdArticles.length;i++){
+                            thirdArticles.eq(i).remove();
+                        }
+                    }
+                    // alert(originArticles.length+" "+secondArticles.length+" "+thirdArticles.length);
+                    
+                })
+            </script>
+            
+        {% endif %}
+        {% if(page.isJsDemo) %}
+            <script src="/js/{{ page.demoJs }}"></script>
+        {% endif %}
+        {% if(page.isHome) %}
+            <script src="/js/lib/jquery.threeDTags.js"></script>
+            <script>
+                $(function(){
+                    // $('#slides').slides({
+                    //     preload: true,
+                    //     generateNextPrev: true
+                    // });
+                    $('#threeDTags').threeDTags({
+                        radius:60,//半径
+                        tspeed:8//转速
+                    });
+                });
+            </script>
+        {% endif %}
+        {% if(page.isTags) %}
+            <script>
+                $(function(){
+                    var param=Chocolate.getParameterFromURL();
+                    if(param !== ""){
+                        $('#all-tags').css('width','290px');
+                        $('#all-articles').animate({width:'660px'});
+                        $('#'+param+'-ref').slideDown();
+                    }
+                    $('#all-tags ul li a').bind('click',  function() {
+                        $('#all-tags').css('width','290px');
+                        $('#all-articles').animate({width:'660px'});
+                        var tagName=$(this).children('span.tag-name').text();
+                        $('.articles-for-the-tag').slideUp();
+                        $('#'+tagName+'-ref').slideDown();
+                    });
+                });
+            </script>
+        {% endif %}
+        {% if(page.isArticlesList) %}
+            <script>
+                $(function(){
+                    $('#articles-list-head li a.pointer').bind('click', function(event) {
+                        var tailId_year=$(this).children('span').eq(0).text();
+                        $('#articles-list-body .per-year-articles').slideUp();
+                        $('#per-year-articles-'+tailId_year).slideDown();
+                    });
+                    var param=Chocolate.getParameterFromURL();
+                    if(param !== ""){
+                        $('#articles-list-body .per-year-articles').slideUp();
+                        $('#per-year-articles-'+param).slideDown();
+                    }
+                })
+            </script>
+        {% endif %}
+        {% if(page.isNavDemos) %}
+            <script src="/js/waterFall.js"></script>
+            <script type="text/javascript">
+            $(function(){
+                waterFall.init();
+    
+                $('#waterFallContainer article div.demo-title').each(function(index,domEle){
+                    $(domEle).css('borderColor','rgba('+Chocolate.randomColor()+',.5)');
+                }); 
+                $('#waterFallContainer article').each(function(){
+                    $(this).hover(function(){
+                        $(this).children('div.demo-time').slideToggle("normal");
+                        $(this).children('div.demo-title').children('h3').children('a').toggleClass('hoverColor');
+                    })
+                    $(this).bind('click', function() {
+                        var gotoTheUrl=$(this).children('div.demo-title').children('h3').children('a').attr('href');
+                        if(gotoTheUrl){
+                            window.location.href=gotoTheUrl;
+                        } 
+                    });
+                }) 
+            });
+            </script>
+        {% endif %}
+        {% if(page.isAbout) %}
+            <!--<script src="/js/lib/timeline/compiled/js/timeline-min.js"></script>
+            <script>
+                Chocolate.includeStyleSheet('/js/lib/timeline/compiled/css/timeline.css');
+                Chocolate.initTimeline();
+            </script>-->
+            <script src="/js/lib/timeline/js/timeline-embed.js"></script>
+        {% endif %}
+        <script>
+            $(function(){
+                $('#main').css('min-height',$(window).height()-196);
+                $('#loading-bar div').animate({width:"100%"},200,"swing"); 
+                var scrHeight, topId;
+                topId = $("#go-top");
+                $(window).bind("scroll", function(){
+                    scrHeight = $(window).scrollTop();
+                    if(scrHeight > 500) {
+                        topId.css('display','block');
+                        topId.fadeIn(1500);
+                    } else {
+                        topId.fadeOut(1500);
+                    }
+                });
+                topId.click(function() {
+                    // $('body, html').animate({scrollTop: 0}, 1200);
+                    Chocolate.goTop();
+                });   
+            });      
+        </script>
+    </div>
+</body>
+</html>

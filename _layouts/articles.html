@@ -1,0 +1,88 @@
+---
+layout: default
+isArticlesLayout: true
+---
+<section class="content-cnt">
+	<article class="article-main-content">
+		<div class="article-title">
+            <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
+            <div class="clearfix">
+                <div class="article-post-time left">
+                    <span>&#8227;</span>
+                    <time class="date" pubdate="{{ page.date | date_to_utc | date: '%Y-%m-%d' }}">{{ page.date | date_to_utc | date: "%Y-%m-%d" }}</time>
+                </div>
+                {% if page.tags != empty %}
+                <div class="article-tags right">
+                    <span class="pure-css-tag">&nbsp;</span>
+                    <span class="pure-css-tag-behind left">
+                        <ul>
+                            {% for tag in page.tags %} 
+                            <li>
+                                <a href="/tags.html#{{ tag }}">
+                                    {{ tag }}
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </span> 
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <p class="description">{{ page.description }}</p>
+        <div class="article-div-content">
+        	{{ content }}
+        </div>
+        <nav class="article-bottom-nav clearfix">
+            {% if page.previous %}
+                <a class="left" href="{{ page.previous.url }}" rel="bookmark" title="旧一篇">&laquo;&nbsp;{{ page.previous.title | truncatewords:5 }}</a>
+            {% endif %}
+            {% if page.next %}
+                <a class="right" href="{{ page.next.url }}" rel="bookmark" title="新一篇">{{ page.next.title | truncatewords:5 }}&nbsp;&raquo;</a>
+            {% endif %}
+        </nav>
+        <div class="clearfix">
+            <div id="relatedArticles">
+                <h3>相关阅读</h3>
+                <ul>
+                {% assign pageTags = page.tags %} 
+                {% for siteTag in site.tags %}
+                    {% assign articles_list = siteTag[1] %} 
+                    {% for pageTag in pageTags %}
+                        {% if siteTag[0] == pageTag %}
+                            {% for node in articles_list %}
+                                {% if node.title != null %}
+                                    <li><a href="{{ node.url }}" title="{{ node.title }}">&raquo;&nbsp;{{ node.title }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                </ul>
+            </div>
+            <div id="recentPosts">
+                <h3>最新发布</h3>
+                <ul>
+                {% for rpost in site.related_posts limit:10  %}   
+                    <li>
+                        <a href="{{ rpost.url }}" title="{{ rpost.title }}" rel="bookmark">&raquo;&nbsp;{{ rpost.title }}</a>
+                    </li>                                   
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+	</article>
+    <aside id="menuIndex" class="right">
+	
+	</aside>
+</section>
+
+<!--<script>
+	$(function(){
+		Chocolate.includeScript('/js/lib/prettify/prettify.js',function(){});
+		Chocolate.includeScript('/js/articles_layout.js',function(){});
+	})
+</script>-->

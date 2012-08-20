@@ -1,0 +1,96 @@
+---
+layout: default
+title: Articles
+description: 文章列表
+keywords: webcraft,github,jekyll,ruby,css,javascripts,articles
+isArticlesList: true
+---
+<div class="content-cnt clearfix" id="articles-list">
+    <section id="articles-list-body" class="left">             
+        {% capture post_year_now %}{{ site.time | date: '%Y' }}{% endcapture %}
+        {% capture per_year_articles_id %}per-year-articles-{{ post_year_now }}{% endcapture %}
+        <div class="per-year-articles" id="{{ per_year_articles_id }}">
+            <h3 class="which-year">{{ post_year_now }}</h3>
+            {% for post in site.categories.articles %}
+                {% capture post_year_article %}{{ post.date | date: '%Y' }}{% endcapture %}
+                {% if post_year_now != post_year_article %}
+                    {% assign post_year_now = post_year_article %}
+
+        </div>         
+        {% capture per_year_articles_id %}per-year-articles-{{ post_year_now }}{% endcapture %}
+        <div class="per-year-articles none" id="{{ per_year_articles_id }}">
+            <h3 class="which-year">{{ post_year_now }}</h3>
+                {% endif %}
+                <article>
+                    <div class="article-head">
+                        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                        <div class="clearfix">
+                            <div class="article-post-time left">
+                                <span>&#8227;</span>
+                                <time pubdate="{{ post.date | date: '%b %d, %Y' }}">{{ post.date | date: '%b %d' }}</time>
+                            </div>
+                            {% if post.tags != empty %}
+                            <div class="article-tags right">
+                                <span class="pure-css-tag">&nbsp;</span>
+                                <span class="pure-css-tag-behind left">
+                                    <ul>
+                                        {% for tag in post.tags %} 
+                                        <li>
+                                            <a href="/tags.html#{{ tag }}">
+                                                {{ tag }}
+                                            </a>
+                                            <span>
+                                                ,
+                                            </span>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </span> 
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        <p>{{ post.description }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+
+        </div>            
+    </section>
+    <aside id="articles-list-head" class="right">
+        <ul>
+            <li>
+                {% capture list_size %}{{ site.categories.articles | size }}{% endcapture %}
+                {% capture modified_list_size %}{{ list_size | minus:1 }}{% endcapture %}
+                <a>
+                    All articles:
+                    <span>
+                       ({% if modified_list_size == '1' or modified_list_size == '0' %}
+                            {{ modified_list_size }} post
+                        {% else %}
+                            {{ modified_list_size }} posts
+                        {% endif %})
+                    </span>
+                </a>
+            </li>
+            {% capture post_year_now_head %}{{ site.time | date: '%Y' }}{% endcapture %}
+            {% assign per_year_total = 0 %}
+            {% for post in site.categories.articles %}
+                {% capture post_year_article_head %}{{ post.date | date: '%Y' }}{% endcapture %}
+                {% if post_year_now_head == post_year_article_head %}
+                    {% capture per_year_total %}{{ per_year_total | plus:1 }}{% endcapture %}
+                {% else %}        
+                    <li>
+                        <a class="pointer" href="#{{ post_year_now_head }}">
+                            <span>{{ post_year_now_head }}</span>
+                            <span>({{ per_year_total }})</span>
+                        </a>
+                    </li>
+                    {% assign post_year_now_head = post_year_article_head %}
+                    {% assign per_year_total =1 %}
+                {% endif %}
+            {% endfor %}
+        </ul>              
+    </aside>
+</div>
