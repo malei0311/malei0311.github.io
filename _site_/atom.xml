@@ -1,0 +1,1449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+   <title>WebCraft</title>
+   <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
+   <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
+   <updated>2012-08-21T00:11:12+08:00</updated>
+   <id>http://webcraft.malei.tk</id>
+   <author>
+     <name>malei</name>
+     <email>leiman0311@gmail.com</email>
+   </author>
+
+   
+   <entry>
+     <title>JQuery插件之tags的3D旋转球制作</title>
+     <link href="http://webcraft.malei.tk/articles/3D-jquery"/>
+     <updated>2012-08-18T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/3D-jquery</id>
+     <content type="html">&lt;h2 id='id54'&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;这是学习JQuery插件制作的一次有意义的实践&lt;/p&gt;
+
+&lt;h2 id='id55'&gt;声明&lt;/h2&gt;
+
+&lt;p&gt;参考自 &lt;a href='http://www.miaov.com'&gt;妙味课堂&lt;/a&gt; 的原生js，我的工作只不过是做成了JQuery插件。&lt;/p&gt;
+
+&lt;h2 id='id56'&gt;对象级别的插件开发&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;(function ($) {
+    $.fn.extend({
+        pluginName:function(opt,callback){
+            
+        }
+    });
+})(jQuery);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(function ($) {
+    $.fn.pluginName=function(){
+
+    }
+})(jQuery);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上面定义了一个jquery函数，形参是$，然后把实参jquery传进去，立即调用执行。好处：在写jquery插件时，也可使用$这个别名，而不会与prototype引起冲突。&lt;/p&gt;
+
+&lt;h2 id='id57'&gt;先看一个五脏俱全的小例子&lt;/h2&gt;
+
+&lt;h3 id='id58'&gt;插件代码&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;/*+++++++++++++++++声明 Start++++++++++++++
+ *|                                       |
+ *|   以下代码来自 ITEYE 的 gaojiewyh     |
+ *|                                       |
+ *+++++++++++++++++声明 End++++++++++++++++
+ */
+(function ($) {
+    $.fn.hilight=function(options){
+        debug(this);
+        var opts=$.extend({},$.fn.hilight.defaults,options);
+        return this.each(function(){
+            var $this=$(this);
+            $this.css({
+                backgroundColor:opts.background,
+                color:opts.foreground
+            });
+            var markup=$this.html();
+            markup=$.fn.hilight.format(markup);
+            $this.html(markup);
+        });
+    };
+    //适当暴露一些函数
+    $.fn.hilight.format=function(txt){
+        return &amp;#39;&amp;lt;strong&amp;gt;&amp;#39;+txt+&amp;#39;&amp;lt;/strong&amp;gt;&amp;#39;;
+    }
+    //暴露默认设置
+    $.fn.hilight.defaults={
+        foreground:&amp;#39;red&amp;#39;,
+        background:&amp;#39;yellow&amp;#39;
+    };
+    //保持私有函数的私有性
+    function debug($obj){
+        if(window.console &amp;amp;&amp;amp; window.console.log){
+            window.console.log(&amp;#39;hilight selection count:&amp;#39;+$obj.size());
+        }
+    }
+})(jQuery);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id59'&gt;应用&lt;/h3&gt;
+
+&lt;p&gt;1.采用默认设置&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(&amp;quot;.test&amp;quot;).hilight();&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.自定义设置一&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$.fn.hilight.defaults.background=&amp;#39;green&amp;#39;;
+$(&amp;quot;.test&amp;quot;).hilight();&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3.自定义设置二&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(&amp;quot;.test&amp;quot;).hilight({
+	foreground:&amp;#39;black&amp;#39;,
+	background:&amp;#39;gray&amp;#39;
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='3d'&gt;3D旋转球插件制作&lt;/h2&gt;
+
+&lt;p&gt;提供“转速”和“旋转半径”的自定义&lt;/p&gt;
+
+&lt;h3 id='id60'&gt;所需文档结构&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&amp;quot;threeDTags&amp;quot;&amp;gt;
+	&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
+	&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
+	&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
+	&amp;lt;!-- ... n个 ... --&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id61'&gt;所需类库及样式表&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;jquery.min.js&lt;/li&gt;
+
+&lt;li&gt;jquery.threeDTags.js&lt;/li&gt;
+
+&lt;li&gt;threeDTags.css&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ps:threeDTags.css并不存在，因为是个人应用，没有把相应的css独立出来&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#threeDTags{
+	position: relative;
+	width: 270px;
+	height: 270px;
+}
+
+#threeDTags a {
+	position:absolute; 
+	top:0px; 
+	left:0px; 
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;相对来说，这几句是比较重要的，想要什么效果，自己扩展。&lt;/p&gt;
+
+&lt;h3 id='id62'&gt;应用&lt;/h3&gt;
+
+&lt;p&gt;应用通以上三种用法，这里只写一种。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(&amp;#39;threeDTags&amp;#39;).threeDTags({
+    radius:60,//半径
+    tspeed:8//转速
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='faq'&gt;FAQ&lt;/h2&gt;
+
+&lt;h3 id='id63'&gt;如何获取鼠标相对于某个元素的位置?&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;document.getElementById(&amp;#39;threeDTags&amp;#39;).onmouseover=function (ev)
+{
+    var oEvent=window.event || ev;
+    var mouseX,mouseY;
+
+    mouseX=oEvent.clientX-($(this).offset().left-$(window).scrollLeft()+this.offsetWidth/2);
+    mouseY=oEvent.clientY-($(this).offset().top-$(window).scrollTop()+this.offsetHeight/2);
+    
+	alert(mouseX+&amp;quot; vs &amp;quot;+mouseY);
+};&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了打破各家浏览器的浮动差异，以及 &lt;code&gt;document.getElementById(&amp;#39;threeDTags&amp;#39;).offsetLeft&lt;/code&gt; 相对于父元素(如果父元素 &lt;code&gt;position；relative&lt;/code&gt;)，而不是相对于整个文档的偏移，于是用了jquery类库。&lt;/p&gt;
+
+&lt;p&gt;jquery中 &lt;code&gt;.offset()&lt;/code&gt; 为匹配的元素集合中获取第一个元素的当前坐标，相对于文档（document）。&lt;/p&gt;
+
+&lt;h2 id='id64'&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;第一次写插件，代码相对混乱，但是会不断优化的。&lt;/p&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本</title>
+     <link href="http://webcraft.malei.tk/articles/sae-cloud-icon"/>
+     <updated>2012-08-17T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/sae-cloud-icon</id>
+     <content type="html">&lt;h2 id='id49'&gt;效果预览&lt;/h2&gt;
+
+&lt;p&gt;在&lt;a href='/about.html' title='关于我'&gt;About&lt;/a&gt;界面的 Feb. 2012 的 SAE&lt;/p&gt;
+
+&lt;h2 id='_span_'&gt;一个 span 搞定&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;span class=&amp;#39;cloud-icon&amp;#39;&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id50'&gt;添砖加瓦&lt;/h2&gt;
+
+&lt;h3 id='span_'&gt;span 主体：底座&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;.cloud-icon{
+	width: 266px;
+	height: 115px;
+	float:left;
+	background:#555;
+	border-radius: 60px;
+	-moz-border-radius:60px;
+	-webkit-border-radius: 60px;
+	-ms-border-radius:60px;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id51'&gt;右边突出比较大的部分&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;.cloud-icon::before{
+	position:relative;
+	content:&amp;#39;&amp;#39;;
+	left: 82px;
+	top: -82px;
+	width: 130px;
+	height: 130px;
+	float:left;
+	background:#555;
+	border-radius:65px;
+	-moz-border-radius:65px;
+	-webkit-border-radius: 65px;
+	-ms-border-radius:65px;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id52'&gt;左边突出比较小的部分&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;.cloud-icon::after{
+	position:relative;
+	content:&amp;#39;&amp;#39;;
+	left: -98px;
+	top: -38px;
+	width: 70px;
+	height: 70px;
+	float:left;
+	background: #555;
+	border-radius:35px;
+	-moz-border-radius:35px;
+	-webkit-border-radius: 35px;
+	-ms-border-radius:35px;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id53'&gt;结语&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;云已完成，完整的显示，需要调父元素的 &lt;code&gt;padding&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;float&lt;/code&gt; 当该属性不等于none引起对象浮动时，对象将被视作块对象(&lt;code&gt;block-level&lt;/code&gt;)，即display属性等于block。也就是说，浮动对象的display特性将被忽略。 该属性可以被应用在非绝对定位的任何元素上。&lt;/li&gt;
+&lt;/ul&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>制作图像 picture 的阴影显示效果</title>
+     <link href="http://webcraft.malei.tk/articles/image-shadow"/>
+     <updated>2012-08-17T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/image-shadow</id>
+     <content type="html">&lt;h2 id='id45'&gt;效果预览&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt='imgShadow' src='/images/articles/css/imgShadow-1.png' /&gt;&lt;/p&gt;
+
+&lt;h2 id='id46'&gt;主要结构&lt;/h2&gt;
+
+&lt;p&gt;主要是两层，外层的 &lt;code&gt;div&lt;/code&gt; 层主要是起 “相框” 的作用，里面的 &lt;code&gt;img&lt;/code&gt; 放图片。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;box-shadow&amp;quot;&amp;gt;
+	&amp;lt;img src=&amp;quot;&amp;quot;&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='css'&gt;CSS渲染&lt;/h2&gt;
+
+&lt;h3 id='_'&gt;“相框” 的主架&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;“相框” 要紧紧地包裹图片 =&amp;gt; &lt;code&gt;display:inline-block&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;伪对象的相对偏移 =&amp;gt; &lt;code&gt;position: relative&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;CSS如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.box-shadow{
+	position: relative;
+	display:inline-block;
+	z-index: 1;
+	background: white;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id47'&gt;伪对象实现阴影效果&lt;/h3&gt;
+
+&lt;p&gt;左右两片，绝对定位，效果实现&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.box-shadow::after,.box-shadow::before{
+	z-index:-1;
+	position:absolute;
+	content:&amp;quot;&amp;quot;;
+	bottom:15px;
+	left:10px;
+	width:50%;
+	top:80%;
+	max-width:300px;
+	background:#999999;
+	-webkit-box-shadow:0 15px 10px #999999;
+	-moz-box-shadow:0 15px 10px #999999;
+	box-shadow:0 15px 10px #999999;
+	-webkit-transform:rotate(-2deg);
+	-moz-transform:rotate(-2deg);
+	-o-transform:rotate(-2deg);
+	-ms-transform:rotate(-2deg);
+	transform:rotate(-2deg);
+}
+
+.box-shadow::after{
+	-webkit-transform:rotate(2deg);
+	-moz-transform:rotate(2deg);
+	-o-transform:rotate(2deg);
+	-ms-transform:rotate(2deg);
+	transform:rotate(2deg);
+	right:10px;
+	left:auto;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id48'&gt;结语&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;注意 &lt;code&gt;transform:rotate(2deg)&lt;/code&gt; 这种小转角的应用&lt;/li&gt;
+
+&lt;li&gt;层叠的 element 可以显示出不错的效果&lt;/li&gt;
+
+&lt;li&gt;用更少的 element 干更多的事 * 精简代码&lt;/li&gt;
+&lt;/ul&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>容器透明，内容不透明，随机变色</title>
+     <link href="http://webcraft.malei.tk/articles/random-color"/>
+     <updated>2012-08-12T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/random-color</id>
+     <content type="html">&lt;h2 id='id41'&gt;想法&lt;/h2&gt;
+
+&lt;p&gt;看着demos界面，假的瀑布流布局有些单调，于是想随机给个背景颜色。开始没想到各种颜色的&lt;code&gt;真彩&lt;/code&gt;，冲击这么强烈，让人不舒服。于是就产生了&lt;code&gt;容器透明，内容不透明&lt;/code&gt;的想法。&lt;/p&gt;
+
+&lt;h2 id='id42'&gt;步骤&lt;/h2&gt;
+
+&lt;h3 id='1'&gt;1.分配颜色&lt;/h3&gt;
+
+&lt;p&gt;我们知道颜色正整数值的取值范围为：&lt;code&gt;0 - 255&lt;/code&gt;。除以5，来个均分&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var colorBit = new Array(6);
+colorBit[0] = &amp;quot;255&amp;quot;;
+colorBit[1] = &amp;quot;204&amp;quot;;
+colorBit[2] = &amp;quot;153&amp;quot;;
+colorBit[3] = &amp;quot;102&amp;quot;;
+colorBit[4] = &amp;quot;51&amp;quot;;
+colorBit[5] = &amp;quot;0&amp;quot;;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='2'&gt;2.颜色组合&lt;/h3&gt;
+
+&lt;p&gt;red,green,blue三原色的不同组合，融合成了不同色彩。根据排列组合原理，从&lt;code&gt;6&lt;/code&gt;个数取出&lt;code&gt;3&lt;/code&gt;个，进行可重复的排列，有 &lt;code&gt;6&lt;/code&gt;的&lt;code&gt;3&lt;/code&gt;次方种情况，即：取&lt;code&gt;3&lt;/code&gt;次，每次有&lt;code&gt;6&lt;/code&gt;种选择，&lt;code&gt;6*6*6&lt;/code&gt;是也。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var colorArray=new Array();
+for (var i = 0; i &amp;lt; 6; i++){
+    for (var j = 0; j &amp;lt; 6; j++){
+        for (var k = 0; k &amp;lt; 6; k++){
+            colorArray.push(colorBit[i]+&amp;#39;,&amp;#39;+colorBit[j]+&amp;#39;,&amp;#39;+colorBit[k]);
+        }
+    }
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='3jquery'&gt;3.上色(借助JQuery)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$(&amp;#39;#waterFallContainer article&amp;#39;).each(function(index,domEle){
+    var randomColor=colorArray[Math.floor((colorArray.length)*Math.random())];
+    $(domEle).css(&amp;#39;backgroundColor&amp;#39;,&amp;#39;rgba(&amp;#39;+randomColor+&amp;#39;,0.1)&amp;#39;);
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id43'&gt;小插曲&lt;/h2&gt;
+
+&lt;p&gt;容器透明，内容不透明，有两种方法(来自&lt;code&gt;飘零雾雨&lt;/code&gt;的经验谈)：&lt;/p&gt;
+
+&lt;h3 id='1'&gt;1.方法一&lt;/h3&gt;
+
+&lt;p&gt;原理是容器层与内容层并级，容器层设置透明度，内容层通过负&lt;code&gt;margin&lt;/code&gt;或者&lt;code&gt;position&lt;/code&gt;绝对定位等方式覆盖到容器层上&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.outer{width:200px;height:200px;background:#000;filter:alpha(opacity=20);opacity:.2;}
+.inner{width:200px;height:200px;margin-top:-200px;}
+					
+&amp;lt;div class=&amp;quot;outer&amp;quot;&amp;gt;&amp;lt;!--我是透明的容器--&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class=&amp;quot;inner&amp;quot;&amp;gt;我是不透明的内容&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='2'&gt;2.方法二&lt;/h3&gt;
+
+&lt;p&gt;高级浏览器直接使用rgba颜色值实现；IE浏览器在定义容器透明的同时，让子节点相对定位，也可达到效果&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.outer{width:200px;height:200px;background:rgba(0,0,0,.2);background:#000\9;filter:alpha(opacity=20)\9;}
+.outer .inner{position:relative\9;}
+					
+&amp;lt;div class=&amp;quot;outer&amp;quot;&amp;gt;
+	&amp;lt;div class=&amp;quot;inner&amp;quot;&amp;gt;我是不透明的内容&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id44'&gt;追加&lt;/h2&gt;
+
+&lt;p&gt;把随机的背景色改成了随机border&lt;/p&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>articlesLayout构建之右侧目录索引</title>
+     <link href="http://webcraft.malei.tk/articles/articlesLayout-directory"/>
+     <updated>2012-08-09T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/articlesLayout-directory</id>
+     <content type="html">&lt;h2 id='id29'&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;就像前面说的一样，这种博客，一直是一个梦。因为所有的博客程序在编辑时，都不把博客的书写风格规范化。都只是按自己所想，随心所欲的在 &lt;code&gt;textarea&lt;/code&gt; 中添加，发布。&lt;/p&gt;
+
+&lt;p&gt;事实上，在知道 &lt;code&gt;MarkDown&lt;/code&gt; 之前，也懒得把 &lt;code&gt;textarea&lt;/code&gt; 中的内容规范化，太费事。直到2012年的7月底，无意间看到了BeiYuu搭建在GitHub的博客，知道了 &lt;code&gt;jekyll + GitHub + MarkDown&lt;/code&gt; 的书写方式，加之这种目录索引，这正是我想要的。&lt;/p&gt;
+
+&lt;p&gt;兴奋了几天，一心扑在上面，也要完成一款自己的 &lt;code&gt;jekyll&lt;/code&gt; 博客，其实对 &lt;code&gt;jekyll&lt;/code&gt; 早就有耳闻，但是只是停留在听说过的地步。后悔没有早一点打开 &lt;code&gt;jekyll&lt;/code&gt; 这扇门。&lt;/p&gt;
+
+&lt;h2 id='id30'&gt;声明&lt;/h2&gt;
+
+&lt;p&gt;在下面出现的某些算法思想、核心部分都是继承自BeiYuu。当然也有自己的想法杂烩其中，如不指明，均来自于BeiYuu。&lt;/p&gt;
+
+&lt;h2 id='id31'&gt;界面构建&lt;/h2&gt;
+
+&lt;h3 id='id32'&gt;总体布局&lt;/h3&gt;
+
+&lt;p&gt;此界面主要分两栏，右栏是绝对定位，脱离正常文档流 &lt;code&gt;position:absolute&lt;/code&gt;。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;article&amp;gt;
+	&amp;lt;!-- 文章内容 --&amp;gt;
+&amp;lt;/article&amp;gt;
+&amp;lt;aside id=&amp;quot;menuIndex&amp;quot; class=&amp;quot;right&amp;quot;&amp;gt;
+	&amp;lt;!-- 目录索引 --&amp;gt;
+&amp;lt;/aside&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id33'&gt;文章的详细信息头&lt;/h3&gt;
+
+&lt;p&gt;这里并没有像BeiYuu那样每次的&lt;code&gt;h1&lt;/code&gt;标题都需自己手动书写，简化了一哈，把对 &lt;code&gt;page.title&lt;/code&gt; 等头部信息的处理，放在了 &lt;code&gt;layout&lt;/code&gt; 中，另外，加了不少其他信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;article-title&amp;quot;&amp;gt;
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;{{ page.url }}&amp;quot;&amp;gt;{{ page.title }}&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+    &amp;lt;div class=&amp;quot;clearfix&amp;quot;&amp;gt;
+        &amp;lt;div class=&amp;quot;article-post-time left&amp;quot;&amp;gt;
+            &amp;lt;span&amp;gt;&amp;amp;#8227;&amp;lt;/span&amp;gt;
+            &amp;lt;time class=&amp;quot;date&amp;quot; pubdate=&amp;quot;{{ page.date | date_to_utc | date: &amp;#39;%Y-%m-%d&amp;#39; }}&amp;quot;&amp;gt;{{ page.date | date_to_utc | date: &amp;quot;%Y-%m-%d&amp;quot; }}&amp;lt;/time&amp;gt;
+        &amp;lt;/div&amp;gt;
+        {% if page.tags != empty %}
+        &amp;lt;div class=&amp;quot;article-tags right&amp;quot;&amp;gt;
+            &amp;lt;span class=&amp;quot;pure-css-tag&amp;quot;&amp;gt;&amp;amp;nbsp;&amp;lt;/span&amp;gt;
+            &amp;lt;span class=&amp;quot;pure-css-tag-behind left&amp;quot;&amp;gt;
+                &amp;lt;ul&amp;gt;
+                    {% for tag in page.tags %} 
+                    &amp;lt;li&amp;gt;
+                        &amp;lt;a href=&amp;quot;/tags.html#{{ tag }}&amp;quot;&amp;gt;
+                            {{ tag }}
+                        &amp;lt;/a&amp;gt;
+                        &amp;lt;span&amp;gt;
+                            ,
+                        &amp;lt;/span&amp;gt;
+                    &amp;lt;/li&amp;gt;
+                    {% endfor %}
+                &amp;lt;/ul&amp;gt;
+            &amp;lt;/span&amp;gt; 
+        &amp;lt;/div&amp;gt;
+        {% endif %}
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id34'&gt;生成目录&lt;/h2&gt;
+
+&lt;p&gt;主要列表的是二级、三级标题。&lt;/p&gt;
+
+&lt;h3 id='id35'&gt;收集信息&lt;/h3&gt;
+
+&lt;p&gt;把文章中标题的内容“拿到”相应数组中，而 id 信息则同步生成出来，写入相应数组。有两条线：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;jquery取出的 &lt;code&gt;h2&lt;/code&gt; 、&lt;code&gt;h3&lt;/code&gt; 的index线；&lt;/li&gt;
+
+&lt;li&gt;自建两个数组的index线，&lt;code&gt;h2&lt;/code&gt; 数组是顺次的不间断的从 &lt;code&gt;0&lt;/code&gt; 依次到 &lt;code&gt;n&lt;/code&gt;，&lt;code&gt;h3&lt;/code&gt; 数组是间断的，对应于相应 &lt;code&gt;h2&lt;/code&gt; 的index&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;下面代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var h2 = [],h3 = [],tmpl = &amp;#39;&amp;lt;ul&amp;gt;&amp;#39;,h2index = 0;
+$.each($(&amp;#39;.article-div-content&amp;gt;h2,.article-div-content&amp;gt;h3&amp;#39;),function(index,item){
+    if(item.tagName.toLowerCase() == &amp;#39;h2&amp;#39;){
+        var h2item = {};
+        h2item.name = $(item).text();
+        h2item.id = &amp;#39;menuIndex&amp;#39;+index;
+        h2.push(h2item);
+        h2index++;
+    }else{
+        var h3item = {};
+        h3item.name = $(item).text();
+        h3item.id = &amp;#39;menuIndex&amp;#39;+index;
+        if(!h3[h2index-1]){
+            h3[h2index-1] = [];
+        }
+        h3[h2index-1].push(h3item);
+    }
+    item.id = &amp;#39;menuIndex&amp;#39; + index
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id36'&gt;生成目录串&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;tmpl += &amp;#39;&amp;lt;li class=&amp;quot;h1&amp;quot;&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot; data-top=&amp;quot;0&amp;quot;&amp;gt;&amp;#39;+$(&amp;#39;.article-title&amp;gt;h1&amp;#39;).text()+&amp;#39;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&amp;#39;;           
+for(var i=0;i&amp;lt;h2.length;i++){
+    tmpl += &amp;#39;&amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot; data-id=&amp;quot;&amp;#39;+h2[i].id+&amp;#39;&amp;quot;&amp;gt;&amp;#39;+h2[i].name+&amp;#39;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&amp;#39;;
+    if(h3[i]){
+        for(var j=0;j&amp;lt;h3[i].length;j++){
+            tmpl += &amp;#39;&amp;lt;li class=&amp;quot;h3&amp;quot;&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot; data-id=&amp;quot;&amp;#39;+h3[i][j].id+&amp;#39;&amp;quot;&amp;gt;&amp;#39;+h3[i][j].name+&amp;#39;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&amp;#39;;
+        }
+    }
+}
+tmpl += &amp;#39;&amp;lt;/ul&amp;gt;&amp;#39;;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id37'&gt;插入目录并赋事件&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;Chocolate&lt;/code&gt; 为本博客的一个通用类库&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var $scrollable = Chocolate.findScrollableElement(&amp;#39;body&amp;#39;,&amp;#39;html&amp;#39;);
+$(&amp;#39;#menuIndex&amp;#39;).append($(tmpl)).delegate(&amp;#39;a&amp;#39;,&amp;#39;click&amp;#39;,function(e){
+    e.preventDefault();
+    var scrollNum = $(this).attr(&amp;#39;data-top&amp;#39;) || $(&amp;#39;#&amp;#39;+$(this).attr(&amp;#39;data-id&amp;#39;)).offset().top;
+    $scrollable.animate({ scrollTop: scrollNum-30 }, 400, &amp;#39;swing&amp;#39;);
+})&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='chocolate__findscrollableelement'&gt;Chocolate 类 findScrollableElement&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;$scrollElement = $(el)&lt;/code&gt; 这个变量以 &lt;code&gt;$&lt;/code&gt; 开头，因为被赋予了一个 JQuery 对象，增强程序的可读性。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;findScrollableElement : function(els) {
+    for (var i = 0, argLength = arguments.length; i &amp;lt; argLength; i++) {
+        var el = arguments[i],
+        $scrollElement = $(el);
+        var ss=el;
+        if ($scrollElement.scrollTop() &amp;gt; 0) {
+            return $scrollElement;
+        } else {
+            $scrollElement.scrollTop(1);
+            var isScrollable = $scrollElement.scrollTop() &amp;gt; 0;
+            $scrollElement.scrollTop(0);
+            if (isScrollable) {
+                return $scrollElement;
+            }
+        }
+    }
+    return [];
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='jquery__scrolltop'&gt;JQuery 之 scrollTop()&lt;/h3&gt;
+
+&lt;p&gt;“匹配的元素集合中获取第一个元素的滚动条的垂直位置”。&lt;/p&gt;
+
+&lt;p&gt;垂直滚动位置等于浏览器可见区域以上的已经淡出我们视野的隐藏区域。如果滚动条是在最顶部，或者这个元素没有滚动条，那么这个数字是0。当此元素没有滚动条时 &lt;code&gt;scrollTop(value)&lt;/code&gt; 是不起作用的（包括 body,html,window）。理论上，应该只有 window 可滚动，但是，在浏览器有滚动条的情况下，经测试 firefox 和 ie 的可滚动元素为 html、window，而 webkit 内核的浏览器为 body、window。&lt;/p&gt;
+
+&lt;p&gt;既然这样，为什么不直接用 window 呢？like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(&amp;#39;#menuIndex&amp;#39;).append($(tmpl)).delegate(&amp;#39;a&amp;#39;,&amp;#39;click&amp;#39;,function(e){
+    e.preventDefault();
+    var scrollNum = $(this).attr(&amp;#39;data-top&amp;#39;) || $(&amp;#39;#&amp;#39;+$(this).attr(&amp;#39;data-id&amp;#39;)).offset().top;
+    //window.scrollTo(0,scrollNum-30);
+    // $(window).scrollTop(scrollNum-30);
+})&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;两条注释语句，随便开一条，即可以点击时跳转到相应位置。原因是没有滚动效果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(window).animate({ scrollTop: scrollNum-30 }, 400, &amp;#39;swing&amp;#39;);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;是没有效果的，window 并不是 dom 元素，而是 window 对象，animate 不起作用。当然我们可以用原生的 javascript 完成滚动效果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//TODO:&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id38'&gt;相应目录项高亮&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;scrollTop&lt;/code&gt;数组中，应该比 &lt;code&gt;$(&amp;#39;#menuIndex li&amp;#39;)&lt;/code&gt; 集合中 &lt;code&gt;li&lt;/code&gt; 的个数少一个，利用这种特殊关系，通过数值调整，很巧妙地实现了相应目录的高亮。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(window).load(function(){
+    var scrollTop = [];
+    $.each($(&amp;#39;#menuIndex li a&amp;#39;),function(index,item){
+        if(!$(item).attr(&amp;#39;data-top&amp;#39;)){
+            var top = $(&amp;#39;#&amp;#39;+$(item).attr(&amp;#39;data-id&amp;#39;)).offset().top;
+            scrollTop.push(top);
+            $(item).attr(&amp;#39;data-top&amp;#39;,top);
+        }
+    });
+    $(window).bind(&amp;#39;scroll&amp;#39;,function(){
+        var nowTop = $(window).scrollTop(),index,length = scrollTop.length;
+        if(nowTop+60 &amp;gt; scrollTop[length-1]){
+            index = length
+        }else{
+            for(var i=0;i&amp;lt;length;i++){
+                if(nowTop+60 &amp;lt;= scrollTop[i]){
+                    index = i
+                    break;
+                }
+            }
+        }
+        $(&amp;#39;#menuIndex li&amp;#39;).removeClass(&amp;#39;on&amp;#39;)
+        $(&amp;#39;#menuIndex li&amp;#39;).eq(index).addClass(&amp;#39;on&amp;#39;)
+    });
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id39'&gt;我的改善&lt;/h2&gt;
+
+&lt;p&gt;其实上面的代码中，也有我的小改，不过核心的东西还是来自于 BeiYuu 。下面写一小段判断，很简单，使目录索引随着滚动，不断移动，不断出现在我们的视野中。当没有这一 &lt;code&gt;($(window).height()-60)&amp;gt;$(&amp;#39;#menuIndex&amp;#39;).height()&lt;/code&gt; 条件时，是很可怕的，一旦 &lt;code&gt;$(&amp;#39;#menuIndex&amp;#39;).height()&lt;/code&gt; 大于 &lt;code&gt;$(window).height()&lt;/code&gt; 了，滚动条会因为目录区域的溢出可无限往下滚动。之所以 &lt;code&gt;$(window).height()-60&lt;/code&gt; 减 60，是因为本博客的版权高度大概60像素，这样避免了版权区域与目录区域的重叠覆盖。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(window).bind(&amp;quot;scroll&amp;quot;, function(){
+    var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
+    if(menuIndex_scrHeight &amp;gt; 140 &amp;amp;&amp;amp; ($(window).height()-60)&amp;gt;$(&amp;#39;#menuIndex&amp;#39;).height()) {
+        menuIndex_topHeight = menuIndex_scrHeight-140;
+        $(&amp;#39;#menuIndex&amp;#39;).animate({top: menuIndex_topHeight},10);
+    } 
+    else{
+        $(&amp;#39;#menuIndex&amp;#39;).animate({top: 0},10);
+    }
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果减去的 footer 高度很大，岂不是达不到想要的效果，上面这种方法不是很好，或者说很局限，很差，那你可以这样：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(window).bind(&amp;quot;scroll&amp;quot;, function(){
+    var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
+    var footerOffsetTop=$(&amp;#39;footer&amp;#39;).offset().top;
+    if(menuIndex_scrHeight &amp;gt; 140 &amp;amp;&amp;amp; menuIndex_scrHeight&amp;lt;(footerOffsetTop-$(&amp;#39;#menuIndex&amp;#39;).height()) ) {
+        menuIndex_topHeight = menuIndex_scrHeight-140;
+        $(&amp;#39;#menuIndex&amp;#39;).animate({top: menuIndex_topHeight},10);
+    } 
+    else{
+        $(&amp;#39;#menuIndex&amp;#39;).animate({top: 0},10);
+    }
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;footerOffsetTop&lt;/code&gt; 这个高度只要保持取到“分栏容器”后的，第一个元素的 &lt;code&gt;.offset().top&lt;/code&gt; 即可&lt;/p&gt;
+
+&lt;h2 id='id40'&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;不写不知道，很多概念还很模糊，试着解释了一哈，很不到位，不过理解稍微加深了一些。&lt;/p&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>Demos界面的伪瀑布流布局的实现</title>
+     <link href="http://webcraft.malei.tk/articles/water-fall-layout"/>
+     <updated>2012-08-07T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/water-fall-layout</id>
+     <content type="html">&lt;h2 id='id22'&gt;为什么叫伪瀑布流&lt;/h2&gt;
+
+&lt;p&gt;因为并没有实现动态loading&amp;#8230;，也没有用脚本去嗅探浏览器的宽度，以确定具体有几条瀑布。这是由博客的具体情况决定的，因为所有的demo都是慢慢生成的，所以这个Demos界面主要是做了个collection。写的比较死，主要针对本博客所写。&lt;/p&gt;
+
+&lt;h2 id='liquid'&gt;liquid脚本&lt;/h2&gt;
+
+&lt;h3 id='demo'&gt;遍历所有demo&lt;/h3&gt;
+
+&lt;p&gt;给每篇文章一个特定的&lt;code&gt;ID&lt;/code&gt;，我这里是从&lt;code&gt;1&lt;/code&gt;开始，即&lt;code&gt;demo-index-1&lt;/code&gt;，因为我在&lt;code&gt;demo-index-0&lt;/code&gt;中存放了所有demo数量的概览，这个总数将由&lt;code&gt;js&lt;/code&gt;获取，留待后用。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% assign index = 0 %}
+{% for post in site.categories.demos %}
+{% capture index %}{{ index | plus:1 }}{% endcapture %}
+{% capture demo_index %}demo-index-{{ index }}{% endcapture %}
+    &amp;lt;article id=&amp;quot;{{ demo_index }}&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;demo-title&amp;quot;&amp;gt;
+                &amp;lt;h3&amp;gt;&amp;lt;a href=&amp;quot;{{ post.url }}&amp;quot;&amp;gt;{{ post.title }}&amp;lt;/a&amp;gt;&amp;lt;/h3&amp;gt;
+                &amp;lt;p&amp;gt;{{ post.description }}&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;demo-time&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;&amp;lt;span&amp;gt;&amp;amp;#8227;&amp;lt;/span&amp;gt;&amp;lt;time pubdate=&amp;quot;{{ post.date | date: &amp;#39;%b %d, %Y&amp;#39; }}&amp;quot;&amp;gt;{{ post.date | date: &amp;#39;%b %d, %Y&amp;#39; }}&amp;lt;/time&amp;gt;&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+    &amp;lt;/article&amp;gt;
+{% endfor %}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='demo'&gt;demo数量概览&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;article id=&amp;quot;demo-index-0&amp;quot;&amp;gt;
+    {% capture list_size %}{{ site.categories.demos | size }}{% endcapture %}
+    &amp;lt;h3&amp;gt;
+        All demos:
+        (&amp;lt;span&amp;gt;
+            {{list_size}}
+        &amp;lt;/span&amp;gt;)
+    &amp;lt;/h3&amp;gt;         
+&amp;lt;/article&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id23'&gt;给出瀑布流容器&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&amp;quot;waterFallContainer&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id24'&gt;生成瀑布&lt;/h2&gt;
+
+&lt;p&gt;主要就是用&lt;code&gt;js&lt;/code&gt;操作&lt;code&gt;DOM&lt;/code&gt;树，把文档呈现成自己想要的样子。&lt;/p&gt;
+
+&lt;h3 id='id25'&gt;首先声明一个静态类&lt;/h3&gt;
+
+&lt;p&gt;这里声明了如下属性、方法。具体分了5条瀑布，下面分别介绍每个方法的作用。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var waterFall = {
+	container: $(&amp;quot;#waterFallContainer&amp;quot;),
+	columnNumber: 5,
+	columnWidth: 184,
+	demoIndex: 0,
+	loadFinish: false,
+	demosNum: parseInt($(&amp;#39;#demo-index-0 span&amp;#39;).text())+1,
+	create: function(){  },
+	loadAllDemos: function() {	},
+	loadSingleDemo: function(column) {	},
+	init:function(){  }
+};&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id26'&gt;生成空瀑布&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;create: function(){
+    var start=0, spans = &amp;#39;&amp;#39;;
+    for (start; start &amp;lt; this.columnNumber; start++) {
+        spans = spans + &amp;#39;&amp;lt;span id=&amp;quot;waterFallColumn-&amp;#39;+ start +&amp;#39;&amp;quot; class=&amp;quot;waterFallColumns&amp;quot; style=&amp;quot;width:&amp;#39;+ this.columnWidth +&amp;#39;px;&amp;quot;&amp;gt;&amp;#39;+ &amp;#39;&amp;lt;/span&amp;gt; &amp;#39;;
+    }
+    this.container.html(spans);
+    return this;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id27'&gt;填入内容&lt;/h3&gt;
+
+&lt;p&gt;把所有的demo剪切到瀑布流容器中。首先，在剪切一个节点前，先判断是否所有demo都已加载完毕。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;loadSingleDemo: function(column) {
+    
+    if (this.demoIndex &amp;gt; this.demosNum) {
+        this.loadFinish = true;
+    }
+    else{
+        column.append($(&amp;quot;#demo-index-&amp;quot;+this.demoIndex));
+        this.demoIndex += 1;
+    }
+    return this;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其次，有了上述方法，就可以放心的加载了&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;loadAllDemos: function() {
+    var index=0;
+    for(index;index&amp;lt;this.demosNum;index +=5){
+        var start = 0;
+        for (start; start &amp;lt; this.columnNumber; start++) {
+            var eleColumn = $(&amp;quot;#waterFallColumn-&amp;quot; + start);
+            if (eleColumn &amp;amp;&amp;amp; !this.loadFinish) {
+                this.loadSingleDemo(eleColumn);
+            }           
+        }
+    }
+    return this;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id28'&gt;初始化&lt;/h3&gt;
+
+&lt;p&gt;每个方法都&lt;code&gt;return this;&lt;/code&gt;,这样就可以像下面连着写了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;init:function(){
+    this.create().loadAllDemos();
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='faq'&gt;FAQ&lt;/h2&gt;
+
+&lt;p&gt;这里我遇到了一个问题，纠结了半天也没解决。本来想着 &lt;code&gt;span&lt;/code&gt;的&lt;code&gt;display:inline-block&lt;/code&gt; 就可以能解决问题了，诡异的是&lt;code&gt;span&lt;/code&gt;之间总有5像素的间隔（ps:&lt;code&gt;span&lt;/code&gt;的&lt;code&gt;margin&lt;/code&gt;为&lt;code&gt;0&lt;/code&gt;），怎么也找不出是哪的猫腻。于是乎，&lt;code&gt;display:block;float:left;&lt;/code&gt;。纠结啊。&lt;/p&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>Tags界面构建之123</title>
+     <link href="http://webcraft.malei.tk/articles/tags-js-liquid"/>
+     <updated>2012-08-06T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/tags-js-liquid</id>
+     <content type="html">&lt;h2 id='id16'&gt;起因&lt;/h2&gt;
+
+&lt;p&gt;说道产生这种想法的起因，刚开始，想的是点击一个按钮链接，在 &lt;code&gt;location&lt;/code&gt; 中产生相应的锚，这样用&lt;code&gt;js&lt;/code&gt;获取锚中的值，就可以实现无论在tags界面还是文章界面，都能用这一种做法实现显示相应的文章。&lt;/p&gt;
+
+&lt;h2 id='id17'&gt;错误的方向&lt;/h2&gt;
+
+&lt;p&gt;在构建tags界面当时，鬼迷了心窍，一心想着&lt;code&gt;js&lt;/code&gt;与&lt;code&gt;liquid&lt;/code&gt;脚本交互，根本没有想可行性。尝试了各种蹩脚的方法尝试&lt;code&gt;js&lt;/code&gt;向&lt;code&gt;liquid&lt;/code&gt;传参，都失败了。现在想想，当时真是傻透了，白白的浪费了大量的时间。&lt;/p&gt;
+
+&lt;h2 id='vs'&gt;放弃vs转机&lt;/h2&gt;
+
+&lt;p&gt;大概浪费了半天时间纠结于传参问题，要命的是当时已把&lt;code&gt;jekyll&lt;/code&gt;的工作原理抛向脑后，还咒骂过&lt;code&gt;jekyll&lt;/code&gt;的&lt;code&gt;liquid&lt;/code&gt;脚本竟然不提供与&lt;code&gt;js&lt;/code&gt;的交互。渐渐地，心气儿被时间磨平了，于是就放弃了（在放弃的那一刻，我还坚信着他们之间一定能传参，只是我还没有找对路子）。说到转机，其实并不是传参这件事，而是用&lt;code&gt;liquid&lt;/code&gt;脚本遍历出所有的&lt;code&gt;tag&lt;/code&gt;，然后用&lt;code&gt;js&lt;/code&gt;达到自己想要的效果。&lt;/p&gt;
+
+&lt;h2 id='id18'&gt;为什么不能传参&lt;/h2&gt;
+
+&lt;p&gt;因为&lt;code&gt;jekyll&lt;/code&gt;是静态的，在把代码注入到&lt;code&gt;_site&lt;/code&gt;文件夹时，&lt;code&gt;liquid&lt;/code&gt;脚本已然运行了，根本没有交互的机会，他们的生存期错开了。&lt;/p&gt;
+
+&lt;h2 id='id19'&gt;小效果的实现&lt;/h2&gt;
+
+&lt;p&gt;site.tags一览&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;site = {
+	&amp;quot;tags&amp;quot;=&amp;gt;
+	{
+	 &amp;quot;permalinks&amp;quot;=&amp;gt;
+	  [...(Array of liquified Jekyll::Post objects)...],
+	 &amp;quot;urls&amp;quot;=&amp;gt;
+	  [...(Array of liquified Jekyll::Post objects)...],
+	 &amp;quot;templating&amp;quot;=&amp;gt;
+	  [...(Array of liquified Jekyll::Post objects)...],
+	 &amp;quot;liquid&amp;quot;=&amp;gt;
+	  [...(Array of liquified Jekyll::Post objects)...],
+	 &amp;quot;posts&amp;quot;=&amp;gt;
+	  [...(Array of liquified Jekyll::Post objects)...]
+	}
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='tags'&gt;遍历tags&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;{% assign tags_list = site.tags %}  
+{% for tag in tags_list %} 
+    &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;/tags.html#{{ tag[0] }}&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;tag-name&amp;quot;&amp;gt;{{ tag[0] }}&amp;lt;span&amp;gt;({{ tagsize }})&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+{% endfor %}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='tag'&gt;遍历相应tag的文章&lt;/h3&gt;
+
+&lt;p&gt;每一类tag的文章放入一个&lt;code&gt;div&lt;/code&gt;中，其&lt;code&gt;id&lt;/code&gt;为&lt;code&gt;{{ tag[0] }}-ref&lt;/code&gt;,防止被锚点跟踪。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% for tag in site.tags %}
+&amp;lt;div class=&amp;quot;articles-for-the-tag none&amp;quot; id=&amp;quot;{{ tag[0] }}-ref&amp;quot;&amp;gt;
+    &amp;lt;h3 class=&amp;quot;tag-name&amp;quot;&amp;gt;{{ tag[0] }}&amp;lt;/h3&amp;gt;
+    {% assign articles_list = tag[1] %}  
+    {% for node in articles_list %}
+        {% if node.title != null %}
+            &amp;lt;article&amp;gt;
+                &amp;lt;div class=&amp;quot;article-head&amp;quot;&amp;gt;
+                    &amp;lt;h3&amp;gt;&amp;lt;a href=&amp;quot;{{ node.url }}&amp;quot;&amp;gt;{{ node.title }}&amp;lt;/a&amp;gt;&amp;lt;/h3&amp;gt;
+                    &amp;lt;div class=&amp;quot;clearfix&amp;quot;&amp;gt;
+                        &amp;lt;div class=&amp;quot;article-post-time left&amp;quot;&amp;gt;
+                            &amp;lt;span&amp;gt;&amp;amp;#8227;&amp;lt;/span&amp;gt;
+                            &amp;lt;time pubdate=&amp;quot;{{ node.date | date: &amp;#39;%b %d, %Y&amp;#39; }}&amp;quot;&amp;gt;{{ node.date | date: &amp;#39;%b %d, %Y&amp;#39; }}&amp;lt;/time&amp;gt;
+                        &amp;lt;/div&amp;gt;
+                    &amp;lt;/div&amp;gt;
+                &amp;lt;/div&amp;gt;
+                &amp;lt;div class=&amp;quot;article-body&amp;quot;&amp;gt;
+                    &amp;lt;p&amp;gt;{{ node.description }}&amp;lt;/p&amp;gt;
+                &amp;lt;/div&amp;gt;
+            &amp;lt;/article&amp;gt;
+        {% endif %}
+    {% endfor %}
+&amp;lt;/div&amp;gt;
+{% endfor %}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='id20'&gt;显示&lt;/h3&gt;
+
+&lt;p&gt;刚开始，所有的文章都&lt;code&gt;display:none&lt;/code&gt;，等到触发相应事件后，显示相应tag的文章。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(function(){
+    var param=Chocolate.getParameterFromURL();
+    if(param !== &amp;quot;&amp;quot;){
+        $(&amp;#39;#all-tags&amp;#39;).css(&amp;#39;width&amp;#39;,&amp;#39;290px&amp;#39;);
+        $(&amp;#39;#all-articles&amp;#39;).animate({width:&amp;#39;660px&amp;#39;});
+        $(&amp;#39;#&amp;#39;+param+&amp;#39;-ref&amp;#39;).slideDown();
+    }
+    $(&amp;#39;#all-tags ul li a&amp;#39;).bind(&amp;#39;click&amp;#39;,  function() {
+        $(&amp;#39;#all-tags&amp;#39;).css(&amp;#39;width&amp;#39;,&amp;#39;290px&amp;#39;);
+        $(&amp;#39;#all-articles&amp;#39;).animate({width:&amp;#39;660px&amp;#39;});
+        var tagName=$(this).children(&amp;#39;span.tag-name&amp;#39;).text();
+        $(&amp;#39;.articles-for-the-tag&amp;#39;).slideUp();
+        $(&amp;#39;#&amp;#39;+tagName+&amp;#39;-ref&amp;#39;).slideDown();
+    });
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了达到与整体博客的融合，tags界面采用的是左文章、右标签的布局。为了使点击tag时，文章显示的不那么突兀，配合CSS,做了个拉动效果。&lt;/p&gt;
+
+&lt;h2 id='id21'&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;虽然历经坎坷，但终于还是有了一个令自己看着还行的的效果。&lt;/p&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>ana...</title>
+     <link href="http://webcraft.malei.tk/articles/ana"/>
+     <updated>2012-08-02T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/ana</id>
+     <content type="html">&lt;p&gt;在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了博得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。（席慕容）&lt;/p&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>本博客使用PureCss</title>
+     <link href="http://webcraft.malei.tk/articles/chocolate-pure-css"/>
+     <updated>2012-08-01T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/chocolate-pure-css</id>
+     <content type="html">&lt;h2 id='id14'&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;由于本博客用的都是一些高级的css3属性，又是个人博客，没必要为低级浏览器做兼容，已做好kill低级浏览器的程序，现只支持高级浏览器（指的是对html5、css3支持的很好的浏览器）。&lt;/p&gt;
+
+&lt;h2 id='1logo'&gt;1.LOGO背景的抛光&lt;/h2&gt;
+
+&lt;p&gt;由于底部背景用的是linear-gradient，下面有一个明显的渐变，为了使抛光柔和呈现，把抛光分成上、下两部分。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&amp;quot;logo-bg&amp;quot;&amp;gt;
+    &amp;lt;span id=&amp;quot;logo-bg-top&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;span id=&amp;quot;logo-bg-bottom&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='__'&gt;先对这两个 &lt;code&gt;span&lt;/code&gt; 设置一下公共属性：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;#logo-bg span{
+	display:block;
+	width:330px;
+	margin:0;
+	padding:0;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='css__'&gt;用CSS描述上面 &lt;code&gt;span&lt;/code&gt; 的呈现方式&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;#logo-bg-top{
+	height:76px;
+	background: -moz-radial-gradient(center bottom,ellipse cover, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.8) 60%,rgba(46,46,46,0.5) 100%);
+	background: -webkit-radial-gradient(center bottom,ellipse cover, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.8) 60%,rgba(46,46,46,0.5) 100%);
+	background: -o-radial-gradient(center bottom,ellipse cover, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.8) 60%,rgba(46,46,46,0.5) 100%);
+	background: -ms-radial-gradient(center bottom,ellipse cover, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.8) 60%,rgba(46,46,46,0.5) 100%);
+	background: radial-gradient(center bottom,ellipse cover, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.8) 60%,rgba(46,46,46,0.5) 100%);
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='css__'&gt;用CSS描述下面 &lt;code&gt;span&lt;/code&gt; 的呈现方式&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;#logo-bg-bottom{
+	height:12px;
+	background: -moz-radial-gradient(center top,ellipse, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.3) 70%,rgba(46,46,46,0) 100%);
+	background: -webkit-radial-gradient(center top,ellipse, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.3) 70%,rgba(46,46,46,0) 100%);
+	background: -o-radial-gradient(center top,ellipse, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.3) 70%,rgba(46,46,46,0) 100%);
+	background: -ms-radial-gradient(center top,ellipse, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.3) 70%,rgba(46,46,46,0) 100%);
+	background: radial-gradient(center top,ellipse, rgba(83,83,83,0.8) 0%,rgba(46,46,46,0.3) 70%,rgba(46,46,46,0) 100%);
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='2_forkme'&gt;2.右上角的 ForkMe&lt;/h2&gt;
+
+&lt;p&gt;放在 &lt;code&gt;footer&lt;/code&gt; 中的 &lt;code&gt;ForkMe&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;a href=&amp;quot;https://github.com/malei0311/malei0311.github.com&amp;quot; target=&amp;quot;_blank&amp;quot; id=&amp;quot;forkme&amp;quot;&amp;gt;Fork Me&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='css'&gt;CSS发挥作用：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;#forkme{
+	display:block;
+	position:fixed;
+	top:0;
+	right:0;
+	width:124px;
+	height:28px;
+	background-color:#333;
+	color:#fff;
+	font:bold 14px/28px &amp;quot;Times New Roman&amp;quot;,Times,serif;;
+	text-align:center;
+	-webkit-transition: .3s;
+	-moz-transition: .3s;
+	-ms-transition: .3s;
+	-o-transition: .3s;
+	transition: .3s;
+	-moz-transform:translate(28px,20px) rotate(45deg);
+	-webkit-transform:translate(28px,20px) rotate(45deg);
+	-o-transform:translate(28px,20px) rotate(45deg);
+	-ms-transform:translate(28px,20px) rotate(45deg);
+	transform:translate(28px,20px) rotate(45deg);
+	-moz-box-shadow:0 0 5px rgba(0,0,0,.5),inset 0 0 2px #fff;
+	-webkit-box-shadow:0 0 5px rgba(0,0,0,.5),inset 0 0 2px #fff;
+	box-shadow:0 0 5px rgba(0,0,0,.5),inset 0 0 2px #fff;
+	text-shadow:0px 0px 1px rgba(255,255,255,0.9),2px 2px 5px rgba(0, 0, 0, 0.5);
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='mouseover'&gt;MouseOver?&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;#forkme:hover{
+	background-color:#900;
+	text-shadow:-1px -1px 2px rgba(0,0,0,.5);
+	text-decoration:none;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='3tag'&gt;3.Tag图标&lt;/h2&gt;
+
+&lt;p&gt;只是一个&lt;code&gt;span&lt;/code&gt;标签&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;span class=&amp;quot;pure-css-tag&amp;quot;&amp;gt;&amp;amp;nbsp;&amp;lt;/span&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;连上本体，和两个伪对象，共三部分：&lt;/p&gt;
+
+&lt;h3 id='tag'&gt;TAG主身：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;.pure-css-tag{
+	float:left;
+	width: 10px;
+	height: 4px;
+	border: 2px solid #4183C4;
+	border-radius:2px;
+	margin-top: 6px;
+	margin-right:2px;
+	transform:rotate(45deg);
+	-moz-transform:rotate(45deg);
+	-webkit-transform:rotate(45deg);
+	-o-transform:rotate(45deg);
+	-ms-transform:rotate(45deg);
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='tag'&gt;TAG上面三角：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;.pure-css-tag::before{
+	content:&amp;#39;&amp;#39;;
+	position:relative;
+	top: -2px;
+	left: -9px;
+	float:left;
+	width:0;
+	height:0;
+	border: 4px solid transparent;
+	border-right-color:#4183C4;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='tag'&gt;TAG的穿孔，小白圆点&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;.pure-css-tag::after{
+	content:&amp;#39;&amp;#39;;
+	position:relative;
+	top: -7px;
+	left: -3px;
+	float:left;
+	width: 2px;
+	height: 2px;
+	background: #fff;
+	border-radius: 2px;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+	-ms-border-radius:2px;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='4'&gt;4.回到顶端图标&lt;/h2&gt;
+
+&lt;p&gt;主要是由一个 &lt;code&gt;a&lt;/code&gt; 标签和一个 &lt;code&gt;span&lt;/code&gt; 标签呈现出来的， &lt;code&gt;a&lt;/code&gt; 标签：正方形框； &lt;code&gt;span&lt;/code&gt; 标签：向上箭头。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;go-top&amp;quot;&amp;gt;
+    &amp;lt;a href=&amp;quot;#i-will-top&amp;quot; id=&amp;quot;go-top&amp;quot; class=&amp;quot;clearfix&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;go-top-icon&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='_'&gt;&lt;code&gt;a&lt;/code&gt; 标签：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;div.go-top a{
+	display:none;
+	width:32px;
+	height:32px;
+	padding:5px;
+	border-radius:5px;
+	box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.3),0px 0px 34px 2px rgba(0, 0, 0, 0.3) inset;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='_'&gt;&lt;code&gt;span&lt;/code&gt; 标签：&lt;/h3&gt;
+
+&lt;p&gt;箭头===&amp;gt;等腰直角三角形&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.go-top-icon{
+	margin-top:-16px;
+	width:0;
+	height:0;
+	float:left;
+	border-style:solid;
+	border-color:transparent;
+	border-bottom-color:rgba(0,0,0,0.3);
+	border-width:16px;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;箭身===&amp;gt;伪对象呈现&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.go-top-icon::before{
+	position:relative;
+	content:&amp;#39;&amp;#39;;
+	top:16px;
+	left:-8px;
+	float:left;
+	width:16px;
+	height:14px;
+	background:rgba(0,0,0,0.3);
+	border-radius:0 0 2px 2px;
+	-moz-border-radius:0 0 2px 2px;
+	-webkit-border-radius:0 0 2px 2px;
+	-ms-border-radius:0 0 2px 2px;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='5'&gt;5.其他&lt;/h2&gt;
+
+&lt;p&gt;以上四项为在构建博客时，写的CSS算是比较繁琐的，其他的相对简洁。&lt;/p&gt;
+
+&lt;h2 id='id15'&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;CSS3的确很强大&lt;/p&gt;</content>
+   </entry>
+   
+   <entry>
+     <title>【转】使用Github Pages建独立博客</title>
+     <link href="http://webcraft.malei.tk/articles/github-pages"/>
+     <updated>2012-02-22T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/github-pages</id>
+     <content type="html">&lt;p&gt;&lt;a href='http://github.com' title='Github'&gt;Github&lt;/a&gt;很好的将代码和社区联系在了一起，于是发生了很多有趣的事情，世界也因为他美好了一点点。Github作为现在最流行的代码仓库，已经得到很多大公司和项目的青睐，比如&lt;a href='https://github.com/jquery/jquery' title='jQuery@github'&gt;jQuery&lt;/a&gt;、&lt;a href='https://github.com/twitter/bootstrap' title='Twitter@github'&gt;Twitter&lt;/a&gt;等。为使项目更方便的被人理解，介绍页面少不了，甚至会需要完整的文档站，Github替你想到了这一点，他提供了&lt;a href='http://pages.github.com/' title='Github Pages'&gt;Github Pages&lt;/a&gt;的服务，不仅可以方便的为项目建立介绍站点，也可以用来建立个人博客。&lt;/p&gt;
+
+&lt;p&gt;Github Pages有以下几个优点：&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;轻量级的博客系统，没有麻烦的配置&lt;/li&gt;
+    &lt;li&gt;使用标记语言，比如&lt;a href='http://markdown.tw'&gt;Markdown&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;无需自己搭建服务器&lt;/li&gt;
+    &lt;li&gt;根据Github的限制，对应的每个站有300MB空间&lt;/li&gt;
+    &lt;li&gt;可以绑定自己的域名&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当然他也有缺点：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;使用&lt;a href='https://github.com/mojombo/jekyll' title='Jekyll'&gt;Jekyll&lt;/a&gt;模板系统，相当于静态页发布，适合博客，文档介绍等。 * 动态程序的部分相当局限，比如没有评论，不过还好我们有解决方案。&lt;/li&gt;
+
+&lt;li&gt;基于Git，很多东西需要动手，不像Wordpress有强大的后台&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;大致介绍到此，作为个人博客来说，简洁清爽的表达自己的工作、心得，就已达目标，所以Github Pages是我认为此需求最完美的解决方案了。&lt;/p&gt;
+
+&lt;h2 id='id8'&gt;购买、绑定独立域名&lt;/h2&gt;
+
+&lt;p&gt;虽说&lt;a href='http://www.godaddy.com/' title='Godaddy'&gt;Godaddy&lt;/a&gt;曾支持过SOPA，并且首页放着极其不专业的大胸美女，但是作为域名服务商他做的还不赖，选择它最重要的原因是他支持支付宝，没有信用卡有时真的很难过。&lt;/p&gt;
+
+&lt;p&gt;域名的购买不用多讲，注册、选域名、支付，有网购经验的都毫无压力，优惠码也遍地皆是。域名的配置需要提醒一下，因为伟大英明的GFW的存在，我们必须多做些事情。&lt;/p&gt;
+
+&lt;p&gt;流传Godaddy的域名解析服务器被墙掉，导致域名无法访问，后来这个事情在&lt;a href='http://beiyuu.com' title='BeiYuu'&gt;BeiYuu&lt;/a&gt;也发生了，不得已需要把域名解析服务迁移到国内比较稳定的服务商处，这个迁移对于域名来说没有什么风险，最终的控制权还是在Godaddy那里，你随时都可以改回去。&lt;/p&gt;
+
+&lt;p&gt;我们选择&lt;a href='https://www.dnspod.cn/' title='DNSPod'&gt;DNSPod&lt;/a&gt;的服务，他们的产品做得不错，易用、免费，收费版有更高端的功能，暂不需要。注册登录之后，按照DNSPod的说法，只需三步（我们插入一步）：&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;首先添加域名记录，可参考DNSPod的帮助文档：&lt;a href='https://www.dnspod.cn/Support'&gt;https://www.dnspod.cn/Support&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;在DNSPod自己的域名下添加一条&lt;a href='http://baike.baidu.com/view/65575.htm'&gt;A记录&lt;/a&gt;，地址就是Github Pages的服务IP地址：207.97.227.245&lt;/li&gt;
+	&lt;li&gt;在域名注册商处修改DNS服务:去Godaddy修改Nameservers为这两个地址：f1g1ns1.dnspod.net、f1g1ns2.dnspod.net。如果你不明白在哪里修改，可以参考这里：&lt;a href='https://www.dnspod.cn/support/index/fid/119'&gt;Godaddy注册的域名如何使用DNSPod&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;等待域名解析生效&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;域名的配置部分完成，跪谢方校长。&lt;/p&gt;
+
+&lt;h2 id='github'&gt;配置和使用Github&lt;/h2&gt;
+
+&lt;p&gt;Git是版本管理的未来，他的优点我不再赘述，相关资料很多。推荐这本&lt;a href='http://progit.org/book/zh/' title='Pro Git中文版'&gt;Git中文教程&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;要使用Git，需要安装它的客户端，推荐在Linux下使用Git，会比较方便。Windows版的下载地址在这里：&lt;a href='http://code.google.com/p/msysgit/downloads/list' title='Windows版Git客户端'&gt;http://code.google.com/p/msysgit/downloads/list&lt;/a&gt;。其他系统的安装也可以参考官方的&lt;a href='http://help.github.com/mac-set-up-git/' title='Mac下Git安装'&gt;安装教程&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;下载安装客户端之后，各个系统的配置就类似了，我们使用windows作为例子，Linux和Mac与此类似。&lt;/p&gt;
+
+&lt;p&gt;在Windows下，打开Git Bash，其他系统下面则打开终端（Terminal）： &lt;img alt='Git Bash' src='/images/githubpages/bootcamp_1_win_gitbash.jpg' /&gt;&lt;/p&gt;
+
+&lt;h3 id='1ssh_keys'&gt;1、检查SSH keys的设置&lt;/h3&gt;
+
+&lt;p&gt;首先我们需要检查你电脑上现有的ssh key：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd ~/.ssh&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果显示“No such file or directory”，跳到第三步，否则继续。&lt;/p&gt;
+
+&lt;h3 id='2ssh_key'&gt;2、备份和移除原来的ssh key设置：&lt;/h3&gt;
+
+&lt;p&gt;因为已经存在key文件，所以需要备份旧的数据并删除：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ls
+config	id_rsa	id_rsa.pub	known_hosts
+$ mkdir key_backup
+$ cp id_rsa* key_backup
+$ rm id_rsa*&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='3ssh_key'&gt;3、生成新的SSH Key：&lt;/h3&gt;
+
+&lt;p&gt;输入下面的代码，就可以生成新的key文件，我们只需要默认设置就好，所以当需要输入文件名的时候，回车就好。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ssh-keygen -t rsa -C &amp;quot;邮件地址@youremail.com&amp;quot;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&amp;lt;回车就好&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后系统会要你输入加密串（&lt;a href='http://help.github.com/ssh-key-passphrases/'&gt;Passphrase&lt;/a&gt;）：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Enter passphrase (empty for no passphrase):&amp;lt;输入加密串&amp;gt;
+Enter same passphrase again:&amp;lt;再次输入加密串&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;最后看到这样的界面，就成功设置ssh key了： &lt;img alt='ssh key success' src='/images/githubpages/ssh-key-set.png' /&gt;&lt;/p&gt;
+
+&lt;h3 id='4ssh_keygithub'&gt;4、添加SSH Key到GitHub：&lt;/h3&gt;
+
+&lt;p&gt;在本机设置SSH Key之后，需要添加到GitHub上，以完成SSH链接的设置。&lt;/p&gt;
+
+&lt;p&gt;用文本编辑工具打开id_rsa.pub文件，如果看不到这个文件，你需要设置显示隐藏文件。准确的复制这个文件的内容，才能保证设置的成功。&lt;/p&gt;
+
+&lt;p&gt;在GitHub的主页上点击设置按钮： &lt;img alt='github account setting' src='/images/githubpages/github-account-setting.png' /&gt;&lt;/p&gt;
+
+&lt;p&gt;选择SSH Keys项，把复制的内容粘贴进去，然后点击Add Key按钮即可： &lt;img alt='set ssh keys' src='/images/githubpages/bootcamp_1_ssh.jpg' /&gt;&lt;/p&gt;
+
+&lt;p&gt;PS：如果需要配置多个GitHub账号，可以参看这个&lt;a href='http://omiga.org/blog/archives/2269'&gt;多个github帐号的SSH key切换&lt;/a&gt;，不过需要提醒一下的是，如果你只是通过这篇文章中所述配置了Host，那么你多个账号下面的提交用户会是一个人，所以需要通过命令&lt;code&gt;git config --global --unset user.email&lt;/code&gt;删除用户账户设置，在每一个repo下面使用&lt;code&gt;git config --local user.email &amp;#39;你的github邮箱@mail.com&amp;#39;&lt;/code&gt; 命令单独设置用户账户信息&lt;/p&gt;
+
+&lt;h3 id='5'&gt;5、测试一下&lt;/h3&gt;
+
+&lt;p&gt;可以输入下面的命令，看看设置是否成功，&lt;code&gt;git@github.com&lt;/code&gt;的部分不要修改：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ssh -T git@github.com&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果是下面的反应：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;The authenticity of host &amp;#39;github.com (207.97.227.239)&amp;#39; can&amp;#39;t be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)?&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;不要紧张，输入&lt;code&gt;yes&lt;/code&gt;就好，然后会看到：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Hi &amp;lt;em&amp;gt;username&amp;lt;/em&amp;gt;! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access.&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='6'&gt;6、设置你的账号信息&lt;/h3&gt;
+
+&lt;p&gt;现在你已经可以通过SSH链接到GitHub了，还有一些个人信息需要完善的。&lt;/p&gt;
+
+&lt;p&gt;Git会根据用户的名字和邮箱来记录提交。GitHub也是用这些信息来做权限的处理，输入下面的代码进行个人信息的设置，把名称和邮箱替换成你自己的，名字必须是你的真名，而不是GitHub的昵称。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git config --global user.name &amp;quot;你的名字&amp;quot;
+$ git config --global user.email &amp;quot;your_email@youremail.com&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id='githubtoken'&gt;设置GitHub的token&lt;/h4&gt;
+
+&lt;p&gt;2012-4-28补充：新版的接口已经不需要配置token了，所以下面这段可以跳过了&lt;/p&gt;
+
+&lt;p&gt;有些工具没有通过SSH来链接GitHub。如果要使用这类工具，你需要找到然后设置你的API Token。&lt;/p&gt;
+
+&lt;p&gt;在GitHub上，你可以点击&lt;em&gt;Account Setting &amp;gt; Account Admin&lt;/em&gt;： &lt;img alt='set ssh keys' src='/images/githubpages/bootcamp_1_token.jpg' /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后在你的命令行中，输入下面的命令，把token添加进去：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git config --global user.name &amp;quot;你的名字&amp;quot;
+$ git config --global user.token 0123456789your123456789token&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果你改了GitHub的密码，需要重新设置token。&lt;/p&gt;
+
+&lt;h3 id='id9'&gt;成功了&lt;/h3&gt;
+
+&lt;p&gt;好了，你已经可以成功连接GitHub了。&lt;/p&gt;
+
+&lt;h2 id='github_pages'&gt;使用GitHub Pages建立博客&lt;/h2&gt;
+
+&lt;p&gt;与GitHub建立好链接之后，就可以方便的使用它提供的Pages服务，GitHub Pages分两种，一种是你的GitHub用户名建立的&lt;code&gt;username.github.com&lt;/code&gt;这样的用户&amp;amp;组织页（站），另一种是依附项目的pages。&lt;/p&gt;
+
+&lt;h3 id='user__organization_pages'&gt;User &amp;amp; Organization Pages&lt;/h3&gt;
+
+&lt;p&gt;想建立个人博客是用的第一种，形如&lt;code&gt;beiyuu.github.com&lt;/code&gt;这样的可访问的站，每个用户名下面只能建立一个，创建之后点击&lt;code&gt;Admin&lt;/code&gt;进入项目管理，可以看到是这样的： &lt;img alt='user pages' src='/images/githubpages/user-pages.png' /&gt; 而普通的项目是这样的，即使你也是用的&lt;code&gt;othername.github.com&lt;/code&gt;： &lt;img alt='other pages' src='/images/githubpages/other-pages.png' /&gt;&lt;/p&gt;
+
+&lt;p&gt;创建好&lt;code&gt;username.github.com&lt;/code&gt;项目之后，提交一个&lt;code&gt;index.html&lt;/code&gt;文件，然后&lt;code&gt;push&lt;/code&gt;到GitHub的&lt;code&gt;master&lt;/code&gt;分支（也就是普通意义上的主干）。第一次页面生效需要一些时间，大概10分钟左右。&lt;/p&gt;
+
+&lt;p&gt;生效之后，访问&lt;code&gt;username.github.com&lt;/code&gt;就可以看到你上传的页面了，&lt;a href='http://beiyuu.github.com'&gt;beiyuu.github.com&lt;/a&gt;就是一个例子。&lt;/p&gt;
+
+&lt;p&gt;关于第二种项目&lt;code&gt;pages&lt;/code&gt;，简单提一下，他和用户pages使用的后台程序是同一套，只不过它的目的是项目的帮助文档等跟项目绑定的内容，所以需要在项目的&lt;code&gt;gh-pages&lt;/code&gt;分支上去提交相应的文件，GitHub会自动帮你生成项目pages。具体的使用帮助可以参考&lt;a href='http://pages.github.com/' title='Github Pages'&gt;Github Pages&lt;/a&gt;的官方文档：&lt;/p&gt;
+
+&lt;h3 id='id10'&gt;绑定域名&lt;/h3&gt;
+
+&lt;p&gt;我们在第一部分就提到了在DNS部分的设置，再来看在GitHub的配置，要想让&lt;code&gt;username.github.com&lt;/code&gt;能通过你自己的域名来访问，需要在项目的根目录下新建一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件，文件内容形如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;beiyuu.com&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你也可以绑定在二级域名上：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;blog.beiyuu.com&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;需要提醒的一点是，如果你使用形如&lt;code&gt;beiyuu.com&lt;/code&gt;这样的一级域名的话，需要在DNS处设置A记录到&lt;code&gt;207.97.227.245&lt;/code&gt;，而不是在DNS处设置为CNAME的形式，否则可能会对其他服务（比如email）造成影响。&lt;/p&gt;
+
+&lt;p&gt;设置成功后，根据DNS的情况，最长可能需要一天才能生效，耐心等待吧。&lt;/p&gt;
+
+&lt;h2 id='jekyll'&gt;Jekyll模板系统&lt;/h2&gt;
+
+&lt;p&gt;GitHub Pages为了提供对HTML内容的支持，选择了&lt;a href='https://github.com/mojombo/jekyll' title='Jekyll'&gt;Jekyll&lt;/a&gt;作为模板系统，Jekyll是一个强大的静态模板系统，作为个人博客使用，基本上可以满足要求，也能保持管理的方便，你可以查看&lt;a href='https://github.com/mojombo/jekyll/blob/master/README.textile'&gt;Jekyll官方文档&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;你可以直接fork&lt;a href='https://github.com/beiyuu/beiyuu.github.com'&gt;我的项目&lt;/a&gt;，然后改名，就有了你自己的满足Jekyll要求的文档了，当然你也可以按照下面的介绍自己创建。&lt;/p&gt;
+
+&lt;h3 id='jekyll'&gt;Jekyll基本结构&lt;/h3&gt;
+
+&lt;p&gt;Jekyll的核心其实就是一个文本的转换引擎，用你最喜欢的标记语言写文档，可以是Markdown、Textile或者HTML等等，再通过&lt;code&gt;layout&lt;/code&gt;将文档拼装起来，根据你设置的URL规则来展现，这些都是通过严格的配置文件来定义，最终的产出就是web页面。&lt;/p&gt;
+
+&lt;p&gt;基本的Jekyll结构如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;|-- _config.yml
+|-- _includes
+|-- _layouts
+|   |-- default.html
+|   `-- post.html
+|-- _posts
+|   |-- 2007-10-29-why-every-programmer-should-play-nethack.textile
+|   `-- 2009-04-26-barcamp-boston-4-roundup.textile
+|-- _site
+`-- index.html&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;简单介绍一下他们的作用：&lt;/p&gt;
+
+&lt;h4 id='configyml'&gt;&lt;em&gt;config.yml&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;配置文件，用来定义你想要的效果，设置之后就不用关心了。&lt;/p&gt;
+
+&lt;h4 id='includes'&gt;&lt;em&gt;includes&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;可以用来存放一些小的可复用的模块，方便通过&lt;code&gt;{ % include file.ext %}&lt;/code&gt;（去掉前两个{中或者{与%中的空格，下同）灵活的调用。这条命令会调用_includes/file.ext文件。&lt;/p&gt;
+
+&lt;h4 id='layouts'&gt;&lt;em&gt;layouts&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;这是模板文件存放的位置。模板需要通过&lt;a href='https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter'&gt;YAML front matter&lt;/a&gt;来定义，后面会讲到，&lt;code&gt;{ { content }}&lt;/code&gt;标记用来将数据插入到这些模板中来。&lt;/p&gt;
+
+&lt;h4 id='posts'&gt;&lt;em&gt;posts&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;你的动态内容，一般来说就是你的博客正文存放的文件夹。他的命名有严格的规定，必须是&lt;code&gt;2012-02-22-artical-title.MARKUP&lt;/code&gt;这样的形式，MARKUP是你所使用标记语言的文件后缀名，根据_config.yml中设定的链接规则，可以根据你的文件名灵活调整，文章的日期和标记语言后缀与文章的标题的独立的。&lt;/p&gt;
+
+&lt;h4 id='site'&gt;&lt;em&gt;site&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;这个是Jekyll生成的最终的文档，不用去关心。最好把他放在你的&lt;code&gt;.gitignore&lt;/code&gt;文件中忽略它。&lt;/p&gt;
+
+&lt;h4 id='id11'&gt;其他文件夹&lt;/h4&gt;
+
+&lt;p&gt;你可以创建任何的文件夹，在根目录下面也可以创建任何文件，假设你创建了&lt;code&gt;project&lt;/code&gt;文件夹，下面有一个&lt;code&gt;github-pages.md&lt;/code&gt;的文件，那么你就可以通过&lt;code&gt;yoursite.com/project/github-pages&lt;/code&gt;访问的到，如果你是使用一级域名的话。文件后缀可以是&lt;code&gt;.html&lt;/code&gt;或者&lt;code&gt;markdown&lt;/code&gt;或者&lt;code&gt;textile&lt;/code&gt;。这里还有很多的例子：&lt;a href='https://github.com/mojombo/jekyll/wiki/Sites'&gt;https://github.com/mojombo/jekyll/wiki/Sites&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id='jekyll'&gt;Jekyll的配置&lt;/h3&gt;
+
+&lt;p&gt;Jekyll的配置写在_config.yml文件中，可配置项有很多，我们不去一一追究了，很多配置虽有用但是一般不需要去关心，&lt;a href='https://github.com/mojombo/jekyll/wiki/configuration'&gt;官方配置文档&lt;/a&gt;有很详细的说明，确实需要了可以去这里查，我们主要说两个比较重要的东西，一个是&lt;code&gt;Permalink&lt;/code&gt;，还有就是自定义项。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Permalink&lt;/code&gt;项用来定义你最终的文章链接是什么形式，他有下面几个变量：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;year&lt;/code&gt; 文件名中的年份&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;month&lt;/code&gt; 文件名中的月份&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;day&lt;/code&gt; 文件名中的日期&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;title&lt;/code&gt; 文件名中的文章标题&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;categories&lt;/code&gt; 文章的分类，如果文章没有分类，会忽略&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;i-month&lt;/code&gt; 文件名中的除去前缀0的月份&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;i-day&lt;/code&gt; 文件名中的除去前缀0的日期&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;看看最终的配置效果：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;permalink: pretty&lt;/code&gt; /2009/04/29/slap-chop/index.html&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;permalink: /:month-:day-:year/:title.html&lt;/code&gt; /04-29-2009/slap-chop.html&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;permalink: /blog/:year/:month/:day/:title&lt;/code&gt; /blog/2009/04/29/slap-chop/index.html&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;我使用的是：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;permalink: /:title&lt;/code&gt; /github-pages&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;自定义项的内容，例如我们定义了&lt;code&gt;title:BeiYuu的博客&lt;/code&gt;这样一项，那么你就可以在文章中使用&lt;code&gt;{ { site.title }}&lt;/code&gt;来引用这个变量了，非常方便定义些全局变量。&lt;/p&gt;
+
+&lt;h3 id='yaml_front_matter'&gt;YAML Front Matter和模板变量&lt;/h3&gt;
+
+&lt;p&gt;对于使用YAML定义格式的文章，Jekyll会特别对待，他的格式要求比较严格，必须是这样的形式：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;---
+layout: post
+title: Blogging Like a Hacker
+---&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;前后的&lt;code&gt;---&lt;/code&gt;不能省略，在这之间，你可以定一些你需要的变量，layout就是调用&lt;code&gt;_layouts&lt;/code&gt;下面的某一个模板，他还有一些其他的变量可以使用：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;permalink&lt;/code&gt; 你可以对某一篇文章使用通用设置之外的永久链接&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;published&lt;/code&gt; 可以单独设置某一篇文章是否需要发布&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;category&lt;/code&gt; 设置文章的分类&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;tags&lt;/code&gt; 设置文章的tag&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;上面的&lt;code&gt;title&lt;/code&gt;就是自定义的内容，你也可以设置其他的内容，在文章中可以通过&lt;code&gt;{ { page.title }}&lt;/code&gt;这样的形式调用。&lt;/p&gt;
+
+&lt;p&gt;模板变量，我们之前也涉及了不少了，还有其他需要的变量，可以参考官方的文档：&lt;a href='https://github.com/mojombo/jekyll/wiki/template-data' title='Jekyll Template Data'&gt;https://github.com/mojombo/jekyll/wiki/template-data&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id='disqus'&gt;使用Disqus管理评论&lt;/h2&gt;
+
+&lt;p&gt;模板部分到此就算是配置完毕了，但是Jekyll只是个静态页面的发布系统，想做到关爽场倒是很容易，如果想要评论呢？也很简单。&lt;/p&gt;
+
+&lt;p&gt;现在专做评论模块的产品有很多，比如&lt;a href='http://disqus.com/'&gt;Disqus&lt;/a&gt;，还有国产的&lt;a href='http://duoshuo.com/' title='多说'&gt;多说&lt;/a&gt;，Disqus对现在各种系统的支持都比较全面，到写博客为止，多说现在仅是WordPress的一个插件，所以我这里暂时也使用不了，多说与国内的社交网络紧密结合，还是有很多亮点的，值得期待一下。我先选择了Disqus。&lt;/p&gt;
+
+&lt;p&gt;注册账号什么的就不提了，Disqus支持很多的博客平台，参见下图： &lt;img alt='Disqus sites' src='/images/githubpages/disqus-site.jpg' /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们选择最下面的&lt;code&gt;Universal Code&lt;/code&gt;就好，然后会看到一个介绍页面，把下面这段代码复制到你的模板里面，可以只复制到显示文章的模板中：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&amp;quot;disqus_thread&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = &amp;#39;example&amp;#39;; // required: replace example with your forum shortname 这个地方需要改成你配置的网站名
+
+    /* * * DON&amp;#39;T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement(&amp;#39;script&amp;#39;); dsq.type = &amp;#39;text/javascript&amp;#39;; dsq.async = true;
+        dsq.src = &amp;#39;http://&amp;#39; + disqus_shortname + &amp;#39;.disqus.com/embed.js&amp;#39;;
+        (document.getElementsByTagName(&amp;#39;head&amp;#39;)[0] || document.getElementsByTagName(&amp;#39;body&amp;#39;)[0]).appendChild(dsq);
+    })();
+&amp;lt;/script&amp;gt;
+&amp;lt;noscript&amp;gt;Please enable JavaScript to view the &amp;lt;a href=&amp;quot;http://disqus.com/?ref_noscript&amp;quot;&amp;gt;comments powered by Disqus.&amp;lt;/a&amp;gt;&amp;lt;/noscript&amp;gt;
+&amp;lt;a href=&amp;quot;http://disqus.com&amp;quot; class=&amp;quot;dsq-brlink&amp;quot;&amp;gt;blog comments powered by &amp;lt;span class=&amp;quot;logo-disqus&amp;quot;&amp;gt;Disqus&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置完之后，你也可以做一些异步加载的处理，提高性能，比如我就在最开始页面打开的时候不显示评论，当你想看评论的时候，点击“显示评论”再加载Disqus的模块。代码很简单，你可以参考我的写法。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(&amp;#39;#disqus_container .comment&amp;#39;).on(&amp;#39;click&amp;#39;,function(){
+        $(this).html(&amp;#39;加载中...&amp;#39;);
+        var disqus_shortname = &amp;#39;beiyuu&amp;#39;;
+        var that = this;
+        BYB.includeScript(&amp;#39;http://&amp;#39; + disqus_shortname + &amp;#39;.disqus.com/embed.js&amp;#39;,function(){$(that).remove()}); //这是一个加载js的函数
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果你不喜欢Disqus的样式，你也可以根据他生成的HTML结构，自己改写样式覆盖它的，Disqus现在也提供每个页面的评论数接口，&lt;a href='http://docs.disqus.com/developers/universal/'&gt;帮助文档&lt;/a&gt;在这里可以看到。&lt;/p&gt;
+
+&lt;h2 id='id12'&gt;代码高亮插件&lt;/h2&gt;
+
+&lt;p&gt;如果写技术博客，代码高亮少不了，有两个可选插件&lt;a href='http://mihai.bazon.net/projects/javascript-syntax-highlighting-engine'&gt;DlHightLight代码高亮组件&lt;/a&gt;和&lt;a href='http://code.google.com/p/google-code-prettify/'&gt;Google Code Prettify&lt;/a&gt;。DLHightLight支持的语言相对较少一些，有js、css、xml和html，Google的高亮插件基本上任何语言都支持，也可以自定义语言，也支持自动识别，也有行号的特别支持。&lt;/p&gt;
+
+&lt;p&gt;Google的高亮插件使用也比较方便，只需要在&lt;code&gt;&amp;lt;pre&amp;gt;&lt;/code&gt;的标签上加入&lt;code&gt;prettyprint&lt;/code&gt;即可。所以我选择了Google Code Prettify。&lt;/p&gt;
+
+&lt;h2 id='jekyll'&gt;搭建本地jekyll环境&lt;/h2&gt;
+
+&lt;p&gt;这里主要介绍一下在Mac OS X下面的安装过程，其他操作系统可以参考官方的&lt;a href='https://github.com/mojombo/jekyll/wiki/Install'&gt;jekyll安装&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;作为生活在水深火热的墙内人民，有必要进行下面一步修改gem的源，方便我们更快的下载所需组建：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo gem sources --remove http://rubygems.org/ 
+sudo gem sources -a http://ruby.taobao.org/ &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后用Gem安装jekyll&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gem install jekyll&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;不过一般如果有出错提示，你可能需要这样安装：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo gem install jekyll&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我到了这一步的时候总是提示错误&lt;code&gt;Failed to build gem native extension&lt;/code&gt;，很可能的一个原因是没有安装rvm，&lt;a href='https://rvm.io/rvm/install/'&gt;rvm的安装&lt;/a&gt;可以参考这里，或者敲入下面的命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ curl -L https://get.rvm.io | bash -s stable --ruby&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后还需要安装Markdown的解释器，这个需要在你的_config.yml里面设置&lt;code&gt;markdown:rdiscount&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gem install jekyll rdiscount&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;好了，如果一切顺利的话，本地环境就基本搭建完成了，进入之前我们建立的博客目录，运行下面的命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ jekyll --server&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个时候，你就可以通过&lt;code&gt;localhost:4000&lt;/code&gt;来访问了。还有关于&lt;a href='http://jekyllbootstrap.com/'&gt;jekyll bootstrap&lt;/a&gt;的资料，需要自己修改调试的，可以研究一下。&lt;/p&gt;
+
+&lt;p&gt;我在这个过程中还遇到两个诡异的没有解决的问题，一个是我放在根目录下面的blog.md等文件，在GitHub的pages服务上一切正常，可以通过&lt;code&gt;beiyuu.com/blog&lt;/code&gt;访问的到，但是在本地环境下，总是&lt;code&gt;not found&lt;/code&gt;，很是让人郁闷，看生成的&lt;code&gt;_site&lt;/code&gt;目录下面的文件，也是正常的&lt;code&gt;blog.html&lt;/code&gt;，但就是找不到，只有当我把URL改为&lt;code&gt;localhost:4000/blog.html&lt;/code&gt;的时候，才能访问的到，环境不同真糟糕。&lt;/p&gt;
+
+&lt;p&gt;还有一个是关于&lt;code&gt;category&lt;/code&gt;的问题，根据&lt;code&gt;YAML&lt;/code&gt;的语法，我们在文章头部可以定义文章所属的类别，也可以定义为&lt;code&gt;category:[blog,rss]&lt;/code&gt;这样子的多类别，我在本地试一切正常，但是push到GitHub之后，就无法读取了，真让人着急，没有办法，只能采用别的办法满足我的需求了。这里还有一篇&lt;a href='http://chxt6896.github.com/blog/2012/02/13/blog-jekyll-native.html'&gt;Jekyll 本地调试之若干问题&lt;/a&gt;，安装中如果有其他问题，也可以对照参考一下。&lt;/p&gt;
+
+&lt;h2 id='id13'&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;如果你跟着这篇不那么详尽的教程，成功搭建了自己的博客，恭喜你！剩下的就是保持热情的去写自己的文章吧。&lt;/p&gt;</content>
+   </entry>
+   
+ 
+</feed>

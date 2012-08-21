@@ -56,51 +56,7 @@ body .hide{display:none;}
 .right{float:right;}
 .none{display: none;}
 /*===========Beiyuu End===============*/
-::-webkit-scrollbar {
-	height: 16px;
-	overflow: visible;
-	width: 12px;
-}
 
-::-webkit-scrollbar-thumb {
-	background-color: rgba(0, 0, 0, .5);
-	background-clip: padding-box;
-	border: solid transparent;
-	border-width: 1px 1px 1px 1px;
-	min-height: 28px;
-	padding: 100px 0 0;
-	box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1),inset 0 -1px 0 rgba(0, 0, 0, .07);
-}
-
-::-webkit-scrollbar-button {
-	height: 0;
-	width: 0;
-}
-
-::-webkit-scrollbar-track {
-	background-clip: padding-box;
-	border: solid transparent;
-	border-width: 0 0 0 0px;
-}
-
-body::-webkit-scrollbar-track-piece {
-	background-clip: padding-box;
-	background-color: whiteSmoke;
-	border: solid white;
-	border-width: 0 0 0 0px;
-	box-shadow: inset 1px 0 0 rgba(0, 0, 0, .14),inset -1px 0 0 rgba(0, 0, 0, .07);
-}
-
-body::-webkit-scrollbar-corner {
-	background-clip: padding-box;
-	background-color: whiteSmoke;
-	border: solid white;
-	border-width: 3px 0 0 3px;
-	box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .14);
-}
-::-webkit-scrollbar-corner {
-	background: transparent;
-}
 /*=================common elements================*/
 body {font: 14px/1.5 verdana, \5fae\8f6f\96c5\9ed1,\5b8b\4f53, \9ED1\4F53, sans-serif;position:relative;}/* 英文字体 verdana，中文微软雅黑，宋体和黑体。*/
 a {color:#4183C4;text-decoration:none;outline:none;}

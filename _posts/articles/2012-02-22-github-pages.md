@@ -257,7 +257,7 @@ Jekyll的配置写在_config.yml文件中，可配置项有很多，我们不去
 ## 使用Disqus管理评论
 模板部分到此就算是配置完毕了，但是Jekyll只是个静态页面的发布系统，想做到关爽场倒是很容易，如果想要评论呢？也很简单。
 
-现在专做评论模块的产品有很多，比如[Disqus][]，还有国产的[多说][]，Disqus对现在各种系统的支持都比较全面，到写博客为止，多说现在仅是WordPress的一个插件，所以我这里暂时也使用不了，多说与国内的社交网络紧密结合，还是有很多亮点的，值得期待一下。我先选择了Disqus。
+现在专做评论模块的产品有很多，比如[Disqus][]，还有国产的[多说][1]，Disqus对现在各种系统的支持都比较全面，到写博客为止，多说现在仅是WordPress的一个插件，所以我这里暂时也使用不了，多说与国内的社交网络紧密结合，还是有很多亮点的，值得期待一下。我先选择了Disqus。
 
 注册账号什么的就不提了，Disqus支持很多的博客平台，参见下图：
 ![Disqus sites](/images/githubpages/disqus-site.jpg)
@@ -342,7 +342,7 @@ Google的高亮插件使用也比较方便，只需要在`<pre>`的标签上加�
 [Jekyll]:   https://github.com/mojombo/jekyll "Jekyll"
 [DNSPod]:   https://www.dnspod.cn/ "DNSPod"
 [Disqus]: http://disqus.com/
-[多说]: http://duoshuo.com/
+[1]: http://duoshuo.com/    "多说"
 [2]: http://markdown.tw/    "Markdown语法"
 [3]:    http://baike.baidu.com/view/65575.htm "A记录"
 [4]: http://progit.org/book/zh/ "Pro Git中文版"
