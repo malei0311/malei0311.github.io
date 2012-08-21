@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!-- 
+    @author <a href="mailto:leiman0311@gmail.com">Lei Ma</a>
+    @time  Aug 2, 2012
+-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>CSSbox-shadow秒杀 | WebCraft</title>
+    <meta name="generator" content="Jekyll" />
+    <meta name="author" content="malei" />
+    <meta name="description" content="1.普通的IMG 2.作为背景 3.基本的圆(普通IMG) 4.基本的圆(作为背景) 5.卡片风格 6.浮雕风格 7.软浮雕效果 8.剪切画效果 9.变形记 10.发光遮罩 11.倒影效果 12.光影结合 13.胶带风格 14.变形并着色 15.羽化 | malei0311\'s Blog" />
+    <meta name="keywords" content="css3,images" />
+    <link rel="stylesheet" href="/css/default.css" type="text/css" />
+    
+    
+    <link rel="stylesheet" href="/css/cssDemo-css3-image-box-shadow.css" type="text/css" />
+    
+    <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="/atom.xml" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <script src="/js/lib/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <header>
+        <div id="header">
+            <div class="head-cnt clearfix">
+                <div id="logo-bg">
+                    <span id="logo-bg-top"></span>
+                    <span id="logo-bg-bottom"></span>
+                </div>
+                <hgroup id="caption">
+                    <h1><a href="/">WebCraft</a></h1>
+                    <h2>开源有意思，不断学习ing...</h2>
+                </hgroup>
+            </div> 
+        </div>
+        <div id="loading-bar">
+            <div></div>
+        </div>
+        <script>
+            $('#loading-bar div').animate({width:"15%"},500,"linear");
+        </script>
+        <nav id="top-nav">
+            <div class="head-cnt">
+                <ul>
+                    <li><a href="/" class="current" rel="nofollow">Home</a></li>
+                    <li><a href="/articles.html">Articles</a></li>
+                    <li><a href="/tags.html">Tags</a></li>
+                    <li><a href="/demos.html" >Demos</a></li>
+                    <li><a href="/about.html" >About</a></li>
+                </ul>
+            </div>
+        </nav> 
+    </header>
+    
+    <section id="main">
+        	<div class="demos" id="css3-image-box-shadow">
+	<h1>CSS图片样式box-shadow秒杀</h1>
+	<div class="box normal">
+		<h3>1.普通的IMG</h3>
+		<a href="#" class="image-normal"><img src="../../images/image-styles/image_styles_1.png"></a>
+		<a href="#" class="image-normal"><img src="../../images/image-styles/image_styles_2.jpg"></a>
+		<a href="#" class="image-normal"><img src="../../images/image-styles/image_styles_3.jpg"></a>
+		<a href="#" class="image-normal"><img src="../../images/image-styles/image_styles_4.jpg"></a>
+	</div>
+	<div class="box bg">
+		<h3>2.作为背景</h3>
+		<a href="#" class="image-normal"><span id="image_styles_1"></span></a>
+		<a href="#" class="image-normal"><span id="image_styles_2"></span></a>
+		<a href="#" class="image-normal"><span id="image_styles_3"></span></a>
+		<a href="#" class="image-normal"><span id="image_styles_4"></span></a>
+	</div>
+	<div class="box note">
+		<h3>&dagger;&nbsp;NOTE&nbsp;&uarr;</h3>
+		<p>以上demo的CSS完全相同，但表现效果却不同。两者都使用了border-radius和inset box-shadow。Firefox会直接在图片元素上渲染border-radius，但不会渲染inset box-shadow。chrome/safari则两者都不渲染。如果变成背景就可以随心所欲了。</p>
+	</div>
+	<div class="box circle">
+		<h3>3.基本的圆(普通IMG)</h3>
+		<a href="#" class="image-normal"><img src="../../images/image-styles/image_styles_1.png"></a>
+		<a href="#" class="image-normal"><img src="../../images/image-styles/image_styles_2.jpg"></a>
+		<a href="#" class="image-normal"><img src="../../images/image-styles/image_styles_3.jpg"></a>
+		<a href="#" class="image-normal"><img src="../../images/image-styles/image_styles_4.jpg"></a>
+	</div>
+	<div class="box circlebg">
+		<h3>4.基本的圆(作为背景)</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box note">
+		<h3>&dagger;&nbsp;NOTE&nbsp;&uarr;</h3>
+		<p>firefox中打开firebug查看元素，你会发现，普通img能显示成圆圈，作为背景的显示方块。</p>
+	</div>
+	<div class="box card">
+		<h3>5.卡片风格</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box embose">
+		<h3>6.浮雕风格</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box soft-embose">
+		<h3>7.软浮雕效果</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box cut-out boxbg">
+		<h3>8.剪切画效果</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box morphing-glowing boxbg">
+		<h3>9.变形记</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box glossy boxbg">
+		<h3>10.发光遮罩</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box note">
+		<h3>&dagger;&nbsp;NOTE&nbsp;&uarr;</h3>
+		<p>说明：此demo用了伪对象选择符 ( E:after/E::after )，在CSS3中为了区别“伪类选择符”和“伪对象选择符”，选用了双冒号，但是单冒号仍然有效。</p>
+	</div>
+	<div class="box reflection">
+		<h3>11.倒影效果</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box glossy-reflection">
+		<h3>12.光影结合</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box tape">
+		<h3>13.胶带风格</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box morphing-tinting">
+		<h3>14.变形并着色</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box feather">
+		<h3>15.羽化</h3>
+		<a href="#"><img src="../../images/image-styles/image_styles_1.png" alt="image_styles_1.png"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_2.jpg" alt="image_styles_2.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_3.jpg" alt="image_styles_3.jpg"></a>
+		<a href="#"><img src="../../images/image-styles/image_styles_4.jpg" alt="image_styles_4.jpg"></a>
+	</div>
+	<div class="box note">
+		<h3>&dagger;&nbsp;NOTE&nbsp;&uarr;</h3>
+		<p>demo中有些属性，不被一些低级浏览器支持，请用firefox/chrome/safari。感觉伪对象很强大！</p>
+		<p>所有权利归：<a href="http://webdesignerwall.com">webdesignerwall</a>所有</p>	
+	</div>
+	</div>
+    </section>
+    <div class="go-top">
+        <a href="#i-will-top" id="go-top" class="clearfix"><span class="go-top-icon"></span></a>
+    </div>
+    <footer>
+        <div class="footer-cnt">
+            <section class="chocolate-theme left">
+                <p>Powered by <a href="http://jekyllrb.com" target="_blank" rel="nofollow">Jekyll</a>. &lceil;Chocolate&rfloor; is designed by <a href="http://webcraft.malei.tk" rel="nofollow">Lei Ma</a>.</p>
+            </section>
+            <section class="chocorate-copyright right">
+                <p>© 2012 WebCraft All rights reserved.</p>
+            </section>
+            <a href="https://github.com/malei0311/malei0311.github.com" target="_blank" id="forkme">Fork Me</a>
+        </div>
+    </footer>
+    <div id="footer-scripts" class="none">
+        <script src="/js/lib/slides.min.jquery.js"></script>
+        <script src="/js/chocolate.js"></script>
+        
+        
+            <script src="/js/cssDemo-css3-image-box-shadow.js"></script>
+        
+        
+        
+        
+        
+        
+        <script>
+            $(function(){
+                $('#main').css('min-height',$(window).height()-196);
+                $('#loading-bar div').animate({width:"100%"},200,"swing"); 
+                var scrHeight, topId;
+                topId = $("#go-top");
+                $(window).bind("scroll", function(){
+                    scrHeight = $(window).scrollTop();
+                    if(scrHeight > 500) {
+                        topId.css('display','block');
+                        topId.fadeIn(1500);
+                    } else {
+                        topId.fadeOut(1500);
+                    }
+                });
+                topId.click(function() {
+                    // $('body, html').animate({scrollTop: 0}, 1200);
+                    Chocolate.goTop();
+                });   
+            });      
+        </script>
+    </div>
+</body>
+</html>

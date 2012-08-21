@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<!-- 
+    @author <a href="mailto:leiman0311@gmail.com">Lei Ma</a>
+    @time  Aug 2, 2012
+-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tags界面构建之123 | WebCraft</title>
+    <meta name="generator" content="Jekyll" />
+    <meta name="author" content="malei" />
+    <meta name="description" content="在Tags界面构建中有了`js`与`liquid`脚本，交互的想法，事后证明是完全错误的 | malei0311\'s Blog" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="/css/default.css" type="text/css" />
+    
+        <link rel="stylesheet" href="/js/lib/prettify/prettify.css" type="text/css" />
+    
+    
+    <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="/atom.xml" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <script src="/js/lib/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <header>
+        <div id="header">
+            <div class="head-cnt clearfix">
+                <div id="logo-bg">
+                    <span id="logo-bg-top"></span>
+                    <span id="logo-bg-bottom"></span>
+                </div>
+                <hgroup id="caption">
+                    <h1><a href="/">WebCraft</a></h1>
+                    <h2>开源有意思，不断学习ing...</h2>
+                </hgroup>
+            </div> 
+        </div>
+        <div id="loading-bar">
+            <div></div>
+        </div>
+        <script>
+            $('#loading-bar div').animate({width:"15%"},500,"linear");
+        </script>
+        <nav id="top-nav">
+            <div class="head-cnt">
+                <ul>
+                    <li><a href="/" class="current" rel="nofollow">Home</a></li>
+                    <li><a href="/articles.html">Articles</a></li>
+                    <li><a href="/tags.html">Tags</a></li>
+                    <li><a href="/demos.html" >Demos</a></li>
+                    <li><a href="/about.html" >About</a></li>
+                </ul>
+            </div>
+        </nav> 
+    </header>
+    
+    <section id="main">
+        <section class="content-cnt">
+	<article class="article-main-content">
+		<div class="article-title">
+            <h1><a href="/articles/tags-js-liquid">Tags界面构建之123</a></h1>
+            <div class="clearfix">
+                <div class="article-post-time left">
+                    <span>&#8227;</span>
+                    <time class="date" pubdate="2012-08-06">2012-08-06</time>
+                </div>
+                
+                <div class="article-tags right">
+                    <span class="pure-css-tag">&nbsp;</span>
+                    <span class="pure-css-tag-behind left">
+                        <ul>
+                             
+                            <li>
+                                <a href="/tags.html#js">
+                                    js
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                             
+                            <li>
+                                <a href="/tags.html#博客志">
+                                    博客志
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                            
+                        </ul>
+                    </span> 
+                </div>
+                
+            </div>
+        </div>
+        <p class="description">在Tags界面构建中有了`js`与`liquid`脚本，交互的想法，事后证明是完全错误的</p>
+        <div class="article-div-content">
+        	<h2 id='id10'>起因</h2>
+
+<p>说道产生这种想法的起因，刚开始，想的是点击一个按钮链接，在 <code>location</code> 中产生相应的锚，这样用<code>js</code>获取锚中的值，就可以实现无论在tags界面还是文章界面，都能用这一种做法实现显示相应的文章。</p>
+
+<h2 id='id11'>错误的方向</h2>
+
+<p>在构建tags界面当时，鬼迷了心窍，一心想着<code>js</code>与<code>liquid</code>脚本交互，根本没有想可行性。尝试了各种蹩脚的方法尝试<code>js</code>向<code>liquid</code>传参，都失败了。现在想想，当时真是傻透了，白白的浪费了大量的时间。</p>
+
+<h2 id='vs'>放弃vs转机</h2>
+
+<p>大概浪费了半天时间纠结于传参问题，要命的是当时已把<code>jekyll</code>的工作原理抛向脑后，还咒骂过<code>jekyll</code>的<code>liquid</code>脚本竟然不提供与<code>js</code>的交互。渐渐地，心气儿被时间磨平了，于是就放弃了（在放弃的那一刻，我还坚信着他们之间一定能传参，只是我还没有找对路子）。说到转机，其实并不是传参这件事，而是用<code>liquid</code>脚本遍历出所有的<code>tag</code>，然后用<code>js</code>达到自己想要的效果。</p>
+
+<h2 id='id12'>为什么不能传参</h2>
+
+<p>因为<code>jekyll</code>是静态的，在把代码注入到<code>_site</code>文件夹时，<code>liquid</code>脚本已然运行了，根本没有交互的机会，他们的生存期错开了。</p>
+
+<h2 id='id13'>小效果的实现</h2>
+
+<p>site.tags一览</p>
+
+<pre><code>site = {
+	&quot;tags&quot;=&gt;
+	{
+	 &quot;permalinks&quot;=&gt;
+	  [...(Array of liquified Jekyll::Post objects)...],
+	 &quot;urls&quot;=&gt;
+	  [...(Array of liquified Jekyll::Post objects)...],
+	 &quot;templating&quot;=&gt;
+	  [...(Array of liquified Jekyll::Post objects)...],
+	 &quot;liquid&quot;=&gt;
+	  [...(Array of liquified Jekyll::Post objects)...],
+	 &quot;posts&quot;=&gt;
+	  [...(Array of liquified Jekyll::Post objects)...]
+	}
+}</code></pre>
+
+<h3 id='tags'>遍历tags</h3>
+
+<pre><code>{% assign tags_list = site.tags %}  
+{% for tag in tags_list %} 
+    &lt;li&gt;&lt;a href=&quot;/tags.html#{{ tag[0] }}&quot;&gt;&lt;span class=&quot;tag-name&quot;&gt;{{ tag[0] }}&lt;span&gt;({{ tagsize }})&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+{% endfor %}</code></pre>
+
+<h3 id='tag'>遍历相应tag的文章</h3>
+
+<p>每一类tag的文章放入一个<code>div</code>中，其<code>id</code>为<code>{{ tag[0] }}-ref</code>,防止被锚点跟踪。</p>
+
+<pre><code>{% for tag in site.tags %}
+&lt;div class=&quot;articles-for-the-tag none&quot; id=&quot;{{ tag[0] }}-ref&quot;&gt;
+    &lt;h3 class=&quot;tag-name&quot;&gt;{{ tag[0] }}&lt;/h3&gt;
+    {% assign articles_list = tag[1] %}  
+    {% for node in articles_list %}
+        {% if node.title != null %}
+            &lt;article&gt;
+                &lt;div class=&quot;article-head&quot;&gt;
+                    &lt;h3&gt;&lt;a href=&quot;{{ node.url }}&quot;&gt;{{ node.title }}&lt;/a&gt;&lt;/h3&gt;
+                    &lt;div class=&quot;clearfix&quot;&gt;
+                        &lt;div class=&quot;article-post-time left&quot;&gt;
+                            &lt;span&gt;&amp;#8227;&lt;/span&gt;
+                            &lt;time pubdate=&quot;{{ node.date | date: &#39;%b %d, %Y&#39; }}&quot;&gt;{{ node.date | date: &#39;%b %d, %Y&#39; }}&lt;/time&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;article-body&quot;&gt;
+                    &lt;p&gt;{{ node.description }}&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/article&gt;
+        {% endif %}
+    {% endfor %}
+&lt;/div&gt;
+{% endfor %}</code></pre>
+
+<h3 id='id14'>显示</h3>
+
+<p>刚开始，所有的文章都<code>display:none</code>，等到触发相应事件后，显示相应tag的文章。</p>
+
+<pre><code>$(function(){
+    var param=Chocolate.getParameterFromURL();
+    if(param !== &quot;&quot;){
+        $(&#39;#all-tags&#39;).css(&#39;width&#39;,&#39;290px&#39;);
+        $(&#39;#all-articles&#39;).animate({width:&#39;660px&#39;});
+        $(&#39;#&#39;+param+&#39;-ref&#39;).slideDown();
+    }
+    $(&#39;#all-tags ul li a&#39;).bind(&#39;click&#39;,  function() {
+        $(&#39;#all-tags&#39;).css(&#39;width&#39;,&#39;290px&#39;);
+        $(&#39;#all-articles&#39;).animate({width:&#39;660px&#39;});
+        var tagName=$(this).children(&#39;span.tag-name&#39;).text();
+        $(&#39;.articles-for-the-tag&#39;).slideUp();
+        $(&#39;#&#39;+tagName+&#39;-ref&#39;).slideDown();
+    });
+});</code></pre>
+
+<p>为了达到与整体博客的融合，tags界面采用的是左文章、右标签的布局。为了使点击tag时，文章显示的不那么突兀，配合CSS,做了个拉动效果。</p>
+
+<h2 id='id15'>结语</h2>
+
+<p>虽然历经坎坷，但终于还是有了一个令自己看着还行的的效果。</p>
+        </div>
+        <nav class="article-bottom-nav clearfix">
+            
+                <a class="left" href="/demos/css3-image-box-shadow" rel="bookmark" title="旧一篇">&laquo;&nbsp;CSSbox-shadow秒杀</a>
+            
+            
+                <a class="right" href="/articles/water-fall-layout" rel="bookmark" title="新一篇">Demos界面的伪瀑布流布局的实现&nbsp;&raquo;</a>
+            
+        </nav>
+        <div class="clearfix">
+            <div id="relatedArticles">
+                <h3>相关阅读</h3>
+                <ul>
+                 
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/chocolate-pure-css" title="本博客使用PureCss">&raquo;&nbsp;本博客使用PureCss</a></li>
+                                
+                            
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
+                                
+                            
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                </ul>
+            </div>
+            <div id="recentPosts">
+                <h3>最新发布</h3>
+                <ul>
+                   
+                    <li>
+                        <a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作" rel="bookmark">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/sae-cloud-icon" title="仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本" rel="bookmark">&raquo;&nbsp;仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/image-shadow" title="制作图像 picture 的阴影显示效果" rel="bookmark">&raquo;&nbsp;制作图像 picture 的阴影显示效果</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/random-color" title="容器透明，内容不透明，随机变色" rel="bookmark">&raquo;&nbsp;容器透明，内容不透明，随机变色</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引" rel="bookmark">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现" rel="bookmark">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/demos/css3-image-box-shadow" title="CSSbox-shadow秒杀" rel="bookmark">&raquo;&nbsp;CSSbox-shadow秒杀</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/ana" title="ana..." rel="bookmark">&raquo;&nbsp;ana...</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/demos/js" title="javascript之背景变色" rel="bookmark">&raquo;&nbsp;javascript之背景变色</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/chocolate-pure-css" title="本博客使用PureCss" rel="bookmark">&raquo;&nbsp;本博客使用PureCss</a>
+                    </li>                                   
+                
+                </ul>
+            </div>
+        </div>
+	</article>
+    <aside id="menuIndex" class="right">
+	
+	</aside>
+</section>
+
+<!--<script>
+	$(function(){
+		Chocolate.includeScript('/js/lib/prettify/prettify.js',function(){});
+		Chocolate.includeScript('/js/articles_layout.js',function(){});
+	})
+</script>-->
+    </section>
+    <div class="go-top">
+        <a href="#i-will-top" id="go-top" class="clearfix"><span class="go-top-icon"></span></a>
+    </div>
+    <footer>
+        <div class="footer-cnt">
+            <section class="chocolate-theme left">
+                <p>Powered by <a href="http://jekyllrb.com" target="_blank" rel="nofollow">Jekyll</a>. &lceil;Chocolate&rfloor; is designed by <a href="http://webcraft.malei.tk" rel="nofollow">Lei Ma</a>.</p>
+            </section>
+            <section class="chocorate-copyright right">
+                <p>© 2012 WebCraft All rights reserved.</p>
+            </section>
+            <a href="https://github.com/malei0311/malei0311.github.com" target="_blank" id="forkme">Fork Me</a>
+        </div>
+    </footer>
+    <div id="footer-scripts" class="none">
+        <script src="/js/lib/slides.min.jquery.js"></script>
+        <script src="/js/chocolate.js"></script>
+        
+            <script src="/js/lib/prettify/prettify.js"></script>
+            <script>
+                $(function(){
+                    $('pre').addClass('prettyprint linenums'); //添加Google code Hight需要的class
+                    prettyPrint();
+                    if($('.article-div-content>h2').length > 2){
+                        var h2 = [],h3 = [],tmpl = '<ul>',h2index = 0;
+            
+                        $.each($('.article-div-content>h2,.article-div-content>h3'),function(index,item){
+                            if(item.tagName.toLowerCase() == 'h2'){
+                                var h2item = {};
+                                h2item.name = $(item).text();
+                                h2item.id = 'menuIndex'+index;
+                                h2.push(h2item);
+                                h2index++;
+                            }else{
+                                var h3item = {};
+                                h3item.name = $(item).text();
+                                h3item.id = 'menuIndex'+index;
+                                if(!h3[h2index-1]){
+                                    h3[h2index-1] = [];
+                                }
+                                h3[h2index-1].push(h3item);
+                            }
+                            item.id = 'menuIndex' + index
+                        });
+            
+                        //添加h1
+                        tmpl += '<li class="h1"><a href="#" data-top="0">'+$('.article-title>h1').text()+'</a></li>';
+            
+                        for(var i=0;i<h2.length;i++){
+                            tmpl += '<li><a href="#" data-id="'+h2[i].id+'">'+h2[i].name+'</a></li>';
+                            if(h3[i]){
+                                for(var j=0;j<h3[i].length;j++){
+                                    tmpl += '<li class="h3"><a href="#" data-id="'+h3[i][j].id+'">'+h3[i][j].name+'</a></li>';
+                                }
+                            }
+                        }
+                        tmpl += '</ul>';
+            
+                        var $scrollable = Chocolate.findScrollableElement('body','html');
+                        // alert($scrollable);
+                        // $('body').append('<div id="menuIndex"></div>');
+                        $('#menuIndex').append($(tmpl)).delegate('a','click',function(e){
+                            e.preventDefault();
+                            var scrollNum = $(this).attr('data-top') || $('#'+$(this).attr('data-id')).offset().top;
+                            //window.scrollTo(0,scrollNum-30);
+                            // $(window).scrollTop(scrollNum-30);
+                            // Chocolate.goThere(scrollNum-30,$(window).scrollTop(),0);
+                            $scrollable.animate({ scrollTop: scrollNum-30 }, 400, 'swing');
+                        })
+            
+                        $(window).load(function(){
+                            var scrollTop = [];
+                            $.each($('#menuIndex li a'),function(index,item){
+                                if(!$(item).attr('data-top')){
+                                    var top = $('#'+$(item).attr('data-id')).offset().top;
+                                    scrollTop.push(top);
+                                    $(item).attr('data-top',top);
+                                }
+                            });
+                            $(window).bind('scroll',function(){
+                                // alert($('body').scrollTop());
+                                var nowTop = $(window).scrollTop(),index,length = scrollTop.length;
+                                if(nowTop+60 > scrollTop[length-1]){
+                                    index = length
+                                }else{
+                                    for(var i=0;i<length;i++){
+                                        if(nowTop+60 <= scrollTop[i]){
+                                            index = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                                $('#menuIndex li').removeClass('on')
+                                $('#menuIndex li').eq(index).addClass('on')
+                            });
+                        });
+            
+                        // //用js计算屏幕的高度
+                        // $('#menuIndex').css('max-height',$(window).height()-140);
+                    }
+                });
+                $(function() {
+                    // $(window).bind("scroll", function(){
+                    //     var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
+                    //     if(menuIndex_scrHeight > 140 && ($(window).height()-60)>$('#menuIndex').height()) {
+                    //         menuIndex_topHeight = menuIndex_scrHeight-140;
+                    //         $('#menuIndex').animate({top: menuIndex_topHeight},10);
+                    //     } 
+                    //     else{
+                    //         $('#menuIndex').animate({top: 0},10);
+                    //     }
+                    // });
+                    $(window).bind("scroll", function(){
+                        var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
+                        var footerOffsetTop=$('footer').offset().top;
+                        if(menuIndex_scrHeight > 140 && menuIndex_scrHeight<(footerOffsetTop-$('#menuIndex').height()) ) {
+                            menuIndex_topHeight = menuIndex_scrHeight-140;
+                            $('#menuIndex').animate({top: menuIndex_topHeight},10);
+                        } 
+                        else{
+                            $('#menuIndex').animate({top: 0},10);
+                        }
+                    });
+                });
+                $(function(){ 
+                    var originArticles=$('#relatedArticles ul li');
+                    for(var i=0;i<originArticles.length-1;i++){
+                        for(var j=i+1;j<originArticles.length;j++){
+                            if(originArticles.eq(i).children('a').attr('href') == originArticles.eq(j).children('a').attr('href')){
+                                originArticles.eq(j).remove();
+                            }
+                        }
+                    }
+                    var secondArticles=$('#relatedArticles ul li');
+                    for(var i=0;i<secondArticles.length;i++){
+                        if(secondArticles.length == 1){
+                            $('#relatedArticles ul').html("<li>&raquo;&nbsp;悲剧了，与之相关的文章还没生出来呢</li>");
+                        }
+                        if(secondArticles.eq(i).children('a').attr('href') == $('div.article-title>h1>a').attr('href')){
+                            secondArticles.eq(i).remove();
+                        }
+                    }
+                    var thirdArticles=$('#relatedArticles ul li');
+                    if(thirdArticles.length > 10){
+                        for(var i=10;i<thirdArticles.length;i++){
+                            thirdArticles.eq(i).remove();
+                        }
+                    }
+                    // alert(originArticles.length+" "+secondArticles.length+" "+thirdArticles.length);
+                    
+                })
+            </script>
+            
+        
+        
+        
+        
+        
+        
+        
+        <script>
+            $(function(){
+                $('#main').css('min-height',$(window).height()-196);
+                $('#loading-bar div').animate({width:"100%"},200,"swing"); 
+                var scrHeight, topId;
+                topId = $("#go-top");
+                $(window).bind("scroll", function(){
+                    scrHeight = $(window).scrollTop();
+                    if(scrHeight > 500) {
+                        topId.css('display','block');
+                        topId.fadeIn(1500);
+                    } else {
+                        topId.fadeOut(1500);
+                    }
+                });
+                topId.click(function() {
+                    // $('body, html').animate({scrollTop: 0}, 1200);
+                    Chocolate.goTop();
+                });   
+            });      
+        </script>
+    </div>
+</body>
+</html>
