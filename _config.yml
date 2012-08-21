@@ -1,7 +1,6 @@
 auto:	true
 markdown:         rdiscount
 pygments:         true
-paginate:         6
 permalink:        /:categories/:title
 
 title:            WebCraft
