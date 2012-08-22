@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-08-22T08:39:17+08:00</updated>
+   <updated>2012-08-22T11:31:22+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>malei</name>
@@ -270,7 +270,8 @@ $(&quot;.test&quot;).hilight();
      <id>http://webcraft.malei.tk/articles/image-shadow</id>
      <content type="html">&lt;h2&gt;效果预览&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/articles/css/imgShadow-1.png&quot; alt=&quot;imgShadow&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/articles/css/imgShadow-1.png&quot; alt=&quot;imgShadow&quot; /&gt;
+&lt;img src=&quot;/images/articles/css/imgShadow-1.png&quot; alt=&quot;imgShadow&quot; /&gt;&lt;/p&gt;
 
 &lt;h2&gt;主要结构&lt;/h2&gt;
 
@@ -657,7 +658,7 @@ $('#menuIndex').append($(tmpl)).delegate('a','click',function(e){
 &lt;pre&gt;&lt;code&gt;$(window).bind(&quot;scroll&quot;, function(){
     var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
     var footerOffsetTop=$('footer').offset().top;
-    if(menuIndex_scrHeight &amp;gt; 140 &amp;amp;&amp;amp; menuIndex_scrHeight&amp;lt;(footerOffsetTop-$('#menuIndex').height()) ) {
+    if(menuIndex_scrHeight &amp;gt; 140 &amp;amp;&amp;amp; menuIndex_scrHeight&amp;lt;(footerOffsetTop-$('#menuIndex').height()) &amp;amp;&amp;amp; $(window).height()&amp;gt;$('#menuIndex').height()) {
         menuIndex_topHeight = menuIndex_scrHeight-140;
         $('#menuIndex').animate({top: menuIndex_topHeight},10);
     } 

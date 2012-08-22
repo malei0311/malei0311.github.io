@@ -230,6 +230,13 @@
 <p>这里我遇到了一个问题，纠结了半天也没解决。本来想着 <code>span</code>的<code>display:inline-block</code> 就可以能解决问题了，诡异的是<code>span</code>之间总有5像素的间隔（ps:<code>span</code>的<code>margin</code>为<code>0</code>），怎么也找不出是哪的猫腻。于是乎，<code>display:block;float:left;</code>。纠结啊。</p>
 
         </div>
+        <div class="share clearfix">
+            <em class="share-plain-text">分享到：</em>
+            <span class="sina-ico"></span>
+            <span class="twitter-ico"></span>
+            <span class="google-ico"></span>
+            <span class="tencent-ico"></span>
+        </div>
         <nav class="article-bottom-nav clearfix">
             
                 <a class="left" href="/articles/tags-js-liquid" rel="bookmark" title="旧一篇">&laquo;&nbsp;Tags界面构建之123</a>
@@ -437,6 +444,10 @@
                 </ul>
             </div>
         </div>
+        <div>
+            <h3>留下一句吧</h3>
+            <div id="disqus_thread"></div>
+        </div>
 	</article>
     <aside id="menuIndex" class="right">
 	
@@ -461,7 +472,7 @@
             <section class="chocorate-copyright right">
                 <p>© 2012 WebCraft All rights reserved.</p>
             </section>
-            <a href="https://github.com/malei0311/malei0311.github.com" target="_blank" id="forkme">Fork Me</a>
+            <a href="https://github.com/malei0311/myBlog" target="_blank" id="forkme">Fork Me</a>
         </div>
     </footer>
     <div id="footer-scripts" class="none">
@@ -473,6 +484,16 @@
                 $(function(){
                     $('pre').addClass('prettyprint linenums'); //添加Google code Hight需要的class
                     prettyPrint();
+                    Chocolate.share();
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'malei0311'; // required: replace example with your forum shortname                这个地方需要改成你配置的网站名
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq              );
+                    })();
+
                     if($('.article-div-content>h2').length > 2){
                         var h2 = [],h3 = [],tmpl = '<ul>',h2index = 0;
             
@@ -565,7 +586,7 @@
                     $(window).bind("scroll", function(){
                         var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
                         var footerOffsetTop=$('footer').offset().top;
-                        if(menuIndex_scrHeight > 140 && menuIndex_scrHeight<(footerOffsetTop-$('#menuIndex').height()) ) {
+                        if(menuIndex_scrHeight > 140 && menuIndex_scrHeight<(footerOffsetTop-$('#menuIndex').height()) && $(window).height()>$('#menuIndex').height()) {
                             menuIndex_topHeight = menuIndex_scrHeight-140;
                             $('#menuIndex').animate({top: menuIndex_topHeight},10);
                         } 

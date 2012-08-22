@@ -206,9 +206,14 @@ var Chocolate={
         return randomColor;
     },
     share: function () {
-        var title = encodeURIComponent($('article.article-main-content').text()),
+        var title = encodeURIComponent($('article.article-main-content .article-title>h1').text()),
         url = window.location.href,
-        pic = $('article.article-main-content').children('img')[0].attr('src');
+        pic;
+        if($('article.article-main-content').find('img').attr('src')){
+            pic="http://webcraft.malei.tk"+$('article.article-main-content').find('img').attr('src');
+        }else{
+            pic="http://webcraft.malei.tk/images/webcraft.png";
+        }
         
         var urls = {};
         urls.tencent = "http://share.v.t.qq.com/index.php?c=share&a=index&title=" + title + 

@@ -273,6 +273,13 @@ $(".test").hilight();
 <p>第一次写插件，代码相对混乱，但是会不断优化的。</p>
 
         </div>
+        <div class="share clearfix">
+            <em class="share-plain-text">分享到：</em>
+            <span class="sina-ico"></span>
+            <span class="twitter-ico"></span>
+            <span class="google-ico"></span>
+            <span class="tencent-ico"></span>
+        </div>
         <nav class="article-bottom-nav clearfix">
             
                 <a class="left" href="/articles/sae-cloud-icon" rel="bookmark" title="旧一篇">&laquo;&nbsp;仿 SAE 的收藏夹图标，做了一个 Pure CSS...</a>
@@ -478,6 +485,10 @@ $(".test").hilight();
                 </ul>
             </div>
         </div>
+        <div>
+            <h3>留下一句吧</h3>
+            <div id="disqus_thread"></div>
+        </div>
 	</article>
     <aside id="menuIndex" class="right">
 	
@@ -502,7 +513,7 @@ $(".test").hilight();
             <section class="chocorate-copyright right">
                 <p>© 2012 WebCraft All rights reserved.</p>
             </section>
-            <a href="https://github.com/malei0311/malei0311.github.com" target="_blank" id="forkme">Fork Me</a>
+            <a href="https://github.com/malei0311/myBlog" target="_blank" id="forkme">Fork Me</a>
         </div>
     </footer>
     <div id="footer-scripts" class="none">
@@ -514,6 +525,16 @@ $(".test").hilight();
                 $(function(){
                     $('pre').addClass('prettyprint linenums'); //添加Google code Hight需要的class
                     prettyPrint();
+                    Chocolate.share();
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'malei0311'; // required: replace example with your forum shortname                这个地方需要改成你配置的网站名
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq              );
+                    })();
+
                     if($('.article-div-content>h2').length > 2){
                         var h2 = [],h3 = [],tmpl = '<ul>',h2index = 0;
             
@@ -606,7 +627,7 @@ $(".test").hilight();
                     $(window).bind("scroll", function(){
                         var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
                         var footerOffsetTop=$('footer').offset().top;
-                        if(menuIndex_scrHeight > 140 && menuIndex_scrHeight<(footerOffsetTop-$('#menuIndex').height()) ) {
+                        if(menuIndex_scrHeight > 140 && menuIndex_scrHeight<(footerOffsetTop-$('#menuIndex').height()) && $(window).height()>$('#menuIndex').height()) {
                             menuIndex_topHeight = menuIndex_scrHeight-140;
                             $('#menuIndex').animate({top: menuIndex_topHeight},10);
                         } 
