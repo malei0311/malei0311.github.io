@@ -117,7 +117,7 @@ pre code{background-color:transparent;border:none;padding:0;}
 pre ol{margin-left:25px;list-style-type:decimal;}
 
 /*================common classes=================*/
-.head-cnt,.banner-cnt,.content-cnt,.footer-cnt{
+.head-cnt,.banner-cnt,.content-cnt,.footer-cnt,.banner-bottom-cnt{
 	margin:0 auto;
 	width:980px;
 	height:auto;
@@ -319,6 +319,7 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 /*==================banner====================*/
 #banner{
 	/*min-height:200px;*/
+	background:#ededed;
 	background: -moz-linear-gradient(-90deg, #f6f6f6 0%, #ededed 96%, #ddd 100%);
 	background: -webkit-linear-gradient(-90deg, #f6f6f6 0%, #ededed 96%, #ddd 100%);
 	background: -o-linear-gradient(-90deg, #f6f6f6 0%, #ededed 96%, #ddd 100%);
@@ -327,11 +328,19 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 }
 #banner-bottom{
 	min-height:200px;
+	background:#ededed;
 	background: -moz-linear-gradient(90deg, #f6f6f6 0%, #ededed 96%, #ddd 100%);
 	background: -webkit-linear-gradient(90deg, #f6f6f6 0%, #ededed 96%, #ddd 100%);
 	background: -o-linear-gradient(90deg, #f6f6f6 0%, #ededed 96%, #ddd 100%);
 	background: -ms-linear-gradient(90deg, #f6f6f6 0%, #ededed 96%, #ddd 100%);
 	background: linear-gradient(90deg, #f6f6f6 0%, #ededed 96%, #ddd 100%);
+}
+#banner-bottom p{
+	font-size: 100px;
+	line-height: normal;
+	font-weight: bold;
+	text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+	color: #2E2E2E;
 }
 #slide1{
 	background: -webkit-linear-gradient(-90deg, #F9DA43 0%, #F3C515 96%, #E3B121 100%);
@@ -400,6 +409,27 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 }
 #author-info{
 	
+}
+#about-some{
+	padding:10px;
+	position: relative;
+}
+#about-some p{
+	color:#313131;
+	margin-bottom: 10px;
+	/*margin-bottom: 0px;*/
+	/*text-align: left;*/
+	white-space: normal;
+	word-wrap: break-word;
+}
+.avatar{
+	float:left;
+	display: inline;
+	margin: 10px 10px 10px 0px;
+	/*background: url(../images/avatar.png) no-repeat scroll 0 0 transparent;*/
+	border-radius: 5px;
+	box-shadow: 0px 0px 0px 1px white,0px 0px 1px 3px rgba(0, 0, 0, 0.1);
+	border: 1px dashed rgba(65, 131, 196, .5);
 }
 /*=================articles list==============*/
 #articles-list{
@@ -1035,7 +1065,7 @@ div.share{
 	background: -ms-linear-gradient(-90deg, #F6F6F6 0%, #EDEDED 96%, #DDD 100%);
 	background: linear-gradient(-90deg, #F6F6F6 0%, #EDEDED 96%, #DDD 100%);
 }
-.tencent-ico, .sina-ico, .twitter-ico, .google-ico {
+.tencent-ico, .sina-ico, .twitter-ico, .google-ico,.github-ico {
 	background-image: url("/images/icon.gif");
 	cursor: pointer;
 	float: left;
@@ -1046,7 +1076,10 @@ div.share{
 .share-plain-text{
 	float:left;
 	font-size:12px;
-	line-height: 12px;
+	line-height: 16px;
+}
+.github-ico{
+	background-position:-23px -28px;
 }
 .tencent-ico{
 	background-position:-80px -28px;
@@ -1060,6 +1093,9 @@ div.share{
 .google-ico{
 	background-position:-61px -28px;
 }
+.github-ico:hover{
+	background-position:-23px -4px;
+}
 .tencent-ico:hover{
 	background-position:-80px -4px;
 }
@@ -1072,7 +1108,13 @@ div.share{
 .google-ico:hover{
 	background-position:-61px -4px;
 }
-
+#pay-attention-to-me  a span{
+	display:none;
+}
+#pay-attention-to-me span.left{
+	font-size:12px;
+	line-height: 16px;
+}
 div.footer-cnt a{
 	color: #FAFAFA;
 	/*border: 1px solid rgba(255, 255, 255, .3);*/
@@ -1086,4 +1128,13 @@ div.footer-cnt a:hover{
 	text-decoration: none;
 	/*background:#313131;*/
 	border: 1px dashed rgba(255,255,255,.8);
+}
+#the-404-page span{
+	font-size: 180px;
+	font-weight: bold;
+	text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+	color: #2E2E2E;
+}
+#the-404-page p{
+	padding:0px 20px;
 }
