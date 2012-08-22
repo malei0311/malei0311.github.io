@@ -414,6 +414,9 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 	padding:10px;
 	position: relative;
 }
+#about-some p:first-child{
+	margin-bottom: 0px;
+}
 #about-some p{
 	color:#313131;
 	margin-bottom: 10px;
