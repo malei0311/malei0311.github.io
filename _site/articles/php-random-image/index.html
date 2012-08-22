@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<!-- 
+    @author <a href="mailto:leiman0311@gmail.com">Lei Ma</a>
+    @time  Aug 2, 2012
+-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>PHP随机显示图片（目录不限深度） | WebCraft</title>
+    <meta name="generator" content="Jekyll" />
+    <meta name="author" content="Lei Ma" />
+    <meta name="description" content="编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度 | malei0311\'s Blog" />
+    <meta name="keywords" content="php,readImage,malei0311" />
+    <link rel="stylesheet" href="/css/default.css" type="text/css" />
+    
+        <link rel="stylesheet" href="/js/lib/prettify/prettify.css" type="text/css" />
+    
+    
+    <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="/atom.xml" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <script src="/js/lib/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <header>
+        <div id="header">
+            <div class="head-cnt clearfix">
+                <div id="logo-bg">
+                    <span id="logo-bg-top"></span>
+                    <span id="logo-bg-bottom"></span>
+                </div>
+                <hgroup id="caption">
+                    <h1><a href="/">WebCraft</a></h1>
+                    <h2>开源有意思，不断学习ing...</h2>
+                </hgroup>
+                <a href="http://www.w3.org/html/logo/" id="html5-logo">
+                    <img src="/images/html5-badge-h-css3-semantics.png" width="165" height="64" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics">
+                </a>
+            </div> 
+        </div>
+        <div id="loading-bar">
+            <div></div>
+        </div>
+        <script>
+            $('#loading-bar div').animate({width:"15%"},500,"linear");
+        </script>
+        <nav id="top-nav">
+            <div class="head-cnt">
+                <ul>
+                    <li><a href="/" class="current" rel="nofollow">Home</a></li>
+                    <li><a href="/articles.html">Articles</a></li>
+                    <li><a href="/tags.html">Tags</a></li>
+                    <li><a href="/demos.html" >Demos</a></li>
+                    <li><a href="/about.html" >About</a></li>
+                    <li><a href="/atom.xml" >Rss</a></li>
+                </ul>
+            </div>
+        </nav> 
+    </header>
+    
+    <section id="main">
+        <section class="content-cnt">
+	<article class="article-main-content">
+		<div class="article-title">
+            <h1><a href="/articles/php-random-image">PHP随机显示图片（目录不限深度）</a></h1>
+            <div class="clearfix">
+                <div class="article-post-time right">
+                    <span>&#8227;</span>
+                    <time class="date" pubdate="2011-12-31">2011-12-31</time>
+                </div>
+                
+                <div class="article-tags left">
+                    <span class="pure-css-tag">&nbsp;</span>
+                    <span class="pure-css-tag-behind left">
+                        <ul>
+                             
+                            <li>
+                                <a href="/tags.html#php">
+                                    php
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                            
+                        </ul>
+                    </span> 
+                </div>
+                
+            </div>
+        </div>
+        <p class="description">编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度</p>
+        <div class="article-div-content">
+        	<h2>总述</h2>
+
+<p>这是在 jekyll 引擎上的第一篇正式博文，也作为一篇测试文章(测试隔年文章的显示效果)，故意把时间调整到了 2011-12-31。此篇原文，在我搭建在GAE的<a href="http://blog.malei.tk/" title="malei0311的专栏">blog</a>上。那篇只是简单地贴出了代码，这篇稍微加工一下。好，现在先把类的“皮”，写出来。</p>
+
+<pre><code>&lt;?php
+/*
+ * @fileoverview handle-file 随机显示目录中的图片
+ *
+ * @author &lt;a href="mailto:leiman0311@gmail.com"&gt;Lei Ma&lt;/a&gt;
+ * @time  Jul 31, 2012
+ */
+
+/*
+ * @description {class} ReadImage
+ */
+class ReadImage{}
+?&gt;
+</code></pre>
+
+<h2>ReadImage类的三部曲</h2>
+
+<h3>1.读取文件夹目录</h3>
+
+<p>此方法返回的是一个不规则的多维数组，实现起来很简单，PHP 手册上写的很清楚</p>
+
+<pre><code>/*
+ *@description 读取文件夹目录(遍历所有目录)
+ *@param {String} dir 要读取的目录
+ */
+public function read_folder_directory($dir){ 
+    $listDir = array(); 
+    if($handler = opendir($dir)) { 
+        while (($sub = readdir($handler)) !== FALSE) { 
+            if ($sub != "." &amp;&amp; $sub != "..") {
+                    if(is_file($dir."/".$sub)) {
+                        if(substr($sub,-3)=='gif' || substr($sub,-3)=='jpg' || substr($sub,-3)=='png')
+                        $listDir[] = $sub; 
+                    }
+                    //递归
+                    elseif(is_dir($dir."/".$sub)){ 
+                        $listDir[$sub] = $this-&gt;read_folder_directory($dir."/".$sub); 
+                    } 
+            } 
+        } 
+        closedir($handler); 
+    } 
+    return $listDir; 
+}  
+</code></pre>
+
+<h3>2. 遍历多维数组到一维数组中</h3>
+
+<p>此方法着实令我费了一些周折，需要实现的是：把上个方法返回的不规则数组，注入到一维数组中，细化到 <code>叶子</code> ，把 <code>叶子</code> 到 <code>根</code> 的路径排列好，写入一维数组中。难点是：<code>static</code> 关键字 和 参数控制。</p>
+
+<pre><code>/*
+ *@description 遍历多维数组，把值注入到一维数组
+ *@param {array} arr 不规则多维数组
+ *@param {boolean} flag 标志位
+ *@param {string} subFolder 图片根目录下的子目录名
+ */ 
+public function arr_foreach ($arr,$flag=false,$subFolder=""){
+    static $newArr=array();
+    if(!is_array($arr)){
+        return $newArr;
+    }
+    if(!$flag){
+        foreach($arr as $key =&gt; $val){
+            if(is_array($val)){
+                $this-&gt;arr_foreach($val,true,$key);
+            }
+            else $newArr[]=$val;
+        }
+    }
+    else{
+        foreach($arr as $key =&gt; $val){
+            if(is_array($val)){
+               $this-&gt;arr_foreach($val,true,$subFolder."/".$key);
+            }
+            else  $newArr[]=$subFolder."/".$val;
+        }
+    }
+
+    return $newArr;
+}
+</code></pre>
+
+<h3>3.读取数据</h3>
+
+<p>终于到了读取数据的方法了，这就比较简单了，随机取那个一维数组中的一项，写出相应格式图片的 <code>header</code> ，直接 <code>readfile()</code>。</p>
+
+<pre><code>/*
+ * @description 读取数据
+ */
+function read_a_random_file(){
+    $files = $this-&gt;read_folder_directory ($_SERVER["DOCUMENT_ROOT"].'/images/');
+    $dumpFiles=array();
+    $dumpFiles=$this-&gt;arr_foreach ($files);
+    $random=rand(0,count($dumpFiles)-1);
+    if(substr($dumpFiles[$random],-3)=='gif') header("Content-type: image/gif");
+    if(substr($dumpFiles[$random],-3)=='jpg') header("Content-type: image/jpeg");
+    if(substr($dumpFiles[$random],-3)=="png") header("Content-type: image/png");
+    readfile($_SERVER["DOCUMENT_ROOT"].'/images/'.$dumpFiles[$random]);
+}
+</code></pre>
+
+<h2>调用</h2>
+
+<p>只需把以上三个方法，放入最开始的类 “皮” 中，就可以调用了。</p>
+
+<pre><code>$readImage=new ReadImage;
+$readImage-&gt;read_a_random_file();
+</code></pre>
+
+<h2>结语</h2>
+
+<p>对<code>递归</code>稍微有点认识了</p>
+
+        </div>
+        <div class="share clearfix">
+            <em class="share-plain-text">分享到：</em>
+            <span class="sina-ico"></span>
+            <span class="twitter-ico"></span>
+            <span class="google-ico"></span>
+            <span class="tencent-ico"></span>
+        </div>
+        <nav class="article-bottom-nav clearfix">
+            
+                <a class="left" href="/articles/flag" rel="bookmark" title="旧一篇">&laquo;&nbsp;article-flag</a>
+            
+            
+                <a class="right" href="/articles/chocolate-pure-css" rel="bookmark" title="新一篇">本博客使用PureCss&nbsp;&raquo;</a>
+            
+        </nav>
+        <div class="clearfix">
+            <div id="relatedArticles">
+                <h3>相关阅读</h3>
+                <ul>
+                 
+                
+                     
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/php-random-image" title="PHP随机显示图片（目录不限深度）">&raquo;&nbsp;PHP随机显示图片（目录不限深度）</a></li>
+                                
+                            
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                </ul>
+            </div>
+            <div id="recentPosts">
+                <h3>最新发布</h3>
+                <ul>
+                   
+                    <li>
+                        <a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作" rel="bookmark">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/sae-cloud-icon" title="仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本" rel="bookmark">&raquo;&nbsp;仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/image-shadow" title="制作图像 picture 的阴影显示效果" rel="bookmark">&raquo;&nbsp;制作图像 picture 的阴影显示效果</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/random-color" title="容器透明，内容不透明，随机变色" rel="bookmark">&raquo;&nbsp;容器透明，内容不透明，随机变色</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引" rel="bookmark">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现" rel="bookmark">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/tags-js-liquid" title="Tags界面构建之123" rel="bookmark">&raquo;&nbsp;Tags界面构建之123</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/demos/css3-image-box-shadow" title="CSSbox-shadow秒杀" rel="bookmark">&raquo;&nbsp;CSSbox-shadow秒杀</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/ana" title="ana..." rel="bookmark">&raquo;&nbsp;ana...</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/demos/js" title="javascript之背景变色" rel="bookmark">&raquo;&nbsp;javascript之背景变色</a>
+                    </li>                                   
+                
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h3>留下一句吧</h3>
+            <div id="disqus_thread"></div>
+        </div>
+	</article>
+    <aside id="menuIndex" class="right">
+	
+	</aside>
+</section>
+
+<!--<script>
+	$(function(){
+		Chocolate.includeScript('/js/lib/prettify/prettify.js',function(){});
+		Chocolate.includeScript('/js/articles_layout.js',function(){});
+	})
+</script>-->
+    </section>
+    <div class="go-top">
+        <a href="#i-will-top" id="go-top" class="clearfix"><span class="go-top-icon"></span></a>
+    </div>
+    <footer>
+        <div class="footer-cnt">
+            <section class="chocolate-theme left">
+                <p>Powered by <a href="http://jekyllrb.com" target="_blank" rel="nofollow">Jekyll</a>. &lceil;Chocolate&rfloor; is designed by <a href="http://webcraft.malei.tk" rel="nofollow">Lei Ma</a>.</p>
+            </section>
+            <section class="chocorate-copyright right">
+                <p>© 2012 WebCraft All rights reserved.</p>
+            </section>
+            <a href="https://github.com/malei0311/myBlog" target="_blank" id="forkme">Fork Me</a>
+        </div>
+    </footer>
+    <div id="footer-scripts" class="none">
+        <script src="/js/lib/slides.min.jquery.js"></script>
+        <script src="/js/chocolate.js"></script>
+        
+            <script src="/js/lib/prettify/prettify.js"></script>
+            <script>
+                $(function(){
+                    $('pre').addClass('prettyprint linenums'); //添加Google code Hight需要的class
+                    prettyPrint();
+                    Chocolate.share();
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'malei0311'; /* required: replace example with your forum shortname*/
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+
+                    if($('.article-div-content>h2').length > 2){
+                        var h2 = [],h3 = [],tmpl = '<ul>',h2index = 0;
+            
+                        $.each($('.article-div-content>h2,.article-div-content>h3'),function(index,item){
+                            if(item.tagName.toLowerCase() == 'h2'){
+                                var h2item = {};
+                                h2item.name = $(item).text();
+                                h2item.id = 'menuIndex'+index;
+                                h2.push(h2item);
+                                h2index++;
+                            }else{
+                                var h3item = {};
+                                h3item.name = $(item).text();
+                                h3item.id = 'menuIndex'+index;
+                                if(!h3[h2index-1]){
+                                    h3[h2index-1] = [];
+                                }
+                                h3[h2index-1].push(h3item);
+                            }
+                            item.id = 'menuIndex' + index
+                        });
+            
+                        //添加h1
+                        tmpl += '<li class="h1"><a href="#" data-top="0">'+$('.article-title>h1').text()+'</a></li>';
+            
+                        for(var i=0;i<h2.length;i++){
+                            tmpl += '<li><a href="#" data-id="'+h2[i].id+'">'+h2[i].name+'</a></li>';
+                            if(h3[i]){
+                                for(var j=0;j<h3[i].length;j++){
+                                    tmpl += '<li class="h3"><a href="#" data-id="'+h3[i][j].id+'">'+h3[i][j].name+'</a></li>';
+                                }
+                            }
+                        }
+                        tmpl += '</ul>';
+            
+                        var $scrollable = Chocolate.findScrollableElement('body','html');
+                        // alert($scrollable);
+                        // $('body').append('<div id="menuIndex"></div>');
+                        $('#menuIndex').append($(tmpl)).delegate('a','click',function(e){
+                            e.preventDefault();
+                            var scrollNum = $(this).attr('data-top') || $('#'+$(this).attr('data-id')).offset().top;
+                            //window.scrollTo(0,scrollNum-30);
+                            // $(window).scrollTop(scrollNum-30);
+                            // Chocolate.goThere(scrollNum-30,$(window).scrollTop(),0);
+                            $scrollable.animate({ scrollTop: scrollNum-30 }, 400, 'swing');
+                        })
+            
+                        $(window).load(function(){
+                            var scrollTop = [];
+                            $.each($('#menuIndex li a'),function(index,item){
+                                if(!$(item).attr('data-top')){
+                                    var top = $('#'+$(item).attr('data-id')).offset().top;
+                                    scrollTop.push(top);
+                                    $(item).attr('data-top',top);
+                                }
+                            });
+                            $(window).bind('scroll',function(){
+                                // alert($('body').scrollTop());
+                                var nowTop = $(window).scrollTop(),index,length = scrollTop.length;
+                                if(nowTop+60 > scrollTop[length-1]){
+                                    index = length
+                                }else{
+                                    for(var i=0;i<length;i++){
+                                        if(nowTop+60 <= scrollTop[i]){
+                                            index = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                                $('#menuIndex li').removeClass('on')
+                                $('#menuIndex li').eq(index).addClass('on')
+                            });
+                        });
+            
+                        // //用js计算屏幕的高度
+                        // $('#menuIndex').css('max-height',$(window).height()-140);
+                    }
+                });
+                $(function() {
+                    // $(window).bind("scroll", function(){
+                    //     var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
+                    //     if(menuIndex_scrHeight > 140 && ($(window).height()-60)>$('#menuIndex').height()) {
+                    //         menuIndex_topHeight = menuIndex_scrHeight-140;
+                    //         $('#menuIndex').animate({top: menuIndex_topHeight},10);
+                    //     } 
+                    //     else{
+                    //         $('#menuIndex').animate({top: 0},10);
+                    //     }
+                    // });
+                    $(window).bind("scroll", function(){
+                        var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
+                        var footerOffsetTop=$('footer').offset().top;
+                        if(menuIndex_scrHeight > 140 && menuIndex_scrHeight<(footerOffsetTop-$('#menuIndex').height()) && $(window).height()>$('#menuIndex').height()) {
+                            menuIndex_topHeight = menuIndex_scrHeight-140;
+                            $('#menuIndex').animate({top: menuIndex_topHeight},10);
+                        } 
+                        else{
+                            $('#menuIndex').animate({top: 0},10);
+                        }
+                    });
+                });
+                $(function(){ 
+                    var originArticles=$('#relatedArticles ul li');
+                    for(var i=0;i<originArticles.length-1;i++){
+                        for(var j=i+1;j<originArticles.length;j++){
+                            if(originArticles.eq(i).children('a').attr('href') == originArticles.eq(j).children('a').attr('href')){
+                                originArticles.eq(j).remove();
+                            }
+                        }
+                    }
+                    var secondArticles=$('#relatedArticles ul li');
+                    for(var i=0;i<secondArticles.length;i++){
+                        if(secondArticles.length == 1){
+                            $('#relatedArticles ul').html("<li>&raquo;&nbsp;悲剧了，与之相关的文章还没生出来呢</li>");
+                        }
+                        if(secondArticles.eq(i).children('a').attr('href') == $('div.article-title>h1>a').attr('href')){
+                            secondArticles.eq(i).remove();
+                        }
+                    }
+                    var thirdArticles=$('#relatedArticles ul li');
+                    if(thirdArticles.length > 10){
+                        for(var i=10;i<thirdArticles.length;i++){
+                            thirdArticles.eq(i).remove();
+                        }
+                    }
+                    // alert(originArticles.length+" "+secondArticles.length+" "+thirdArticles.length);
+                    
+                })
+            </script>
+            
+        
+        
+        
+        
+        
+        
+        
+        <script>
+            $(function(){
+                $('#main').css('min-height',$(window).height()-196);
+                $('#loading-bar div').animate({width:"100%"},200,"swing"); 
+                var scrHeight, topId;
+                topId = $("#go-top");
+                $(window).bind("scroll", function(){
+                    scrHeight = $(window).scrollTop();
+                    if(scrHeight > 500) {
+                        topId.css('display','block');
+                        topId.fadeIn(1500);
+                    } else {
+                        topId.fadeOut(1500);
+                    }
+                });
+                topId.click(function() {
+                    // $('body, html').animate({scrollTop: 0}, 1200);
+                    Chocolate.goTop();
+                });   
+            });      
+        </script>
+    </div>
+</body>
+</html>
