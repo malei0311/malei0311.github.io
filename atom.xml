@@ -4,13 +4,30 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-08-25T08:13:08+08:00</updated>
+   <updated>2012-09-05T17:31:53+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>该怎么做？</title>
+     <link href="http://webcraft.malei.tk/articles/how-to-do"/>
+     <updated>2012-08-29T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/how-to-do</id>
+     <content type="html">##总述
+越来越发现自己是榆木脑袋，没有新意，从来没有做过产品，只是
+[成都出租车司机给我上的一课](http://blog.sina.com.cn/s/blog_56c35a550102dyl6.html &quot;成都出租车司机给我上的一课&quot;)
+
+##//TODO:
+首先，每次登陆微信，没在线这段时间的消息就会不停的弹出一大堆。用过微信群聊的朋友们应该会深有体会，尤其是群成员超过10个以上时，再加上有几个话唠，看完这些消息挺费劲。对于他们出租车司机来说，他们只需要及时聊天，并不需要看过去别人的聊天信息。
+
+其次，微信的通知挺烦，不停的响。他们这个行业，24小时都有人在工作，在聊天，形成打扰。我提醒他说微信有免打扰设置。他说他知道，可是那功能不好使。这个我也深有体会，确实不好使。有天半夜，我微信某个群组里的几个哥们聊的热火朝天，手机不停的在响，我睡觉很死，没听到，结果媳妇从隔壁房间冲过来关掉了我的手机，说打扰女儿睡觉了。我设置了微信的夜间免打扰功能，可惜这个功能确实很烂。
+
+第三，A产品设置几乎不用手操作，对司机很方便，而微信，和每个人聊天都要去按，去切换。另外，A产品有个功能是按下手机侧面的声音键就可以聊天，单手即可操作，且不需要眼睛去看；不像微信，需要去按产品界面上的按钮，一般需要双手操作，还需要眼睛去看。</content>
+   </entry>
    
    <entry>
      <title>JQuery插件之tags的3D旋转球制作</title>
@@ -1146,130 +1163,6 @@ $('#menuIndex').append($(tmpl)).delegate('a','click',function(e){
 &lt;h2&gt;结语&lt;/h2&gt;
 
 &lt;p&gt;CSS3的确很强大&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>PHP随机显示图片（目录不限深度）</title>
-     <link href="http://webcraft.malei.tk/articles/php-random-image"/>
-     <updated>2011-12-31T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/php-random-image</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;这是在 jekyll 引擎上的第一篇正式博文，也作为一篇测试文章(测试隔年文章的显示效果)，故意把时间调整到了 2011-12-31。此篇原文，在我搭建在GAE的&lt;a href=&quot;http://blog.malei.tk/&quot; title=&quot;malei0311的专栏&quot;&gt;blog&lt;/a&gt;上。那篇只是简单地贴出了代码，这篇稍微加工一下。好，现在先把类的“皮”，写出来。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;?php
-/*
- * @fileoverview handle-file 随机显示目录中的图片
- *
- * @author &amp;lt;a href=&quot;mailto:leiman0311@gmail.com&quot;&amp;gt;Lei Ma&amp;lt;/a&amp;gt;
- * @time  Jul 31, 2012
- */
-
-/*
- * @description {class} ReadImage
- */
-class ReadImage{}
-?&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;ReadImage类的三部曲&lt;/h2&gt;
-
-&lt;h3&gt;1.读取文件夹目录&lt;/h3&gt;
-
-&lt;p&gt;此方法返回的是一个不规则的多维数组，实现起来很简单，PHP 手册上写的很清楚&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/*
- *@description 读取文件夹目录(遍历所有目录)
- *@param {String} dir 要读取的目录
- */
-public function read_folder_directory($dir){ 
-    $listDir = array(); 
-    if($handler = opendir($dir)) { 
-        while (($sub = readdir($handler)) !== FALSE) { 
-            if ($sub != &quot;.&quot; &amp;amp;&amp;amp; $sub != &quot;..&quot;) {
-                    if(is_file($dir.&quot;/&quot;.$sub)) {
-                        if(substr($sub,-3)=='gif' || substr($sub,-3)=='jpg' || substr($sub,-3)=='png')
-                        $listDir[] = $sub; 
-                    }
-                    //递归
-                    elseif(is_dir($dir.&quot;/&quot;.$sub)){ 
-                        $listDir[$sub] = $this-&amp;gt;read_folder_directory($dir.&quot;/&quot;.$sub); 
-                    } 
-            } 
-        } 
-        closedir($handler); 
-    } 
-    return $listDir; 
-}  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;2. 遍历多维数组到一维数组中&lt;/h3&gt;
-
-&lt;p&gt;此方法着实令我费了一些周折，需要实现的是：把上个方法返回的不规则数组，注入到一维数组中，细化到 &lt;code&gt;叶子&lt;/code&gt; ，把 &lt;code&gt;叶子&lt;/code&gt; 到 &lt;code&gt;根&lt;/code&gt; 的路径排列好，写入一维数组中。难点是：&lt;code&gt;static&lt;/code&gt; 关键字 和 参数控制。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/*
- *@description 遍历多维数组，把值注入到一维数组
- *@param {array} arr 不规则多维数组
- *@param {boolean} flag 标志位
- *@param {string} subFolder 图片根目录下的子目录名
- */ 
-public function arr_foreach ($arr,$flag=false,$subFolder=&quot;&quot;){
-    static $newArr=array();
-    if(!is_array($arr)){
-        return $newArr;
-    }
-    if(!$flag){
-        foreach($arr as $key =&amp;gt; $val){
-            if(is_array($val)){
-                $this-&amp;gt;arr_foreach($val,true,$key);
-            }
-            else $newArr[]=$val;
-        }
-    }
-    else{
-        foreach($arr as $key =&amp;gt; $val){
-            if(is_array($val)){
-               $this-&amp;gt;arr_foreach($val,true,$subFolder.&quot;/&quot;.$key);
-            }
-            else  $newArr[]=$subFolder.&quot;/&quot;.$val;
-        }
-    }
-
-    return $newArr;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;3.读取数据&lt;/h3&gt;
-
-&lt;p&gt;终于到了读取数据的方法了，这就比较简单了，随机取那个一维数组中的一项，写出相应格式图片的 &lt;code&gt;header&lt;/code&gt; ，直接 &lt;code&gt;readfile()&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/*
- * @description 读取数据
- */
-function read_a_random_file(){
-    $files = $this-&amp;gt;read_folder_directory ($_SERVER[&quot;DOCUMENT_ROOT&quot;].'/images/');
-    $dumpFiles=array();
-    $dumpFiles=$this-&amp;gt;arr_foreach ($files);
-    $random=rand(0,count($dumpFiles)-1);
-    if(substr($dumpFiles[$random],-3)=='gif') header(&quot;Content-type: image/gif&quot;);
-    if(substr($dumpFiles[$random],-3)=='jpg') header(&quot;Content-type: image/jpeg&quot;);
-    if(substr($dumpFiles[$random],-3)==&quot;png&quot;) header(&quot;Content-type: image/png&quot;);
-    readfile($_SERVER[&quot;DOCUMENT_ROOT&quot;].'/images/'.$dumpFiles[$random]);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;调用&lt;/h2&gt;
-
-&lt;p&gt;只需把以上三个方法，放入最开始的类 “皮” 中，就可以调用了。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$readImage=new ReadImage;
-$readImage-&amp;gt;read_a_random_file();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;结语&lt;/h2&gt;
-
-&lt;p&gt;对&lt;code&gt;递归&lt;/code&gt;稍微有点认识了&lt;/p&gt;
 </content>
    </entry>
    
