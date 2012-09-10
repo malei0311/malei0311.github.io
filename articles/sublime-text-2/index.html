@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>制作图像 picture 的阴影显示效果 | WebCraft</title>
+    <title>sublime text 2 插件使用 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="在图像下面呈现一条阴影，有稍微的立体效果 | malei0311\'s Blog" />
-    <meta name="keywords" content="shadow,malei0311" />
+    <meta name="description" content="sublime text 2 插件使用 | malei0311\'s Blog" />
+    <meta name="keywords" content="editor,ST2,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -62,11 +62,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/image-shadow">制作图像 picture 的阴影显示效果</a></h1>
+            <h1><a href="/articles/sublime-text-2">sublime text 2 插件使用</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2012-08-17">2012-08-17</time>
+                    <time class="date" pubdate="2012-09-10">2012-09-10</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -75,8 +75,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#css">
-                                    css
+                                <a href="/tags.html#editor">
+                                    editor
                                 </a>
                                 <span>
                                     ,
@@ -84,8 +84,8 @@
                             </li>
                              
                             <li>
-                                <a href="/tags.html#imgShadow">
-                                    imgShadow
+                                <a href="/tags.html#ST2">
+                                    ST2
                                 </a>
                                 <span>
                                     ,
@@ -98,85 +98,9 @@
                 
             </div>
         </div>
-        <p class="description">在图像下面呈现一条阴影，有稍微的立体效果</p>
+        <p class="description">sublime text 2 插件使用</p>
         <div class="article-div-content">
-        	<h2>效果预览</h2>
-
-<p><img src="/images/articles/css/imgShadow-1.png" alt="imgShadow" /></p>
-
-<h2>主要结构</h2>
-
-<p>主要是两层，外层的 <code>div</code> 层主要是起 “相框” 的作用，里面的 <code>img</code> 放图片。</p>
-
-<pre><code>&lt;div class="box-shadow"&gt;
-    &lt;img src=""&gt;
-&lt;/div&gt;
-</code></pre>
-
-<h2>CSS渲染</h2>
-
-<h3>“相框” 的主架</h3>
-
-<ul>
-<li>“相框” 要紧紧地包裹图片 => <code>display:inline-block</code></li>
-<li>伪对象的相对偏移 => <code>position: relative</code></li>
-</ul>
-
-
-<p>CSS如下：</p>
-
-<pre><code>.box-shadow{
-    position: relative;
-    display:inline-block;
-    z-index: 1;
-    background: white;
-}
-</code></pre>
-
-<h3>伪对象实现阴影效果</h3>
-
-<p>左右两片，绝对定位，效果实现</p>
-
-<pre><code>.box-shadow::after,.box-shadow::before{
-    z-index:-1;
-    position:absolute;
-    content:"";
-    bottom:15px;
-    left:10px;
-    width:50%;
-    top:80%;
-    max-width:300px;
-    background:#999999;
-    -webkit-box-shadow:0 15px 10px #999999;
-    -moz-box-shadow:0 15px 10px #999999;
-    box-shadow:0 15px 10px #999999;
-    -webkit-transform:rotate(-2deg);
-    -moz-transform:rotate(-2deg);
-    -o-transform:rotate(-2deg);
-    -ms-transform:rotate(-2deg);
-    transform:rotate(-2deg);
-}
-
-.box-shadow::after{
-    -webkit-transform:rotate(2deg);
-    -moz-transform:rotate(2deg);
-    -o-transform:rotate(2deg);
-    -ms-transform:rotate(2deg);
-    transform:rotate(2deg);
-    right:10px;
-    left:auto;
-}
-</code></pre>
-
-<h2>结语</h2>
-
-<ul>
-<li>注意 <code>transform:rotate(2deg)</code> 这种小转角的应用</li>
-<li>层叠的 element 可以显示出不错的效果</li>
-<li>用更少的 element 干更多的事</li>
-<li>精简代码</li>
-</ul>
-
+        	<p>//TODO:sfgsf</p>
 
         </div>
         <div class="share clearfix">
@@ -188,10 +112,8 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/random-color" rel="bookmark" title="旧一篇">&laquo;&nbsp;容器透明，内容不透明，随机变色</a>
+                <a class="left" href="/articles/how-to-do" rel="bookmark" title="旧一篇">&laquo;&nbsp;该怎么做？</a>
             
-            
-                <a class="right" href="/articles/sae-cloud-icon" rel="bookmark" title="新一篇">仿 SAE 的收藏夹图标，做了一个 Pure CSS...&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -210,17 +132,79 @@
                      
                     
                         
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/sae-cloud-icon" title="仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本">&raquo;&nbsp;仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/image-shadow" title="制作图像 picture 的阴影显示效果">&raquo;&nbsp;制作图像 picture 的阴影显示效果</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/chocolate-pure-css" title="本博客使用PureCss">&raquo;&nbsp;本博客使用PureCss</a></li>
+                                    <li><a href="/articles/sublime-text-2" title="sublime text 2 插件使用">&raquo;&nbsp;sublime text 2 插件使用</a></li>
                                 
                             
                         
@@ -233,81 +217,11 @@
                         
                     
                         
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
                             
                                 
-                                    <li><a href="/articles/image-shadow" title="制作图像 picture 的阴影显示效果">&raquo;&nbsp;制作图像 picture 的阴影显示效果</a></li>
+                                    <li><a href="/articles/sublime-text-2" title="sublime text 2 插件使用">&raquo;&nbsp;sublime text 2 插件使用</a></li>
                                 
                             
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
                         
                     
                 
@@ -316,10 +230,6 @@
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
-                   
-                    <li>
-                        <a href="/articles/sublime-text-2" title="sublime text 2 插件使用" rel="bookmark">&raquo;&nbsp;sublime text 2 插件使用</a>
-                    </li>                                   
                    
                     <li>
                         <a href="/articles/how-to-do" title="该怎么做？" rel="bookmark">&raquo;&nbsp;该怎么做？</a>
@@ -331,6 +241,10 @@
                    
                     <li>
                         <a href="/articles/sae-cloud-icon" title="仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本" rel="bookmark">&raquo;&nbsp;仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/image-shadow" title="制作图像 picture 的阴影显示效果" rel="bookmark">&raquo;&nbsp;制作图像 picture 的阴影显示效果</a>
                     </li>                                   
                    
                     <li>
