@@ -639,9 +639,10 @@ div.share{
 
 }
 .article-div-content img{
-	/*padding: 3px 3px;
+	border-radius:5px;
+	padding: 3px 3px;
     border: 1px solid #e8e8e8;
-    box-shadow: 0 0 4px #d0d0d0;*/
+    box-shadow: 0 0 4px #d0d0d0;
 }
 #relatedArticles,#recentPosts{
 	float:left;
@@ -1116,7 +1117,6 @@ footer .footer-cnt{
 	right:10px;
 	left:auto;
 }
-
 
 div.footer-cnt a{
 	color: #FAFAFA;

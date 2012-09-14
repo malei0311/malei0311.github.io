@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>article-flag | WebCraft</title>
+    <title>mysql拷贝表 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="just a flag for per year articles | malei0311\'s Blog" />
-    <meta name="keywords" content="article-flag,malei0311" />
+    <meta name="description" content="由于新表和原表的字段不同，所以先要找出两个表的相同字段，然后拷贝相同字段 | malei0311\'s Blog" />
+    <meta name="keywords" content="mysql,php,copyTable,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -62,64 +62,139 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/flag">article-flag</a></h1>
+            <h1><a href="/articles/mysql-copy-table">mysql拷贝表</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2000-01-01">2000-01-01</time>
+                    <time class="date" pubdate="2012-09-12">2012-09-12</time>
+                </div>
+                
+                <div class="article-tags left">
+                    <span class="pure-css-tag">&nbsp;</span>
+                    <span class="pure-css-tag-behind left">
+                        <ul>
+                             
+                            <li>
+                                <a href="/tags.html#php">
+                                    php
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                             
+                            <li>
+                                <a href="/tags.html#mysql">
+                                    mysql
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                            
+                        </ul>
+                    </span> 
                 </div>
                 
             </div>
         </div>
-        <p class="description">just a flag for per year articles</p>
+        <p class="description">由于新表和原表的字段不同，所以先要找出两个表的相同字段，然后拷贝相同字段</p>
         <div class="article-div-content">
-        	<h2>药！药！切克闹！</h2>
+        	<h2>总述</h2>
 
-<p>这是一篇并不存在的文章，说不存在，主要是因为它只作为一篇 <code>flag</code>，这篇文章是我在构建博客中应用一个小 <code>hack</code> 的产物，如有雷同，不胜荣幸。</p>
+<p>现在每个表都是按用户的意愿生成的，每个表的字段大体上相同，但是会有一两个不同的字段，该怎么做？</p>
 
-<h2>为什么要采用这个 <code>hack</code></h2>
+<h2>几种拷贝表的方式</h2>
 
-<p>首先声明：<code>hack</code> 不安全，应用需谨慎</p>
+<h3>拷贝表结构到新表中</h3>
 
-<h3>起因</h3>
-
-<p>想着遍历一次，就遍历出每年的文章数（当然遍历两次很容易实现）。但是，我想到的所有不应用 <code>hack</code> 的方法，都无法实现，遂，退而求其次，用 <code>hack</code> 吧。</p>
-
-<h3>可乘之机</h3>
-
-<p>发现每次遍历文章时，都是按<code>时间</code>顺序、<code>规则</code>遍历的（总是从最新的文章开始），这就有了可乘之机。</p>
-
-<pre><code>&lt;ul&gt;
-{% capture post_year_now_head %}{{ site.time | date: '%Y' }}{% endcapture %}
-{% assign per_year_total = 0 %}
-{% for post in site.categories.articles %}
-    {% capture post_year_article_head %}{{ post.date | date: '%Y' }}{% endcapture %}
-    {% if post_year_now_head == post_year_article_head %}
-        {% capture per_year_total %}{{ per_year_total | plus:1 }}{% endcapture %}
-    {% else %}        
-        &lt;li&gt;
-            &lt;a class="pointer" href="#{{ post_year_now_head }}"&gt;
-                &lt;span&gt;{{ post_year_now_head }}&lt;/span&gt;
-                &lt;span&gt;({{ per_year_total }})&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/li&gt;
-        {% assign post_year_now_head = post_year_article_head %}
-        {% assign per_year_total =1 %}
-    {% endif %}
-{% endfor %}
-&lt;/ul&gt;
+<pre><code>CREATE TABLE new LIKE origin;
 </code></pre>
 
-<p>不让<code>liquid</code>运行，包裹其中</p>
+<h3>拷贝数据到新表中</h3>
 
-<pre><code>{\% raw %}
-    “加 "\" ，防止运行”
-{\% endraw %}
+<p>注意：这个语句其实只是把select语句的结果建一个表。所以 new 这个表不会有主键，索引。</p>
+
+<pre><code>CREATE TABLE new AS   
+(   
+    SELECT *   
+    FROM origin   
+); 
 </code></pre>
 
-<h2>诞生</h2>
+<h3>真正的复制一个表</h3>
 
-<p>但这并不完结，发现最后一年的文章是遍历不出来的，这就需要做一篇很久以前的文章则作为 <code>hack</code> <code>flag</code>，于是这篇文章就诞生了。</p>
+<pre><code>CREATE TABLE new LIKE origin;   
+INSERT INTO new SELECT * FROM origin;
+</code></pre>
+
+<h3>操作不同的数据库</h3>
+
+<pre><code>CREATE TABLE new LIKE shop.origin;   
+</code></pre>
+
+<h3>新建的表的字段改名</h3>
+
+<pre><code>CREATE TABLE new AS   
+(   
+    SELECT id, username AS uname, password AS pass FROM origin   
+);
+</code></pre>
+
+<h2>实现</h2>
+
+<p>因为表中的字段大部分相同，所以需要找出相同的字段</p>
+
+<h3>获取表中的字段</h3>
+
+<pre><code>        //获取表字段信息
+    public function getColumnName($tableName){
+        $sql=&lt;&lt;&lt;EOF
+        select COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where table_name="$tableName";
+EOF;
+        $queryResult=$this-&gt;pdo-&gt;query($sql);
+        $resultArray=array();
+        $rows=$queryResult-&gt;fetchAll(PDO::FETCH_ASSOC);
+        foreach ($rows as $row) {
+            $resultArray[]=$row['COLUMN_NAME'];
+        }
+        return $resultArray;
+    }
+</code></pre>
+
+<h3>找出相同的字段，然后拷贝</h3>
+
+<pre><code>        /**
+     * [copyDataToNewTable 拷贝上一个月表中的数据]
+     * @param  [string] $oldTableName [上一个月原表]
+     * @param  [string] $newTableName [新表]
+     * @return [boolean]              [返回值]
+     */
+    public function copyDataToNewTable($oldTableName,$newTableName){
+        $whatIWant=array();
+        $columnName_oldTable=$this-&gt;getColumnName($oldTableName);
+        $columnName_newTable=$this-&gt;getColumnName($newTableName);
+        foreach ($columnName_oldTable as $key1 =&gt; $value1) {
+            foreach ($columnName_newTable as $key2 =&gt; $value2) {
+                if($columnName_oldTable[$key1]==$columnName_newTable[$key2]){
+                    $whatIWant[]= $columnName_oldTable[$key1];
+                }
+            }
+        }
+        $whatIWant_result=join(",",$whatIWant);
+        $sql=&lt;&lt;&lt;EOF
+        insert  into `$newTableName`($whatIWant_result) select $whatIWant_result from `$oldTableName`;
+EOF;
+        $queryResult=$this-&gt;pdo-&gt;exec($sql);
+        if($queryResult)
+        {
+            return true;
+        }
+        else{
+            return false;
+        } 
+    }
+</code></pre>
 
         </div>
         <div class="share clearfix">
@@ -131,8 +206,10 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
+                <a class="left" href="/articles/sublime-text-2" rel="bookmark" title="旧一篇">&laquo;&nbsp;sublime text 2 插件使用</a>
             
-                <a class="right" href="/articles/php-random-image" rel="bookmark" title="新一篇">PHP随机显示图片（目录不限深度）&nbsp;&raquo;</a>
+            
+                <a class="right" href="/articles/the-diff-between-alt-and-title" rel="bookmark" title="新一篇">img 中alt和tittle的区别&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -143,47 +220,123 @@
                 
                      
                     
-                
-                     
+                        
+                            
+                                
+                                    <li><a href="/articles/mysql-copy-table" title="mysql拷贝表">&raquo;&nbsp;mysql拷贝表</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/php-random-image" title="PHP随机显示图片（目录不限深度）">&raquo;&nbsp;PHP随机显示图片（目录不限深度）</a></li>
+                                
+                            
+                        
+                    
+                        
                     
                 
                      
                     
-                
-                     
+                        
+                    
+                        
                     
                 
                      
                     
-                
-                     
+                        
+                    
+                        
                     
                 
                      
                     
-                
-                     
+                        
+                    
+                        
                     
                 
                      
                     
-                
-                     
+                        
+                    
+                        
                     
                 
                      
                     
-                
-                     
+                        
+                    
+                        
                     
                 
                      
                     
-                
-                     
+                        
+                    
+                        
                     
                 
                      
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/mysql-copy-table" title="mysql拷贝表">&raquo;&nbsp;mysql拷贝表</a></li>
+                                
+                            
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
                     
                 
                 </ul>
@@ -194,10 +347,6 @@
                    
                     <li>
                         <a href="/articles/the-diff-between-alt-and-title" title="img 中alt和tittle的区别" rel="bookmark">&raquo;&nbsp;img 中alt和tittle的区别</a>
-                    </li>                                   
-                   
-                    <li>
-                        <a href="/articles/mysql-copy-table" title="mysql拷贝表" rel="bookmark">&raquo;&nbsp;mysql拷贝表</a>
                     </li>                                   
                    
                     <li>
@@ -230,6 +379,10 @@
                    
                     <li>
                         <a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现" rel="bookmark">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/tags-js-liquid" title="Tags界面构建之123" rel="bookmark">&raquo;&nbsp;Tags界面构建之123</a>
                     </li>                                   
                 
                 </ul>

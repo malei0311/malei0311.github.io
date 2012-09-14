@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>article-flag | WebCraft</title>
+    <title>img 中alt和tittle的区别 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="just a flag for per year articles | malei0311\'s Blog" />
-    <meta name="keywords" content="article-flag,malei0311" />
+    <meta name="description" content="img 中alt和tittle的区别 | malei0311\'s Blog" />
+    <meta name="keywords" content="css,html,img,alt,title,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -62,64 +62,69 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/flag">article-flag</a></h1>
+            <h1><a href="/articles/the-diff-between-alt-and-title">img 中alt和tittle的区别</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2000-01-01">2000-01-01</time>
+                    <time class="date" pubdate="2012-09-14">2012-09-14</time>
+                </div>
+                
+                <div class="article-tags left">
+                    <span class="pure-css-tag">&nbsp;</span>
+                    <span class="pure-css-tag-behind left">
+                        <ul>
+                             
+                            <li>
+                                <a href="/tags.html#html">
+                                    html
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                            
+                        </ul>
+                    </span> 
                 </div>
                 
             </div>
         </div>
-        <p class="description">just a flag for per year articles</p>
+        <p class="description">img 中alt和tittle的区别</p>
         <div class="article-div-content">
-        	<h2>药！药！切克闹！</h2>
+        	<h2>总述</h2>
 
-<p>这是一篇并不存在的文章，说不存在，主要是因为它只作为一篇 <code>flag</code>，这篇文章是我在构建博客中应用一个小 <code>hack</code> 的产物，如有雷同，不胜荣幸。</p>
+<p>简单的理解：
+alt：  图片显示不出来了就显示alt的属性值
+title：鼠标划过图片显示的提示</p>
 
-<h2>为什么要采用这个 <code>hack</code></h2>
+<h2>alt属性</h2>
 
-<p>首先声明：<code>hack</code> 不安全，应用需谨慎</p>
+<p>使用alt属性是为了给那些不能看到你文档中图像的浏览者提供文字说明。这包括那些使用本来就不支持图像显示或者图像显示被关闭的浏览器的用户，视觉障碍的用户和使用屏幕阅读器的用户。替换文字是用来替代图像而不是提供额外说明文字的。在写替换文字前仔细想想，保证那些文字确实为那些看不到图像的人提供了说明信息，并且在上下文中有意义。对于那些装饰性的图片可以使用空的值(alt=""，引号中间没有空格)，而不是使用不相关的替换文字比如“foo”或者“foo.gif”。不要忽略它，如果你忽略了，那么一些屏幕阅读器会直接阅读图像文件的文件名，那些文字浏览器，比如Lynx会显示图像文件的文件名，而那对于你的浏览者就没什么用了。包含文字的图像图片设置替换文字是最简单的，图像中包含的文字一般来说就可以作为alt属性值。</p>
 
-<h3>起因</h3>
+<h2>title属性</h2>
 
-<p>想着遍历一次，就遍历出每年的文章数（当然遍历两次很容易实现）。但是，我想到的所有不应用 <code>hack</code> 的方法，都无法实现，遂，退而求其次，用 <code>hack</code> 吧。</p>
+<p>title属性有一个很好的用途，即为链接添加描述性文字，特别是当连接本身并不是十分清楚的表达了链接的目的。这样就使得访问者知道那些链接将会带他们到什么地方，他们就不会加载一个可能完全不感兴趣的页面。对于img标签，title是对图片的说明和额外补充，如果需要在鼠标经过图片时出现文字提示应该用属性title。</p>
 
-<h3>可乘之机</h3>
+<h2>测试</h2>
 
-<p>发现每次遍历文章时，都是按<code>时间</code>顺序、<code>规则</code>遍历的（总是从最新的文章开始），这就有了可乘之机。</p>
+<p>一段简单的代码：</p>
 
-<pre><code>&lt;ul&gt;
-{% capture post_year_now_head %}{{ site.time | date: '%Y' }}{% endcapture %}
-{% assign per_year_total = 0 %}
-{% for post in site.categories.articles %}
-    {% capture post_year_article_head %}{{ post.date | date: '%Y' }}{% endcapture %}
-    {% if post_year_now_head == post_year_article_head %}
-        {% capture per_year_total %}{{ per_year_total | plus:1 }}{% endcapture %}
-    {% else %}        
-        &lt;li&gt;
-            &lt;a class="pointer" href="#{{ post_year_now_head }}"&gt;
-                &lt;span&gt;{{ post_year_now_head }}&lt;/span&gt;
-                &lt;span&gt;({{ per_year_total }})&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/li&gt;
-        {% assign post_year_now_head = post_year_article_head %}
-        {% assign per_year_total =1 %}
-    {% endif %}
-{% endfor %}
-&lt;/ul&gt;
+<pre><code>&lt;div&gt;
+    &lt;img src="" alt="test" title="i'm a title"&gt;
+&lt;/div&gt;
 </code></pre>
 
-<p>不让<code>liquid</code>运行，包裹其中</p>
+<h3>chrome中的显示效果</h3>
 
-<pre><code>{\% raw %}
-    “加 "\" ，防止运行”
-{\% endraw %}
-</code></pre>
+<p><img src="/images/articles/img-alt-vs-title/chrome.png" title="chrome中的显示效果" alt="chrome" /></p>
 
-<h2>诞生</h2>
+<h3>firefox中的显示效果</h3>
 
-<p>但这并不完结，发现最后一年的文章是遍历不出来的，这就需要做一篇很久以前的文章则作为 <code>hack</code> <code>flag</code>，于是这篇文章就诞生了。</p>
+<p><img src="/images/articles/img-alt-vs-title/firefox.png" title="firefox中的显示效果" alt="firefox" /></p>
+
+<h3>ie9中的显示效果</h3>
+
+<p><img src="/images/articles/img-alt-vs-title/ie9.png" title="ie9中的显示效果" alt="ie9" /></p>
 
         </div>
         <div class="share clearfix">
@@ -131,8 +136,8 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
+                <a class="left" href="/articles/mysql-copy-table" rel="bookmark" title="旧一篇">&laquo;&nbsp;mysql拷贝表</a>
             
-                <a class="right" href="/articles/php-random-image" rel="bookmark" title="新一篇">PHP随机显示图片（目录不限深度）&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -143,47 +148,83 @@
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/the-diff-between-alt-and-title" title="img 中alt和tittle的区别">&raquo;&nbsp;img 中alt和tittle的区别</a></li>
+                                
+                            
+                        
                     
                 
                 </ul>
@@ -191,10 +232,6 @@
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
-                   
-                    <li>
-                        <a href="/articles/the-diff-between-alt-and-title" title="img 中alt和tittle的区别" rel="bookmark">&raquo;&nbsp;img 中alt和tittle的区别</a>
-                    </li>                                   
                    
                     <li>
                         <a href="/articles/mysql-copy-table" title="mysql拷贝表" rel="bookmark">&raquo;&nbsp;mysql拷贝表</a>
@@ -230,6 +267,10 @@
                    
                     <li>
                         <a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现" rel="bookmark">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/tags-js-liquid" title="Tags界面构建之123" rel="bookmark">&raquo;&nbsp;Tags界面构建之123</a>
                     </li>                                   
                 
                 </ul>

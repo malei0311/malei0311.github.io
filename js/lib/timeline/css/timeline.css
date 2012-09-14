@@ -1,3 +1,4 @@
+/*更改29行、32行的background-color,由白色=》透明*/
 .vmm-timeline{}.vmm-timeline div *{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;}
 .vmm-timeline h1,.vmm-timeline h2,.vmm-timeline h3,.vmm-timeline h4,.vmm-timeline h5,.vmm-timeline h6,.vmm-timeline p,.vmm-timeline blockquote,.vmm-timeline pre,.vmm-timeline a,.vmm-timeline abbr,.vmm-timeline acronym,.vmm-timeline address,.vmm-timeline cite,.vmm-timeline code,.vmm-timeline del,.vmm-timeline dfn,.vmm-timeline em,.vmm-timeline img,.vmm-timeline q,.vmm-timeline s,.vmm-timeline samp,.vmm-timeline small,.vmm-timeline strike,.vmm-timeline strong,.vmm-timeline sub,.vmm-timeline sup,.vmm-timeline tt,.vmm-timeline var,.vmm-timeline dd,.vmm-timeline dl,.vmm-timeline dt,.vmm-timeline li,.vmm-timeline ol,.vmm-timeline ul,.vmm-timeline fieldset,.vmm-timeline form,.vmm-timeline label,.vmm-timeline legend,.vmm-timeline button,.vmm-timeline table,.vmm-timeline caption,.vmm-timeline tbody,.vmm-timeline tfoot,.vmm-timeline thead,.vmm-timeline tr,.vmm-timeline th,.vmm-timeline td,.vmm-timeline .container,.vmm-timeline .content-container,.vmm-timeline .media,.vmm-timeline .text,.vmm-timeline .slider,.vmm-timeline .date,.vmm-timeline .title,.vmm-timeline .messege,.vmm-timeline .map,.vmm-timeline .credit,.vmm-timeline .caption,.vmm-timeline .feedback,.vmm-timeline .feature,.vmm-timeline .toolbar,.vmm-timeline .marker,.vmm-timeline .dot,.vmm-timeline .line,.vmm-timeline .flag,.vmm-timeline .time,.vmm-timeline .era,.vmm-timeline .major,.vmm-timeline .minor,.vmm-timeline .navigation,.vmm-timeline .start,.vmm-timeline .active{margin:0;padding:0;border:0;font-weight:normal;font-style:normal;font-size:100%;line-height:1;font-family:inherit;}
 .vmm-timeline table{border-collapse:collapse;border-spacing:0;}
@@ -26,10 +27,10 @@
 .vmm-timeline p,.vmm-timeline blockquote,.vmm-timeline blockquote p,.vmm-timeline .twitter blockquote p{font-family:"Georgia",Times New Roman,Times,serif !important;}
 .vmm-timeline .feature h1,.vmm-timeline .feature h2,.vmm-timeline .feature h3,.vmm-timeline .feature h4,.vmm-timeline .feature h5,.vmm-timeline .feature h6{font-family:"Georgia",Times New Roman,Times,serif;}
 .tooltip{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}
-#timeline-embed{background-color:#ffffff;margin-bottom:20px;border:1px solid #cccccc;padding-top:20px;padding-bottom:20px;clear:both;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;-webkit-box-shadow:1px 1px 3px rgba(0, 0, 0, 0.35);-moz-box-shadow:1px 1px 3px rgba(0, 0, 0, 0.35);box-shadow:1px 1px 3px rgba(0, 0, 0, 0.35);}
+#timeline-embed{background-color:transparent;margin-bottom:20px;border:1px solid #cccccc;padding-top:20px;padding-bottom:20px;clear:both;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;-webkit-box-shadow:1px 1px 3px rgba(0, 0, 0, 0.35);-moz-box-shadow:1px 1px 3px rgba(0, 0, 0, 0.35);box-shadow:1px 1px 3px rgba(0, 0, 0, 0.35);}
 #timeline-embed.full-embed{overflow:hidden;border:0 !important;padding:0 !important;margin:0 !important;clear:both;-webkit-border-radius:0 !important;-moz-border-radius:0 !important;border-radius:0 !important;-webkit-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;-moz-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;box-shadow:0px 0px 0px rgba(0, 0, 0, 0.25) !important;}
 #timeline-embed.sized-embed{overflow:hidden;border:1px solid #cccccc;padding-top:7px;padding-bottom:7px;margin:0 !important;clear:both;-webkit-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;-moz-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;box-shadow:0px 0px 0px rgba(0, 0, 0, 0.25) !important;}
-.vmm-timeline{width:100%;height:100%;padding:0px;margin:0px;background-color:#ffffff;position:absolute;z-index:100;clear:both;overflow:hidden;}.vmm-timeline .vmm-clear:before,.vmm-timeline .vmm-clear:after{content:"";display:table;}
+.vmm-timeline{width:100%;height:100%;padding:0px;margin:0px;background-color:transparent;position:absolute;z-index:100;clear:both;overflow:hidden;}.vmm-timeline .vmm-clear:before,.vmm-timeline .vmm-clear:after{content:"";display:table;}
 .vmm-timeline .vmm-clear:after{clear:both;}
 .vmm-timeline .vmm-clear{*zoom:1;}
 .vmm-timeline .feature{width:100%;}.vmm-timeline .feature .slider{width:100%;float:left;position:relative;z-index:10;padding-top:15px;-webkit-box-shadow:1px 1px 7px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 7px rgba(0, 0, 0, 0.3);box-shadow:1px 1px 7px rgba(0, 0, 0, 0.3);}
@@ -243,7 +244,7 @@
 .vmm-timeline h6{font-size:13px;line-height:14px;text-transform:uppercase;}
 .vmm-timeline strong{font-weight:bold;font-style:inherit;}
 .vmm-timeline em{font-style:italic;font-weight:inherit;}
-.vmm-timeline Q{quotes:'„' '“';font-style:italic;}
+.vmm-timeline Q{quotes:'â' 'â';font-style:italic;}
 .vmm-timeline blockquote,.vmm-timeline blockquote p{font-size:28px;line-height:36px;text-align:left;margin-bottom:6px;padding-top:10px;background-color:#ffffff;color:#000000;}
 .vmm-timeline .credit{color:#999999;text-align:right;font-size:10px;line-height:10px;display:block;margin:0 auto;clear:both;}
 .vmm-timeline .caption{text-align:left;margin-top:5px;color:#666666;font-size:11px;line-height:14px;clear:both;}
