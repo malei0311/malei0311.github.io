@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-09-14T19:22:13+08:00</updated>
+   <updated>2012-09-21T11:05:47+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
@@ -51,6 +51,10 @@ title：鼠标划过图片显示的提示&lt;/p&gt;
 &lt;h3&gt;ie9中的显示效果&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/articles/img-alt-vs-title/ie9.png&quot; title=&quot;ie9中的显示效果&quot; alt=&quot;ie9&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;SEO&lt;/h2&gt;
+
+&lt;p&gt;搜索引擎对图片意思的判断，主要靠alt属性。所以在图片alt属性中以简要文字说明，同时包含关键词，也是页面优化的一部分。条件允许的话，可以在title属性里，进一步对图片说明。&lt;/p&gt;
 </content>
    </entry>
    
