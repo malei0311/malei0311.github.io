@@ -123,6 +123,9 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 	height:auto;
 	position:relative; 
 }
+.inner-content{
+	padding:20px 5px;
+}
 /*==========share========================*/
 div.share{
 	padding: 5px 5px;
@@ -1161,4 +1164,65 @@ div.footer-cnt a:hover{
 }
 #links ul{
 	list-style: inside circle;
+}
+#myBooks{
+	padding:5px;
+}
+#myBooks a{
+	display:inline-block;
+	position:relative;
+}
+#myBooks img{
+	margin-left:5px;
+	margin-top:5px;
+	border-radius:5px;
+	padding: 5px;
+    border: 1px solid #e8e8e8;
+    box-shadow:  3px 3px 3px #cccbcb;
+    background:white;
+}
+
+#myBooks a span{
+	right:0;
+	top:0;
+	position:absolute;
+	background-image: url("/images/icon.gif");
+	height:16px;
+	width:16px;
+}
+#myBooks ul{
+	list-style: none;
+}
+#myBooks ul li{
+	padding:5px 0px;
+}
+#myBooks ul li span{
+	margin-right:5px;
+	display: inline-block;;
+	background-image: url("/images/icon.gif");
+	height:16px;
+	width:16px;
+}
+
+.hasRead,.wantToRead,.isReading,.readBut,.readAHalf{
+	background-image: url("/images/icon.gif");
+}
+
+.hasRead{
+	background-position: -4px -56px;
+}
+.wantToRead{
+	background-position: -99px -80px;
+}
+.isReading{
+	background-position: -181px -80px;
+}
+.readBut{
+	background-position: -4px -80px;
+}
+.readAHalf{
+	background-position: -99px -56px;	
+}
+#book-note{
+	padding:10px;
 }

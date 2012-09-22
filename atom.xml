@@ -4,13 +4,24 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-09-21T11:05:47+08:00</updated>
+   <updated>2012-09-22T18:36:21+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>Java vs JavaScript</title>
+     <link href="http://webcraft.malei.tk/articles/java-vs-javascript"/>
+     <updated>2012-09-21T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/java-vs-javascript</id>
+     <content type="html">&lt;h2&gt;一张趣图&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/java-vs-javascript/java-vs-javascript.png&quot; title=&quot;Java vs JavaScript&quot; alt=&quot;Java vs JavaScript&quot; /&gt;&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>img 中alt和tittle的区别</title>
@@ -849,138 +860,6 @@ $('#menuIndex').append($(tmpl)).delegate('a','click',function(e){
 &lt;h2&gt;结语&lt;/h2&gt;
 
 &lt;p&gt;不写不知道，很多概念还很模糊，试着解释了一哈，很不到位，不过理解稍微加深了一些。&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>Demos界面的伪瀑布流布局的实现</title>
-     <link href="http://webcraft.malei.tk/articles/water-fall-layout"/>
-     <updated>2012-08-07T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/water-fall-layout</id>
-     <content type="html">&lt;h2&gt;为什么叫伪瀑布流&lt;/h2&gt;
-
-&lt;p&gt;因为并没有实现动态loading...，也没有用脚本去嗅探浏览器的宽度，以确定具体有几条瀑布。这是由博客的具体情况决定的，因为所有的demo都是慢慢生成的，所以这个Demos界面主要是做了个collection。写的比较死，主要针对本博客所写。&lt;/p&gt;
-
-&lt;h2&gt;liquid脚本&lt;/h2&gt;
-
-&lt;h3&gt;遍历所有demo&lt;/h3&gt;
-
-&lt;p&gt;给每篇文章一个特定的&lt;code&gt;ID&lt;/code&gt;，我这里是从&lt;code&gt;1&lt;/code&gt;开始，即&lt;code&gt;demo-index-1&lt;/code&gt;，因为我在&lt;code&gt;demo-index-0&lt;/code&gt;中存放了所有demo数量的概览，这个总数将由&lt;code&gt;js&lt;/code&gt;获取，留待后用。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{% assign index = 0 %}
-{% for post in site.categories.demos %}
-{% capture index %}{{ index | plus:1 }}{% endcapture %}
-{% capture demo_index %}demo-index-{{ index }}{% endcapture %}
-    &amp;lt;article id=&quot;{{ demo_index }}&quot;&amp;gt;
-            &amp;lt;div class=&quot;demo-title&quot;&amp;gt;
-                &amp;lt;h3&amp;gt;&amp;lt;a href=&quot;{{ post.url }}&quot;&amp;gt;{{ post.title }}&amp;lt;/a&amp;gt;&amp;lt;/h3&amp;gt;
-                &amp;lt;p&amp;gt;{{ post.description }}&amp;lt;/p&amp;gt;
-            &amp;lt;/div&amp;gt;
-            &amp;lt;div class=&quot;demo-time&quot;&amp;gt;
-                &amp;lt;p&amp;gt;&amp;lt;span&amp;gt;&amp;amp;#8227;&amp;lt;/span&amp;gt;&amp;lt;time pubdate=&quot;{{ post.date | date: '%b %d, %Y' }}&quot;&amp;gt;{{ post.date | date: '%b %d, %Y' }}&amp;lt;/time&amp;gt;&amp;lt;/p&amp;gt;
-            &amp;lt;/div&amp;gt;
-    &amp;lt;/article&amp;gt;
-{% endfor %}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;demo数量概览&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;article id=&quot;demo-index-0&quot;&amp;gt;
-    {% capture list_size %}{{ site.categories.demos | size }}{% endcapture %}
-    &amp;lt;h3&amp;gt;
-        All demos:
-        (&amp;lt;span&amp;gt;
-            {{list_size}}
-        &amp;lt;/span&amp;gt;)
-    &amp;lt;/h3&amp;gt;         
-&amp;lt;/article&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;给出瀑布流容器&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;waterFallContainer&quot;&amp;gt;&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;生成瀑布&lt;/h2&gt;
-
-&lt;p&gt;主要就是用&lt;code&gt;js&lt;/code&gt;操作&lt;code&gt;DOM&lt;/code&gt;树，把文档呈现成自己想要的样子。&lt;/p&gt;
-
-&lt;h3&gt;首先声明一个静态类&lt;/h3&gt;
-
-&lt;p&gt;这里声明了如下属性、方法。具体分了5条瀑布，下面分别介绍每个方法的作用。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var waterFall = {
-    container: $(&quot;#waterFallContainer&quot;),
-    columnNumber: 5,
-    columnWidth: 184,
-    demoIndex: 0,
-    loadFinish: false,
-    demosNum: parseInt($('#demo-index-0 span').text())+1,
-    create: function(){  },
-    loadAllDemos: function() {  },
-    loadSingleDemo: function(column) {  },
-    init:function(){  }
-};
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;生成空瀑布&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;create: function(){
-    var start=0, spans = '';
-    for (start; start &amp;lt; this.columnNumber; start++) {
-        spans = spans + '&amp;lt;span id=&quot;waterFallColumn-'+ start +'&quot; class=&quot;waterFallColumns&quot; style=&quot;width:'+ this.columnWidth +'px;&quot;&amp;gt;'+ '&amp;lt;/span&amp;gt; ';
-    }
-    this.container.html(spans);
-    return this;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;填入内容&lt;/h3&gt;
-
-&lt;p&gt;把所有的demo剪切到瀑布流容器中。首先，在剪切一个节点前，先判断是否所有demo都已加载完毕。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;loadSingleDemo: function(column) {
-
-    if (this.demoIndex &amp;gt; this.demosNum) {
-        this.loadFinish = true;
-    }
-    else{
-        column.append($(&quot;#demo-index-&quot;+this.demoIndex));
-        this.demoIndex += 1;
-    }
-    return this;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;其次，有了上述方法，就可以放心的加载了&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;loadAllDemos: function() {
-    var index=0;
-    for(index;index&amp;lt;this.demosNum;index +=5){
-        var start = 0;
-        for (start; start &amp;lt; this.columnNumber; start++) {
-            var eleColumn = $(&quot;#waterFallColumn-&quot; + start);
-            if (eleColumn &amp;amp;&amp;amp; !this.loadFinish) {
-                this.loadSingleDemo(eleColumn);
-            }           
-        }
-    }
-    return this;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;初始化&lt;/h3&gt;
-
-&lt;p&gt;每个方法都&lt;code&gt;return this;&lt;/code&gt;,这样就可以像下面连着写了。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;init:function(){
-    this.create().loadAllDemos();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;FAQ&lt;/h2&gt;
-
-&lt;p&gt;这里我遇到了一个问题，纠结了半天也没解决。本来想着 &lt;code&gt;span&lt;/code&gt;的&lt;code&gt;display:inline-block&lt;/code&gt; 就可以能解决问题了，诡异的是&lt;code&gt;span&lt;/code&gt;之间总有5像素的间隔（ps:&lt;code&gt;span&lt;/code&gt;的&lt;code&gt;margin&lt;/code&gt;为&lt;code&gt;0&lt;/code&gt;），怎么也找不出是哪的猫腻。于是乎，&lt;code&gt;display:block;float:left;&lt;/code&gt;。纠结啊。&lt;/p&gt;
 </content>
    </entry>
    

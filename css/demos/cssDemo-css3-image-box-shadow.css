@@ -51,16 +51,16 @@
 }
 
 #image_styles_1{
-	background:url(../images/demos/image-styles/image_styles_1.png) scroll center center no-repeat transparent;
+	background:url(/images/demos/image-styles/image_styles_1.png) scroll center center no-repeat transparent;
 }
 #image_styles_2{
-	background:url(../images/demos/image-styles/image_styles_2.jpg) scroll center center no-repeat transparent;
+	background:url(/images/demos/image-styles/image_styles_2.jpg) scroll center center no-repeat transparent;
 }
 #image_styles_3{
-	background:url(../images/demos/image-styles/image_styles_3.jpg) scroll center center no-repeat transparent;
+	background:url(/images/demos/image-styles/image_styles_3.jpg) scroll center center no-repeat transparent;
 }
 #image_styles_4{
-	background:url(../images/demos/image-styles/image_styles_4.jpg) scroll center center no-repeat transparent;
+	background:url(/images/demos/image-styles/image_styles_4.jpg) scroll center center no-repeat transparent;
 }
 .image-wrap{
 	margin-right:10px;

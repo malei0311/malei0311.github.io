@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>About | WebCraft</title>
+    <title>Books | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="关于 | malei0311\'s Blog" />
-    <meta name="keywords" content="webcraft,github,jekyll,ruby,css,javascripts,about,malei0311" />
+    <meta name="description" content="我的书籍 | malei0311\'s Blog" />
+    <meta name="keywords" content="webcraft,github,jekyll,ruby,css,javascripts,Books,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -60,25 +60,81 @@
     
     <section id="main">
         <div class="content-cnt">
-	<div id="about-timeline">
-		<!-- <div class="timeline">
-			<div id="timeline"></div>
-		</div> -->
-		<div id="timeline-embed"></div>
-		<script>
-		    var timeline_config = {
-				width: 	"100%",
-				height: "100%",
-				source: 'about.json',
-				//start_at_end:	true,								//OPTIONAL
-				//hash_bookmark: true,								//OPTIONAL
-				css: 	'/js/lib/timeline/css/timeline.css',				//OPTIONAL
-				js: 	'/js/lib/timeline/js/timeline-min.js'				//OPTIONAL
-			}
-		</script>	
-	</div>
+	<div id="myBooks">
+		
+		<!-- 已经读过的书 -->
+		<a href="#" title="糟糕！读的纸制书">
+			<img src="/images/about/books/theSecret.png" alt="theSecret">
+			<span class="hasRead"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66078&uk=2349829234" title="cssMastery">
+			<img src="/images/about/books/cssMastery.png" alt="cssMastery">
+			<span class="hasRead"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66080&uk=2349829234" title="theZenOfCSSDesign">
+			<img src="/images/about/books/theZenOfCSSDesign.png" alt="theZenOfCSSDesign">
+			<span class="hasRead"></span>
+		</a>
+		<!-- 读过，但是书中一些部分不理解，需要读一些辅助的书，帮助理解，需要重读 -->
+		<a href="http://pan.baidu.com/share/link?shareid=66075&uk=2349829234" title="JavaScriptRia">
+			<img src="/images/about/books/JavaScriptRia.png" alt="JavaScriptRia">
+			<span class="readBut"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66070&uk=2349829234" title="networkProgramming">
+			<img src="/images/about/books/networkProgramming.png" alt="networkProgramming">
+			<span class="readBut"></span>
+		</a>
+		<!-- 正在读 -->
+		<a href="#" title="糟糕！读的纸制书">
+			<img src="/images/about/books/ECMAScript5.png" alt="ECMAScript5">
+			<span class="isReading"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66079&uk=2349829234" title="JavaScriptDesignPatterns">
+			<img src="/images/about/books/JavaScriptDesignPatterns.png" alt="JavaScriptDesignPatterns">
+			<span class="isReading"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66081&uk=2349829234" title="JavaScriptDOM">
+			<img src="/images/about/books/JavaScriptDOM.png" alt="JavaScriptDOM">
+			<span class="isReading"></span>
+		</a>
+		
+		<!-- 读了一部分，有一段时间不读了 -->
+		<a href="http://pan.baidu.com/share/link?shareid=66068&uk=2349829234" title="python">
+			<img src="/images/about/books/python.png" alt="python">
+			<span class="readAHalf"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66076&uk=2349829234" title="regExp">
+			<img src="/images/about/books/regExp.png" alt="regExp">
+			<span class="readAHalf"></span>
+		</a>
+		<!-- 想要读的书 -->
+		<a href="http://pan.baidu.com/share/link?shareid=66067&uk=2349829234" title="php6">
+			<img src="/images/about/books/php6.png" alt="php6">
+			<span class="wantToRead"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66074&uk=2349829234" title="proJavaScript">
+			<img src="/images/about/books/proJavaScript.png" alt="proJavaScript">
+			<span class="wantToRead"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66072&uk=2349829234" title="ruby">
+			<img src="/images/about/books/ruby.png" alt="ruby">
+			<span class="wantToRead"></span>
+		</a>
+		<a href="http://pan.baidu.com/share/link?shareid=66073&uk=2349829234" title="scriptingIntelligence">
+			<img src="/images/about/books/scriptingIntelligence.png" alt="scriptingIntelligence">
+			<span class="wantToRead"></span>
+		</a>
+		<div id="book-note">
+			<ul>
+				<li><span class="hasRead"></span>已经读过的书</li>
+				<li><span class="readBut"></span>读过，但是书中一些部分不理解，需要读一些辅助的书，帮助理解，需要重读</li>
+				<li><span class="isReading"></span>正在读...</li>
+				<li><span class="readAHalf"></span>读了一部分，有一段时间不读了</li>
+				<li><span class="wantToRead"></span>想要读的书</li>
+			</ul>
+		</div>
+	</div>	
 </div>
-
     </section>
     <div class="go-top">
         <a href="#i-will-top" id="go-top" class="clearfix"><span class="go-top-icon"></span></a>
@@ -103,13 +159,6 @@
         
         
         
-        
-            <!--<script src="/js/lib/timeline/compiled/js/timeline-min.js"></script>
-            <script>
-                Chocolate.includeStyleSheet('/js/lib/timeline/compiled/css/timeline.css');
-                Chocolate.initTimeline();
-            </script>-->
-            <script src="/js/lib/timeline/js/timeline-embed.js"></script>
         
         <script>
             $(function(){

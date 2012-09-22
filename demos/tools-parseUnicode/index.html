@@ -6,14 +6,16 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>About | WebCraft</title>
+    <title>parseUnicode小工具 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="关于 | malei0311\'s Blog" />
-    <meta name="keywords" content="webcraft,github,jekyll,ruby,css,javascripts,about,malei0311" />
+    <meta name="description" content="parseUnicode小工具，提供字符串转Unicode和Unicode转字符 | malei0311\'s Blog" />
+    <meta name="keywords" content="js,parseUnicode,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
+    
+    <link rel="stylesheet" href="/css/demos/tools-parseUnicode.css" type="text/css" />
     
     <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="/atom.xml" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -60,22 +62,45 @@
     
     <section id="main">
         <div class="content-cnt">
-	<div id="about-timeline">
-		<!-- <div class="timeline">
-			<div id="timeline"></div>
-		</div> -->
-		<div id="timeline-embed"></div>
-		<script>
-		    var timeline_config = {
-				width: 	"100%",
-				height: "100%",
-				source: 'about.json',
-				//start_at_end:	true,								//OPTIONAL
-				//hash_bookmark: true,								//OPTIONAL
-				css: 	'/js/lib/timeline/css/timeline.css',				//OPTIONAL
-				js: 	'/js/lib/timeline/js/timeline-min.js'				//OPTIONAL
-			}
-		</script>	
+	<div class="inner-content" id="tabs-parseUnicode">
+		<div class="headings">
+			<h2 class="left">parseUnicode小工具</h2>
+			<ul class="tabs-right">
+				<li class="tabs-selected"><a href="#tabs_stringToUnicode">字符转Unicode</a></li>
+				<li><a href="#tabs_unicodeToString">Unicode转字符</a></li>
+			</ul>
+		</div>
+		<div class="content-box" id="tabs_stringToUnicode">
+			<div class="clearfix">
+				<div class="left">
+					<h3>String:</h3>
+					<textarea name=""></textarea>
+				</div>
+				<div class="right">
+					<h3>Unicode:</h3>
+					<textarea name=""></textarea>
+				</div>
+			</div>
+			<div class="clearfix">
+				<input type="button" name="parseUnicode-js" id="parseUnicode-js" value="转换为JS格式">
+				<input type="button" name="parseUnicode-css" id="parseUnicode-css" value="转换为CSS格式">
+			</div>
+		</div>
+		<div class="content-box tabs-hide" id="tabs_unicodeToString">
+			<div class="clearfix">
+				<div class="left">
+					<h3>Unicode(JS或CSS格式):</h3>
+					<textarea name=""></textarea>
+				</div>
+				<div class="right">
+					<h3>String:</h3>
+					<textarea name=""></textarea>
+				</div>
+			</div>
+			<div class="clearfix">
+				<input type="button" name="parseUnicode-jc" id="parseUnicode-jc" value="转换">
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -99,17 +124,12 @@
         <script src="/js/chocolate.js"></script>
         
         
+            <script src="/js/demos/tools-parseUnicode.js"></script>
         
         
         
         
         
-            <!--<script src="/js/lib/timeline/compiled/js/timeline-min.js"></script>
-            <script>
-                Chocolate.includeStyleSheet('/js/lib/timeline/compiled/css/timeline.css');
-                Chocolate.initTimeline();
-            </script>-->
-            <script src="/js/lib/timeline/js/timeline-embed.js"></script>
         
         <script>
             $(function(){
