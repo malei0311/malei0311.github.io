@@ -4,13 +4,68 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-09-22T18:36:21+08:00</updated>
+   <updated>2012-10-05T18:34:10+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>insertAfter()?</title>
+     <link href="http://webcraft.malei.tk/articles/js-insertAfter"/>
+     <updated>2012-09-25T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/js-insertAfter</id>
+     <content type="html">&lt;h2&gt;直接写&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;var referenceNode=document.getElementById('foo');
+var node=document.createElement('div');
+var nodeText=document.createTextNode('hello world!');
+node.appendChild(nodeText);
+
+referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;函数1&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function insertAfter(node, referenceNode){
+    var parent = referenceNode.parentNode;
+
+    if(parent.lastChild == referenceNode){
+        parent.appendChild(node);
+    }
+    else{
+        parent.insertBefore(node,referenceNode.nextSibling);
+    }            
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;函数2&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function insertAfter(node, referenceNode){
+    var parent = referenceNode.parentNode,v;
+    (v=referenceNode.nextSibling)?parent.insertBefore(node,v):parent.appendChild(node);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;函数3&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function insertAfter(node,referenceNode){
+    referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>browsers</title>
+     <link href="http://webcraft.malei.tk/articles/browsers"/>
+     <updated>2012-09-25T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/browsers</id>
+     <content type="html">&lt;p&gt;&lt;img src=&quot;/images/browsers.jpg&quot; title=&quot;browsers&quot; alt=&quot;browsers&quot; /&gt;&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>Java vs JavaScript</title>
@@ -533,333 +588,6 @@ $(&quot;.test&quot;).hilight();
 &lt;li&gt;精简代码&lt;/li&gt;
 &lt;/ul&gt;
 
-</content>
-   </entry>
-   
-   <entry>
-     <title>容器透明，内容不透明，随机变色</title>
-     <link href="http://webcraft.malei.tk/articles/random-color"/>
-     <updated>2012-08-12T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/random-color</id>
-     <content type="html">&lt;h2&gt;想法&lt;/h2&gt;
-
-&lt;p&gt;看着demos界面，假的瀑布流布局有些单调，于是想随机给个背景颜色。开始没想到各种颜色的&lt;code&gt;真彩&lt;/code&gt;，冲击这么强烈，让人不舒服。于是就产生了&lt;code&gt;容器透明，内容不透明&lt;/code&gt;的想法。&lt;/p&gt;
-
-&lt;h2&gt;步骤&lt;/h2&gt;
-
-&lt;h3&gt;1.分配颜色&lt;/h3&gt;
-
-&lt;p&gt;我们知道颜色正整数值的取值范围为：&lt;code&gt;0 - 255&lt;/code&gt;。除以5，来个均分&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var colorBit = new Array(6);
-colorBit[0] = &quot;255&quot;;
-colorBit[1] = &quot;204&quot;;
-colorBit[2] = &quot;153&quot;;
-colorBit[3] = &quot;102&quot;;
-colorBit[4] = &quot;51&quot;;
-colorBit[5] = &quot;0&quot;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;2.颜色组合&lt;/h3&gt;
-
-&lt;p&gt;red,green,blue三原色的不同组合，融合成了不同色彩。根据排列组合原理，从&lt;code&gt;6&lt;/code&gt;个数取出&lt;code&gt;3&lt;/code&gt;个，进行可重复的排列，有 &lt;code&gt;6&lt;/code&gt;的&lt;code&gt;3&lt;/code&gt;次方种情况，即：取&lt;code&gt;3&lt;/code&gt;次，每次有&lt;code&gt;6&lt;/code&gt;种选择，&lt;code&gt;6*6*6&lt;/code&gt;是也。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var colorArray=new Array();
-for (var i = 0; i &amp;lt; 6; i++){
-    for (var j = 0; j &amp;lt; 6; j++){
-        for (var k = 0; k &amp;lt; 6; k++){
-            colorArray.push(colorBit[i]+','+colorBit[j]+','+colorBit[k]);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;3.上色(借助JQuery)&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;$('#waterFallContainer article').each(function(index,domEle){
-    var randomColor=colorArray[Math.floor((colorArray.length)*Math.random())];
-    $(domEle).css('backgroundColor','rgba('+randomColor+',0.1)');
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;小插曲&lt;/h2&gt;
-
-&lt;p&gt;容器透明，内容不透明，有两种方法(来自&lt;code&gt;飘零雾雨&lt;/code&gt;的经验谈)：&lt;/p&gt;
-
-&lt;h3&gt;1.方法一&lt;/h3&gt;
-
-&lt;p&gt;原理是容器层与内容层并级，容器层设置透明度，内容层通过负&lt;code&gt;margin&lt;/code&gt;或者&lt;code&gt;position&lt;/code&gt;绝对定位等方式覆盖到容器层上&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.outer{width:200px;height:200px;background:#000;filter:alpha(opacity=20);opacity:.2;}
-.inner{width:200px;height:200px;margin-top:-200px;}
-
-&amp;lt;div class=&quot;outer&quot;&amp;gt;&amp;lt;!--我是透明的容器--&amp;gt;&amp;lt;/div&amp;gt;
-&amp;lt;div class=&quot;inner&quot;&amp;gt;我是不透明的内容&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;2.方法二&lt;/h3&gt;
-
-&lt;p&gt;高级浏览器直接使用rgba颜色值实现；IE浏览器在定义容器透明的同时，让子节点相对定位，也可达到效果&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.outer{width:200px;height:200px;background:rgba(0,0,0,.2);background:#000\9;filter:alpha(opacity=20)\9;}
-.outer .inner{position:relative\9;}
-
-&amp;lt;div class=&quot;outer&quot;&amp;gt;
-    &amp;lt;div class=&quot;inner&quot;&amp;gt;我是不透明的内容&amp;lt;/div&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;追加&lt;/h2&gt;
-
-&lt;p&gt;把随机的背景色改成了随机border&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>articlesLayout构建之右侧目录索引</title>
-     <link href="http://webcraft.malei.tk/articles/articlesLayout-directory"/>
-     <updated>2012-08-09T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/articlesLayout-directory</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;就像前面说的一样，这种博客，一直是一个梦。因为所有的博客程序在编辑时，都不把博客的书写风格规范化。都只是按自己所想，随心所欲的在 &lt;code&gt;textarea&lt;/code&gt; 中添加，发布。&lt;/p&gt;
-
-&lt;p&gt;事实上，在知道 &lt;code&gt;MarkDown&lt;/code&gt; 之前，也懒得把 &lt;code&gt;textarea&lt;/code&gt; 中的内容规范化，太费事。直到2012年的7月底，无意间看到了BeiYuu搭建在GitHub的博客，知道了 &lt;code&gt;jekyll + GitHub + MarkDown&lt;/code&gt; 的书写方式，加之这种目录索引，这正是我想要的。&lt;/p&gt;
-
-&lt;p&gt;兴奋了几天，一心扑在上面，也要完成一款自己的 &lt;code&gt;jekyll&lt;/code&gt; 博客，其实对 &lt;code&gt;jekyll&lt;/code&gt; 早就有耳闻，但是只是停留在听说过的地步。后悔没有早一点打开 &lt;code&gt;jekyll&lt;/code&gt; 这扇门。&lt;/p&gt;
-
-&lt;h2&gt;声明&lt;/h2&gt;
-
-&lt;p&gt;在下面出现的某些算法思想、核心部分都是继承自BeiYuu。当然也有自己的想法杂烩其中，如不指明，均来自于BeiYuu。&lt;/p&gt;
-
-&lt;h2&gt;界面构建&lt;/h2&gt;
-
-&lt;h3&gt;总体布局&lt;/h3&gt;
-
-&lt;p&gt;此界面主要分两栏，右栏是绝对定位，脱离正常文档流 &lt;code&gt;position:absolute&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;article&amp;gt;
-    &amp;lt;!-- 文章内容 --&amp;gt;
-&amp;lt;/article&amp;gt;
-&amp;lt;aside id=&quot;menuIndex&quot; class=&quot;right&quot;&amp;gt;
-    &amp;lt;!-- 目录索引 --&amp;gt;
-&amp;lt;/aside&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;文章的详细信息头&lt;/h3&gt;
-
-&lt;p&gt;这里并没有像BeiYuu那样每次的&lt;code&gt;h1&lt;/code&gt;标题都需自己手动书写，简化了一哈，把对 &lt;code&gt;page.title&lt;/code&gt; 等头部信息的处理，放在了 &lt;code&gt;layout&lt;/code&gt; 中，另外，加了不少其他信息。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&quot;article-title&quot;&amp;gt;
-    &amp;lt;h1&amp;gt;&amp;lt;a href=&quot;{{ page.url }}&quot;&amp;gt;{{ page.title }}&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
-    &amp;lt;div class=&quot;clearfix&quot;&amp;gt;
-        &amp;lt;div class=&quot;article-post-time left&quot;&amp;gt;
-            &amp;lt;span&amp;gt;&amp;amp;#8227;&amp;lt;/span&amp;gt;
-            &amp;lt;time class=&quot;date&quot; pubdate=&quot;{{ page.date | date_to_utc | date: '%Y-%m-%d' }}&quot;&amp;gt;{{ page.date | date_to_utc | date: &quot;%Y-%m-%d&quot; }}&amp;lt;/time&amp;gt;
-        &amp;lt;/div&amp;gt;
-        {% if page.tags != empty %}
-        &amp;lt;div class=&quot;article-tags right&quot;&amp;gt;
-            &amp;lt;span class=&quot;pure-css-tag&quot;&amp;gt;&amp;amp;nbsp;&amp;lt;/span&amp;gt;
-            &amp;lt;span class=&quot;pure-css-tag-behind left&quot;&amp;gt;
-                &amp;lt;ul&amp;gt;
-                    {% for tag in page.tags %} 
-                    &amp;lt;li&amp;gt;
-                        &amp;lt;a href=&quot;/tags.html#{{ tag }}&quot;&amp;gt;
-                            {{ tag }}
-                        &amp;lt;/a&amp;gt;
-                        &amp;lt;span&amp;gt;
-                            ,
-                        &amp;lt;/span&amp;gt;
-                    &amp;lt;/li&amp;gt;
-                    {% endfor %}
-                &amp;lt;/ul&amp;gt;
-            &amp;lt;/span&amp;gt; 
-        &amp;lt;/div&amp;gt;
-        {% endif %}
-    &amp;lt;/div&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;生成目录&lt;/h2&gt;
-
-&lt;p&gt;主要列表的是二级、三级标题。&lt;/p&gt;
-
-&lt;h3&gt;收集信息&lt;/h3&gt;
-
-&lt;p&gt;把文章中标题的内容“拿到”相应数组中，而 id 信息则同步生成出来，写入相应数组。有两条线：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;jquery取出的 &lt;code&gt;h2&lt;/code&gt; 、&lt;code&gt;h3&lt;/code&gt; 的index线；&lt;/li&gt;
-&lt;li&gt;自建两个数组的index线，&lt;code&gt;h2&lt;/code&gt; 数组是顺次的不间断的从 &lt;code&gt;0&lt;/code&gt; 依次到 &lt;code&gt;n&lt;/code&gt;，&lt;code&gt;h3&lt;/code&gt; 数组是间断的，对应于相应 &lt;code&gt;h2&lt;/code&gt; 的index&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;下面代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var h2 = [],h3 = [],tmpl = '&amp;lt;ul&amp;gt;',h2index = 0;
-$.each($('.article-div-content&amp;gt;h2,.article-div-content&amp;gt;h3'),function(index,item){
-    if(item.tagName.toLowerCase() == 'h2'){
-        var h2item = {};
-        h2item.name = $(item).text();
-        h2item.id = 'menuIndex'+index;
-        h2.push(h2item);
-        h2index++;
-    }else{
-        var h3item = {};
-        h3item.name = $(item).text();
-        h3item.id = 'menuIndex'+index;
-        if(!h3[h2index-1]){
-            h3[h2index-1] = [];
-        }
-        h3[h2index-1].push(h3item);
-    }
-    item.id = 'menuIndex' + index
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;生成目录串&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;tmpl += '&amp;lt;li class=&quot;h1&quot;&amp;gt;&amp;lt;a href=&quot;#&quot; data-top=&quot;0&quot;&amp;gt;'+$('.article-title&amp;gt;h1').text()+'&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;';           
-for(var i=0;i&amp;lt;h2.length;i++){
-    tmpl += '&amp;lt;li&amp;gt;&amp;lt;a href=&quot;#&quot; data-id=&quot;'+h2[i].id+'&quot;&amp;gt;'+h2[i].name+'&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;';
-    if(h3[i]){
-        for(var j=0;j&amp;lt;h3[i].length;j++){
-            tmpl += '&amp;lt;li class=&quot;h3&quot;&amp;gt;&amp;lt;a href=&quot;#&quot; data-id=&quot;'+h3[i][j].id+'&quot;&amp;gt;'+h3[i][j].name+'&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;';
-        }
-    }
-}
-tmpl += '&amp;lt;/ul&amp;gt;';
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;插入目录并赋事件&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;Chocolate&lt;/code&gt; 为本博客的一个通用类库&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var $scrollable = Chocolate.findScrollableElement('body','html');
-$('#menuIndex').append($(tmpl)).delegate('a','click',function(e){
-    e.preventDefault();
-    var scrollNum = $(this).attr('data-top') || $('#'+$(this).attr('data-id')).offset().top;
-    $scrollable.animate({ scrollTop: scrollNum-30 }, 400, 'swing');
-})
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;Chocolate 类 findScrollableElement&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;$scrollElement = $(el)&lt;/code&gt; 这个变量以 &lt;code&gt;$&lt;/code&gt; 开头，因为被赋予了一个 JQuery 对象，增强程序的可读性。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;findScrollableElement : function(els) {
-    for (var i = 0, argLength = arguments.length; i &amp;lt; argLength; i++) {
-        var el = arguments[i],
-        $scrollElement = $(el);
-        var ss=el;
-        if ($scrollElement.scrollTop() &amp;gt; 0) {
-            return $scrollElement;
-        } else {
-            $scrollElement.scrollTop(1);
-            var isScrollable = $scrollElement.scrollTop() &amp;gt; 0;
-            $scrollElement.scrollTop(0);
-            if (isScrollable) {
-                return $scrollElement;
-            }
-        }
-    }
-    return [];
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;JQuery 之 scrollTop()&lt;/h3&gt;
-
-&lt;p&gt;“匹配的元素集合中获取第一个元素的滚动条的垂直位置”。&lt;/p&gt;
-
-&lt;p&gt;垂直滚动位置等于浏览器可见区域以上的已经淡出我们视野的隐藏区域。如果滚动条是在最顶部，或者这个元素没有滚动条，那么这个数字是0。当此元素没有滚动条时 &lt;code&gt;scrollTop(value)&lt;/code&gt; 是不起作用的（包括 body,html,window）。理论上，应该只有 window 可滚动，但是，在浏览器有滚动条的情况下，经测试 firefox 和 ie 的可滚动元素为 html、window，而 webkit 内核的浏览器为 body、window。&lt;/p&gt;
-
-&lt;p&gt;既然这样，为什么不直接用 window 呢？like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$('#menuIndex').append($(tmpl)).delegate('a','click',function(e){
-    e.preventDefault();
-    var scrollNum = $(this).attr('data-top') || $('#'+$(this).attr('data-id')).offset().top;
-    //window.scrollTo(0,scrollNum-30);
-    // $(window).scrollTop(scrollNum-30);
-})
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;两条注释语句，随便开一条，即可以点击时跳转到相应位置。原因是没有滚动效果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$(window).animate({ scrollTop: scrollNum-30 }, 400, 'swing');
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;是没有效果的，window 并不是 dom 元素，而是 window 对象，animate 不起作用。当然我们可以用原生的 javascript 完成滚动效果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;//TODO:
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;相应目录项高亮&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;scrollTop&lt;/code&gt;数组中，应该比 &lt;code&gt;$('#menuIndex li')&lt;/code&gt; 集合中 &lt;code&gt;li&lt;/code&gt; 的个数少一个，利用这种特殊关系，通过数值调整，很巧妙地实现了相应目录的高亮。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$(window).load(function(){
-    var scrollTop = [];
-    $.each($('#menuIndex li a'),function(index,item){
-        if(!$(item).attr('data-top')){
-            var top = $('#'+$(item).attr('data-id')).offset().top;
-            scrollTop.push(top);
-            $(item).attr('data-top',top);
-        }
-    });
-    $(window).bind('scroll',function(){
-        var nowTop = $(window).scrollTop(),index,length = scrollTop.length;
-        if(nowTop+60 &amp;gt; scrollTop[length-1]){
-            index = length
-        }else{
-            for(var i=0;i&amp;lt;length;i++){
-                if(nowTop+60 &amp;lt;= scrollTop[i]){
-                    index = i
-                    break;
-                }
-            }
-        }
-        $('#menuIndex li').removeClass('on')
-        $('#menuIndex li').eq(index).addClass('on')
-    });
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;我的改善&lt;/h2&gt;
-
-&lt;p&gt;其实上面的代码中，也有我的小改，不过核心的东西还是来自于 BeiYuu 。下面写一小段判断，很简单，使目录索引随着滚动，不断移动，不断出现在我们的视野中。当没有这一 &lt;code&gt;($(window).height()-60)&amp;gt;$('#menuIndex').height()&lt;/code&gt; 条件时，是很可怕的，一旦 &lt;code&gt;$('#menuIndex').height()&lt;/code&gt; 大于 &lt;code&gt;$(window).height()&lt;/code&gt; 了，滚动条会因为目录区域的溢出可无限往下滚动。之所以 &lt;code&gt;$(window).height()-60&lt;/code&gt; 减 60，是因为本博客的版权高度大概60像素，这样避免了版权区域与目录区域的重叠覆盖。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$(window).bind(&quot;scroll&quot;, function(){
-    var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
-    if(menuIndex_scrHeight &amp;gt; 140 &amp;amp;&amp;amp; ($(window).height()-60)&amp;gt;$('#menuIndex').height()) {
-        menuIndex_topHeight = menuIndex_scrHeight-140;
-        $('#menuIndex').animate({top: menuIndex_topHeight},10);
-    } 
-    else{
-        $('#menuIndex').animate({top: 0},10);
-    }
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果减去的 footer 高度很大，岂不是达不到想要的效果，上面这种方法不是很好，或者说很局限，很差，那你可以这样：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$(window).bind(&quot;scroll&quot;, function(){
-    var menuIndex_scrHeight = $(window).scrollTop(),menuIndex_topHeight;
-    var footerOffsetTop=$('footer').offset().top;
-    if(menuIndex_scrHeight &amp;gt; 140 &amp;amp;&amp;amp; menuIndex_scrHeight&amp;lt;(footerOffsetTop-$('#menuIndex').height()) &amp;amp;&amp;amp; $(window).height()&amp;gt;$('#menuIndex').height()) {
-        menuIndex_topHeight = menuIndex_scrHeight-140;
-        $('#menuIndex').animate({top: menuIndex_topHeight},10);
-    } 
-    else{
-        $('#menuIndex').animate({top: 0},10);
-    }
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;footerOffsetTop&lt;/code&gt; 这个高度只要保持取到“分栏容器”后的，第一个元素的 &lt;code&gt;.offset().top&lt;/code&gt; 即可&lt;/p&gt;
-
-&lt;h2&gt;结语&lt;/h2&gt;
-
-&lt;p&gt;不写不知道，很多概念还很模糊，试着解释了一哈，很不到位，不过理解稍微加深了一些。&lt;/p&gt;
 </content>
    </entry>
    

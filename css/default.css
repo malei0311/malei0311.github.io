@@ -643,7 +643,8 @@ div.share{
 }
 .article-div-content img{
 	border-radius:5px;
-	padding: 3px 3px;
+	background-color:white;
+	padding: 5px;
     border: 1px solid #e8e8e8;
     box-shadow: 0 0 4px #d0d0d0;
 }
