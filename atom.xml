@@ -4,13 +4,26 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-10-05T18:34:10+08:00</updated>
+   <updated>2012-10-23T20:55:53+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>Windows 7版本IE10浏览器11月中旬推出</title>
+     <link href="http://webcraft.malei.tk/articles/win7-ie10"/>
+     <updated>2012-10-23T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/win7-ie10</id>
+     <content type="html">&lt;p&gt;微软公司表示，11月中旬时，会推出针对Windows 7的Internet Explorer 10浏览器（简称IE10）预览版本。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/win7-ie10/ie.png&quot; title=&quot;IE10&quot; alt=&quot;IE10&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;根据微软的说法，Windows 7版本IE10的平台标准和Windows 8版本IE10是一样的。&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>insertAfter()?</title>
@@ -63,7 +76,11 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
      <link href="http://webcraft.malei.tk/articles/browsers"/>
      <updated>2012-09-25T00:00:00+08:00</updated>
      <id>http://webcraft.malei.tk/articles/browsers</id>
-     <content type="html">&lt;p&gt;&lt;img src=&quot;/images/browsers.jpg&quot; title=&quot;browsers&quot; alt=&quot;browsers&quot; /&gt;&lt;/p&gt;
+     <content type="html">&lt;p&gt;目前只用过Chrome, firefox, IE, Opera。其他的一些浏览器没用过，有的甚至没听过。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/browsers.jpg&quot; title=&quot;browsers&quot; alt=&quot;browsers&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;自认为，没必要为老旧的IE系列做兼容，未来是乐观的，所有的浏览器都应该标准化。&lt;/p&gt;
 </content>
    </entry>
    
@@ -501,91 +518,6 @@ $(&quot;.test&quot;).hilight();
 &lt;ul&gt;
 &lt;li&gt;云已完成，完整的显示，需要调父元素的 &lt;code&gt;padding&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;float&lt;/code&gt; 当该属性不等于none引起对象浮动时，对象将被视作块对象(&lt;code&gt;block-level&lt;/code&gt;)，即display属性等于block。也就是说，浮动对象的display特性将被忽略。 该属性可以被应用在非绝对定位的任何元素上。&lt;/li&gt;
-&lt;/ul&gt;
-
-</content>
-   </entry>
-   
-   <entry>
-     <title>制作图像 picture 的阴影显示效果</title>
-     <link href="http://webcraft.malei.tk/articles/image-shadow"/>
-     <updated>2012-08-17T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/image-shadow</id>
-     <content type="html">&lt;h2&gt;效果预览&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/articles/imgShadow/imgShadow-1.png&quot; title=&quot;效果图&quot; alt=&quot;imgShadow&quot; /&gt;&lt;/p&gt;
-
-&lt;h2&gt;主要结构&lt;/h2&gt;
-
-&lt;p&gt;主要是两层，外层的 &lt;code&gt;div&lt;/code&gt; 层主要是起 “相框” 的作用，里面的 &lt;code&gt;img&lt;/code&gt; 放图片。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&quot;box-shadow&quot;&amp;gt;
-    &amp;lt;img src=&quot;&quot;&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;CSS渲染&lt;/h2&gt;
-
-&lt;h3&gt;“相框” 的主架&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;“相框” 要紧紧地包裹图片 =&gt; &lt;code&gt;display:inline-block&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;伪对象的相对偏移 =&gt; &lt;code&gt;position: relative&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;CSS如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.box-shadow{
-    position: relative;
-    display:inline-block;
-    z-index: 1;
-    background: white;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;伪对象实现阴影效果&lt;/h3&gt;
-
-&lt;p&gt;左右两片，绝对定位，效果实现&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.box-shadow::after,.box-shadow::before{
-    z-index:-1;
-    position:absolute;
-    content:&quot;&quot;;
-    bottom:15px;
-    left:10px;
-    width:50%;
-    top:80%;
-    max-width:300px;
-    background:#999999;
-    -webkit-box-shadow:0 15px 10px #999999;
-    -moz-box-shadow:0 15px 10px #999999;
-    box-shadow:0 15px 10px #999999;
-    -webkit-transform:rotate(-2deg);
-    -moz-transform:rotate(-2deg);
-    -o-transform:rotate(-2deg);
-    -ms-transform:rotate(-2deg);
-    transform:rotate(-2deg);
-}
-
-.box-shadow::after{
-    -webkit-transform:rotate(2deg);
-    -moz-transform:rotate(2deg);
-    -o-transform:rotate(2deg);
-    -ms-transform:rotate(2deg);
-    transform:rotate(2deg);
-    right:10px;
-    left:auto;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;结语&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;注意 &lt;code&gt;transform:rotate(2deg)&lt;/code&gt; 这种小转角的应用&lt;/li&gt;
-&lt;li&gt;层叠的 element 可以显示出不错的效果&lt;/li&gt;
-&lt;li&gt;用更少的 element 干更多的事&lt;/li&gt;
-&lt;li&gt;精简代码&lt;/li&gt;
 &lt;/ul&gt;
 
 </content>
