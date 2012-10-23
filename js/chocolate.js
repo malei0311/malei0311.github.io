@@ -227,6 +227,25 @@ var Chocolate={
             var key = this.className.replace("-ico", "");
             window.open(urls[key], "_blank", "top=100,left=200,width=648,height=618");
         });
+    },
+    /**
+     * [print description] 打印
+     * @param  {[type]} num [description]
+     * @return {[type]}      [description]
+     */
+    printWhatIWant:function(num){
+        if (num < 10) {
+            bdhtml=window.document.body.innerHTML;//获取当前页的html代码
+            sprnstr="<!--startprint"+num+"-->";//设置打印开始区域
+            eprnstr="<!--endprint"+num+"-->";//设置打印结束区域
+            prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)+18); //从开始代码向后取html
+            prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));//从结束代码向前取html
+            window.document.body.innerHTML=prnhtml;
+            window.print();
+            window.document.body.innerHTML=bdhtml;
+        } else {
+            window.print();
+        }
     }
 }
 

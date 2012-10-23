@@ -48,6 +48,7 @@ sub{vertical-align:text-bottom;}
 /* 清理浮动 */
 .clearfix::after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
 .clearfix{zoom:1; /* for IE6 IE7 */}
+.clearfix-son{display:block;zoom:1;overflow: hidden;}
 /* 隐藏, 通常用来与 JS 配合 */
 body .hide{display:none;}
 /* 设置内联, 减少浮动带来的bug */

@@ -6,14 +6,16 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Demos | WebCraft</title>
+    <title>JavaScript打印 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="demos | malei0311\'s Blog" />
-    <meta name="keywords" content="webcraft,github,jekyll,ruby,css,javascripts,demos,malei0311" />
+    <meta name="description" content="JavaScript打印 | malei0311\'s Blog" />
+    <meta name="keywords" content="js,parseUnicode,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
+    
+    <link rel="stylesheet" href="/css/demos/js-print.css" type="text/css" />
     
     <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="/atom.xml" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -60,65 +62,34 @@
     
     <section id="main">
         <div class="content-cnt">
-    <div id="demos-list">
-    <div id="waterFallContainer" class="clearfix"></div>
-    <article id="demo-index-0">
-        
-        <h3>
-            All demos:
-            (<span>
-                3
-            </span>)
-        </h3>         
-    </article>
-    
-    
-    
-    
-        <article id="demo-index-1">
-            
-                <div class="demo-title">
-                
-                    <h3><a href="/demos/js-print">JavaScript打印</a></h3>
-                    <p>JavaScript打印</p>
-                </div>
-                <div class="demo-time">
-                    <p><span>&#8227;</span><time pubdate="Oct 23, 2012">Oct 23, 2012</time></p>
-                </div>
-            
-        </article>
-    
-    
-    
-        <article id="demo-index-2">
-            
-                <div class="demo-title">
-                
-                    <h3><a href="/demos/css3-image-box-shadow">CSSbox-shadow秒杀</a></h3>
-                    <p>1.普通的IMG 2.作为背景 3.基本的圆(普通IMG) 4.基本的圆(作为背景) 5.卡片风格 6.浮雕风格 7.软浮雕效果 8.剪切画效果 9.变形记 10.发光遮罩 11.倒影效果 12.光影结合 13.胶带风格 14.变形并着色 15.羽化</p>
-                </div>
-                <div class="demo-time">
-                    <p><span>&#8227;</span><time pubdate="Aug 04, 2012">Aug 04, 2012</time></p>
-                </div>
-            
-        </article>
-    
-    
-    
-        <article id="demo-index-3">
-            
-                <div class="demo-title">
-                
-                    <h3><a href="/demos/tools-parseUnicode">parseUnicode小工具</a></h3>
-                    <p>parseUnicode小工具，提供字符串转Unicode和Unicode转字符</p>
-                </div>
-                <div class="demo-time">
-                    <p><span>&#8227;</span><time pubdate="Aug 01, 2012">Aug 01, 2012</time></p>
-                </div>
-            
-        </article>
-    
-    </div>
+	<div id="print-practice">
+		<!--startprint1-->
+		<h1>小石潭记</h1>
+		<div class="clearfix-son">
+			<div class="left">
+				<span>作者：柳宗元</span>
+			</div>
+			<div class="right">
+				<a title="print"><span class="print-icon"></span></a>
+			</div>
+		</div>
+		<p>
+			从小丘西行百二十步，隔篁竹，闻水声，如鸣佩环，心乐之。伐竹取道，下见小潭，水尤清冽。全石以为底，近岸，卷石底以出，为坻，为屿，为嵁，为岩。青树翠蔓，蒙络摇缀，参差披拂。
+		</p>
+		<p>
+			潭中鱼可百许头，皆若空游无所依。日光下澈，影布石上，佁然不动;俶尔远逝，往来翕忽，似与游者相乐。
+		</p>
+		<p> 
+			潭西南而望，斗折蛇行，明灭可见。其岸势犬牙差互，不可知其源。 
+		</p>
+		<p>
+			坐潭上，四面竹树环合，寂寥无人，凄神寒骨，悄怆幽邃。以其境过清，不可久居，乃记之而去。
+		</p>
+		<p>
+			同游者：吴武陵，龚古，余弟宗玄。隶而从者，崔氏二小生：曰恕己，曰奉壹。
+		</p>	
+		<!--endprint1-->
+	</div>	
 </div>
     </section>
     <div class="go-top">
@@ -140,32 +111,11 @@
         <script src="/js/chocolate.js"></script>
         
         
+            <script src="/js/demos/js-print.js"></script>
         
         
         
         
-            <script src="/js/waterFall.js"></script>
-            <script type="text/javascript">
-            $(function(){
-                waterFall.init();
-    
-                $('#waterFallContainer article div.demo-title').each(function(index,domEle){
-                    $(domEle).css('borderColor','rgba('+Chocolate.randomColor()+',.5)');
-                }); 
-                $('#waterFallContainer article').each(function(){
-                    $(this).hover(function(){
-                        $(this).children('div.demo-time').slideToggle("normal");
-                        $(this).children('div.demo-title').children('h3').children('a').toggleClass('hoverColor');
-                    })
-                    $(this).bind('click', function() {
-                        var gotoTheUrl=$(this).children('div.demo-title').children('h3').children('a').attr('href');
-                        if(gotoTheUrl){
-                            window.location.href=gotoTheUrl;
-                        } 
-                    });
-                }) 
-            });
-            </script>
         
         
         <script>
