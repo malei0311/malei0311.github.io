@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>PHP随机显示图片（目录不限深度） | WebCraft</title>
+    <title>百度-web前端开发工程师-笔试+面试-经历 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度 | malei0311\'s Blog" />
-    <meta name="keywords" content="php,readImage,malei0311" />
+    <meta name="description" content="由于自己很喜欢前端开发工作，于是就利用自己的课余时间，学习和练习了许多demo，并看了一些相关的书籍；如果自己未来的工作是web前端开发，是一件多么令人兴奋的事情。抱着这样一种心态，向一些大公司投了简历，想求得一份web前端开发的工作。这篇笔记，主要记录在百度的笔试和面试经历。 | malei0311\'s Blog" />
+    <meta name="keywords" content="面试,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/php-random-image">PHP随机显示图片（目录不限深度）</a></h1>
+            <h1><a href="/articles/baidu-examination">百度-web前端开发工程师-笔试+面试-经历</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2011-12-31">2011-12-31</time>
+                    <time class="date" pubdate="2012-10-26">2012-10-26</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#php">
-                                    php
+                                <a href="/tags.html#面试">
+                                    面试
                                 </a>
                                 <span>
                                     ,
@@ -91,124 +91,194 @@
                 
             </div>
         </div>
-        <p class="description">编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度</p>
+        <p class="description">由于自己很喜欢前端开发工作，于是就利用自己的课余时间，学习和练习了许多demo，并看了一些相关的书籍；如果自己未来的工作是web前端开发，是一件多么令人兴奋的事情。抱着这样一种心态，向一些大公司投了简历，想求得一份web前端开发的工作。这篇笔记，主要记录在百度的笔试和面试经历。</p>
         <div class="article-div-content">
         	<h2>总述</h2>
 
-<p>这是在 jekyll 引擎上的第一篇正式博文，也作为一篇测试文章(测试隔年文章的显示效果)，故意把时间调整到了 2011-12-31。此篇原文，在我搭建在GAE的<a href="http://blog.malei.tk/" title="malei0311的专栏">blog</a>上。那篇只是简单地贴出了代码，这篇稍微加工一下。好，现在先把类的“皮”，写出来。</p>
+<p>幸运的是笔试通过了，悲剧的是在面试的第一轮就被淘汰了。其实面试被淘汰，在意料之中，因为面试官问的一些问题，有的细节竟然一点也不知道。“知其然，而不知其所以然”，致使被淘汰，这使我认识到自己差的还很远，还有很多需要学，加油！！</p>
 
-<pre><code>&lt;?php
-/*
- * @fileoverview handle-file 随机显示目录中的图片
- *
- * @author &lt;a href="mailto:leiman0311@gmail.com"&gt;Lei Ma&lt;/a&gt;
- * @time  Jul 31, 2012
- */
+<h2>web前端工程师职位要求</h2>
 
-/*
- * @description {class} ReadImage
- */
-class ReadImage{}
-?&gt;
-</code></pre>
+<ul>
+<li>精通JavaScript、Ajax等Web开发技术</li>
+<li>精通HTML/XHTML、CSS等网页制作技术，熟悉页面架构和布局</li>
+<li>熟悉W3C标准，对表现与数据分离、Web语义化等有深刻理解</li>
+<li>对互联网产品和Web技术有强烈兴趣，有优秀的学习能力和强烈的进取心</li>
+<li>具有良好的沟通能力和团队合作精神、优秀的分析问题和解决问题的能力</li>
+<li>计算机相关专业本科或以上学历</li>
+</ul>
 
-<h2>ReadImage类的三部曲</h2>
 
-<h3>1.读取文件夹目录</h3>
+<p>具有以下能力者优先考虑：</p>
 
-<p>此方法返回的是一个不规则的多维数组，实现起来很简单，PHP 手册上写的很清楚</p>
+<ul>
+<li>具有Flash、Mobile WEB/WAP、HTML5/CSS3开发经验</li>
+<li>精通一种模板语言（Smarty、Velocity、Django等）</li>
+<li>熟悉Linux平台，掌握一种后端开发语言（PHP/Java/C/C++等）</li>
+<li>具有一定的软件工程意识，对数据结构和算法设计有充分理解</li>
+</ul>
 
-<pre><code>/*
- *@description 读取文件夹目录(遍历所有目录)
- *@param {String} dir 要读取的目录
- */
-public function read_folder_directory($dir){ 
-    $listDir = array(); 
-    if($handler = opendir($dir)) { 
-        while (($sub = readdir($handler)) !== FALSE) { 
-            if ($sub != "." &amp;&amp; $sub != "..") {
-                    if(is_file($dir."/".$sub)) {
-                        if(substr($sub,-3)=='gif' || substr($sub,-3)=='jpg' || substr($sub,-3)=='png')
-                        $listDir[] = $sub; 
-                    }
-                    //递归
-                    elseif(is_dir($dir."/".$sub)){ 
-                        $listDir[$sub] = $this-&gt;read_folder_directory($dir."/".$sub); 
-                    } 
-            } 
-        } 
-        closedir($handler); 
-    } 
-    return $listDir; 
-}  
-</code></pre>
 
-<h3>2. 遍历多维数组到一维数组中</h3>
+<h2>笔试</h2>
 
-<p>此方法着实令我费了一些周折，需要实现的是：把上个方法返回的不规则数组，注入到一维数组中，细化到 <code>叶子</code> ，把 <code>叶子</code> 到 <code>根</code> 的路径排列好，写入一维数组中。难点是：<code>static</code> 关键字 和 参数控制。</p>
+<h3>笔试通知</h3>
 
-<pre><code>/*
- *@description 遍历多维数组，把值注入到一维数组
- *@param {array} arr 不规则多维数组
- *@param {boolean} flag 标志位
- *@param {string} subFolder 图片根目录下的子目录名
- */ 
-public function arr_foreach ($arr,$flag=false,$subFolder=""){
-    static $newArr=array();
-    if(!is_array($arr)){
-        return $newArr;
-    }
-    if(!$flag){
-        foreach($arr as $key =&gt; $val){
-            if(is_array($val)){
-                $this-&gt;arr_foreach($val,true,$key);
+<p>由于笔试在清华大学进行，所以顺便游览了一下清华校园，找到了一个不错的住宿环境——<a href="/articles/youth-hotel/" title="未名国际青年旅社">未名国际青年旅社</a>。以下是笔试的详细信息:</p>
+
+<ul>
+<li>简历编号：123856</li>
+<li>应聘职位：Web前端研发工程师(北京)</li>
+<li>笔试时间：10月13日（周六）9:00-11:00</li>
+<li>笔试地点：清华大学三教2302</li>
+<li>座位号：114</li>
+</ul>
+
+
+<p>我的第一次笔试经历啊...</p>
+
+<h3>笔试试题</h3>
+
+<h4>1. 请写出至少三个CSS3中新添加的样式属性的名字；</h4>
+
+<p>border-radius,box-shadow,text-shadow,transform,transition,opacity,text-overflow,box-reflect,border-image等等</p>
+
+<h4>2.请运用javaScript找出所有ClassName包含text的标签<code>&lt;li&gt;</code>，并将它们的背景颜色设置为黄色；</h4>
+
+<p>以下代码，并不是做题当时的代码，考试时，没有考虑到：</p>
+
+<ul>
+<li>".all" 问题</li>
+<li>className 中 '-' 的问题</li>
+</ul>
+
+
+<p>代码详情：</p>
+
+<pre><code>var Tea = (function(){
+    function getElementsByClassName(className,tag,parent){
+        //".all" 是 DHTML 中的用法，当 tag 等于 "*" 时，
+        //如果浏览器支持 ".all" 就用，否则，用标准DOM方法
+        var allTags=(tag == "*" &amp;&amp; parent.all) ? parent.all : parent.getElementsByTagName(tag);
+        var matchingElements= new Array();
+        //因为 '-' 是正则表达式中的元字符，而 className 中 '-' 是合法的，
+        //所以，当把 className 写入正则表达式之前，要先转义 '-'
+        className=className.replace(/\-/g,"\\-");
+        var regex=new RegExp("(^|\\b)"+className+"(\\b|$)");
+        var element;
+        for(var i=0;i&lt;allTags.length;i++){
+            element=allTags[i];
+            if(regex.test(element.className)){
+                matchingElements.push(element);
             }
-            else $newArr[]=$val;
         }
+        return matchingElements;
     }
-    else{
-        foreach($arr as $key =&gt; $val){
-            if(is_array($val)){
-               $this-&gt;arr_foreach($val,true,$subFolder."/".$key);
-            }
-            else  $newArr[]=$subFolder."/".$val;
-        }
+    return {
+        getElementsByClassName : getElementsByClassName
+    };
+})();
+window.onload=function(){
+    var matchingElements=Tea.getElementsByClassName('text','li',document);
+    for(var i=0;i&lt;matchingElements.length;i++){
+        matchingElements[i].style.backgroundColor="yellow";
     }
-
-    return $newArr;
 }
 </code></pre>
 
-<h3>3.读取数据</h3>
+<p>为什么起名叫 "Tea" ，因为本人酷爱 Dota ，有一次和同学们注册小号开黑，本想注册一种新兴的编程语言 "CoffeeScript"，很不幸，已经被抢注，经过不断尝试，注册 "teaScripts" 成功了。由于他本来就是 "script"，于是命名为 "Tea"。</p>
 
-<p>终于到了读取数据的方法了，这就比较简单了，随机取那个一维数组中的一项，写出相应格式图片的 <code>header</code> ，直接 <code>readfile()</code>。</p>
+<h4>3.用HTML/CSS实现下面的图片内容：</h4>
 
-<pre><code>/*
- * @description 读取数据
- */
-function read_a_random_file(){
-    $files = $this-&gt;read_folder_directory ($_SERVER["DOCUMENT_ROOT"].'/images/');
-    $dumpFiles=array();
-    $dumpFiles=$this-&gt;arr_foreach ($files);
-    $random=rand(0,count($dumpFiles)-1);
-    if(substr($dumpFiles[$random],-3)=='gif') header("Content-type: image/gif");
-    if(substr($dumpFiles[$random],-3)=='jpg') header("Content-type: image/jpeg");
-    if(substr($dumpFiles[$random],-3)=="png") header("Content-type: image/png");
-    readfile($_SERVER["DOCUMENT_ROOT"].'/images/'.$dumpFiles[$random]);
+<p><img src="/images/articles/baidu-examination/bishi-3.jpg" title="bishi-3" alt="bishi-3" /></p>
+
+<p>我做的<a href="/demos/bishi-baidu/" title="my demo">demo</a>，关于元素的 <code>display:inline-block</code> 的4像素间隔问题，解决方案(设 "father" 为父标签，"son" 为子标签)：纯CSS实现 在父元素中设置 <code>font-size:0</code> ,用来兼容chrome，而使用 <code>letter-space:-npx</code> 来兼容safari:</p>
+
+<pre><code>father {
+  letter-spacing: -4px;/*根据不同字体字号或许需要做一定的调整*/
+  word-spacing: -4px;
+  font-size: 0;
+}
+father son {
+  font-size: 16px;
+  letter-spacing: normal;
+  word-spacing: normal;
+  display:inline-block;
+  *display: inline;
+  zoom:1;
 }
 </code></pre>
 
-<h2>调用</h2>
+<p>解决方案参考自<a href="http://www.hujuntao.com/archives/inline-block-elements-the-4px-blank-gap-solution.html" title="设计蜂巢">设计蜂巢</a>，讲的很详细。</p>
 
-<p>只需把以上三个方法，放入最开始的类 “皮” 中，就可以调用了。</p>
+<h4>4.浏览器的缓存和本地存储相关内容有哪些？这些在什么环境下都各自能起到什么作用？</h4>
 
-<pre><code>$readImage=new ReadImage;
-$readImage-&gt;read_a_random_file();
+<p>cookie,webstorage => <a href="http://www.baiduux.com/blog/2010/06/21/web-storage%E5%85%A8%E8%A7%A3%E6%9E%90/" title="BAIDU-UFO">BAIDU-UFO</a>讲的相当详细</p>
+
+<h4>5.我们把一个数字倒着读和原数字相同的数字称之为对称数，（例如1,121,88,8998），不考虑性能，请找出1—10000之间的对称数，要求用最简练javaScript实现；</h4>
+
+<pre><code>/**
+ * [findSymmetryNumber 找出一定区段内的对称数]
+ * @param  {[Number]} start [起始数]
+ * @param  {[Number]} end   [结束值]
+ * @return {[Array]}       [返回的结果]
+ */
+function findSymmetryNumber(start,end){
+    var resultArray=[];
+    for(var j=start;j&lt;end;j++){
+        var str1=j+'';
+        var str2=str1.split('').reverse().join('');
+        if(str1 === str2){
+            resultArray.push(str1);
+        }
+    }
+    return resultArray;
+}
 </code></pre>
 
-<h2>结语</h2>
+<p>然后调用函数输出即可</p>
 
-<p>对<code>递归</code>稍微有点认识了</p>
+<h4>6.当你打开浏览在地址栏中输“http://www.baidu.com/”后在百度的搜索框中输入“HTML5”，然后点击百度一下按钮，在所有的信息在一一被列举出来的过程中，计算机和网络都发生了什么变化？你有什建议？</h4>
+
+<h4>7.请描述你参加过的一个项目：</h4>
+
+<ul>
+<li>a)你在项目中的角色？你是如何研发，设计你的角色所做的东西的？</li>
+<li>c)你觉得你在项目的过程中，哪些需要得以注重？</li>
+<li>d)你觉得你还需要能做些什么，去更好的完成你的项目？</li>
+</ul>
+
+
+<h2>面试</h2>
+
+<h3>面试通知</h3>
+
+<p>先是短信通知，再是电话确认，以下详细信息：</p>
+
+<p>同学好，百度面试通知：10月21日13:50到达百度大厦（13号线西二旗站向西500米）C座前台签到。携带身份证、学生证、签字笔、三份简历。</p>
+
+<h3>面试回忆</h3>
+
+<h4>自我介绍</h4>
+
+<h4>做过什么项目</h4>
+
+<h4>3D-tags的jquery插件，tags的分布算法</h4>
+
+<h4>CSS两栏布局（尽可能多方法）</h4>
+
+<h4>JavaScript基本类型</h4>
+
+<h4>null==undefiend or null===undefiend  true? false?</h4>
+
+<h4>统计一个字符串中每个字母的个数</h4>
+
+<h4>说说IE兼容问题</h4>
+
+<h4>清除浮动的几种方法</h4>
+
+<h4>今天周几？</h4>
+
+<h4>如何判断某一变量是什么类型？</h4>
 
         </div>
         <div class="share clearfix">
@@ -220,10 +290,8 @@ $readImage-&gt;read_a_random_file();
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/flag" rel="bookmark" title="旧一篇">&laquo;&nbsp;article-flag</a>
+                <a class="left" href="/articles/youth-hotel" rel="bookmark" title="旧一篇">&laquo;&nbsp;未名国际青年旅社</a>
             
-            
-                <a class="right" href="/articles/chocolate-pure-css" rel="bookmark" title="新一篇">本博客使用PureCss&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -235,95 +303,95 @@ $readImage-&gt;read_a_random_file();
                      
                     
                         
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/mysql-copy-table" title="mysql拷贝表">&raquo;&nbsp;mysql拷贝表</a></li>
+                                    <li><a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/php-random-image" title="PHP随机显示图片（目录不限深度）">&raquo;&nbsp;PHP随机显示图片（目录不限深度）</a></li>
+                                    <li><a href="/articles/youth-hotel" title="未名国际青年旅社">&raquo;&nbsp;未名国际青年旅社</a></li>
                                 
                             
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
                         
                     
                 
@@ -332,10 +400,6 @@ $readImage-&gt;read_a_random_file();
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
-                   
-                    <li>
-                        <a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历" rel="bookmark">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a>
-                    </li>                                   
                    
                     <li>
                         <a href="/articles/youth-hotel" title="未名国际青年旅社" rel="bookmark">&raquo;&nbsp;未名国际青年旅社</a>
@@ -371,6 +435,10 @@ $readImage-&gt;read_a_random_file();
                    
                     <li>
                         <a href="/articles/mysql-copy-table" title="mysql拷贝表" rel="bookmark">&raquo;&nbsp;mysql拷贝表</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/sublime-text-2" title="sublime text 2 插件使用" rel="bookmark">&raquo;&nbsp;sublime text 2 插件使用</a>
                     </li>                                   
                 
                 </ul>

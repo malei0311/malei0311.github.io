@@ -57,7 +57,22 @@ body .hide{display:none;}
 .right{float:right;}
 .none{display: none;}
 /*===========Beiyuu End===============*/
-::-webkit-scrollbar {
+::-webkit-scrollbar{
+	width:8px;
+	height:8px;
+}
+::-webkit-scrollbar-thumb{
+	height:50px;
+	background-color:#838282;
+	-webkit-border-radius:4px;
+	outline-offset:-2px;
+}
+::-webkit-scrollbar-thumb:hover{
+	height:50px;
+	background-color:#999;
+	-webkit-border-radius:4px;
+}
+/*::-webkit-scrollbar {
 	height: 16px;
 	overflow: visible;
 	width: 12px;
@@ -101,7 +116,7 @@ body::-webkit-scrollbar-corner {
 }
 ::-webkit-scrollbar-corner {
 	background: transparent;
-}
+}*/
 /*=================common elements================*/
 body {font: 14px/1.5 verdana, \5fae\8f6f\96c5\9ed1,\5b8b\4f53, \9ED1\4F53, sans-serif;position:relative;}/* 英文字体 verdana，中文微软雅黑，宋体和黑体。*/
 a {color:#4183C4;text-decoration:none;outline:none;}
@@ -126,6 +141,9 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 }
 .inner-content{
 	padding:20px 5px;
+}
+div.article-div-content ul,div.article-div-content ol{
+	padding-bottom:15px;
 }
 /*==========share========================*/
 div.share{

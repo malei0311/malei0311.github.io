@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>PHP随机显示图片（目录不限深度） | WebCraft</title>
+    <title>未名国际青年旅社 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度 | malei0311\'s Blog" />
-    <meta name="keywords" content="php,readImage,malei0311" />
+    <meta name="description" content="去百度笔试和面试时住的旅馆，很不错！ | malei0311\'s Blog" />
+    <meta name="keywords" content="面试,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/php-random-image">PHP随机显示图片（目录不限深度）</a></h1>
+            <h1><a href="/articles/youth-hotel">未名国际青年旅社</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2011-12-31">2011-12-31</time>
+                    <time class="date" pubdate="2012-10-25">2012-10-25</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#php">
-                                    php
+                                <a href="/tags.html#面试">
+                                    面试
                                 </a>
                                 <span>
                                     ,
@@ -91,124 +91,49 @@
                 
             </div>
         </div>
-        <p class="description">编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度</p>
+        <p class="description">去百度笔试和面试时住的旅馆，很不错！</p>
         <div class="article-div-content">
-        	<h2>总述</h2>
+        	<h2>简介</h2>
 
-<p>这是在 jekyll 引擎上的第一篇正式博文，也作为一篇测试文章(测试隔年文章的显示效果)，故意把时间调整到了 2011-12-31。此篇原文，在我搭建在GAE的<a href="http://blog.malei.tk/" title="malei0311的专栏">blog</a>上。那篇只是简单地贴出了代码，这篇稍微加工一下。好，现在先把类的“皮”，写出来。</p>
+<p>北京未名国际青年旅舍，中国的硅谷--北京中关村地区唯一的国际青年旅舍。这里是中国的文化教育中心。周围环绕的是中国最出名的高等学府－北京大学、清华大学、北京语言大学、中国地质大学、北京科技大学，背靠的是中国科学院本部及其直属的十几个研究所。</p>
 
-<pre><code>&lt;?php
-/*
- * @fileoverview handle-file 随机显示目录中的图片
- *
- * @author &lt;a href="mailto:leiman0311@gmail.com"&gt;Lei Ma&lt;/a&gt;
- * @time  Jul 31, 2012
- */
+<p>这里是中国的硅谷－中关村中心区。中国最杰出的IT企业都集中在这里，中国最大最多的电子市场设在这里，最野心勃勃的年轻人集中在这里。</p>
 
-/*
- * @description {class} ReadImage
- */
-class ReadImage{}
-?&gt;
-</code></pre>
+<p>这里是来北京旅游理想的栖息地。到颐和园15分钟车程，到圆明园5分钟车程，到2008奥运村15分钟车程，到天安门30分钟地铁行程，到八达岭长城、明十三陵都很方便。  北京未名国际青年旅舍位置这里是休闲娱乐的好去处。附近的五道口是北京出名的外国人集居区，各种中国特色餐饮、西餐、韩国风味、日式风味沿街可见，多种风格的酒吧也颇有名声。</p>
 
-<h2>ReadImage类的三部曲</h2>
+<p>未名国际青年旅舍拥有标准间、4至8人青年旅舍多种客房，有书吧、网吧、放映厅、自助式厨房、自助式洗衣房，房间可宽带上网， 提供中、英、韩等多种语言服务，是背包客、旅游、学习、商务住宿的理想选择。</p>
 
-<h3>1.读取文件夹目录</h3>
+<h2>个人感受</h2>
 
-<p>此方法返回的是一个不规则的多维数组，实现起来很简单，PHP 手册上写的很清楚</p>
+<p>个人感觉，这个青年旅社，简单，干净，更类似于大学的公寓，很适合大学生居住。有很多外国人，并且有公共区可以看书、下棋。这个旅社的文化氛围很好，墙壁上好多字画，很有感觉。缺点是，有的床有点晃悠，应该及时加强修复。</p>
 
-<pre><code>/*
- *@description 读取文件夹目录(遍历所有目录)
- *@param {String} dir 要读取的目录
- */
-public function read_folder_directory($dir){ 
-    $listDir = array(); 
-    if($handler = opendir($dir)) { 
-        while (($sub = readdir($handler)) !== FALSE) { 
-            if ($sub != "." &amp;&amp; $sub != "..") {
-                    if(is_file($dir."/".$sub)) {
-                        if(substr($sub,-3)=='gif' || substr($sub,-3)=='jpg' || substr($sub,-3)=='png')
-                        $listDir[] = $sub; 
-                    }
-                    //递归
-                    elseif(is_dir($dir."/".$sub)){ 
-                        $listDir[$sub] = $this-&gt;read_folder_directory($dir."/".$sub); 
-                    } 
-            } 
-        } 
-        closedir($handler); 
-    } 
-    return $listDir; 
-}  
-</code></pre>
+<h2>旅社图片分享</h2>
 
-<h3>2. 遍历多维数组到一维数组中</h3>
+<h3>每个房间都有的温馨提示</h3>
 
-<p>此方法着实令我费了一些周折，需要实现的是：把上个方法返回的不规则数组，注入到一维数组中，细化到 <code>叶子</code> ，把 <code>叶子</code> 到 <code>根</code> 的路径排列好，写入一维数组中。难点是：<code>static</code> 关键字 和 参数控制。</p>
+<p><img src="/images/articles/youth-hotel/youth-hotel-tips.png" title="温馨提示" alt="youth-hotel-tips" /></p>
 
-<pre><code>/*
- *@description 遍历多维数组，把值注入到一维数组
- *@param {array} arr 不规则多维数组
- *@param {boolean} flag 标志位
- *@param {string} subFolder 图片根目录下的子目录名
- */ 
-public function arr_foreach ($arr,$flag=false,$subFolder=""){
-    static $newArr=array();
-    if(!is_array($arr)){
-        return $newArr;
-    }
-    if(!$flag){
-        foreach($arr as $key =&gt; $val){
-            if(is_array($val)){
-                $this-&gt;arr_foreach($val,true,$key);
-            }
-            else $newArr[]=$val;
-        }
-    }
-    else{
-        foreach($arr as $key =&gt; $val){
-            if(is_array($val)){
-               $this-&gt;arr_foreach($val,true,$subFolder."/".$key);
-            }
-            else  $newArr[]=$subFolder."/".$val;
-        }
-    }
+<h3>六人间床铺、橱子一览</h3>
 
-    return $newArr;
-}
-</code></pre>
+<p><img src="/images/articles/youth-hotel/bed.png" title="床铺" alt="bed" /></p>
 
-<h3>3.读取数据</h3>
+<p><img src="/images/articles/youth-hotel/closet.png" title="橱子" alt="closet" /></p>
 
-<p>终于到了读取数据的方法了，这就比较简单了，随机取那个一维数组中的一项，写出相应格式图片的 <code>header</code> ，直接 <code>readfile()</code>。</p>
+<h3>空调和换气装置</h3>
 
-<pre><code>/*
- * @description 读取数据
- */
-function read_a_random_file(){
-    $files = $this-&gt;read_folder_directory ($_SERVER["DOCUMENT_ROOT"].'/images/');
-    $dumpFiles=array();
-    $dumpFiles=$this-&gt;arr_foreach ($files);
-    $random=rand(0,count($dumpFiles)-1);
-    if(substr($dumpFiles[$random],-3)=='gif') header("Content-type: image/gif");
-    if(substr($dumpFiles[$random],-3)=='jpg') header("Content-type: image/jpeg");
-    if(substr($dumpFiles[$random],-3)=="png") header("Content-type: image/png");
-    readfile($_SERVER["DOCUMENT_ROOT"].'/images/'.$dumpFiles[$random]);
-}
-</code></pre>
+<p><img src="/images/articles/youth-hotel/air-conditioner.png" title="空调" alt="air-conditioner" /></p>
 
-<h2>调用</h2>
+<h3>走廊字画</h3>
 
-<p>只需把以上三个方法，放入最开始的类 “皮” 中，就可以调用了。</p>
+<p><img src="/images/articles/youth-hotel/calligraphy1.png" title="书法1" alt="calligraphy1" /></p>
 
-<pre><code>$readImage=new ReadImage;
-$readImage-&gt;read_a_random_file();
-</code></pre>
+<p><img src="/images/articles/youth-hotel/calligraphy2.png" title="书法2" alt="calligraphy2" /></p>
 
-<h2>结语</h2>
+<h2>挥一挥手，不带走一片云彩</h2>
 
-<p>对<code>递归</code>稍微有点认识了</p>
+<p>10月21日，北京将近下了一天的小雨，所以第二天的天气格外好。这是站在北京西站的二楼入站口，拍的西站对面。</p>
+
+<p><img src="/images/articles/youth-hotel/beijing-west-railway-station.png" title="北京西站" alt="beijing-west-railway-station" /></p>
 
         </div>
         <div class="share clearfix">
@@ -220,10 +145,10 @@ $readImage-&gt;read_a_random_file();
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/flag" rel="bookmark" title="旧一篇">&laquo;&nbsp;article-flag</a>
+                <a class="left" href="/demos/bishi-baidu" rel="bookmark" title="旧一篇">&laquo;&nbsp;Baidu笔试，CSS布局题</a>
             
             
-                <a class="right" href="/articles/chocolate-pure-css" rel="bookmark" title="新一篇">本博客使用PureCss&nbsp;&raquo;</a>
+                <a class="right" href="/articles/baidu-examination" rel="bookmark" title="新一篇">百度-web前端开发工程师-笔试+面试-经历&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -235,95 +160,95 @@ $readImage-&gt;read_a_random_file();
                      
                     
                         
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/mysql-copy-table" title="mysql拷贝表">&raquo;&nbsp;mysql拷贝表</a></li>
+                                    <li><a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/php-random-image" title="PHP随机显示图片（目录不限深度）">&raquo;&nbsp;PHP随机显示图片（目录不限深度）</a></li>
+                                    <li><a href="/articles/youth-hotel" title="未名国际青年旅社">&raquo;&nbsp;未名国际青年旅社</a></li>
                                 
                             
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
                         
                     
                 
@@ -335,10 +260,6 @@ $readImage-&gt;read_a_random_file();
                    
                     <li>
                         <a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历" rel="bookmark">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a>
-                    </li>                                   
-                   
-                    <li>
-                        <a href="/articles/youth-hotel" title="未名国际青年旅社" rel="bookmark">&raquo;&nbsp;未名国际青年旅社</a>
                     </li>                                   
                    
                     <li>
@@ -371,6 +292,10 @@ $readImage-&gt;read_a_random_file();
                    
                     <li>
                         <a href="/articles/mysql-copy-table" title="mysql拷贝表" rel="bookmark">&raquo;&nbsp;mysql拷贝表</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/sublime-text-2" title="sublime text 2 插件使用" rel="bookmark">&raquo;&nbsp;sublime text 2 插件使用</a>
                     </li>                                   
                 
                 </ul>

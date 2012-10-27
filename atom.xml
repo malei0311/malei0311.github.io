@@ -4,13 +4,256 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-10-23T22:54:31+08:00</updated>
+   <updated>2012-10-27T19:34:21+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>百度-web前端开发工程师-笔试+面试-经历</title>
+     <link href="http://webcraft.malei.tk/articles/baidu-examination"/>
+     <updated>2012-10-26T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/baidu-examination</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;幸运的是笔试通过了，悲剧的是在面试的第一轮就被淘汰了。其实面试被淘汰，在意料之中，因为面试官问的一些问题，有的细节竟然一点也不知道。“知其然，而不知其所以然”，致使被淘汰，这使我认识到自己差的还很远，还有很多需要学，加油！！&lt;/p&gt;
+
+&lt;h2&gt;web前端工程师职位要求&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;精通JavaScript、Ajax等Web开发技术&lt;/li&gt;
+&lt;li&gt;精通HTML/XHTML、CSS等网页制作技术，熟悉页面架构和布局&lt;/li&gt;
+&lt;li&gt;熟悉W3C标准，对表现与数据分离、Web语义化等有深刻理解&lt;/li&gt;
+&lt;li&gt;对互联网产品和Web技术有强烈兴趣，有优秀的学习能力和强烈的进取心&lt;/li&gt;
+&lt;li&gt;具有良好的沟通能力和团队合作精神、优秀的分析问题和解决问题的能力&lt;/li&gt;
+&lt;li&gt;计算机相关专业本科或以上学历&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;具有以下能力者优先考虑：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;具有Flash、Mobile WEB/WAP、HTML5/CSS3开发经验&lt;/li&gt;
+&lt;li&gt;精通一种模板语言（Smarty、Velocity、Django等）&lt;/li&gt;
+&lt;li&gt;熟悉Linux平台，掌握一种后端开发语言（PHP/Java/C/C++等）&lt;/li&gt;
+&lt;li&gt;具有一定的软件工程意识，对数据结构和算法设计有充分理解&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;笔试&lt;/h2&gt;
+
+&lt;h3&gt;笔试通知&lt;/h3&gt;
+
+&lt;p&gt;由于笔试在清华大学进行，所以顺便游览了一下清华校园，找到了一个不错的住宿环境——&lt;a href=&quot;/articles/youth-hotel/&quot; title=&quot;未名国际青年旅社&quot;&gt;未名国际青年旅社&lt;/a&gt;。以下是笔试的详细信息:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;简历编号：123856&lt;/li&gt;
+&lt;li&gt;应聘职位：Web前端研发工程师(北京)&lt;/li&gt;
+&lt;li&gt;笔试时间：10月13日（周六）9:00-11:00&lt;/li&gt;
+&lt;li&gt;笔试地点：清华大学三教2302&lt;/li&gt;
+&lt;li&gt;座位号：114&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;我的第一次笔试经历啊...&lt;/p&gt;
+
+&lt;h3&gt;笔试试题&lt;/h3&gt;
+
+&lt;h4&gt;1. 请写出至少三个CSS3中新添加的样式属性的名字；&lt;/h4&gt;
+
+&lt;p&gt;border-radius,box-shadow,text-shadow,transform,transition,opacity,text-overflow,box-reflect,border-image等等&lt;/p&gt;
+
+&lt;h4&gt;2.请运用javaScript找出所有ClassName包含text的标签&lt;code&gt;&amp;lt;li&amp;gt;&lt;/code&gt;，并将它们的背景颜色设置为黄色；&lt;/h4&gt;
+
+&lt;p&gt;以下代码，并不是做题当时的代码，考试时，没有考虑到：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&quot;.all&quot; 问题&lt;/li&gt;
+&lt;li&gt;className 中 '-' 的问题&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;代码详情：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var Tea = (function(){
+    function getElementsByClassName(className,tag,parent){
+        //&quot;.all&quot; 是 DHTML 中的用法，当 tag 等于 &quot;*&quot; 时，
+        //如果浏览器支持 &quot;.all&quot; 就用，否则，用标准DOM方法
+        var allTags=(tag == &quot;*&quot; &amp;amp;&amp;amp; parent.all) ? parent.all : parent.getElementsByTagName(tag);
+        var matchingElements= new Array();
+        //因为 '-' 是正则表达式中的元字符，而 className 中 '-' 是合法的，
+        //所以，当把 className 写入正则表达式之前，要先转义 '-'
+        className=className.replace(/\-/g,&quot;\\-&quot;);
+        var regex=new RegExp(&quot;(^|\\b)&quot;+className+&quot;(\\b|$)&quot;);
+        var element;
+        for(var i=0;i&amp;lt;allTags.length;i++){
+            element=allTags[i];
+            if(regex.test(element.className)){
+                matchingElements.push(element);
+            }
+        }
+        return matchingElements;
+    }
+    return {
+        getElementsByClassName : getElementsByClassName
+    };
+})();
+window.onload=function(){
+    var matchingElements=Tea.getElementsByClassName('text','li',document);
+    for(var i=0;i&amp;lt;matchingElements.length;i++){
+        matchingElements[i].style.backgroundColor=&quot;yellow&quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为什么起名叫 &quot;Tea&quot; ，因为本人酷爱 Dota ，有一次和同学们注册小号开黑，本想注册一种新兴的编程语言 &quot;CoffeeScript&quot;，很不幸，已经被抢注，经过不断尝试，注册 &quot;teaScripts&quot; 成功了。由于他本来就是 &quot;script&quot;，于是命名为 &quot;Tea&quot;。&lt;/p&gt;
+
+&lt;h4&gt;3.用HTML/CSS实现下面的图片内容：&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/baidu-examination/bishi-3.jpg&quot; title=&quot;bishi-3&quot; alt=&quot;bishi-3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我做的&lt;a href=&quot;/demos/bishi-baidu/&quot; title=&quot;my demo&quot;&gt;demo&lt;/a&gt;，关于元素的 &lt;code&gt;display:inline-block&lt;/code&gt; 的4像素间隔问题，解决方案(设 &quot;father&quot; 为父标签，&quot;son&quot; 为子标签)：纯CSS实现 在父元素中设置 &lt;code&gt;font-size:0&lt;/code&gt; ,用来兼容chrome，而使用 &lt;code&gt;letter-space:-npx&lt;/code&gt; 来兼容safari:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;father {
+  letter-spacing: -4px;/*根据不同字体字号或许需要做一定的调整*/
+  word-spacing: -4px;
+  font-size: 0;
+}
+father son {
+  font-size: 16px;
+  letter-spacing: normal;
+  word-spacing: normal;
+  display:inline-block;
+  *display: inline;
+  zoom:1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;解决方案参考自&lt;a href=&quot;http://www.hujuntao.com/archives/inline-block-elements-the-4px-blank-gap-solution.html&quot; title=&quot;设计蜂巢&quot;&gt;设计蜂巢&lt;/a&gt;，讲的很详细。&lt;/p&gt;
+
+&lt;h4&gt;4.浏览器的缓存和本地存储相关内容有哪些？这些在什么环境下都各自能起到什么作用？&lt;/h4&gt;
+
+&lt;p&gt;cookie,webstorage =&gt; &lt;a href=&quot;http://www.baiduux.com/blog/2010/06/21/web-storage%E5%85%A8%E8%A7%A3%E6%9E%90/&quot; title=&quot;BAIDU-UFO&quot;&gt;BAIDU-UFO&lt;/a&gt;讲的相当详细&lt;/p&gt;
+
+&lt;h4&gt;5.我们把一个数字倒着读和原数字相同的数字称之为对称数，（例如1,121,88,8998），不考虑性能，请找出1—10000之间的对称数，要求用最简练javaScript实现；&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;/**
+ * [findSymmetryNumber 找出一定区段内的对称数]
+ * @param  {[Number]} start [起始数]
+ * @param  {[Number]} end   [结束值]
+ * @return {[Array]}       [返回的结果]
+ */
+function findSymmetryNumber(start,end){
+    var resultArray=[];
+    for(var j=start;j&amp;lt;end;j++){
+        var str1=j+'';
+        var str2=str1.split('').reverse().join('');
+        if(str1 === str2){
+            resultArray.push(str1);
+        }
+    }
+    return resultArray;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后调用函数输出即可&lt;/p&gt;
+
+&lt;h4&gt;6.当你打开浏览在地址栏中输“http://www.baidu.com/”后在百度的搜索框中输入“HTML5”，然后点击百度一下按钮，在所有的信息在一一被列举出来的过程中，计算机和网络都发生了什么变化？你有什建议？&lt;/h4&gt;
+
+&lt;h4&gt;7.请描述你参加过的一个项目：&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a)你在项目中的角色？你是如何研发，设计你的角色所做的东西的？&lt;/li&gt;
+&lt;li&gt;c)你觉得你在项目的过程中，哪些需要得以注重？&lt;/li&gt;
+&lt;li&gt;d)你觉得你还需要能做些什么，去更好的完成你的项目？&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;面试&lt;/h2&gt;
+
+&lt;h3&gt;面试通知&lt;/h3&gt;
+
+&lt;p&gt;先是短信通知，再是电话确认，以下详细信息：&lt;/p&gt;
+
+&lt;p&gt;同学好，百度面试通知：10月21日13:50到达百度大厦（13号线西二旗站向西500米）C座前台签到。携带身份证、学生证、签字笔、三份简历。&lt;/p&gt;
+
+&lt;h3&gt;面试回忆&lt;/h3&gt;
+
+&lt;h4&gt;自我介绍&lt;/h4&gt;
+
+&lt;h4&gt;做过什么项目&lt;/h4&gt;
+
+&lt;h4&gt;3D-tags的jquery插件，tags的分布算法&lt;/h4&gt;
+
+&lt;h4&gt;CSS两栏布局（尽可能多方法）&lt;/h4&gt;
+
+&lt;h4&gt;JavaScript基本类型&lt;/h4&gt;
+
+&lt;h4&gt;null==undefiend or null===undefiend  true? false?&lt;/h4&gt;
+
+&lt;h4&gt;统计一个字符串中每个字母的个数&lt;/h4&gt;
+
+&lt;h4&gt;说说IE兼容问题&lt;/h4&gt;
+
+&lt;h4&gt;清除浮动的几种方法&lt;/h4&gt;
+
+&lt;h4&gt;今天周几？&lt;/h4&gt;
+
+&lt;h4&gt;如何判断某一变量是什么类型？&lt;/h4&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>未名国际青年旅社</title>
+     <link href="http://webcraft.malei.tk/articles/youth-hotel"/>
+     <updated>2012-10-25T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/youth-hotel</id>
+     <content type="html">&lt;h2&gt;简介&lt;/h2&gt;
+
+&lt;p&gt;北京未名国际青年旅舍，中国的硅谷--北京中关村地区唯一的国际青年旅舍。这里是中国的文化教育中心。周围环绕的是中国最出名的高等学府－北京大学、清华大学、北京语言大学、中国地质大学、北京科技大学，背靠的是中国科学院本部及其直属的十几个研究所。&lt;/p&gt;
+
+&lt;p&gt;这里是中国的硅谷－中关村中心区。中国最杰出的IT企业都集中在这里，中国最大最多的电子市场设在这里，最野心勃勃的年轻人集中在这里。&lt;/p&gt;
+
+&lt;p&gt;这里是来北京旅游理想的栖息地。到颐和园15分钟车程，到圆明园5分钟车程，到2008奥运村15分钟车程，到天安门30分钟地铁行程，到八达岭长城、明十三陵都很方便。  北京未名国际青年旅舍位置这里是休闲娱乐的好去处。附近的五道口是北京出名的外国人集居区，各种中国特色餐饮、西餐、韩国风味、日式风味沿街可见，多种风格的酒吧也颇有名声。&lt;/p&gt;
+
+&lt;p&gt;未名国际青年旅舍拥有标准间、4至8人青年旅舍多种客房，有书吧、网吧、放映厅、自助式厨房、自助式洗衣房，房间可宽带上网， 提供中、英、韩等多种语言服务，是背包客、旅游、学习、商务住宿的理想选择。&lt;/p&gt;
+
+&lt;h2&gt;个人感受&lt;/h2&gt;
+
+&lt;p&gt;个人感觉，这个青年旅社，简单，干净，更类似于大学的公寓，很适合大学生居住。有很多外国人，并且有公共区可以看书、下棋。这个旅社的文化氛围很好，墙壁上好多字画，很有感觉。缺点是，有的床有点晃悠，应该及时加强修复。&lt;/p&gt;
+
+&lt;h2&gt;旅社图片分享&lt;/h2&gt;
+
+&lt;h3&gt;每个房间都有的温馨提示&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/youth-hotel-tips.png&quot; title=&quot;温馨提示&quot; alt=&quot;youth-hotel-tips&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;六人间床铺、橱子一览&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/bed.png&quot; title=&quot;床铺&quot; alt=&quot;bed&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/closet.png&quot; title=&quot;橱子&quot; alt=&quot;closet&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;空调和换气装置&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/air-conditioner.png&quot; title=&quot;空调&quot; alt=&quot;air-conditioner&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;走廊字画&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/calligraphy1.png&quot; title=&quot;书法1&quot; alt=&quot;calligraphy1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/calligraphy2.png&quot; title=&quot;书法2&quot; alt=&quot;calligraphy2&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;挥一挥手，不带走一片云彩&lt;/h2&gt;
+
+&lt;p&gt;10月21日，北京将近下了一天的小雨，所以第二天的天气格外好。这是站在北京西站的二楼入站口，拍的西站对面。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/beijing-west-railway-station.png&quot; title=&quot;北京西站&quot; alt=&quot;beijing-west-railway-station&quot; /&gt;&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>Windows 7版本IE10浏览器11月中旬推出</title>
@@ -271,257 +514,6 @@ EOF;
 &lt;p&gt;其次，微信的通知挺烦，不停的响。他们这个行业，24小时都有人在工作，在聊天，形成打扰。我提醒他说微信有免打扰设置。他说他知道，可是那功能不好使。这个我也深有体会，确实不好使。有天半夜，我微信某个群组里的几个哥们聊的热火朝天，手机不停的在响，我睡觉很死，没听到，结果媳妇从隔壁房间冲过来关掉了我的手机，说打扰女儿睡觉了。我设置了微信的夜间免打扰功能，可惜这个功能确实很烂。&lt;/p&gt;
 
 &lt;p&gt;第三，A产品设置几乎不用手操作，对司机很方便，而微信，和每个人聊天都要去按，去切换。另外，A产品有个功能是按下手机侧面的声音键就可以聊天，单手即可操作，且不需要眼睛去看；不像微信，需要去按产品界面上的按钮，一般需要双手操作，还需要眼睛去看。&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>JQuery插件之tags的3D旋转球制作</title>
-     <link href="http://webcraft.malei.tk/articles/3D-jquery"/>
-     <updated>2012-08-18T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/3D-jquery</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;这是学习JQuery插件制作的一次有意义的实践&lt;/p&gt;
-
-&lt;h2&gt;声明&lt;/h2&gt;
-
-&lt;p&gt;参考自 &lt;a href=&quot;http://www.miaov.com&quot;&gt;妙味课堂&lt;/a&gt; 的原生js，我的工作只不过是做成了JQuery插件。&lt;/p&gt;
-
-&lt;h2&gt;对象级别的插件开发&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;(function ($) {
-    $.fn.extend({
-        pluginName:function(opt,callback){
-
-        }
-    });
-})(jQuery);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;and&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;(function ($) {
-    $.fn.pluginName=function(){
-
-    }
-})(jQuery);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;上面定义了一个jquery函数，形参是$，然后把实参jquery传进去，立即调用执行。好处：在写jquery插件时，也可使用$这个别名，而不会与prototype引起冲突。&lt;/p&gt;
-
-&lt;h2&gt;先看一个五脏俱全的小例子&lt;/h2&gt;
-
-&lt;h3&gt;插件代码&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;/*+++++++++++++++++声明 Start++++++++++++++
- *|                                       |
- *|   以下代码来自 ITEYE 的 gaojiewyh     |
- *|                                       |
- *+++++++++++++++++声明 End++++++++++++++++
- */
-(function ($) {
-    $.fn.hilight=function(options){
-        debug(this);
-        var opts=$.extend({},$.fn.hilight.defaults,options);
-        return this.each(function(){
-            var $this=$(this);
-            $this.css({
-                backgroundColor:opts.background,
-                color:opts.foreground
-            });
-            var markup=$this.html();
-            markup=$.fn.hilight.format(markup);
-            $this.html(markup);
-        });
-    };
-    //适当暴露一些函数
-    $.fn.hilight.format=function(txt){
-        return '&amp;lt;strong&amp;gt;'+txt+'&amp;lt;/strong&amp;gt;';
-    }
-    //暴露默认设置
-    $.fn.hilight.defaults={
-        foreground:'red',
-        background:'yellow'
-    };
-    //保持私有函数的私有性
-    function debug($obj){
-        if(window.console &amp;amp;&amp;amp; window.console.log){
-            window.console.log('hilight selection count:'+$obj.size());
-        }
-    }
-})(jQuery);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;应用&lt;/h3&gt;
-
-&lt;p&gt;1.采用默认设置&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$(&quot;.test&quot;).hilight();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;2.自定义设置一&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$.fn.hilight.defaults.background='green';
-$(&quot;.test&quot;).hilight();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;3.自定义设置二&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$(&quot;.test&quot;).hilight({
-    foreground:'black',
-    background:'gray'
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;3D旋转球插件制作&lt;/h2&gt;
-
-&lt;p&gt;提供“转速”和“旋转半径”的自定义&lt;/p&gt;
-
-&lt;h3&gt;所需文档结构&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;threeDTags&quot;&amp;gt;
-    &amp;lt;a href=&quot;#&quot;&amp;gt;&amp;lt;/a&amp;gt;
-    &amp;lt;a href=&quot;#&quot;&amp;gt;&amp;lt;/a&amp;gt;
-    &amp;lt;a href=&quot;#&quot;&amp;gt;&amp;lt;/a&amp;gt;
-    &amp;lt;!-- ... n个 ... --&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;所需类库及样式表&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;jquery.min.js&lt;/li&gt;
-&lt;li&gt;jquery.threeDTags.js&lt;/li&gt;
-&lt;li&gt;threeDTags.css&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;ps:threeDTags.css并不存在，因为是个人应用，没有把相应的css独立出来&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#threeDTags{
-    position: relative;
-    width: 270px;
-    height: 270px;
-}
-
-#threeDTags a {
-    position:absolute; 
-    top:0px; 
-    left:0px; 
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;相对来说，这几句是比较重要的，想要什么效果，自己扩展。&lt;/p&gt;
-
-&lt;h3&gt;应用&lt;/h3&gt;
-
-&lt;p&gt;应用通以上三种用法，这里只写一种。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$('threeDTags').threeDTags({
-    radius:60,//半径
-    tspeed:8//转速
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;FAQ&lt;/h2&gt;
-
-&lt;h3&gt;如何获取鼠标相对于某个元素的位置?&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;document.getElementById('threeDTags').onmouseover=function (ev)
-{
-    var oEvent=window.event || ev;
-    var mouseX,mouseY;
-
-    mouseX=oEvent.clientX-($(this).offset().left-$(window).scrollLeft()+this.offsetWidth/2);
-    mouseY=oEvent.clientY-($(this).offset().top-$(window).scrollTop()+this.offsetHeight/2);
-
-    alert(mouseX+&quot; vs &quot;+mouseY);
-};
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;为了打破各家浏览器的浮动差异，以及 &lt;code&gt;document.getElementById('threeDTags').offsetLeft&lt;/code&gt; 相对于父元素(如果父元素 &lt;code&gt;position；relative&lt;/code&gt;)，而不是相对于整个文档的偏移，于是用了jquery类库。&lt;/p&gt;
-
-&lt;p&gt;jquery中 &lt;code&gt;.offset()&lt;/code&gt; 为匹配的元素集合中获取第一个元素的当前坐标，相对于文档（document）。&lt;/p&gt;
-
-&lt;h2&gt;结语&lt;/h2&gt;
-
-&lt;p&gt;第一次写插件，代码相对混乱，但是会不断优化的。&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本</title>
-     <link href="http://webcraft.malei.tk/articles/sae-cloud-icon"/>
-     <updated>2012-08-17T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/sae-cloud-icon</id>
-     <content type="html">&lt;h2&gt;效果预览&lt;/h2&gt;
-
-&lt;p&gt;在&lt;a href=&quot;/about.html&quot; title=&quot;关于我&quot;&gt;About&lt;/a&gt;界面的 Feb. 2012 的 SAE&lt;/p&gt;
-
-&lt;h2&gt;一个 span 搞定&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;span class='cloud-icon'&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;添砖加瓦&lt;/h2&gt;
-
-&lt;h3&gt;span 主体：底座&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;.cloud-icon{
-    width: 266px;
-    height: 115px;
-    float:left;
-    background:#555;
-    border-radius: 60px;
-    -moz-border-radius:60px;
-    -webkit-border-radius: 60px;
-    -ms-border-radius:60px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;右边突出比较大的部分&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;.cloud-icon::before{
-    position:relative;
-    content:'';
-    left: 82px;
-    top: -82px;
-    width: 130px;
-    height: 130px;
-    float:left;
-    background:#555;
-    border-radius:65px;
-    -moz-border-radius:65px;
-    -webkit-border-radius: 65px;
-    -ms-border-radius:65px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;左边突出比较小的部分&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;.cloud-icon::after{
-    position:relative;
-    content:'';
-    left: -98px;
-    top: -38px;
-    width: 70px;
-    height: 70px;
-    float:left;
-    background: #555;
-    border-radius:35px;
-    -moz-border-radius:35px;
-    -webkit-border-radius: 35px;
-    -ms-border-radius:35px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;结语&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;云已完成，完整的显示，需要调父元素的 &lt;code&gt;padding&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;float&lt;/code&gt; 当该属性不等于none引起对象浮动时，对象将被视作块对象(&lt;code&gt;block-level&lt;/code&gt;)，即display属性等于block。也就是说，浮动对象的display特性将被忽略。 该属性可以被应用在非绝对定位的任何元素上。&lt;/li&gt;
-&lt;/ul&gt;
-
 </content>
    </entry>
    

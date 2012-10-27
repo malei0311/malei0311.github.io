@@ -177,6 +177,17 @@
                 }
             },
             {
+                "startDate":"2012,10,21",
+                "headline":"面试Baidu",
+                "text":"很幸运10月13号在北京清华大学的笔试通过了，这一天去面试，由于“知其然，不知其所以然”，在第一轮被淘汰了...",
+                "asset":
+                {
+                    "media":"/images/about/baidu.png",
+                    "credit":"",
+                    "caption":"这是我面试的地方，百度大厦"
+                }
+            },
+            {
                 "startDate":"2013,6",
                 "headline":"即将毕业",
                 "text":"...",
