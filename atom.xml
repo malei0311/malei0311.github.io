@@ -4,13 +4,210 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-10-27T19:34:21+08:00</updated>
+   <updated>2012-10-30T15:51:12+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>JavaScript如何判断变量类型</title>
+     <link href="http://webcraft.malei.tk/articles/how-to-detect-variable-type"/>
+     <updated>2012-10-29T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/how-to-detect-variable-type</id>
+     <content type="html">&lt;h2&gt;数据类型&lt;/h2&gt;
+
+&lt;h3&gt;简单数据类型&lt;/h3&gt;
+
+&lt;p&gt;Boolean,Number,String,Undefined,Null&lt;/p&gt;
+
+&lt;h3&gt;复杂数据类型&lt;/h3&gt;
+
+&lt;p&gt;Object&lt;/p&gt;
+
+&lt;h2&gt;变量的传值与传址&lt;/h2&gt;
+
+&lt;h3&gt;按值传递&lt;/h3&gt;
+
+&lt;p&gt;简单数据类型是按值进行传递的。当按值传递时，将在计算机内存分配一块空间并将原值复制到其中，这意味着变量的实际内容会传递给变量。然后即使改变原来的值，也不会影响复制到新变量中的值。&lt;/p&gt;
+
+&lt;h3&gt;按引用传递&lt;/h3&gt;
+
+&lt;p&gt;复杂数据类型，可以包含大量和复杂的信息，所以属于此类型的变量并不包含实际的值，它包含的是对值得引用。这中引用类似于指向变量内容的别名（在一些程序语言中成为“指针”）。当变量需要知道他的值时，该引用会查询内容，然后返回答案，而无需将该值传递给变量。&lt;/p&gt;
+
+&lt;p&gt;当多个变量都指向这个复杂的数据类型时，实际上他们获得的只是对这个复杂数据类型的引用。当这个复杂数据类型被改变时，所有引用该复杂数据类型的变量都会获得一个新值。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var theArray=[&quot;malei0311&quot;,&quot;teaScripts&quot;];
+var newArray=theArray;
+alert(newArray[1]); //teaScripts
+theArray[1]=&quot;tom&quot;;
+alert(newArray[1]); //tom
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;内存使用规则&lt;/h2&gt;
+
+&lt;p&gt;堆和栈都是运行时内存中分配的一个数据区，因此也被称之为堆区和栈区，但两者存储的数据类型和处理速度不同。&lt;/p&gt;
+
+&lt;p&gt;堆 (heap) 用于为复杂数据类型分配空间，例如数组对象、Object对象。他是在运行时动态分配内存的，因此存取速度较慢。&lt;/p&gt;
+
+&lt;p&gt;栈 (stack) 主要存放一些基本类型的变量和对象的引用。其优势是存取速度比堆要快，并且栈内的数据可以共享。但缺点是存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。&lt;/p&gt;
+
+&lt;h3&gt;栈&lt;/h3&gt;
+
+&lt;p&gt;栈有一个很重要的特性，就是存在栈中的数据可以共享。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a=1;
+var b=1;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;JavaScript解释引擎先处理 &lt;code&gt;var a=1;&lt;/code&gt; 首先会在栈中创建一个变量为 a 的引用，然后查找栈中是否有 1 这个值，如果没找到 1 ，就将 1 存放进来，然后将 a 指向 1 。接着处理 &lt;code&gt;var b=1;&lt;/code&gt; 在创建完 b 的引用变量后，查找栈中是否有 1 这个值，因为在栈中已经存在了，便将 b 直接指向 1 。这样，就出现了 a 与 b 同时指向 1 的情况。&lt;/p&gt;
+
+&lt;p&gt;此时，如果再令 &lt;code&gt;a=2&lt;/code&gt; 那么 JavaScript解释引擎会重新搜索栈中是否有 2 这个值，如果没有，就将 2 存放进来，并令 a 指向 2 ；如果已经有了，则直接将 a 指向这个地址。因此 a 值得改变不会影响到 b 的值。&lt;/p&gt;
+
+&lt;h3&gt;堆&lt;/h3&gt;
+
+&lt;p&gt;通过 Array 来看一下堆的行为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var sport1=&quot;basketball&quot;;
+var sport2=&quot;football&quot;;
+var sport3=&quot;volleyball&quot;;
+var theArray=[sport1,sport2,sport3];
+var newArray=theArray;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当创建数组时，就会在堆内创建一个数组对象，并且在栈内创建一个对数组的引用。这几步操作对应的内存，如图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/stack-heap.png&quot; alt=&quot;stack-heap&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;变量 sport1,sport2,sport3 为基本数据类型，他们的值直接放在栈中；theArray,newArray 为复合数据类型，他们的引用变量存储在栈中，指向于存储于堆中的实际对象。&lt;/p&gt;
+
+&lt;p&gt;如果更改 newArray 或 theArray 的值，那么实际是更改堆中的实际对象，因此，对两个变量引用都会发生作用。&lt;/p&gt;
+
+&lt;p&gt;JavaScript堆不需要程序代码来显示的释放，因为堆是由自动的垃圾回收来负责的，每种浏览器中的JavaScript解释引擎有不同的自动回收方式，但一个基本的原则是，如果栈中不存在对堆中某个对象堆的引用，那么就会认为该对象已经不再需要，在垃圾回收时，就会清除该对象占用的空间。&lt;/p&gt;
+
+&lt;p&gt;因此，在不需要时，应该将对对象的引用释放掉，以利于垃圾回收，这样可以提高程序的性能。释放引用最常见的方法：&lt;code&gt;newArray=null;&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2&gt;进入正题&lt;/h2&gt;
+
+&lt;h3&gt;测试环境&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Chrome 22&lt;/li&gt;
+&lt;li&gt;Firefox 15&lt;/li&gt;
+&lt;li&gt;IE 7,8,9&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;JavaScript类型总览&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/types.png&quot; alt=&quot;types&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;简单测试 typeof&lt;/h3&gt;
+
+&lt;p&gt;接着&lt;a href=&quot;/articles/baidu-examination/&quot; title=&quot;百度面试&quot;&gt;面试题&lt;/a&gt;中的写，简单的测试 typeof&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var Tea = (function(){
+
+    function getElementsByClassName(className,tag,parent){}
+
+    function findSymmetryNumber(start,end){}
+
+    function getVarType(v){
+        return typeof(v);
+    }
+
+    return {
+        getElementsByClassName : getElementsByClassName,
+        findSymmetryNumber : findSymmetryNumber,
+        getVarType : getVarType
+    };
+})();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通过在控制台中进行测试，以下是测试结果截图：&lt;/p&gt;
+
+&lt;p&gt;Chrome:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/typeof-chrome.png&quot; alt=&quot;chrome-typeof&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Firefox:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/typeof-firefox.png&quot; alt=&quot;firefox-typeof&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;IE:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/typeof-ie.png&quot; alt=&quot;ie-typeof&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们可以看到在 JavaScript 的简单的数据类型中，只有 null 返回的的是 object ，其他的都是相当准确的。&lt;/p&gt;
+
+&lt;p&gt;我们知道 &quot;JavaScript一切皆是对象&quot;， 对于除了 Math(静态类) 的内建类，当我们用 new 关键字给变量赋值时，
+例如：&lt;code&gt;var oString=new String(&quot;test&quot;);&lt;/code&gt; =&gt; &lt;code&gt;typeof oString&lt;/code&gt; 返回 object。类似的还有：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var oBoolean=new Boolean(true);
+var oNumber=new Number(1234);
+var oArray1=new Array();
+var oArray2=[];
+var re1=new RegExp(&quot;\\w*&quot;,&quot;g&quot;);
+var re2=/\w*/g;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;返回的都是 &quot;object&quot;，仅用 typeof ，我们无法知道，到底是什么。当然 typeof Math 返回的也是 &quot;object&quot;。但是，直接 &lt;code&gt;typeof 非静态内建类&lt;/code&gt; 返回的却是 &quot;function&quot;。&lt;/p&gt;
+
+&lt;h3&gt;加入精确判断&lt;/h3&gt;
+
+&lt;p&gt;方法一：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function getVarType(v){
+    if(typeof v === 'object'){
+        if(v === null){return 'null';}
+        return Object.prototype.toString.call(v).match(/object\s(\w+)/)[1].toLowerCase();
+    }
+    return typeof(v);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;方法二：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function getVarType(v){
+    if(typeof v === 'object'){
+        if(v === null){return 'null';}
+        if(v.constructor) 
+            //直接取出想要的，但是必须多取出一个空格，IE中 &quot;function&quot; 前面并不是空格，
+            //所以这就决定了取出的是自己想要的值，然后截取字符串
+            //return (v.constructor.toString()).match(/(?: )[\w\$]+/)[0].substr(1).toLowerCase(); 
+
+            //通过获取子表达式，取出自己想要的，因为IE在 &quot;function&quot; 前加了空字符，所以  &quot;^\s*&quot; 
+            //return v.constructor.toString().match(/^\s*function\s([\w\$]+)/)[1].toLowerCase(); // [注]
+
+            //match的正则表达式返回第一个匹配，所以 [注] 的 &quot;^\s*&quot; 可以去掉
+            return v.constructor.toString().match(/function\s([\w\$]+)/)[1].toLowerCase();
+
+        return &quot;object&quot;;
+    }
+    return typeof(v);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其实，IE在 &quot;function&quot; 前面加的是 &quot;\n&quot; 换行符。&lt;/p&gt;
+
+&lt;p&gt;如果说判断某个变量 s 是否为 Array 类型时，可以&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if(s instanceof Array){
+    //your code
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;《JavaScript权威指南》——张亚飞&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/aimingoo/article/details/6634977&quot;&gt;再谈JavaScript的数据类型问题&lt;/a&gt; ——aimingoo&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
    
    <entry>
      <title>百度-web前端开发工程师-笔试+面试-经历</title>
@@ -58,7 +255,7 @@
 &lt;/ul&gt;
 
 
-&lt;p&gt;我的第一次笔试经历啊...&lt;/p&gt;
+&lt;p&gt;我的第一次笔试经历啊...貌似参加考试的有270人&lt;/p&gt;
 
 &lt;h3&gt;笔试试题&lt;/h3&gt;
 
@@ -76,7 +273,8 @@
 &lt;/ul&gt;
 
 
-&lt;p&gt;代码详情：&lt;/p&gt;
+&lt;p&gt;当然考试时，也是这种思想，参考了阮一峰的 &lt;a href=&quot;http://www.ruanyifeng.com/blog/2012/10/javascript_module.html&quot; title=&quot;Javascript模块化编程（一）：模块的写法&quot;&gt;Javascript模块化编程（一）：模块的写法&lt;/a&gt; 后，有改进。
+代码详情：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;var Tea = (function(){
     function getElementsByClassName(className,tag,parent){
@@ -132,7 +330,7 @@ father son {
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;解决方案参考自&lt;a href=&quot;http://www.hujuntao.com/archives/inline-block-elements-the-4px-blank-gap-solution.html&quot; title=&quot;设计蜂巢&quot;&gt;设计蜂巢&lt;/a&gt;，讲的很详细。&lt;/p&gt;
+&lt;p&gt;解决方案参考自 &lt;a href=&quot;http://www.hujuntao.com/archives/inline-block-elements-the-4px-blank-gap-solution.html&quot; title=&quot;设计蜂巢&quot;&gt;设计蜂巢&lt;/a&gt;，讲的很详细。&lt;/p&gt;
 
 &lt;h4&gt;4.浏览器的缓存和本地存储相关内容有哪些？这些在什么环境下都各自能起到什么作用？&lt;/h4&gt;
 
@@ -182,27 +380,140 @@ function findSymmetryNumber(start,end){
 
 &lt;h3&gt;面试回忆&lt;/h3&gt;
 
-&lt;h4&gt;自我介绍&lt;/h4&gt;
+&lt;h4&gt;1.自我介绍&lt;/h4&gt;
 
-&lt;h4&gt;做过什么项目&lt;/h4&gt;
+&lt;p&gt;略&lt;/p&gt;
 
-&lt;h4&gt;3D-tags的jquery插件，tags的分布算法&lt;/h4&gt;
+&lt;h4&gt;2.做过什么项目&lt;/h4&gt;
 
-&lt;h4&gt;CSS两栏布局（尽可能多方法）&lt;/h4&gt;
+&lt;p&gt;说了自己做的关于 PHP 的项目，不过面试官要求说与前端有关的项目，在 GAE 上做过一款博客皮肤，在 GitHub 上用 jekyll 做了一个博客，也就是本博客，其中做了一款 JQuery 插件，方便自己调用，生成 tag cloud。&lt;/p&gt;
 
-&lt;h4&gt;JavaScript基本类型&lt;/h4&gt;
+&lt;h4&gt;3.3D-tags的jquery插件，tags的分布算法&lt;/h4&gt;
 
-&lt;h4&gt;null==undefiend or null===undefiend  true? false?&lt;/h4&gt;
+&lt;p&gt;详情，请参考，我以前写的 &lt;a href=&quot;/articles/3D-jquery/&quot; title=&quot;JQuery插件之tags的3D旋转球制作&quot;&gt;JQuery插件之tags的3D旋转球制作&lt;/a&gt;&lt;/p&gt;
 
-&lt;h4&gt;统计一个字符串中每个字母的个数&lt;/h4&gt;
+&lt;h4&gt;4.CSS两栏布局（尽可能多方法）&lt;/h4&gt;
 
-&lt;h4&gt;说说IE兼容问题&lt;/h4&gt;
+&lt;p&gt;这道题，答的还行，并且得到了面试官的认可。发现了一篇文章，讲的CSS两栏布局，还不错，挺全面 =&gt; &lt;a href=&quot;http://www.hua126.com/article/edu/Web/info-1694.html&quot; title=&quot;如何以CSS作出两栏版面布局&quot;&gt;如何以CSS作出两栏版面布局&lt;/a&gt;&lt;/p&gt;
 
-&lt;h4&gt;清除浮动的几种方法&lt;/h4&gt;
+&lt;h4&gt;5.清除浮动的几种方法&lt;/h4&gt;
 
-&lt;h4&gt;今天周几？&lt;/h4&gt;
+&lt;p&gt;清除浮动主要有三种方法：&lt;/p&gt;
 
-&lt;h4&gt;如何判断某一变量是什么类型？&lt;/h4&gt;
+&lt;p&gt;方法一( 不推荐，因为加了一个多余的标签 )：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.clearfix{clear:both;} /* 其中 .clearfix 为浮动元素的下一个兄弟元素 */
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;方法二：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/* 放在浮动元素的父元素上 */
+.clearfix::after {
+    content:&quot; &quot;;
+    display:block;
+    visibility:hidden;
+    clear:both;
+    font-size:0;
+    height:0;
+}
+.clearfix{zoom:1; /* for IE6 IE7 */}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;方法三：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/* 放在浮动元素的父元素上 */
+.clearfix{
+    display:block;
+    zoom:1;
+    overflow:hidden;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然，这三种方法我都说出来了，只是当时第三种方法当时还没用过，主要用的第二种。这时面试官问了一个让自己觉得“自己弱爆了的问题”，问：为什么加 &lt;code&gt;zoom:1;&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;我知道它是为了兼容IE，但是面试官又追问：为什么加了 &lt;code&gt;zoom:1;&lt;/code&gt; 就能兼容 IE？&lt;/p&gt;
+
+&lt;p&gt;这下，我彻底凌乱了，不知道，是一点都不知道，我居然从来没想过这个问题，只是想当然的这么用就对了。这让我明白了 “知其然，一定要知其所以然” ，我会在这方面加油。当然，面试官还是告诉我了：激活了 hasLayout。不过对我来说，还是相当模糊的，毕竟做 IE 兼容比较少，且没经历过 ie 6,7 的时代。如果想了解，请看来自 “愚人码头” 的 &lt;a href=&quot;http://www.css88.com/archives/1288&quot; title=&quot;hasLayout详解&quot;&gt;hasLayout详解&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h4&gt;6.null和undefined相等吗？&lt;/h4&gt;
+
+&lt;p&gt;这道题，还是理直气壮地：null == undefined true ; null === undefined false.&lt;/p&gt;
+
+&lt;p&gt;紧接着问 &quot;==&quot; 与 &quot;===&quot; 的区别？&lt;/p&gt;
+
+&lt;p&gt;&quot;==&quot; 是逻辑等于，而 &quot;===&quot; 是全等。逻辑等于在比较时会进行类型转换，而全等不会。&lt;/p&gt;
+
+&lt;h4&gt;7.统计一个字符串中每个字母的个数&lt;/h4&gt;
+
+&lt;p&gt;当时想用两个 for 循环做，但最终卡壳了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/**
+ * [getEachLetterNum 获取一个字符串中每个字母的个数]
+ * @param  {[string or String]} str [&quot;&quot; or new String()]
+ * @return {[Array]}     [复合数组]
+ */
+function getEachLetterNum(str){
+    var tempStr=str.toString().split('');
+    var returnArray=[];
+    var re1=/[A-Za-z]/;
+    var i=0;
+    while(re1.test(tempStr.join(''))){  
+        if(re1.test(tempStr[i])){
+            var o=tempStr.join(''); var re2=new RegExp(tempStr[i],&quot;g&quot;);
+            returnArray[tempStr[i]]=o.match(re2).length;
+            tempStr=o.replace(re2,'').split('');
+        }
+        else{
+            i++;
+        }
+
+    }
+    return returnArray;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;谁还有好的方法可以留言交流。&lt;/p&gt;
+
+&lt;h4&gt;8.说说IE兼容问题&lt;/h4&gt;
+
+&lt;p&gt;关于这道题，没太深入研究过兼容问题，我认为未来是乐观的，没太必要为兼容问题耗费太多精力。就本博客来说，并不支持 ie6,7,8 并已经做好相关程序，如果您用以上浏览器，会跳转到一个页面，提示您升级浏览器，或者换高级浏览器。所以，这道题，只回答出了 IECC(conditional comment) 和 几个属性级的 hack，关于更多的 ie bug 的 hack ，没太用过，说出来自己都觉得怪怪的。&lt;/p&gt;
+
+&lt;h4&gt;9.今天周几？&lt;/h4&gt;
+
+&lt;p&gt;1.单纯的switch&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var oDate=new Date();
+var day=oDate.getDay();
+switch(day){
+    case 0: document.write(&quot;今天是周日&quot;);break;
+    case 1: document.write(&quot;今天是周一&quot;);break;
+    case 2: document.write(&quot;今天是周二&quot;);break;
+    case 3: document.write(&quot;今天是周三&quot;);break;
+    case 4: document.write(&quot;今天是周四&quot;);break;
+    case 5: document.write(&quot;今天是周五&quot;);break;
+    default: document.write(&quot;今天是周六&quot;);break;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.数组方法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var oDate=new Date();
+var day=oDate.getDay();
+var dayArray=[];
+dayArray[0]=&quot;周日&quot;;
+dayArray[1]=&quot;周一&quot;;
+dayArray[2]=&quot;周二&quot;;
+dayArray[3]=&quot;周三&quot;;
+dayArray[4]=&quot;周四&quot;;
+dayArray[5]=&quot;周五&quot;;
+dayArray[6]=&quot;周六&quot;;
+document.write(&quot;今天是&quot;+dayArray[day]);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;10.JavaScript基本类型，如何判断某一变量是什么类型？&lt;/h4&gt;
+
+&lt;p&gt;关于这道题，我当时只知道用 typeof 判断，而且 typeof 判断的并不准确。究其原因，主要是自己做的东西太少了，遇到的东西太少了，还有就是太过依赖于类库(jquery)。
+所以，写了一篇专门针对的&lt;a href=&quot;/articles/how-to-detect-variable-type&quot; title=&quot;JavaScript如何判断变量类型&quot;&gt;笔记&lt;/a&gt;。&lt;/p&gt;
 </content>
    </entry>
    
@@ -495,25 +806,6 @@ EOF;
      <updated>2012-09-10T00:00:00+08:00</updated>
      <id>http://webcraft.malei.tk/articles/sublime-text-2</id>
      <content type="html">&lt;p&gt;//TODO:&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>该怎么做？</title>
-     <link href="http://webcraft.malei.tk/articles/how-to-do"/>
-     <updated>2012-08-29T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/how-to-do</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;停留在实验室中的永远不能算是产品，主观臆断的东西极有可能不能满足用户的需求，做产品一定要明确针对人群，明确需求。详情请 &lt;a href=&quot;http://blog.sina.com.cn/s/blog_56c35a550102dyl6.html&quot; title=&quot;成都出租车司机给我上的一课&quot;&gt;click me&lt;/a&gt; 。&lt;/p&gt;
-
-&lt;h2&gt;小摘抄&lt;/h2&gt;
-
-&lt;p&gt;首先，每次登陆微信，没在线这段时间的消息就会不停的弹出一大堆。用过微信群聊的朋友们应该会深有体会，尤其是群成员超过10个以上时，再加上有几个话唠，看完这些消息挺费劲。对于他们出租车司机来说，他们只需要及时聊天，并不需要看过去别人的聊天信息。&lt;/p&gt;
-
-&lt;p&gt;其次，微信的通知挺烦，不停的响。他们这个行业，24小时都有人在工作，在聊天，形成打扰。我提醒他说微信有免打扰设置。他说他知道，可是那功能不好使。这个我也深有体会，确实不好使。有天半夜，我微信某个群组里的几个哥们聊的热火朝天，手机不停的在响，我睡觉很死，没听到，结果媳妇从隔壁房间冲过来关掉了我的手机，说打扰女儿睡觉了。我设置了微信的夜间免打扰功能，可惜这个功能确实很烂。&lt;/p&gt;
-
-&lt;p&gt;第三，A产品设置几乎不用手操作，对司机很方便，而微信，和每个人聊天都要去按，去切换。另外，A产品有个功能是按下手机侧面的声音键就可以聊天，单手即可操作，且不需要眼睛去看；不像微信，需要去按产品界面上的按钮，一般需要双手操作，还需要眼睛去看。&lt;/p&gt;
 </content>
    </entry>
    

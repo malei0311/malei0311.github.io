@@ -84,6 +84,24 @@
                                     ,
                                 </span>
                             </li>
+                             
+                            <li>
+                                <a href="/tags.html#js">
+                                    js
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                             
+                            <li>
+                                <a href="/tags.html#css">
+                                    css
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
                             
                         </ul>
                     </span> 
@@ -134,7 +152,7 @@
 </ul>
 
 
-<p>我的第一次笔试经历啊...</p>
+<p>我的第一次笔试经历啊...貌似参加考试的有270人</p>
 
 <h3>笔试试题</h3>
 
@@ -152,7 +170,8 @@
 </ul>
 
 
-<p>代码详情：</p>
+<p>当然考试时，也是这种思想，参考了阮一峰的 <a href="http://www.ruanyifeng.com/blog/2012/10/javascript_module.html" title="Javascript模块化编程（一）：模块的写法">Javascript模块化编程（一）：模块的写法</a> 后，有改进。
+代码详情：</p>
 
 <pre><code>var Tea = (function(){
     function getElementsByClassName(className,tag,parent){
@@ -208,7 +227,7 @@ father son {
 }
 </code></pre>
 
-<p>解决方案参考自<a href="http://www.hujuntao.com/archives/inline-block-elements-the-4px-blank-gap-solution.html" title="设计蜂巢">设计蜂巢</a>，讲的很详细。</p>
+<p>解决方案参考自 <a href="http://www.hujuntao.com/archives/inline-block-elements-the-4px-blank-gap-solution.html" title="设计蜂巢">设计蜂巢</a>，讲的很详细。</p>
 
 <h4>4.浏览器的缓存和本地存储相关内容有哪些？这些在什么环境下都各自能起到什么作用？</h4>
 
@@ -258,27 +277,140 @@ function findSymmetryNumber(start,end){
 
 <h3>面试回忆</h3>
 
-<h4>自我介绍</h4>
+<h4>1.自我介绍</h4>
 
-<h4>做过什么项目</h4>
+<p>略</p>
 
-<h4>3D-tags的jquery插件，tags的分布算法</h4>
+<h4>2.做过什么项目</h4>
 
-<h4>CSS两栏布局（尽可能多方法）</h4>
+<p>说了自己做的关于 PHP 的项目，不过面试官要求说与前端有关的项目，在 GAE 上做过一款博客皮肤，在 GitHub 上用 jekyll 做了一个博客，也就是本博客，其中做了一款 JQuery 插件，方便自己调用，生成 tag cloud。</p>
 
-<h4>JavaScript基本类型</h4>
+<h4>3.3D-tags的jquery插件，tags的分布算法</h4>
 
-<h4>null==undefiend or null===undefiend  true? false?</h4>
+<p>详情，请参考，我以前写的 <a href="/articles/3D-jquery/" title="JQuery插件之tags的3D旋转球制作">JQuery插件之tags的3D旋转球制作</a></p>
 
-<h4>统计一个字符串中每个字母的个数</h4>
+<h4>4.CSS两栏布局（尽可能多方法）</h4>
 
-<h4>说说IE兼容问题</h4>
+<p>这道题，答的还行，并且得到了面试官的认可。发现了一篇文章，讲的CSS两栏布局，还不错，挺全面 => <a href="http://www.hua126.com/article/edu/Web/info-1694.html" title="如何以CSS作出两栏版面布局">如何以CSS作出两栏版面布局</a></p>
 
-<h4>清除浮动的几种方法</h4>
+<h4>5.清除浮动的几种方法</h4>
 
-<h4>今天周几？</h4>
+<p>清除浮动主要有三种方法：</p>
 
-<h4>如何判断某一变量是什么类型？</h4>
+<p>方法一( 不推荐，因为加了一个多余的标签 )：</p>
+
+<pre><code>.clearfix{clear:both;} /* 其中 .clearfix 为浮动元素的下一个兄弟元素 */
+</code></pre>
+
+<p>方法二：</p>
+
+<pre><code>/* 放在浮动元素的父元素上 */
+.clearfix::after {
+    content:" ";
+    display:block;
+    visibility:hidden;
+    clear:both;
+    font-size:0;
+    height:0;
+}
+.clearfix{zoom:1; /* for IE6 IE7 */}
+</code></pre>
+
+<p>方法三：</p>
+
+<pre><code>/* 放在浮动元素的父元素上 */
+.clearfix{
+    display:block;
+    zoom:1;
+    overflow:hidden;
+}
+</code></pre>
+
+<p>当然，这三种方法我都说出来了，只是当时第三种方法当时还没用过，主要用的第二种。这时面试官问了一个让自己觉得“自己弱爆了的问题”，问：为什么加 <code>zoom:1;</code>?</p>
+
+<p>我知道它是为了兼容IE，但是面试官又追问：为什么加了 <code>zoom:1;</code> 就能兼容 IE？</p>
+
+<p>这下，我彻底凌乱了，不知道，是一点都不知道，我居然从来没想过这个问题，只是想当然的这么用就对了。这让我明白了 “知其然，一定要知其所以然” ，我会在这方面加油。当然，面试官还是告诉我了：激活了 hasLayout。不过对我来说，还是相当模糊的，毕竟做 IE 兼容比较少，且没经历过 ie 6,7 的时代。如果想了解，请看来自 “愚人码头” 的 <a href="http://www.css88.com/archives/1288" title="hasLayout详解">hasLayout详解</a>。</p>
+
+<h4>6.null和undefined相等吗？</h4>
+
+<p>这道题，还是理直气壮地：null == undefined true ; null === undefined false.</p>
+
+<p>紧接着问 "==" 与 "===" 的区别？</p>
+
+<p>"==" 是逻辑等于，而 "===" 是全等。逻辑等于在比较时会进行类型转换，而全等不会。</p>
+
+<h4>7.统计一个字符串中每个字母的个数</h4>
+
+<p>当时想用两个 for 循环做，但最终卡壳了。</p>
+
+<pre><code>/**
+ * [getEachLetterNum 获取一个字符串中每个字母的个数]
+ * @param  {[string or String]} str ["" or new String()]
+ * @return {[Array]}     [复合数组]
+ */
+function getEachLetterNum(str){
+    var tempStr=str.toString().split('');
+    var returnArray=[];
+    var re1=/[A-Za-z]/;
+    var i=0;
+    while(re1.test(tempStr.join(''))){  
+        if(re1.test(tempStr[i])){
+            var o=tempStr.join(''); var re2=new RegExp(tempStr[i],"g");
+            returnArray[tempStr[i]]=o.match(re2).length;
+            tempStr=o.replace(re2,'').split('');
+        }
+        else{
+            i++;
+        }
+
+    }
+    return returnArray;
+}
+</code></pre>
+
+<p>谁还有好的方法可以留言交流。</p>
+
+<h4>8.说说IE兼容问题</h4>
+
+<p>关于这道题，没太深入研究过兼容问题，我认为未来是乐观的，没太必要为兼容问题耗费太多精力。就本博客来说，并不支持 ie6,7,8 并已经做好相关程序，如果您用以上浏览器，会跳转到一个页面，提示您升级浏览器，或者换高级浏览器。所以，这道题，只回答出了 IECC(conditional comment) 和 几个属性级的 hack，关于更多的 ie bug 的 hack ，没太用过，说出来自己都觉得怪怪的。</p>
+
+<h4>9.今天周几？</h4>
+
+<p>1.单纯的switch</p>
+
+<pre><code>var oDate=new Date();
+var day=oDate.getDay();
+switch(day){
+    case 0: document.write("今天是周日");break;
+    case 1: document.write("今天是周一");break;
+    case 2: document.write("今天是周二");break;
+    case 3: document.write("今天是周三");break;
+    case 4: document.write("今天是周四");break;
+    case 5: document.write("今天是周五");break;
+    default: document.write("今天是周六");break;
+}
+</code></pre>
+
+<p>2.数组方法</p>
+
+<pre><code>var oDate=new Date();
+var day=oDate.getDay();
+var dayArray=[];
+dayArray[0]="周日";
+dayArray[1]="周一";
+dayArray[2]="周二";
+dayArray[3]="周三";
+dayArray[4]="周四";
+dayArray[5]="周五";
+dayArray[6]="周六";
+document.write("今天是"+dayArray[day]);
+</code></pre>
+
+<h4>10.JavaScript基本类型，如何判断某一变量是什么类型？</h4>
+
+<p>关于这道题，我当时只知道用 typeof 判断，而且 typeof 判断的并不准确。究其原因，主要是自己做的东西太少了，遇到的东西太少了，还有就是太过依赖于类库(jquery)。
+所以，写了一篇专门针对的<a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">笔记</a>。</p>
 
         </div>
         <div class="share clearfix">
@@ -293,6 +425,8 @@ function findSymmetryNumber(start,end){
                 <a class="left" href="/articles/youth-hotel" rel="bookmark" title="旧一篇">&laquo;&nbsp;未名国际青年旅社</a>
             
             
+                <a class="right" href="/articles/how-to-detect-variable-type" rel="bookmark" title="新一篇">JavaScript如何判断变量类型&nbsp;&raquo;</a>
+            
         </nav>
         <div class="clearfix">
             <div id="relatedArticles">
@@ -304,8 +438,7 @@ function findSymmetryNumber(start,end){
                     
                         
                     
-                
-                     
+                        
                     
                         
                     
@@ -314,8 +447,34 @@ function findSymmetryNumber(start,end){
                     
                         
                     
+                        
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sae-cloud-icon" title="仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本">&raquo;&nbsp;仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/image-shadow" title="制作图像 picture 的阴影显示效果">&raquo;&nbsp;制作图像 picture 的阴影显示效果</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/chocolate-pure-css" title="本博客使用PureCss">&raquo;&nbsp;本博客使用PureCss</a></li>
+                                
+                            
+                        
+                    
                 
                      
+                    
+                        
+                    
+                        
                     
                         
                     
@@ -324,8 +483,7 @@ function findSymmetryNumber(start,end){
                     
                         
                     
-                
-                     
+                        
                     
                         
                     
@@ -334,8 +492,45 @@ function findSymmetryNumber(start,end){
                     
                         
                     
-                
-                     
+                        
+                            
+                                
+                                    <li><a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">&raquo;&nbsp;JavaScript如何判断变量类型</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/js-insertAfter" title="insertAfter()?">&raquo;&nbsp;insertAfter()?</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/java-vs-javascript" title="Java vs JavaScript">&raquo;&nbsp;Java vs JavaScript</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
+                                
+                            
+                        
                     
                         
                     
@@ -344,8 +539,7 @@ function findSymmetryNumber(start,end){
                     
                         
                     
-                
-                     
+                        
                     
                         
                     
@@ -354,8 +548,7 @@ function findSymmetryNumber(start,end){
                     
                         
                     
-                
-                     
+                        
                     
                         
                     
@@ -364,8 +557,7 @@ function findSymmetryNumber(start,end){
                     
                         
                     
-                
-                     
+                        
                     
                         
                     
@@ -374,8 +566,70 @@ function findSymmetryNumber(start,end){
                     
                         
                     
+                        
+                    
+                        
+                    
                 
                      
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
                     
                         
                     
@@ -394,12 +648,20 @@ function findSymmetryNumber(start,end){
                             
                         
                     
+                        
+                    
+                        
+                    
                 
                 </ul>
             </div>
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
+                   
+                    <li>
+                        <a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型" rel="bookmark">&raquo;&nbsp;JavaScript如何判断变量类型</a>
+                    </li>                                   
                    
                     <li>
                         <a href="/articles/youth-hotel" title="未名国际青年旅社" rel="bookmark">&raquo;&nbsp;未名国际青年旅社</a>
@@ -435,10 +697,6 @@ function findSymmetryNumber(start,end){
                    
                     <li>
                         <a href="/articles/mysql-copy-table" title="mysql拷贝表" rel="bookmark">&raquo;&nbsp;mysql拷贝表</a>
-                    </li>                                   
-                   
-                    <li>
-                        <a href="/articles/sublime-text-2" title="sublime text 2 插件使用" rel="bookmark">&raquo;&nbsp;sublime text 2 插件使用</a>
                     </li>                                   
                 
                 </ul>

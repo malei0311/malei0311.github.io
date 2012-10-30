@@ -4,7 +4,7 @@
         "headline":"About Me",
         "type":"default",
 		"startDate":"1991",
-		"text":"关于我",
+		"text":"关于我 <a target='_blank' href='http://resume.github.com/?malei0311'>resume</a>",
 		"asset":
         {
             "media":"/images/about/index.png",

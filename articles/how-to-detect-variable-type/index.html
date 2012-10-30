@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ana... | WebCraft</title>
+    <title>JavaScript如何判断变量类型 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="... | malei0311\'s Blog" />
-    <meta name="keywords" content="ana,malei0311" />
+    <meta name="description" content="JavaScript的主要数据类型、变量的传值与传址详解、内存的使用规则（堆和栈）详解、判断变量类型的实现。另外，对于Javascript的类型理解，有的地方还有些模糊，需要多看看权威的文章，加深理解。随着理解的加深，会不断修订。 | malei0311\'s Blog" />
+    <meta name="keywords" content="js,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/ana">ana...</a></h1>
+            <h1><a href="/articles/how-to-detect-variable-type">JavaScript如何判断变量类型</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2012-08-02">2012-08-02</time>
+                    <time class="date" pubdate="2012-10-29">2012-10-29</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#ana">
-                                    ana
+                                <a href="/tags.html#js">
+                                    js
                                 </a>
                                 <span>
                                     ,
@@ -91,13 +91,195 @@
                 
             </div>
         </div>
-        <p class="description">...</p>
+        <p class="description">JavaScript的主要数据类型、变量的传值与传址详解、内存的使用规则（堆和栈）详解、判断变量类型的实现。另外，对于Javascript的类型理解，有的地方还有些模糊，需要多看看权威的文章，加深理解。随着理解的加深，会不断修订。</p>
         <div class="article-div-content">
-        	<ul>
-<li><p>在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了博得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。（席慕容）</p></li>
-<li><p>虽说是抄袭之作，但想必也耗费了不少精力，最后的结果却难令人满意——既浪费了资源，又坏了名声。开发者们是否该问问自己，这样做真的值得吗？</p></li>
-<li><p>工作中，你给的往往是自己"想"给的，却不是客户想要的，活在自己世界里的付出不值钱。</p></li>
-<li><p>泉涸，鱼双与予处于陆，相濡以沫，不如相忘于江湖。</p></li>
+        	<h2>数据类型</h2>
+
+<h3>简单数据类型</h3>
+
+<p>Boolean,Number,String,Undefined,Null</p>
+
+<h3>复杂数据类型</h3>
+
+<p>Object</p>
+
+<h2>变量的传值与传址</h2>
+
+<h3>按值传递</h3>
+
+<p>简单数据类型是按值进行传递的。当按值传递时，将在计算机内存分配一块空间并将原值复制到其中，这意味着变量的实际内容会传递给变量。然后即使改变原来的值，也不会影响复制到新变量中的值。</p>
+
+<h3>按引用传递</h3>
+
+<p>复杂数据类型，可以包含大量和复杂的信息，所以属于此类型的变量并不包含实际的值，它包含的是对值得引用。这中引用类似于指向变量内容的别名（在一些程序语言中成为“指针”）。当变量需要知道他的值时，该引用会查询内容，然后返回答案，而无需将该值传递给变量。</p>
+
+<p>当多个变量都指向这个复杂的数据类型时，实际上他们获得的只是对这个复杂数据类型的引用。当这个复杂数据类型被改变时，所有引用该复杂数据类型的变量都会获得一个新值。</p>
+
+<pre><code>var theArray=["malei0311","teaScripts"];
+var newArray=theArray;
+alert(newArray[1]); //teaScripts
+theArray[1]="tom";
+alert(newArray[1]); //tom
+</code></pre>
+
+<h2>内存使用规则</h2>
+
+<p>堆和栈都是运行时内存中分配的一个数据区，因此也被称之为堆区和栈区，但两者存储的数据类型和处理速度不同。</p>
+
+<p>堆 (heap) 用于为复杂数据类型分配空间，例如数组对象、Object对象。他是在运行时动态分配内存的，因此存取速度较慢。</p>
+
+<p>栈 (stack) 主要存放一些基本类型的变量和对象的引用。其优势是存取速度比堆要快，并且栈内的数据可以共享。但缺点是存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。</p>
+
+<h3>栈</h3>
+
+<p>栈有一个很重要的特性，就是存在栈中的数据可以共享。例如：</p>
+
+<pre><code>var a=1;
+var b=1;
+</code></pre>
+
+<p>JavaScript解释引擎先处理 <code>var a=1;</code> 首先会在栈中创建一个变量为 a 的引用，然后查找栈中是否有 1 这个值，如果没找到 1 ，就将 1 存放进来，然后将 a 指向 1 。接着处理 <code>var b=1;</code> 在创建完 b 的引用变量后，查找栈中是否有 1 这个值，因为在栈中已经存在了，便将 b 直接指向 1 。这样，就出现了 a 与 b 同时指向 1 的情况。</p>
+
+<p>此时，如果再令 <code>a=2</code> 那么 JavaScript解释引擎会重新搜索栈中是否有 2 这个值，如果没有，就将 2 存放进来，并令 a 指向 2 ；如果已经有了，则直接将 a 指向这个地址。因此 a 值得改变不会影响到 b 的值。</p>
+
+<h3>堆</h3>
+
+<p>通过 Array 来看一下堆的行为：</p>
+
+<pre><code>var sport1="basketball";
+var sport2="football";
+var sport3="volleyball";
+var theArray=[sport1,sport2,sport3];
+var newArray=theArray;
+</code></pre>
+
+<p>当创建数组时，就会在堆内创建一个数组对象，并且在栈内创建一个对数组的引用。这几步操作对应的内存，如图：</p>
+
+<p><img src="/images/articles/how-to-detect-variable-type/stack-heap.png" alt="stack-heap" /></p>
+
+<p>变量 sport1,sport2,sport3 为基本数据类型，他们的值直接放在栈中；theArray,newArray 为复合数据类型，他们的引用变量存储在栈中，指向于存储于堆中的实际对象。</p>
+
+<p>如果更改 newArray 或 theArray 的值，那么实际是更改堆中的实际对象，因此，对两个变量引用都会发生作用。</p>
+
+<p>JavaScript堆不需要程序代码来显示的释放，因为堆是由自动的垃圾回收来负责的，每种浏览器中的JavaScript解释引擎有不同的自动回收方式，但一个基本的原则是，如果栈中不存在对堆中某个对象堆的引用，那么就会认为该对象已经不再需要，在垃圾回收时，就会清除该对象占用的空间。</p>
+
+<p>因此，在不需要时，应该将对对象的引用释放掉，以利于垃圾回收，这样可以提高程序的性能。释放引用最常见的方法：<code>newArray=null;</code></p>
+
+<h2>进入正题</h2>
+
+<h3>测试环境</h3>
+
+<ul>
+<li>Chrome 22</li>
+<li>Firefox 15</li>
+<li>IE 7,8,9</li>
+</ul>
+
+
+<h3>JavaScript类型总览</h3>
+
+<p><img src="/images/articles/how-to-detect-variable-type/types.png" alt="types" /></p>
+
+<h3>简单测试 typeof</h3>
+
+<p>接着<a href="/articles/baidu-examination/" title="百度面试">面试题</a>中的写，简单的测试 typeof</p>
+
+<pre><code>var Tea = (function(){
+
+    function getElementsByClassName(className,tag,parent){}
+
+    function findSymmetryNumber(start,end){}
+
+    function getVarType(v){
+        return typeof(v);
+    }
+
+    return {
+        getElementsByClassName : getElementsByClassName,
+        findSymmetryNumber : findSymmetryNumber,
+        getVarType : getVarType
+    };
+})();
+</code></pre>
+
+<p>通过在控制台中进行测试，以下是测试结果截图：</p>
+
+<p>Chrome:</p>
+
+<p><img src="/images/articles/how-to-detect-variable-type/typeof-chrome.png" alt="chrome-typeof" /></p>
+
+<p>Firefox:</p>
+
+<p><img src="/images/articles/how-to-detect-variable-type/typeof-firefox.png" alt="firefox-typeof" /></p>
+
+<p>IE:</p>
+
+<p><img src="/images/articles/how-to-detect-variable-type/typeof-ie.png" alt="ie-typeof" /></p>
+
+<p>我们可以看到在 JavaScript 的简单的数据类型中，只有 null 返回的的是 object ，其他的都是相当准确的。</p>
+
+<p>我们知道 "JavaScript一切皆是对象"， 对于除了 Math(静态类) 的内建类，当我们用 new 关键字给变量赋值时，
+例如：<code>var oString=new String("test");</code> => <code>typeof oString</code> 返回 object。类似的还有：</p>
+
+<pre><code>var oBoolean=new Boolean(true);
+var oNumber=new Number(1234);
+var oArray1=new Array();
+var oArray2=[];
+var re1=new RegExp("\\w*","g");
+var re2=/\w*/g;
+</code></pre>
+
+<p>返回的都是 "object"，仅用 typeof ，我们无法知道，到底是什么。当然 typeof Math 返回的也是 "object"。但是，直接 <code>typeof 非静态内建类</code> 返回的却是 "function"。</p>
+
+<h3>加入精确判断</h3>
+
+<p>方法一：</p>
+
+<pre><code>function getVarType(v){
+    if(typeof v === 'object'){
+        if(v === null){return 'null';}
+        return Object.prototype.toString.call(v).match(/object\s(\w+)/)[1].toLowerCase();
+    }
+    return typeof(v);
+}
+</code></pre>
+
+<p>方法二：</p>
+
+<pre><code>function getVarType(v){
+    if(typeof v === 'object'){
+        if(v === null){return 'null';}
+        if(v.constructor) 
+            //直接取出想要的，但是必须多取出一个空格，IE中 "function" 前面并不是空格，
+            //所以这就决定了取出的是自己想要的值，然后截取字符串
+            //return (v.constructor.toString()).match(/(?: )[\w\$]+/)[0].substr(1).toLowerCase(); 
+
+            //通过获取子表达式，取出自己想要的，因为IE在 "function" 前加了空字符，所以  "^\s*" 
+            //return v.constructor.toString().match(/^\s*function\s([\w\$]+)/)[1].toLowerCase(); // [注]
+
+            //match的正则表达式返回第一个匹配，所以 [注] 的 "^\s*" 可以去掉
+            return v.constructor.toString().match(/function\s([\w\$]+)/)[1].toLowerCase();
+
+        return "object";
+    }
+    return typeof(v);
+}
+</code></pre>
+
+<p>其实，IE在 "function" 前面加的是 "\n" 换行符。</p>
+
+<p>如果说判断某个变量 s 是否为 Array 类型时，可以</p>
+
+<pre><code>if(s instanceof Array){
+    //your code
+}
+</code></pre>
+
+<h2>Reference</h2>
+
+<ul>
+<li>《JavaScript权威指南》——张亚飞</li>
+<li><a href="http://blog.csdn.net/aimingoo/article/details/6634977">再谈JavaScript的数据类型问题</a> ——aimingoo</li>
 </ul>
 
 
@@ -111,10 +293,8 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/demos/tools-parseUnicode" rel="bookmark" title="旧一篇">&laquo;&nbsp;parseUnicode小工具</a>
+                <a class="left" href="/articles/baidu-examination" rel="bookmark" title="旧一篇">&laquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a>
             
-            
-                <a class="right" href="/demos/css3-image-box-shadow" rel="bookmark" title="新一篇">CSSbox-shadow秒杀&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -141,16 +321,48 @@
                      
                     
                         
-                            
-                                
-                                    <li><a href="/articles/ana" title="ana...">&raquo;&nbsp;ana...</a></li>
-                                
-                            
-                        
                     
                 
                      
                     
+                        
+                            
+                                
+                                    <li><a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">&raquo;&nbsp;JavaScript如何判断变量类型</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/js-insertAfter" title="insertAfter()?">&raquo;&nbsp;insertAfter()?</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/java-vs-javascript" title="Java vs JavaScript">&raquo;&nbsp;Java vs JavaScript</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
+                                
+                            
                         
                     
                 
@@ -221,10 +433,6 @@
                 <ul>
                    
                     <li>
-                        <a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型" rel="bookmark">&raquo;&nbsp;JavaScript如何判断变量类型</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历" rel="bookmark">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a>
                     </li>                                   
                    
@@ -258,6 +466,10 @@
                    
                     <li>
                         <a href="/articles/the-diff-between-alt-and-title" title="img 中alt和tittle的区别" rel="bookmark">&raquo;&nbsp;img 中alt和tittle的区别</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/mysql-copy-table" title="mysql拷贝表" rel="bookmark">&raquo;&nbsp;mysql拷贝表</a>
                     </li>                                   
                 
                 </ul>
