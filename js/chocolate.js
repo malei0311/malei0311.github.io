@@ -10,7 +10,7 @@
  * @static
  */
 var Chocolate={
-	/**
+    /**
      * @description 非 IE6/7/8 的浏览器，跳转到 kill-browser 页面
      */
     killIE: function () {
@@ -34,20 +34,20 @@ var Chocolate={
     /**
      * @description 高亮显示菜单项
      */
-	highLightMenu: function() {
-    	var navs, url, cur, i;
-    	navs = $("#top-nav li a");
-		for(i = 1 ; i < navs.length; i++ ){
-			url = navs[i].href;
-			cur = window.location.href;
-			if(cur.indexOf(url) !=-1) {
-				navs[i].className = "current";
-				navs[0].className = "";
-			}
-			if(cur != navs[0].href) {
-				navs[0].className = "";
-			}
-		}     	
+    highLightMenu: function() {
+        var navs, url, cur, i;
+        navs = $("#top-nav li a");
+        for(i = 1 ; i < navs.length; i++ ){
+            url = navs[i].href;
+            cur = window.location.href;
+            if(cur.indexOf(url) !=-1) {
+                navs[i].className = "current";
+                navs[0].className = "";
+            }
+            if(cur != navs[0].href) {
+                navs[0].className = "";
+            }
+        }       
     },
     /**
      * @description DOM加载完成后的初始化
@@ -250,5 +250,5 @@ var Chocolate={
 }
 
 $(function(){
-	Chocolate.init();
+    Chocolate.init();
 })

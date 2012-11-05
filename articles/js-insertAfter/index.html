@@ -9,7 +9,7 @@
     <title>insertAfter()? | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="关于几种自定义的insertAfter() | malei0311\'s Blog" />
+    <meta name="description" content="关于几种自定义的insertAfter() | malei0311's Blog" />
     <meta name="keywords" content="js,insertAfter,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
@@ -99,7 +99,6 @@
 var node=document.createElement('div');
 var nodeText=document.createTextNode('hello world!');
 node.appendChild(nodeText);
-
 referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
 </code></pre>
 
@@ -107,7 +106,6 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
 
 <pre><code>function insertAfter(node, referenceNode){
     var parent = referenceNode.parentNode;
-
     if(parent.lastChild == referenceNode){
         parent.appendChild(node);
     }
@@ -177,6 +175,10 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
                      
                     
                         
+                            
+                                
+                                    <li><a href="/articles/css3-linear-gradient" title="关于 CSS3 的 linear-gradient">&raquo;&nbsp;关于 CSS3 的 linear-gradient</a></li>
+                                
                             
                                 
                                     <li><a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">&raquo;&nbsp;JavaScript如何判断变量类型</a></li>
@@ -284,6 +286,10 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
                 <ul>
                    
                     <li>
+                        <a href="/articles/css3-linear-gradient" title="关于 CSS3 的 linear-gradient" rel="bookmark">&raquo;&nbsp;关于 CSS3 的 linear-gradient</a>
+                    </li>                                   
+                   
+                    <li>
                         <a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型" rel="bookmark">&raquo;&nbsp;JavaScript如何判断变量类型</a>
                     </li>                                   
                    
@@ -317,10 +323,6 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
                    
                     <li>
                         <a href="/articles/the-diff-between-alt-and-title" title="img 中alt和tittle的区别" rel="bookmark">&raquo;&nbsp;img 中alt和tittle的区别</a>
-                    </li>                                   
-                   
-                    <li>
-                        <a href="/articles/mysql-copy-table" title="mysql拷贝表" rel="bookmark">&raquo;&nbsp;mysql拷贝表</a>
                     </li>                                   
                 
                 </ul>

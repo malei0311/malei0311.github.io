@@ -3,33 +3,33 @@
     {
         "headline":"About Me",
         "type":"default",
-		"startDate":"1991",
-		"text":"关于我 <a target='_blank' href='http://resume.github.com/?malei0311'>resume</a>",
-		"asset":
+        "startDate":"1991",
+        "text":"关于我 <a target='_blank' href='http://resume.github.com/?malei0311'>resume</a>",
+        "asset":
         {
             "media":"/images/about/index.png",
             "credit":"",
             "caption":""
         },
-		"era": [
-			{
-				"startDate":"1991,1,20",
-				"endDate":"1996,9,1",
-				"headline":"学前时代",
-				"text":""
-	        },
-			{
-				"startDate":"1996,9,1",
-				"endDate":"2003,9,1",
-				"headline":"小学时代",
-				"text":""
-	        },
-			{
-				"startDate":"2003,9,1",
-				"endDate":"2006,9,1",
-				"headline":"中学时代",
-				"text":""
-	        },
+        "era": [
+            {
+                "startDate":"1991,1,20",
+                "endDate":"1996,9,1",
+                "headline":"学前时代",
+                "text":""
+            },
+            {
+                "startDate":"1996,9,1",
+                "endDate":"2003,9,1",
+                "headline":"小学时代",
+                "text":""
+            },
+            {
+                "startDate":"2003,9,1",
+                "endDate":"2006,9,1",
+                "headline":"中学时代",
+                "text":""
+            },
             {
                 "startDate":"2006,9,1",
                 "endDate":"2009,9,1",
@@ -42,7 +42,7 @@
                 "headline":"大学时代",
                 "text":""
             }
-		],
+        ],
         "date": [
             {
                 "startDate":"1991",
@@ -198,7 +198,7 @@
                     "caption":""
                 }
             }
-			
+            
         ]
     }
 }
