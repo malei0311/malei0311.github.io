@@ -128,9 +128,9 @@ h3 {font-size:18px;font-weight:bold;margin-bottom:10px;}
 h4,h5,h6 {font-weight:bold;margin-bottom:10px;}
 p {margin-bottom:20px;line-height:25px;}
 code {background:#eee;border:1px solid #ccc;padding:0 5px;font-family:"Courier";line-height:14px;font-size:14px;}
-pre {background-color:#272822;padding:15px;overflow:auto;margin-bottom:20px;font-size:14px;border: 1px solid #eee;-webkit-border-radius: 4px 4px 4px 4px;-moz-border-radius: 4px 4px 4px 4px;border-radius: 4px 4px 4px 4px;color:#b9bdb6}
+pre {background-color:#272822;padding:15px 20px;overflow:auto;margin-bottom:20px;font-size:14px;border: 1px solid #eee;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;color:#b9bdb6}
 pre code{background-color:transparent;border:none;padding:0;}
-pre ol{margin-left:25px;list-style-type:decimal;}
+pre ol{margin-left:0px;list-style:none;}
 
 /*================common classes=================*/
 .head-cnt,.banner-cnt,.content-cnt,.footer-cnt,.banner-bottom-cnt{
@@ -142,7 +142,7 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 .inner-content{
 	padding:20px 5px;
 }
-div.article-div-content ul,div.article-div-content ol{
+div.article-div-content ul{
 	padding-bottom:15px;
 }
 /*==========share========================*/
