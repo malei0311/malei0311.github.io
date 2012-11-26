@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>mysql拷贝表 | WebCraft</title>
+    <title>Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？ | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="由于新表和原表的字段不同，所以先要找出两个表的相同字段，然后拷贝相同字段 | malei0311's Blog" />
-    <meta name="keywords" content="mysql,php,copyTable,malei0311" />
+    <meta name="description" content="under Ubuntu+iBus, you can't enter Chinese into Sublime Text 2, how to solve it, let's go! | malei0311's Blog" />
+    <meta name="keywords" content="sublime_text_2,ubuntu,iBus,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/mysql-copy-table">mysql拷贝表</a></h1>
+            <h1><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus">Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2012-09-12">2012-09-12</time>
+                    <time class="date" pubdate="2012-11-26">2012-11-26</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#php">
-                                    php
+                                <a href="/tags.html#editor">
+                                    editor
                                 </a>
                                 <span>
                                     ,
@@ -86,8 +86,17 @@
                             </li>
                              
                             <li>
-                                <a href="/tags.html#mysql">
-                                    mysql
+                                <a href="/tags.html#ST2">
+                                    ST2
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                             
+                            <li>
+                                <a href="/tags.html#ubuntu">
+                                    ubuntu
                                 </a>
                                 <span>
                                     ,
@@ -100,103 +109,45 @@
                 
             </div>
         </div>
-        <p class="description">由于新表和原表的字段不同，所以先要找出两个表的相同字段，然后拷贝相同字段</p>
+        <p class="description">under Ubuntu+iBus, you can't enter Chinese into Sublime Text 2, how to solve it, let's go!</p>
         <div class="article-div-content">
-        	<h2>总述</h2>
+        	<h2>解决方案</h2>
 
-<p>现在每个表都是按用户的意愿生成的，每个表的字段大体上相同，但是会有一两个不同的字段，该怎么做？</p>
+<p>先安装能在sublime text 2显示中文的字体，有一个非常好的开源字体，叫做“文泉驿字体”，安装如下：</p>
 
-<h2>几种拷贝表的方式</h2>
-
-<h3>拷贝表结构到新表中</h3>
-
-<pre><code>CREATE TABLE new LIKE origin;
+<pre><code>sudo apt-get install xfonts-wqy
 </code></pre>
 
-<h3>拷贝数据到新表中</h3>
+<p>官方网站：<a href="http://wenq.org/index.cgi?%E9%A6%96%E9%A1%B5">http://wenq.org/index.cgi?%E9%A6%96%E9%A1%B5</a></p>
 
-<p>注意：这个语句其实只是把select语句的结果建一个表。所以 new 这个表不会有主键，索引。</p>
+<p>然后配置sublime text 2的 “Settings-User”，在里面加上：</p>
 
-<pre><code>CREATE TABLE new AS   
-(   
-    SELECT *   
-    FROM origin   
-); 
+<pre><code>"font_face": "WenQuanYi Micro Hei Mono"
 </code></pre>
 
-<h3>真正的复制一个表</h3>
+<p>最后安装一个sublime text 2的插件 InputHelper，用于输入中文，安装如下：</p>
 
-<pre><code>CREATE TABLE new LIKE origin;   
-INSERT INTO new SELECT * FROM origin;
+<pre><code>cd ~/.config/sublime-text-2/Packages
+git clone https://github.com/xgenvn/InputHelper.git
 </code></pre>
 
-<h3>操作不同的数据库</h3>
+<p>使用方法：</p>
 
-<pre><code>CREATE TABLE new LIKE shop.origin;   
-</code></pre>
+<ul>
+<li>1.保证ibus/scim是在gtk程序下正常运行。</li>
+<li>2.Ctrl+Shift+Z 调出输入框（虽然不习惯也不爽，但能支持中文输入已经不错啦_<sup>)</sup></li>
+<li>3.在输入框窗口输入中文，然后按下Enter或者Ctrl+Enter键输入文字到sublime text 2</li>
+<li>4.点击>右方向键或者End键把光标移动到最后，进行继续输入（回到1）</li>
+</ul>
 
-<h3>新建的表的字段改名</h3>
 
-<pre><code>CREATE TABLE new AS   
-(   
-    SELECT id, username AS uname, password AS pass FROM origin   
-);
-</code></pre>
+<p>说明：</p>
 
-<h2>实现</h2>
+<p>该插件只能在linux下使用，对于windows或者mac是不支持的。</p>
 
-<p>因为表中的字段大部分相同，所以需要找出相同的字段</p>
+<h2>Reference</h2>
 
-<h3>获取表中的字段</h3>
-
-<pre><code>        //获取表字段信息
-    public function getColumnName($tableName){
-        $sql=&lt;&lt;&lt;EOF
-        select COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where table_name="$tableName";
-EOF;
-        $queryResult=$this-&gt;pdo-&gt;query($sql);
-        $resultArray=array();
-        $rows=$queryResult-&gt;fetchAll(PDO::FETCH_ASSOC);
-        foreach ($rows as $row) {
-            $resultArray[]=$row['COLUMN_NAME'];
-        }
-        return $resultArray;
-    }
-</code></pre>
-
-<h3>找出相同的字段，然后拷贝</h3>
-
-<pre><code>        /**
-     * [copyDataToNewTable 拷贝上一个月表中的数据]
-     * @param  [string] $oldTableName [上一个月原表]
-     * @param  [string] $newTableName [新表]
-     * @return [boolean]              [返回值]
-     */
-    public function copyDataToNewTable($oldTableName,$newTableName){
-        $whatIWant=array();
-        $columnName_oldTable=$this-&gt;getColumnName($oldTableName);
-        $columnName_newTable=$this-&gt;getColumnName($newTableName);
-        foreach ($columnName_oldTable as $key1 =&gt; $value1) {
-            foreach ($columnName_newTable as $key2 =&gt; $value2) {
-                if($columnName_oldTable[$key1]==$columnName_newTable[$key2]){
-                    $whatIWant[]= $columnName_oldTable[$key1];
-                }
-            }
-        }
-        $whatIWant_result=join(",",$whatIWant);
-        $sql=&lt;&lt;&lt;EOF
-        insert  into `$newTableName`($whatIWant_result) select $whatIWant_result from `$oldTableName`;
-EOF;
-        $queryResult=$this-&gt;pdo-&gt;exec($sql);
-        if($queryResult)
-        {
-            return true;
-        }
-        else{
-            return false;
-        } 
-    }
-</code></pre>
+<p><a href="http://www.zhihu.com/question/20163104">知乎</a></p>
 
         </div>
         <div class="share clearfix">
@@ -208,10 +159,10 @@ EOF;
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/sublime-text-2" rel="bookmark" title="旧一篇">&laquo;&nbsp;sublime text 2 插件使用</a>
+                <a class="left" href="/articles/css3-linear-gradient" rel="bookmark" title="旧一篇">&laquo;&nbsp;关于 CSS3 的 linear-gradient</a>
             
             
-                <a class="right" href="/articles/the-diff-between-alt-and-title" rel="bookmark" title="新一篇">img 中alt和tittle的区别&nbsp;&raquo;</a>
+                <a class="right" href="/articles/ubuntu-github-git-jekyll" rel="bookmark" title="新一篇">ubuntu配置github+git+jekyll环境&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -223,21 +174,6 @@ EOF;
                      
                     
                         
-                            
-                                
-                                    <li><a href="/articles/mysql-copy-table" title="mysql拷贝表">&raquo;&nbsp;mysql拷贝表</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/php-random-image" title="PHP随机显示图片（目录不限深度）">&raquo;&nbsp;PHP随机显示图片（目录不限深度）</a></li>
-                                
-                            
-                        
-                    
-                        
-                    
-                
-                     
                     
                         
                     
@@ -250,22 +186,12 @@ EOF;
                     
                         
                     
-                
-                     
-                    
-                        
-                    
                         
                     
                 
                      
                     
                         
-                    
-                        
-                    
-                
-                     
                     
                         
                     
@@ -278,22 +204,12 @@ EOF;
                     
                         
                     
-                
-                     
-                    
-                        
-                    
                         
                     
                 
                      
                     
                         
-                    
-                        
-                    
-                
-                     
                     
                         
                     
@@ -306,11 +222,6 @@ EOF;
                     
                         
                     
-                
-                     
-                    
-                        
-                    
                         
                     
                 
@@ -320,15 +231,133 @@ EOF;
                     
                         
                     
+                        
+                    
                 
                      
                     
                         
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
                     
                         
                             
                                 
-                                    <li><a href="/articles/mysql-copy-table" title="mysql拷贝表">&raquo;&nbsp;mysql拷贝表</a></li>
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime-text-2" title="sublime text 2 插件使用">&raquo;&nbsp;sublime text 2 插件使用</a></li>
+                                
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime-text-2" title="sublime text 2 插件使用">&raquo;&nbsp;sublime text 2 插件使用</a></li>
+                                
+                            
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
                                 
                             
                         
@@ -337,32 +366,6 @@ EOF;
                      
                     
                         
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                
-                     
                     
                         
                     
@@ -377,10 +380,6 @@ EOF;
                    
                     <li>
                         <a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境" rel="bookmark">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a>
-                    </li>                                   
-                   
-                    <li>
-                        <a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？" rel="bookmark">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a>
                     </li>                                   
                    
                     <li>
@@ -413,6 +412,10 @@ EOF;
                    
                     <li>
                         <a href="/articles/js-insertAfter" title="insertAfter()?" rel="bookmark">&raquo;&nbsp;insertAfter()?</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/browsers" title="browsers" rel="bookmark">&raquo;&nbsp;browsers</a>
                     </li>                                   
                 
                 </ul>
