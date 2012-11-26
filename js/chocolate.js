@@ -163,7 +163,7 @@ var Chocolate={
      * @time  Aug 9, 2012
      */
     getParameterFromURL:function(){
-        var currHref = window.location.href;
+        var currHref = decodeURIComponent(window.location.href);
         var index = currHref.lastIndexOf("#");
         var param = "";
         if(index != "-1"){
