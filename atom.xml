@@ -4,13 +4,22 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2012-11-26T18:22:49+08:00</updated>
+   <updated>2013-01-01T00:57:39+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>写在新年第一天</title>
+     <link href="http://webcraft.malei.tk/articles/happy-new-year"/>
+     <updated>2013-01-01T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/happy-new-year</id>
+     <content type="html">&lt;p&gt;--!&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>ubuntu配置github+git+jekyll环境</title>
@@ -823,17 +832,6 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
 &lt;p&gt;&lt;img src=&quot;/images/browsers.jpg&quot; title=&quot;browsers&quot; alt=&quot;browsers&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;自认为，没必要为老旧的IE系列做兼容，未来是乐观的，所有的浏览器都应该标准化。&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>Java vs JavaScript</title>
-     <link href="http://webcraft.malei.tk/articles/java-vs-javascript"/>
-     <updated>2012-09-21T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/java-vs-javascript</id>
-     <content type="html">&lt;h2&gt;一张趣图&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/articles/java-vs-javascript/java-vs-javascript.png&quot; title=&quot;Java vs JavaScript&quot; alt=&quot;Java vs JavaScript&quot; /&gt;&lt;/p&gt;
 </content>
    </entry>
    
