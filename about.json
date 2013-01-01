@@ -188,6 +188,17 @@
                 }
             },
             {
+                "startDate":"2012,12,13",
+                "headline":"在 sina 云计算实习",
+                "text":"很幸运能通过昨天的面试，相信会在实习过程中不断充实自己，努力ing...",
+                "asset":
+                {
+                    "media":"/images/about/sina.png",
+                    "credit":"",
+                    "caption":"理想国际大厦"
+                }
+            },
+            {
                 "startDate":"2013,6",
                 "headline":"即将毕业",
                 "text":"...",
