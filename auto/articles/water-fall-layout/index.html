@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>写在新年第一天 | WebCraft</title>
+    <title>Demos界面的伪瀑布流布局的实现 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="新年伊始，结束了2012，要重新规划自己新的一年——2013。 | malei0311's Blog" />
-    <meta name="keywords" content="new_year,2012,2013,malei0311" />
+    <meta name="description" content="很早以前，就想搞一下瀑布流布局，各种原因吧，借这次玩jekyll构建本博客的机会，稍微玩一下瀑布流。 | malei0311's Blog" />
+    <meta name="keywords" content="demos,waterfall,js,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/happy-new-year">写在新年第一天</a></h1>
+            <h1><a href="/articles/water-fall-layout">Demos界面的伪瀑布流布局的实现</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-01-01">2013-01-01</time>
+                    <time class="date" pubdate="2012-08-07">2012-08-07</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,26 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#life">
-                                    life
+                                <a href="/tags.html#js">
+                                    js
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                             
+                            <li>
+                                <a href="/tags.html#waterFall">
+                                    waterFall
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                             
+                            <li>
+                                <a href="/tags.html#博客志">
+                                    博客志
                                 </a>
                                 <span>
                                     ,
@@ -91,9 +109,132 @@
                 
             </div>
         </div>
-        <p class="description">新年伊始，结束了2012，要重新规划自己新的一年——2013。</p>
+        <p class="description">很早以前，就想搞一下瀑布流布局，各种原因吧，借这次玩jekyll构建本博客的机会，稍微玩一下瀑布流。</p>
         <div class="article-div-content">
-        	<p>--!</p>
+        	<h2>为什么叫伪瀑布流</h2>
+
+<p>因为并没有实现动态loading...，也没有用脚本去嗅探浏览器的宽度，以确定具体有几条瀑布。这是由博客的具体情况决定的，因为所有的demo都是慢慢生成的，所以这个Demos界面主要是做了个collection。写的比较死，主要针对本博客所写。</p>
+
+<h2>liquid脚本</h2>
+
+<h3>遍历所有demo</h3>
+
+<p>给每篇文章一个特定的<code>ID</code>，我这里是从<code>1</code>开始，即<code>demo-index-1</code>，因为我在<code>demo-index-0</code>中存放了所有demo数量的概览，这个总数将由<code>js</code>获取，留待后用。</p>
+
+<pre><code>{% assign index = 0 %}
+{% for post in site.categories.demos %}
+{% capture index %}{{ index | plus:1 }}{% endcapture %}
+{% capture demo_index %}demo-index-{{ index }}{% endcapture %}
+    &lt;article id="{{ demo_index }}"&gt;
+            &lt;div class="demo-title"&gt;
+                &lt;h3&gt;&lt;a href="{{ post.url }}"&gt;{{ post.title }}&lt;/a&gt;&lt;/h3&gt;
+                &lt;p&gt;{{ post.description }}&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="demo-time"&gt;
+                &lt;p&gt;&lt;span&gt;&amp;#8227;&lt;/span&gt;&lt;time pubdate="{{ post.date | date: '%b %d, %Y' }}"&gt;{{ post.date | date: '%b %d, %Y' }}&lt;/time&gt;&lt;/p&gt;
+            &lt;/div&gt;
+    &lt;/article&gt;
+{% endfor %}
+</code></pre>
+
+<h3>demo数量概览</h3>
+
+<pre><code>&lt;article id="demo-index-0"&gt;
+    {% capture list_size %}{{ site.categories.demos | size }}{% endcapture %}
+    &lt;h3&gt;
+        All demos:
+        (&lt;span&gt;
+            {{list_size}}
+        &lt;/span&gt;)
+    &lt;/h3&gt;         
+&lt;/article&gt;
+</code></pre>
+
+<h3>给出瀑布流容器</h3>
+
+<pre><code>&lt;div id="waterFallContainer"&gt;&lt;/div&gt;
+</code></pre>
+
+<h2>生成瀑布</h2>
+
+<p>主要就是用<code>js</code>操作<code>DOM</code>树，把文档呈现成自己想要的样子。</p>
+
+<h3>首先声明一个静态类</h3>
+
+<p>这里声明了如下属性、方法。具体分了5条瀑布，下面分别介绍每个方法的作用。</p>
+
+<pre><code>var waterFall = {
+    container: $("#waterFallContainer"),
+    columnNumber: 5,
+    columnWidth: 184,
+    demoIndex: 0,
+    loadFinish: false,
+    demosNum: parseInt($('#demo-index-0 span').text())+1,
+    create: function(){  },
+    loadAllDemos: function() {  },
+    loadSingleDemo: function(column) {  },
+    init:function(){  }
+};
+</code></pre>
+
+<h3>生成空瀑布</h3>
+
+<pre><code>create: function(){
+    var start=0, spans = '';
+    for (start; start &lt; this.columnNumber; start++) {
+        spans = spans + '&lt;span id="waterFallColumn-'+ start +'" class="waterFallColumns" style="width:'+ this.columnWidth +'px;"&gt;'+ '&lt;/span&gt; ';
+    }
+    this.container.html(spans);
+    return this;
+}
+</code></pre>
+
+<h3>填入内容</h3>
+
+<p>把所有的demo剪切到瀑布流容器中。首先，在剪切一个节点前，先判断是否所有demo都已加载完毕。</p>
+
+<pre><code>loadSingleDemo: function(column) {
+
+    if (this.demoIndex &gt; this.demosNum) {
+        this.loadFinish = true;
+    }
+    else{
+        column.append($("#demo-index-"+this.demoIndex));
+        this.demoIndex += 1;
+    }
+    return this;
+}
+</code></pre>
+
+<p>其次，有了上述方法，就可以放心的加载了</p>
+
+<pre><code>loadAllDemos: function() {
+    var index=0;
+    for(index;index&lt;this.demosNum;index +=5){
+        var start = 0;
+        for (start; start &lt; this.columnNumber; start++) {
+            var eleColumn = $("#waterFallColumn-" + start);
+            if (eleColumn &amp;&amp; !this.loadFinish) {
+                this.loadSingleDemo(eleColumn);
+            }           
+        }
+    }
+    return this;
+}
+</code></pre>
+
+<h3>初始化</h3>
+
+<p>每个方法都<code>return this;</code>,这样就可以像下面连着写了。</p>
+
+<pre><code>init:function(){
+    this.create().loadAllDemos();
+}
+</code></pre>
+
+<h2>FAQ</h2>
+
+<p>这里我遇到了一个问题，纠结了半天也没解决。本来想着 <code>span</code>的<code>display:inline-block</code> 就可以能解决问题了，诡异的是<code>span</code>之间总有4像素的间隔（ps:<code>span</code>的<code>margin</code>为<code>0</code>），怎么也找不出是哪的猫腻。于是乎，<code>display:block;float:left;</code>。纠结啊。</p>
 
         </div>
         <div class="share clearfix">
@@ -105,8 +246,10 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/ubuntu-github-git-jekyll" rel="bookmark" title="旧一篇">&laquo;&nbsp;ubuntu配置github+git+jekyll环境</a>
+                <a class="left" href="/articles/tags-js-liquid" rel="bookmark" title="旧一篇">&laquo;&nbsp;Tags界面构建之123</a>
             
+            
+                <a class="right" href="/articles/articlesLayout-directory" rel="bookmark" title="新一篇">articlesLayout构建之右侧目录索引&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -119,8 +262,7 @@
                     
                         
                     
-                
-                     
+                        
                     
                         
                     
@@ -129,8 +271,7 @@
                     
                         
                     
-                
-                     
+                        
                     
                         
                     
@@ -139,42 +280,32 @@
                     
                         
                     
-                
-                     
-                    
                         
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
                     
                         
                             
                                 
-                                    <li><a href="/articles/happy-new-year" title="写在新年第一天">&raquo;&nbsp;写在新年第一天</a></li>
+                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/how-to-do" title="该怎么做？">&raquo;&nbsp;该怎么做？</a></li>
+                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/chocolate-pure-css" title="本博客使用PureCss">&raquo;&nbsp;本博客使用PureCss</a></li>
                                 
                             
                         
@@ -184,8 +315,54 @@
                     
                         
                     
+                        
+                    
+                        
+                    
                 
                      
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">&raquo;&nbsp;JavaScript如何判断变量类型</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/js-insertAfter" title="insertAfter()?">&raquo;&nbsp;insertAfter()?</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/java-vs-javascript" title="Java vs JavaScript">&raquo;&nbsp;Java vs JavaScript</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
+                                
+                            
+                        
+                    
+                        
                     
                         
                     
@@ -194,8 +371,13 @@
                     
                         
                     
-                
-                     
+                        
+                            
+                                
+                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                
+                            
+                        
                     
                         
                     
@@ -204,8 +386,7 @@
                     
                         
                     
-                
-                     
+                        
                     
                         
                     
@@ -214,8 +395,106 @@
                     
                         
                     
+                        
+                    
+                        
+                    
                 
                      
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
                     
                         
                     
@@ -225,6 +504,10 @@
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
+                   
+                    <li>
+                        <a href="/articles/happy-new-year-2013" title="写在新年第一天" rel="bookmark">&raquo;&nbsp;写在新年第一天</a>
+                    </li>                                   
                    
                     <li>
                         <a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境" rel="bookmark">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a>
@@ -260,10 +543,6 @@
                    
                     <li>
                         <a href="/demos/js-print" title="JavaScript打印" rel="bookmark">&raquo;&nbsp;JavaScript打印</a>
-                    </li>                                   
-                   
-                    <li>
-                        <a href="/articles/js-insertAfter" title="insertAfter()?" rel="bookmark">&raquo;&nbsp;insertAfter()?</a>
                     </li>                                   
                 
                 </ul>

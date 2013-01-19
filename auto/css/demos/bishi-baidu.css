@@ -1,0 +1,108 @@
+#wrap{
+	padding:10px;
+}
+
+#bishi-baidu{
+	width:210px;
+	border:1px solid #e4e4e4;
+	border-radius:5px;
+	font:15px/20px arial;
+}
+
+#bishi-baidu a{
+	text-decoration: underline;
+	color:#0043BD;
+}
+#bishi-baidu h2{
+	margin-bottom:0;
+	font-size:15px;
+	padding: 5px 8px 3px;
+	border-bottom: 1px solid #e4e4e4;
+}
+
+#bishi-baidu h2 a{
+	color:#000;
+}
+
+#bishi-baidu a:hover{
+	color:#4183C4;
+}
+
+#bishi-baidu ol{
+	list-style: none;
+	padding:3px 8px;
+}
+
+#bishi-baidu ol li{
+	font-size:0;
+	letter-spacing: -4px;
+	word-spacing: -4px;
+	line-height:22px;
+}
+
+#bishi-baidu ol li span{
+	letter-spacing: normal;
+	vertical-align: middle;
+  	word-spacing: normal;
+  	display:inline-block;
+  	*display:inline;
+  	zoom:1;
+}
+
+.song-list .num{
+	color:#FF6600;
+	width:12px;
+	font-size:12px;
+}
+
+.song-list .first .num{
+	font-weight:bold;
+	font-size:16px;
+}
+
+.music-play{
+	width:16px;
+	height:16px;
+	background:url("/images/icon.gif") no-repeat scroll -99px -28px transparent;
+}
+
+.song-name,.singer-name{
+	font-size:15px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+}
+
+.song-list .first .song-name{
+	font-weight: bold;
+}
+
+.song-name{
+	padding-left: 2px;
+	width:94px;
+}
+
+.singer-name{
+	width:70px;
+}
+
+.music-footer{
+	padding:3px 8px 5px;
+}
+
+#bishi-baidu a.music-more{
+	line-height:19px;
+}
+#bishi-baidu a.music-btn{
+	padding:3px 5px;
+	font-size:13px;
+	line-height:13px;
+	text-decoration: none;
+	color:#000;
+	border:1px solid #9B9B9B;
+	border-radius:3px;
+}
+#bishi-baidu a.music-btn:hover{
+	color:#4183C4;
+	border:1px solid #4183c4;
+}

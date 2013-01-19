@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-01-02T01:52:38+08:00</updated>
+   <updated>2013-01-20T00:30:17+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
@@ -13,11 +13,48 @@
 
    
    <entry>
+     <title>工作杂积累</title>
+     <link href="http://webcraft.malei.tk/articles/work-za"/>
+     <updated>2013-01-05T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/work-za</id>
+     <content type="html">&lt;h2&gt;split&lt;/h2&gt;
+
+&lt;p&gt;把字符串以空字符为间隔转换成数组&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;str.split(/\s+/,num);
+// num 为你想要的前几位
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了避免疏忽，多打了空格，造成得到不想要的结果&lt;/p&gt;
+</content>
+   </entry>
+   
+   <entry>
      <title>写在新年第一天</title>
-     <link href="http://webcraft.malei.tk/articles/happy-new-year"/>
+     <link href="http://webcraft.malei.tk/articles/happy-new-year-2013"/>
      <updated>2013-01-01T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/happy-new-year</id>
-     <content type="html">&lt;p&gt;--!&lt;/p&gt;
+     <id>http://webcraft.malei.tk/articles/happy-new-year-2013</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;玛雅人遗传下来的手卷——“德雷斯顿抄本”，并没有如期的使 2012/12/21 变为世界末日，这就使得 2013 有了可能，不！应该说 2013 已经来了，因为第一屡慢慢爬上窗户的曙光，宣告着新的一年的开始！&lt;/p&gt;
+
+&lt;h2&gt;总结2012&lt;/h2&gt;
+
+&lt;h3&gt;学业方面&lt;/h3&gt;
+
+&lt;p&gt;这一年，从大三跨越到了大四，不知不觉中已经到了毕业季。匆匆忙忙的过完了大三的下半学期，没有什么印象太深刻的课程，只是在不断追寻着自己的爱好，自己以后想要从事的职业。Web前端，这个在同学间很非主流的职位，被我一无反顾的追逐着。因为我确实爱好这一块，虽然很菜，但是骨子里还是认为把自己喜欢的当成职业是一件很酷的事情。就这样慢慢积累着前端知识，一步一步的走着...&lt;/p&gt;
+
+&lt;p&gt;过了一个充实的暑假，大四了。这学期还有两门课，缚住了前去企业实习的脚步（为了避免补考，重修，你懂的，老师很严格，缺一次课减5分）&lt;/p&gt;
+
+&lt;h3&gt;面试实习&lt;/h3&gt;
+
+&lt;p&gt;鉴于现状：小公司没有web前端的职位，或者有职位但不够重视。于是想去大平台尝试一番，因为我相信每个人都是遇强则强的，这样的机会可以促进自己快速成长（不想成为团队中猪一样的队友）。当然，我也不是一条路走到黑的那种，所以来北京带着两个求职意向：首选Web前端；其次PHP开发。&lt;/p&gt;
+
+&lt;p&gt;在紧凑的时间安排上（周五 &lt;code&gt;2012-12-07&lt;/code&gt; 晚上考完最后一门试，周六同学小聚，周日就背上行囊来北京了），辗转面试(周一，周二，周三)，获得了三个offer，最后决定在sina云计算实习。周四 &lt;code&gt;2012-12-13&lt;/code&gt; ，来sina云计算实习了。&lt;/p&gt;
+
+&lt;h2&gt;展望2013&lt;/h2&gt;
+
+&lt;p&gt;相信未来总是美好的，在新的一年里，要在各方面（武装 / 改变）自己，Just Do It!&lt;/p&gt;
 </content>
    </entry>
    
@@ -819,19 +856,6 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
     referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
 }
 &lt;/code&gt;&lt;/pre&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>browsers</title>
-     <link href="http://webcraft.malei.tk/articles/browsers"/>
-     <updated>2012-09-25T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/browsers</id>
-     <content type="html">&lt;p&gt;目前只用过Chrome, firefox, IE, Opera。其他的一些浏览器没用过，有的甚至没听过。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/browsers.jpg&quot; title=&quot;browsers&quot; alt=&quot;browsers&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;自认为，没必要为老旧的IE系列做兼容，未来是乐观的，所有的浏览器都应该标准化。&lt;/p&gt;
 </content>
    </entry>
    

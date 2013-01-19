@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+   <title>WebCraft</title>
+   <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
+   <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
+   <updated>2013-01-03T13:09:36+08:00</updated>
+   <id>http://webcraft.malei.tk</id>
+   <author>
+     <name>Lei Ma</name>
+     <email>leiman0311@gmail.com</email>
+   </author>
+
+   
+   <entry>
+     <title>写在新年第一天</title>
+     <link href="http://webcraft.malei.tk/articles/happy-new-year-2013"/>
+     <updated>2013-01-01T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/happy-new-year-2013</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;玛雅人遗传下来的手卷——“德雷斯顿抄本”，并没有如期的使 2012/12/21 变为世界末日，这就使得 2013 有了可能，不！应该说 2013 已经来了，因为第一屡慢慢爬上窗户的曙光，宣告着新的一年的开始！&lt;/p&gt;
+
+&lt;h2&gt;总结2012&lt;/h2&gt;
+
+&lt;p&gt;这一年，从大三跨越到了大四，不知不觉中已经到了毕业季&lt;/p&gt;
+
+&lt;h2&gt;展望2013&lt;/h2&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>ubuntu配置github+git+jekyll环境</title>
+     <link href="http://webcraft.malei.tk/articles/ubuntu-github-git-jekyll"/>
+     <updated>2012-11-26T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/ubuntu-github-git-jekyll</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;在 windows 中，如果我们只是在本地完成编码，然后在 github 上看效果，那么我们只需安装 &lt;a href=&quot;http://windows.github.com/&quot;&gt;github for windows&lt;/a&gt; 就可以了。如果要在本地编码调试还要看效果，那么推荐安装 RailsInstaller，里面包含了 Ruby、Rails、Bundler、Git、Sqlite、TinyTDS、SQL Server support 和 DevKit。我在 wnidows 用的是 github for windows + RailsInstaller 的方式，既有很好的本地与 github 交互的 metro 风格的客户端，又有在本地调试预览的环境。由于禁不住  metro 风格的诱惑，总是在用 metro 风格的客户端，git 命令到没怎么学，为了加强一下命令学习，遂玩一下 ubuntu 版的 git + github +jekyll。&lt;/p&gt;
+
+&lt;h2&gt;安装 ruby 环境&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.ruby-lang.org/zh_cn/downloads/&quot;&gt;下载并安装 ruby&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;如果按照官网上的方法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install ruby irb rdoc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;稍微对配置做一下修改，把淘宝的镜像加到gem的镜像列表里&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gem sources --remove http://rubygems.org/
+$ gem sources -a http://ruby.taobao.org/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后用gem sources -l看看现在源列表&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;*** CURRENT SOURCES ***
+
+http://ruby.taobao.org
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在终端输入 &lt;code&gt;ruby -v&lt;/code&gt; 或 &lt;code&gt;irb&lt;/code&gt; 或 &lt;code&gt;gem -v&lt;/code&gt; 或 &lt;code&gt;which gem&lt;/code&gt;，你会发现， ruby 已经安装好了。但是，当 &lt;code&gt;sudo gem install jekyll&lt;/code&gt; 时，会报错&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ERROR:  Error installing jekyll:
+ERROR:  Failed to build gem native extension.
+....
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;解决方案：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install ruby-dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;solve the problem perfectly!&lt;/p&gt;
+
+&lt;p&gt;如果你想用 RDiscount 取代 Maruku 作为你的Markdown标记语言转换引擎，只需确认安装：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gem install rdiscount
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;并通过以下命令行参数执行Jekyll：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ jekyll --rdiscount
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;或者也可以在你站点下的 _config.yml 文件中加入以下配置，以便以后每次执行时不必再指定命令行参数：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;markdown: rdiscount
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;配置和使用github&lt;/h2&gt;
+
+&lt;h3&gt;1、安装 git&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;2、检查SSH keys的设置&lt;/h3&gt;
+
+&lt;p&gt;首先我们需要检查你电脑上现有的ssh key：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd ~/.ssh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果显示“No such file or directory”，跳到第四步，否则继续。&lt;/p&gt;
+
+&lt;h3&gt;3、备份和移除原来的ssh key设置：&lt;/h3&gt;
+
+&lt;p&gt;因为已经存在key文件，所以需要备份旧的数据并删除：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ls
+config id_rsa id_rsa.pub known_hosts
+$ mkdir key_backup
+$ cp id_rsa* key_backup
+$ rm id_rsa*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;4、生成新的SSH Key：&lt;/h3&gt;
+
+&lt;p&gt;输入下面的代码，就可以生成新的key文件，我们只需要默认设置就好，所以当需要输入文件名的时候，回车就好。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ssh-keygen -t rsa -C &quot;邮件地址@youremail.com&quot;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&amp;lt;回车就好&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后系统会要你输入加密串（Passphrase）：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Enter passphrase (empty for no passphrase):&amp;lt;输入加密串&amp;gt;
+Enter same passphrase again:&amp;lt;再次输入加密串&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;最后看到这样的界面，就成功设置ssh key了：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/ubuntu-github-git-jekyll/ubuntu-git.png&quot; alt=&quot;ubuntu-git&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;5、添加SSH Key到GitHub：&lt;/h3&gt;
+
+&lt;p&gt;在本机设置SSH Key之后，需要添加到GitHub上，以完成SSH链接的设置。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat ~/.ssh/id_rsa.pub
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后，复制其中的内容到 Account settings -&gt; SSH Keys，自己起一个能标识的名字，add 就可以了。&lt;/p&gt;
+
+&lt;h3&gt;6、修改信息&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git config --global user.name &quot;malei0311&quot;
+$ git config --global user.email &quot;leiman0311@gmail.com&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Clone自己的库&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git clone git@github.com:malei0311/myBlog.git&lt;/li&gt;
+&lt;li&gt;git add .表示添加当前目录下的所有文件&lt;/li&gt;
+&lt;li&gt;git commit -am &quot;message&quot; 表示提交所有更改，这是提交到本地，”message” 换成自己的注释信息&lt;/li&gt;
+&lt;li&gt;git push 把在本地的更改提交到远程服务器&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</title>
+     <link href="http://webcraft.malei.tk/articles/sublime_text_2-vs-ubuntu%2BiBus"/>
+     <updated>2012-11-26T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/sublime_text_2-vs-ubuntu+iBus</id>
+     <content type="html">&lt;h2&gt;解决方案&lt;/h2&gt;
+
+&lt;p&gt;先安装能在sublime text 2显示中文的字体，有一个非常好的开源字体，叫做“文泉驿字体”，安装如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install xfonts-wqy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;官方网站：&lt;a href=&quot;http://wenq.org/index.cgi?%E9%A6%96%E9%A1%B5&quot;&gt;http://wenq.org/index.cgi?%E9%A6%96%E9%A1%B5&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;然后配置sublime text 2的 “Settings-User”，在里面加上：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&quot;font_face&quot;: &quot;WenQuanYi Micro Hei Mono&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;最后安装一个sublime text 2的插件 InputHelper，用于输入中文，安装如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~/.config/sublime-text-2/Packages
+git clone https://github.com/xgenvn/InputHelper.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用方法：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1.保证ibus/scim是在gtk程序下正常运行。&lt;/li&gt;
+&lt;li&gt;2.Ctrl+Shift+Z 调出输入框（虽然不习惯也不爽，但能支持中文输入已经不错啦_&lt;sup&gt;)&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;3.在输入框窗口输入中文，然后按下Enter或者Ctrl+Enter键输入文字到sublime text 2&lt;/li&gt;
+&lt;li&gt;4.点击&gt;右方向键或者End键把光标移动到最后，进行继续输入（回到1）&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;说明：&lt;/p&gt;
+
+&lt;p&gt;该插件只能在linux下使用，对于windows或者mac是不支持的。&lt;/p&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.zhihu.com/question/20163104&quot;&gt;知乎&lt;/a&gt;&lt;/p&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>关于 CSS3 的 linear-gradient</title>
+     <link href="http://webcraft.malei.tk/articles/css3-linear-gradient"/>
+     <updated>2012-11-05T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/css3-linear-gradient</id>
+     <content type="html">&lt;h2&gt;发现&lt;/h2&gt;
+
+&lt;p&gt;关于 CSS3 的 linear-gradient ：最新的 firefox 16 已经符合最新的标准，chrome 22 还部分处于 2011年2月的那个标准，尤其是当用 “角度” 的时候，现阶段各个浏览器厂商角度指向混乱：老标准 0deg是从左到右，新标准 0deg 是由下而上。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.w3.org/TR/2012/WD-css3-images-20120112/gradient-diagram.png&quot; alt=&quot;gradient-diagram&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.w3.org/TR/css3-images/#linear-gradients&quot;&gt;新标准&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.w3.org/TR/2011/WD-css3-images-20110217/#linear-gradient&quot;&gt;老标准&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>JavaScript如何判断变量类型</title>
+     <link href="http://webcraft.malei.tk/articles/how-to-detect-variable-type"/>
+     <updated>2012-10-29T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/how-to-detect-variable-type</id>
+     <content type="html">&lt;h2&gt;数据类型&lt;/h2&gt;
+
+&lt;h3&gt;简单数据类型&lt;/h3&gt;
+
+&lt;p&gt;Boolean,Number,String,Undefined,Null&lt;/p&gt;
+
+&lt;h3&gt;复杂数据类型&lt;/h3&gt;
+
+&lt;p&gt;Object&lt;/p&gt;
+
+&lt;h2&gt;变量的传值与传址&lt;/h2&gt;
+
+&lt;h3&gt;按值传递&lt;/h3&gt;
+
+&lt;p&gt;简单数据类型是按值进行传递的。当按值传递时，将在计算机内存分配一块空间并将原值复制到其中，这意味着变量的实际内容会传递给变量。然后即使改变原来的值，也不会影响复制到新变量中的值。&lt;/p&gt;
+
+&lt;h3&gt;按引用传递&lt;/h3&gt;
+
+&lt;p&gt;复杂数据类型，可以包含大量和复杂的信息，所以属于此类型的变量并不包含实际的值，它包含的是对值得引用。这中引用类似于指向变量内容的别名（在一些程序语言中成为“指针”）。当变量需要知道他的值时，该引用会查询内容，然后返回答案，而无需将该值传递给变量。&lt;/p&gt;
+
+&lt;p&gt;当多个变量都指向这个复杂的数据类型时，实际上他们获得的只是对这个复杂数据类型的引用。当这个复杂数据类型被改变时，所有引用该复杂数据类型的变量都会获得一个新值。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var theArray=[&quot;malei0311&quot;,&quot;teaScripts&quot;];
+var newArray=theArray;
+alert(newArray[1]); //teaScripts
+theArray[1]=&quot;tom&quot;;
+alert(newArray[1]); //tom
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;内存使用规则&lt;/h2&gt;
+
+&lt;p&gt;堆和栈都是运行时内存中分配的一个数据区，因此也被称之为堆区和栈区，但两者存储的数据类型和处理速度不同。&lt;/p&gt;
+
+&lt;p&gt;堆 (heap) 用于为复杂数据类型分配空间，例如数组对象、Object对象。他是在运行时动态分配内存的，因此存取速度较慢。&lt;/p&gt;
+
+&lt;p&gt;栈 (stack) 主要存放一些基本类型的变量和对象的引用。其优势是存取速度比堆要快，并且栈内的数据可以共享。但缺点是存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。&lt;/p&gt;
+
+&lt;h3&gt;栈&lt;/h3&gt;
+
+&lt;p&gt;栈有一个很重要的特性，就是存在栈中的数据可以共享。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a=1;
+var b=1;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;JavaScript解释引擎先处理 &lt;code&gt;var a=1;&lt;/code&gt; 首先会在栈中创建一个变量为 a 的引用，然后查找栈中是否有 1 这个值，如果没找到 1 ，就将 1 存放进来，然后将 a 指向 1 。接着处理 &lt;code&gt;var b=1;&lt;/code&gt; 在创建完 b 的引用变量后，查找栈中是否有 1 这个值，因为在栈中已经存在了，便将 b 直接指向 1 。这样，就出现了 a 与 b 同时指向 1 的情况。&lt;/p&gt;
+
+&lt;p&gt;此时，如果再令 &lt;code&gt;a=2&lt;/code&gt; 那么 JavaScript解释引擎会重新搜索栈中是否有 2 这个值，如果没有，就将 2 存放进来，并令 a 指向 2 ；如果已经有了，则直接将 a 指向这个地址。因此 a 值得改变不会影响到 b 的值。&lt;/p&gt;
+
+&lt;h3&gt;堆&lt;/h3&gt;
+
+&lt;p&gt;通过 Array 来看一下堆的行为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var sport1=&quot;basketball&quot;;
+var sport2=&quot;football&quot;;
+var sport3=&quot;volleyball&quot;;
+var theArray=[sport1,sport2,sport3];
+var newArray=theArray;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当创建数组时，就会在堆内创建一个数组对象，并且在栈内创建一个对数组的引用。这几步操作对应的内存，如图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/stack-heap.png&quot; alt=&quot;stack-heap&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;变量 sport1,sport2,sport3 为基本数据类型，他们的值直接放在栈中；theArray,newArray 为复合数据类型，他们的引用变量存储在栈中，指向于存储于堆中的实际对象。&lt;/p&gt;
+
+&lt;p&gt;如果更改 newArray 或 theArray 的值，那么实际是更改堆中的实际对象，因此，对两个变量引用都会发生作用。&lt;/p&gt;
+
+&lt;p&gt;JavaScript堆不需要程序代码来显示的释放，因为堆是由自动的垃圾回收来负责的，每种浏览器中的JavaScript解释引擎有不同的自动回收方式，但一个基本的原则是，如果栈中不存在对堆中某个对象堆的引用，那么就会认为该对象已经不再需要，在垃圾回收时，就会清除该对象占用的空间。&lt;/p&gt;
+
+&lt;p&gt;因此，在不需要时，应该将对对象的引用释放掉，以利于垃圾回收，这样可以提高程序的性能。释放引用最常见的方法：&lt;code&gt;newArray=null;&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2&gt;进入正题&lt;/h2&gt;
+
+&lt;h3&gt;测试环境&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Chrome 22&lt;/li&gt;
+&lt;li&gt;Firefox 15&lt;/li&gt;
+&lt;li&gt;IE 7,8,9&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;JavaScript类型总览&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/types.png&quot; alt=&quot;types&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;简单测试 typeof&lt;/h3&gt;
+
+&lt;p&gt;接着&lt;a href=&quot;/articles/baidu-examination/&quot; title=&quot;百度面试&quot;&gt;面试题&lt;/a&gt;中的写，简单的测试 typeof&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var Tea = (function(){
+    function getElementsByClassName(className,tag,parent){}
+    function findSymmetryNumber(start,end){}
+    function getVarType(v){
+        return typeof(v);
+    }
+    return {
+        getElementsByClassName : getElementsByClassName,
+        findSymmetryNumber : findSymmetryNumber,
+        getVarType : getVarType
+    };
+})();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通过在控制台中进行测试，以下是测试结果截图：&lt;/p&gt;
+
+&lt;p&gt;Chrome:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/typeof-chrome.png&quot; alt=&quot;chrome-typeof&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Firefox:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/typeof-firefox.png&quot; alt=&quot;firefox-typeof&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;IE:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/how-to-detect-variable-type/typeof-ie.png&quot; alt=&quot;ie-typeof&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们可以看到在 JavaScript 的简单的数据类型中，只有 null 返回的的是 object ，其他的都是相当准确的。&lt;/p&gt;
+
+&lt;p&gt;我们知道 &quot;JavaScript一切皆是对象&quot;， 对于除了 Math(静态类) 的内建类，当我们用 new 关键字给变量赋值时， 例如：&lt;code&gt;var oString=new String(&quot;test&quot;);&lt;/code&gt; =&gt; &lt;code&gt;typeof oString&lt;/code&gt; 返回 object。类似的还有：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var oBoolean=new Boolean(true);
+var oNumber=new Number(1234);
+var oArray1=new Array();
+var oArray2=[];
+var re1=new RegExp(&quot;\\w*&quot;,&quot;g&quot;);
+var re2=/\w*/g;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;返回的都是 &quot;object&quot;，仅用 typeof ，我们无法知道，到底是什么。当然 typeof Math 返回的也是 &quot;object&quot;。但是，直接 &lt;code&gt;typeof 非静态内建类&lt;/code&gt; 返回的却是 &quot;function&quot;。&lt;/p&gt;
+
+&lt;h3&gt;加入精确判断&lt;/h3&gt;
+
+&lt;p&gt;方法一：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function getVarType(v){
+    if(typeof v === 'object'){
+        if(v === null){return 'null';}
+        return Object.prototype.toString.call(v).match(/object\s(\w+)/)[1].toLowerCase();
+    }
+    return typeof(v);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;方法二：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function getVarType(v){
+    if(typeof v === 'object'){
+        if(v === null){return 'null';}
+        if(v.constructor) 
+            //直接取出想要的，但是必须多取出一个空格，IE中 &quot;function&quot; 前面并不是空格，
+            //所以这就决定了取出的是自己想要的值，然后截取字符串
+            //return (v.constructor.toString()).match(/(?: )[\w\$]+/)[0].substr(1).toLowerCase(); 
+            //通过获取子表达式，取出自己想要的，因为IE在 &quot;function&quot; 前加了空字符，所以  &quot;^\s*&quot; 
+            //return v.constructor.toString().match(/^\s*function\s([\w\$]+)/)[1].toLowerCase(); // [注]
+            //match的正则表达式返回第一个匹配，所以 [注] 的 &quot;^\s*&quot; 可以去掉
+            return v.constructor.toString().match(/function\s([\w\$]+)/)[1].toLowerCase();
+        return &quot;object&quot;;
+    }
+    return typeof(v);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其实，IE在 &quot;function&quot; 前面加的是 &quot;\n&quot; 换行符。&lt;/p&gt;
+
+&lt;p&gt;如果说判断某个变量 s 是否为 Array 类型时，可以&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if(s instanceof Array){
+    //your code
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;《JavaScript权威指南》——张亚飞&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/aimingoo/article/details/6634977&quot; title=&quot;再谈JavaScript的数据类型问题&quot;&gt;再谈JavaScript的数据类型问题&lt;/a&gt; ——aimingoo&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>百度-web前端开发工程师-笔试+面试-经历</title>
+     <link href="http://webcraft.malei.tk/articles/baidu-examination"/>
+     <updated>2012-10-26T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/baidu-examination</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;幸运的是笔试通过了，悲剧的是在面试的第一轮就被淘汰了。其实面试被淘汰，在意料之中，因为面试官问的一些问题，有的细节竟然一点也不知道。“知其然，而不知其所以然”，致使被淘汰，这使我认识到自己差的还很远，还有很多需要学，加油！！&lt;/p&gt;
+
+&lt;h2&gt;web前端工程师职位要求&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;精通JavaScript、Ajax等Web开发技术&lt;/li&gt;
+&lt;li&gt;精通HTML/XHTML、CSS等网页制作技术，熟悉页面架构和布局&lt;/li&gt;
+&lt;li&gt;熟悉W3C标准，对表现与数据分离、Web语义化等有深刻理解&lt;/li&gt;
+&lt;li&gt;对互联网产品和Web技术有强烈兴趣，有优秀的学习能力和强烈的进取心&lt;/li&gt;
+&lt;li&gt;具有良好的沟通能力和团队合作精神、优秀的分析问题和解决问题的能力&lt;/li&gt;
+&lt;li&gt;计算机相关专业本科或以上学历&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;具有以下能力者优先考虑：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;具有Flash、Mobile WEB/WAP、HTML5/CSS3开发经验&lt;/li&gt;
+&lt;li&gt;精通一种模板语言（Smarty、Velocity、Django等）&lt;/li&gt;
+&lt;li&gt;熟悉Linux平台，掌握一种后端开发语言（PHP/Java/C/C++等）&lt;/li&gt;
+&lt;li&gt;具有一定的软件工程意识，对数据结构和算法设计有充分理解&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;笔试&lt;/h2&gt;
+
+&lt;h3&gt;笔试通知&lt;/h3&gt;
+
+&lt;p&gt;由于笔试在清华大学进行，所以顺便游览了一下清华校园，找到了一个不错的住宿环境——&lt;a href=&quot;/articles/youth-hotel/&quot; title=&quot;未名国际青年旅社&quot;&gt;未名国际青年旅社&lt;/a&gt;。以下是笔试的详细信息:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;简历编号：123856&lt;/li&gt;
+&lt;li&gt;应聘职位：Web前端研发工程师(北京)&lt;/li&gt;
+&lt;li&gt;笔试时间：10月13日（周六）9:00-11:00&lt;/li&gt;
+&lt;li&gt;笔试地点：清华大学三教2302&lt;/li&gt;
+&lt;li&gt;座位号：114&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;我的第一次笔试经历啊...貌似参加考试的有270人&lt;/p&gt;
+
+&lt;h3&gt;笔试试题&lt;/h3&gt;
+
+&lt;h4&gt;1. 请写出至少三个CSS3中新添加的样式属性的名字；&lt;/h4&gt;
+
+&lt;p&gt;border-radius,box-shadow,text-shadow,transform,transition,opacity,text-overflow,box-reflect,border-image等等&lt;/p&gt;
+
+&lt;h4&gt;2.请运用javaScript找出所有ClassName包含text的标签 &lt;code&gt;&amp;lt;li&amp;gt;&lt;/code&gt;，并将它们的背景颜色设置为黄色；&lt;/h4&gt;
+
+&lt;p&gt;以下代码，并不是做题当时的代码，考试时，没有考虑到：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&quot;.all&quot; 问题&lt;/li&gt;
+&lt;li&gt;className 中 '-' 的问题&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;当然考试时，也是这种思想，参考了阮一峰的 &lt;a href=&quot;http://www.ruanyifeng.com/blog/2012/10/javascript_module.html&quot; title=&quot;Javascript模块化编程（一）：模块的写法&quot;&gt;Javascript模块化编程（一）：模块的写法&lt;/a&gt; 后，有改进。 代码详情：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var Tea = (function(){
+    function getElementsByClassName(className,tag,parent){
+        //&quot;.all&quot; 是 DHTML 中的用法，当 tag 等于 &quot;*&quot; 时，
+        //如果浏览器支持 &quot;.all&quot; 就用，否则，用标准DOM方法
+        var allTags=(tag == &quot;*&quot; &amp;amp;&amp;amp; parent.all) ? parent.all : parent.getElementsByTagName(tag);
+        var matchingElements= new Array();
+        //因为 '-' 是正则表达式中的元字符，而 className 中 '-' 是合法的，
+        //所以，当把 className 写入正则表达式之前，要先转义 '-'
+        className=className.replace(/\-/g,&quot;\\-&quot;);
+        var regex=new RegExp(&quot;(^|\\b)&quot;+className+&quot;(\\b|$)&quot;);
+        var element;
+        for(var i=0;i&amp;lt;allTags.length;i++){
+            element=allTags[i];
+            if(regex.test(element.className)){
+                matchingElements.push(element);
+            }
+        }
+        return matchingElements;
+    }
+    return {
+        getElementsByClassName : getElementsByClassName
+    };
+})();
+window.onload=function(){
+    var matchingElements=Tea.getElementsByClassName('text','li',document);
+    for(var i=0;i&amp;lt;matchingElements.length;i++){
+        matchingElements[i].style.backgroundColor=&quot;yellow&quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为什么起名叫 &quot;Tea&quot; ，因为本人酷爱 Dota ，有一次和同学们注册小号开黑，本想注册一种新兴的编程语言 &quot;CoffeeScript&quot;，很不幸，已经被抢注，经过不断尝试，注册 &quot;teaScripts&quot; 成功了。由于他本来就是 &quot;script&quot;，于是命名为 &quot;Tea&quot;。&lt;/p&gt;
+
+&lt;h4&gt;3.用HTML/CSS实现下面的图片内容：&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/baidu-examination/bishi-3.jpg&quot; title=&quot;bishi-3&quot; alt=&quot;bishi-3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我做的&lt;a href=&quot;/demos/bishi-baidu/&quot; title=&quot;my demo&quot;&gt;demo&lt;/a&gt;，关于元素的 &lt;code&gt;display:inline-block&lt;/code&gt; 的4像素间隔问题，解决方案(设 &quot;father&quot; 为父标签，&quot;son&quot; 为子标签)：纯CSS实现 在父元素中设置 &lt;code&gt;font-size:0&lt;/code&gt; ,用来兼容chrome，而使用 &lt;code&gt;letter-space:-npx&lt;/code&gt; 来兼容safari:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;father {
+  letter-spacing: -4px;/*根据不同字体字号或许需要做一定的调整*/
+  word-spacing: -4px;
+  font-size: 0;
+}
+father son {
+  font-size: 16px;
+  letter-spacing: normal;
+  word-spacing: normal;
+  display:inline-block;
+  *display: inline;
+  zoom:1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;解决方案参考自 &lt;a href=&quot;http://www.hujuntao.com/archives/inline-block-elements-the-4px-blank-gap-solution.html&quot; title=&quot;设计蜂巢&quot;&gt;设计蜂巢&lt;/a&gt;，讲的很详细。&lt;/p&gt;
+
+&lt;h4&gt;4.浏览器的缓存和本地存储相关内容有哪些？这些在什么环境下都各自能起到什么作用？&lt;/h4&gt;
+
+&lt;p&gt;cookie,webstorage =&gt; &lt;a href=&quot;http://www.baiduux.com/blog/2010/06/21/web-storage%E5%85%A8%E8%A7%A3%E6%9E%90/&quot; title=&quot;BAIDU-UFO&quot;&gt;BAIDU-UFO&lt;/a&gt;讲的相当详细&lt;/p&gt;
+
+&lt;h4&gt;5.我们把一个数字倒着读和原数字相同的数字称之为对称数，（例如1,121,88,8998），不考虑性能，请找出1—10000之间的对称数，要求用最简练javaScript实现；&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;/**
+ * [findSymmetryNumber 找出一定区段内的对称数]
+ * @param  {[Number]} start [起始数]
+ * @param  {[Number]} end   [结束值]
+ * @return {[Array]}       [返回的结果]
+ */
+function findSymmetryNumber(start,end){
+    var resultArray=[];
+    for(var j=start;j&amp;lt;end;j++){
+        var str1=j+'';
+        var str2=str1.split('').reverse().join('');
+        if(str1 === str2){
+            resultArray.push(str1);
+        }
+    }
+    return resultArray;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后调用函数输出即可&lt;/p&gt;
+
+&lt;h4&gt;6.当你打开浏览在地址栏中输“http://www.baidu.com/”后在百度的搜索框中输入“HTML5”，然后点击百度一下按钮，在所有的信息在一一被列举出来的过程中，计算机和网络都发生了什么变化？你有什建议？&lt;/h4&gt;
+
+&lt;h4&gt;7.请描述你参加过的一个项目：&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a)你在项目中的角色？你是如何研发，设计你的角色所做的东西的？&lt;/li&gt;
+&lt;li&gt;c)你觉得你在项目的过程中，哪些需要得以注重？&lt;/li&gt;
+&lt;li&gt;d)你觉得你还需要能做些什么，去更好的完成你的项目？&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;面试&lt;/h2&gt;
+
+&lt;h3&gt;面试通知&lt;/h3&gt;
+
+&lt;p&gt;先是短信通知，再是电话确认，以下详细信息：&lt;/p&gt;
+
+&lt;p&gt;同学好，百度面试通知：10月21日13:50到达百度大厦（13号线西二旗站向西500米）C座前台签到。携带身份证、学生证、签字笔、三份简历。&lt;/p&gt;
+
+&lt;h3&gt;面试回忆&lt;/h3&gt;
+
+&lt;h4&gt;1.自我介绍&lt;/h4&gt;
+
+&lt;p&gt;略&lt;/p&gt;
+
+&lt;h4&gt;2.做过什么项目&lt;/h4&gt;
+
+&lt;p&gt;说了自己做的关于 PHP 的项目，不过面试官要求说与前端有关的项目，在 &lt;code&gt;GAE&lt;/code&gt; 上做过一款博客皮肤，在 &lt;code&gt;GitHub&lt;/code&gt; 上用 &lt;code&gt;jekyll&lt;/code&gt; 做了一个博客，也就是本博客，其中做了一款 &lt;code&gt;JQuery&lt;/code&gt; 插件，方便自己调用，生成 tag cloud。&lt;/p&gt;
+
+&lt;h4&gt;3.3D-tags的jquery插件，tags的分布算法&lt;/h4&gt;
+
+&lt;p&gt;详情，请参考，我以前写的 &lt;a href=&quot;/articles/3D-jquery/&quot; title=&quot;JQuery插件之tags的3D旋转球制作&quot;&gt;JQuery插件之tags的3D旋转球制作&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4&gt;4.CSS两栏布局（尽可能多方法）&lt;/h4&gt;
+
+&lt;p&gt;这道题，答的还行，并且得到了面试官的认可。发现了一篇文章，讲的CSS两栏布局，还不错，挺全面 =&gt; &lt;a href=&quot;http://www.hua126.com/article/edu/Web/info-1694.html&quot; title=&quot;如何以CSS作出两栏版面布局&quot;&gt;如何以CSS作出两栏版面布局&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4&gt;5.清除浮动的几种方法&lt;/h4&gt;
+
+&lt;p&gt;清除浮动主要有三种方法：&lt;/p&gt;
+
+&lt;p&gt;方法一( 不推荐，因为加了一个多余的标签 )：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.clearfix{clear:both;} /* 其中 .clearfix 为浮动元素的下一个兄弟元素 */
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;方法二：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/* 放在浮动元素的父元素上 */
+.clearfix::after {
+    content:&quot; &quot;;
+    display:block;
+    visibility:hidden;
+    clear:both;
+    font-size:0;
+    height:0;
+}
+.clearfix{zoom:1; /* for IE6 IE7 */}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;方法三：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/* 放在浮动元素的父元素上 */
+.clearfix{
+    display:block;
+    zoom:1;
+    overflow:hidden;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然，这三种方法我都说出来了，只是当时第三种方法当时还没用过，主要用的第二种。这时面试官问了一个让自己觉得“自己弱爆了的问题”，问：为什么加 &lt;code&gt;zoom:1;&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;我知道它是为了兼容IE，但是面试官又追问：为什么加了 &lt;code&gt;zoom:1;&lt;/code&gt; 就能兼容 IE？&lt;/p&gt;
+
+&lt;p&gt;这下，我彻底凌乱了，不知道，是一点都不知道，我居然从来没想过这个问题，只是想当然的这么用就对了。这让我明白了 “知其然，一定要知其所以然” ，我会在这方面加油。当然，面试官还是告诉我了：激活了 hasLayout。不过对我来说，还是相当模糊的，毕竟做 IE 兼容比较少，且没经历过 ie 6,7 的时代。如果想了解，请看来自 “愚人码头” 的 &lt;a href=&quot;http://www.css88.com/archives/1288&quot; title=&quot;hasLayout详解&quot;&gt;hasLayout详解&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h4&gt;6.null和undefined相等吗？&lt;/h4&gt;
+
+&lt;p&gt;这道题，还是理直气壮地：null == undefined true ; null === undefined false.&lt;/p&gt;
+
+&lt;p&gt;紧接着问 &quot;==&quot; 与 &quot;===&quot; 的区别？&lt;/p&gt;
+
+&lt;p&gt;&quot;==&quot; 是逻辑等于，而 &quot;===&quot; 是全等。逻辑等于在比较时会进行类型转换，而全等不会。&lt;/p&gt;
+
+&lt;h4&gt;7.统计一个字符串中每个字母的个数&lt;/h4&gt;
+
+&lt;p&gt;当时想用两个 for 循环做，但最终卡壳了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/**
+ * [getEachLetterNum 获取一个字符串中每个字母的个数]
+ * @param  {[string or String]} str [&quot;&quot; or new String()]
+ * @return {[Array]}     [复合数组]
+ */
+function getEachLetterNum(str){
+    var tempStr=str.toString().split('');
+    var returnArray=[];
+    var re1=/[A-Za-z]/;
+    var i=0;
+    while(re1.test(tempStr.join(''))){  
+        if(re1.test(tempStr[i])){
+            var o=tempStr.join(''); var re2=new RegExp(tempStr[i],&quot;g&quot;);
+            returnArray[tempStr[i]]=o.match(re2).length;
+            tempStr=o.replace(re2,'').split('');
+        }
+        else{
+            i++;
+        }
+    }
+    return returnArray;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;谁还有好的方法可以留言交流。&lt;/p&gt;
+
+&lt;h4&gt;8.说说IE兼容问题&lt;/h4&gt;
+
+&lt;p&gt;关于这道题，没太深入研究过兼容问题，我认为未来是乐观的，没太必要为兼容问题耗费太多精力。就本博客来说，并不支持 ie6,7,8 并已经做好相关程序，如果您用以上浏览器，会跳转到一个页面，提示您升级浏览器，或者换高级浏览器。所以，这道题，只回答出了 IECC(conditional comment) 和 几个属性级的 hack，关于更多的 ie bug 的 hack ，没太用过，说出来自己都觉得怪怪的。&lt;/p&gt;
+
+&lt;h4&gt;9.今天周几？&lt;/h4&gt;
+
+&lt;p&gt;1.单纯的switch&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var oDate=new Date();
+var day=oDate.getDay();
+switch(day){
+    case 0: document.write(&quot;今天是周日&quot;);break;
+    case 1: document.write(&quot;今天是周一&quot;);break;
+    case 2: document.write(&quot;今天是周二&quot;);break;
+    case 3: document.write(&quot;今天是周三&quot;);break;
+    case 4: document.write(&quot;今天是周四&quot;);break;
+    case 5: document.write(&quot;今天是周五&quot;);break;
+    default: document.write(&quot;今天是周六&quot;);break;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.数组方法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var oDate=new Date();
+var day=oDate.getDay();
+var dayArray=[];
+dayArray[0]=&quot;周日&quot;;
+dayArray[1]=&quot;周一&quot;;
+dayArray[2]=&quot;周二&quot;;
+dayArray[3]=&quot;周三&quot;;
+dayArray[4]=&quot;周四&quot;;
+dayArray[5]=&quot;周五&quot;;
+dayArray[6]=&quot;周六&quot;;
+document.write(&quot;今天是&quot;+dayArray[day]);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;10.JavaScript基本类型，如何判断某一变量是什么类型？&lt;/h4&gt;
+
+&lt;p&gt;关于这道题，我当时只知道用 typeof 判断，而且 typeof 判断的并不准确。究其原因，主要是自己做的东西太少了，遇到的东西太少了，还有就是太过依赖于类库(jquery)。 所以，写了一篇专门针对的&lt;a href=&quot;/articles/how-to-detect-variable-type&quot; title=&quot;JavaScript如何判断变量类型&quot;&gt;笔记&lt;/a&gt;。&lt;/p&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>未名国际青年旅社</title>
+     <link href="http://webcraft.malei.tk/articles/youth-hotel"/>
+     <updated>2012-10-25T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/youth-hotel</id>
+     <content type="html">&lt;h2&gt;简介&lt;/h2&gt;
+
+&lt;p&gt;北京未名国际青年旅舍，中国的硅谷--北京中关村地区唯一的国际青年旅舍。这里是中国的文化教育中心。周围环绕的是中国最出名的高等学府－北京大学、清华大学、北京语言大学、中国地质大学、北京科技大学，背靠的是中国科学院本部及其直属的十几个研究所。&lt;/p&gt;
+
+&lt;p&gt;这里是中国的硅谷－中关村中心区。中国最杰出的IT企业都集中在这里，中国最大最多的电子市场设在这里，最野心勃勃的年轻人集中在这里。&lt;/p&gt;
+
+&lt;p&gt;这里是来北京旅游理想的栖息地。到颐和园15分钟车程，到圆明园5分钟车程，到2008奥运村15分钟车程，到天安门30分钟地铁行程，到八达岭长城、明十三陵都很方便。 北京未名国际青年旅舍位置这里是休闲娱乐的好去处。附近的五道口是北京出名的外国人集居区，各种中国特色餐饮、西餐、韩国风味、日式风味沿街可见，多种风格的酒吧也颇有名声。&lt;/p&gt;
+
+&lt;p&gt;未名国际青年旅舍拥有标准间、4至8人青年旅舍多种客房，有书吧、网吧、放映厅、自助式厨房、自助式洗衣房，房间可宽带上网， 提供中、英、韩等多种语言服务，是背包客、旅游、学习、商务住宿的理想选择。&lt;/p&gt;
+
+&lt;h2&gt;个人感受&lt;/h2&gt;
+
+&lt;p&gt;个人感觉，这个青年旅社，简单，干净，更类似于大学的公寓，很适合大学生居住。有很多外国人，并且有公共区可以看书、下棋。这个旅社的文化氛围很好，墙壁上好多字画，很有感觉。缺点是，有的床有点晃悠，应该及时加强修复。&lt;/p&gt;
+
+&lt;h2&gt;旅社图片分享&lt;/h2&gt;
+
+&lt;h3&gt;每个房间都有的温馨提示&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/youth-hotel-tips.png&quot; title=&quot;温馨提示&quot; alt=&quot;youth-hotel-tips&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;六人间床铺、橱子一览&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/bed.png&quot; title=&quot;床铺&quot; alt=&quot;bed&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/closet.png&quot; title=&quot;橱子&quot; alt=&quot;closet&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;空调和换气装置&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/air-conditioner.png&quot; title=&quot;空调&quot; alt=&quot;air-conditioner&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;走廊字画&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/calligraphy1.png&quot; title=&quot;书法1&quot; alt=&quot;calligraphy1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/calligraphy2.png&quot; title=&quot;书法2&quot; alt=&quot;calligraphy2&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;挥一挥手，不带走一片云彩&lt;/h2&gt;
+
+&lt;p&gt;10月21日，北京将近下了一天的小雨，所以第二天的天气格外好。这是站在北京西站的二楼入站口，拍的西站对面。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/youth-hotel/beijing-west-railway-station.png&quot; title=&quot;北京西站&quot; alt=&quot;beijing-west-railway-station&quot; /&gt;&lt;/p&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>Windows 7版本IE10浏览器11月中旬推出</title>
+     <link href="http://webcraft.malei.tk/articles/win7-ie10"/>
+     <updated>2012-10-23T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/win7-ie10</id>
+     <content type="html">&lt;p&gt;微软公司表示，11月中旬时，会推出针对Windows 7的Internet Explorer 10浏览器（简称IE10）预览版本。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/win7-ie10/ie.png&quot; title=&quot;IE10&quot; alt=&quot;IE10&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;根据微软的说法，Windows 7版本IE10的平台标准和Windows 8版本IE10是一样的。&lt;/p&gt;
+
+&lt;p&gt;很期待，传说中某些方面比 Chrome 还要快的IE10，等win7版的IE10出来后一定要马上试用。&lt;/p&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>insertAfter()?</title>
+     <link href="http://webcraft.malei.tk/articles/js-insertAfter"/>
+     <updated>2012-09-25T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/js-insertAfter</id>
+     <content type="html">&lt;h2&gt;直接写&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;var referenceNode=document.getElementById('foo');
+var node=document.createElement('div');
+var nodeText=document.createTextNode('hello world!');
+node.appendChild(nodeText);
+referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;函数1&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function insertAfter(node, referenceNode){
+    var parent = referenceNode.parentNode;
+    if(parent.lastChild == referenceNode){
+        parent.appendChild(node);
+    }
+    else{
+        parent.insertBefore(node,referenceNode.nextSibling);
+    }            
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;函数2&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function insertAfter(node, referenceNode){
+    var parent = referenceNode.parentNode,v;
+    (v=referenceNode.nextSibling)?parent.insertBefore(node,v):parent.appendChild(node);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;函数3&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function insertAfter(node,referenceNode){
+    referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>browsers</title>
+     <link href="http://webcraft.malei.tk/articles/browsers"/>
+     <updated>2012-09-25T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/browsers</id>
+     <content type="html">&lt;p&gt;目前只用过Chrome, firefox, IE, Opera。其他的一些浏览器没用过，有的甚至没听过。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/browsers.jpg&quot; title=&quot;browsers&quot; alt=&quot;browsers&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;自认为，没必要为老旧的IE系列做兼容，未来是乐观的，所有的浏览器都应该标准化。&lt;/p&gt;
+</content>
+   </entry>
+   
+ 
+</feed>
