@@ -127,7 +127,7 @@ h2 {font-size:22px;font-weight:bold;margin-bottom:13px;}
 h3 {font-size:18px;font-weight:bold;margin-bottom:10px;}
 h4,h5,h6 {font-weight:bold;margin-bottom:10px;}
 p {margin-bottom:20px;line-height:25px;}
-code {background:#eee;border:1px solid #ccc;padding:0 5px;font-family:Verdana,sans-serif;line-height:14px;font-size:13px;}
+code {background:#eee;border:1px solid #ccc;padding:0 5px;font-family:Monaco,'Andale Mono','Courier New',Verdana,sans-serif;line-height:14px;font-size:13px;}
 pre {background-color:#272822;padding:15px 20px;overflow:auto;margin-bottom:20px;font-size:14px;border: 1px solid #eee;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;color:#b9bdb6}
 pre code{background-color:transparent;border:none;padding:0;}
 pre ol{margin-left:0px;list-style:none;}

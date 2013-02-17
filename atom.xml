@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-02-01T09:41:59+08:00</updated>
+   <updated>2013-02-17T15:35:50+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
@@ -13,19 +13,102 @@
 
    
    <entry>
-     <title>工作杂积累</title>
-     <link href="http://webcraft.malei.tk/articles/work-za"/>
+     <title>Node.js的调试</title>
+     <link href="http://webcraft.malei.tk/articles/nodejs-debug"/>
      <updated>2013-01-05T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/work-za</id>
-     <content type="html">&lt;h2&gt;split&lt;/h2&gt;
+     <id>http://webcraft.malei.tk/articles/nodejs-debug</id>
+     <content type="html">&lt;h2&gt;Node.js调试命令一览&lt;/h2&gt;
 
-&lt;p&gt;把字符串以空字符为间隔转换成数组&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;str.split(/\s+/,num);
-// num 为你想要的前几位
+&lt;pre&gt;&lt;code&gt;命令                                       功能
+run ------------------------------------- 执行脚本,在第一行暂停
+restart --------------------------------- 重新执行脚本
+cont, c --------------------------------- 继续执行,直到遇到下一个断点
+next, n --------------------------------- 单步执行
+step, s --------------------------------- 单步执行并进入函数
+out, o ---------------------------------- 从函数中步出
+setBreakpoint(), sb() ------------------- 在当前行设置断点
+setBreakpoint(‘f()’), sb(...) ----------- 在函数f的第一行设置断点
+setBreakpoint(‘script.js’, 20), sb(...) - 在 script.js 的第20行设置断点
+clearBreakpoint, cb(...) ---------------- 清除所有断点
+backtrace, bt --------------------------- 显示当前的调用栈
+list(5) --------------------------------- 显示当前执行到的前后5行代码
+watch(expr)  ---------------------------- 把表达式 expr 加入监视列表
+unwatch(expr) --------------------------- 把表达式 expr 从监视列表移除
+watchers -------------------------------- 显示监视列表中所有的表达式和值
+repl ------------------------------------ 在当前上下文打开即时求值环境
+kill ------------------------------------ 终止当前执行的脚本
+scripts --------------------------------- 显示当前已加载的所有脚本
+version --------------------------------- 显示 V8 的版本
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;为了避免疏忽，多打了空格，造成得到不想要的结果&lt;/p&gt;
+&lt;h2&gt;新建js文件，并调试之&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;gt; node-debug.js
+$ vi node-debug.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;随便写一点...&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var debugFoo = 'Node.js'
+,debugBar = '~'
+,debugFun = function(xxoo){
+    console.log('I love you ' + xxoo + debugBar);
+}
+
+debugFun(debugFoo);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;启动调试&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ node debug node-debug.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;结果&lt;/h2&gt;
+
+&lt;p&gt;接下来就是胡乱的玩一下，玩熟了就可以应用到实际的调试过程中了&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt; debugger listening on port 5858
+connecting... ok
+break in node-debug.js:1
+  1 var debugFoo = 'Node.js'
+  2 ,debugBar = '~'
+  3 ,debugFun = function(xxoo){
+debug&amp;gt; sb(3)
+  1 var debugFoo = 'Node.js'
+  2 ,debugBar = '~'
+* 3 ,debugFun = function(xxoo){
+  4     console.log('I love you ' + xxoo + debugBar);
+  5 }
+  6 
+debug&amp;gt; c
+break in node-debug.js:7
+  5 }
+  6 
+  7 debugFun(debugFoo);
+  8 
+  9 });
+debug&amp;gt; s
+break in node-debug.js:4
+  2 ,debugBar = '~'
+* 3 ,debugFun = function(xxoo){
+  4     console.log('I love you ' + xxoo + debugBar);
+  5 }
+  6 
+debug&amp;gt; repl
+Press Ctrl + C to leave debug repl
+&amp;gt; xxoo
+'Node.js'
+&amp;gt; de
+decodeURI           decodeURIComponent  
+
+debugBar            
+
+&amp;gt; debugBar
+'~'
+debug&amp;gt; c
+&amp;lt; I love you Node.js~
+program terminated
+&lt;/code&gt;&lt;/pre&gt;
 </content>
    </entry>
    

@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>工作杂积累 | WebCraft</title>
+    <title>Node.js的调试 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="在实际工作中踩到的 | malei0311's Blog" />
-    <meta name="keywords" content="work,malei0311" />
+    <meta name="description" content="Node.js的调试，作为备忘 | malei0311's Blog" />
+    <meta name="keywords" content="nodejs, debug,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,7 +64,7 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/work-za">工作杂积累</a></h1>
+            <h1><a href="/articles/nodejs-debug">Node.js的调试</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#js">
-                                    js
+                                <a href="/tags.html#nodejs">
+                                    nodejs
                                 </a>
                                 <span>
                                     ,
@@ -91,17 +91,100 @@
                 
             </div>
         </div>
-        <p class="description">在实际工作中踩到的</p>
+        <p class="description">Node.js的调试，作为备忘</p>
         <div class="article-div-content">
-        	<h2>split</h2>
+        	<h2>Node.js调试命令一览</h2>
 
-<p>把字符串以空字符为间隔转换成数组</p>
-
-<pre><code>str.split(/\s+/,num);
-// num 为你想要的前几位
+<pre><code>命令                                       功能
+run ------------------------------------- 执行脚本,在第一行暂停
+restart --------------------------------- 重新执行脚本
+cont, c --------------------------------- 继续执行,直到遇到下一个断点
+next, n --------------------------------- 单步执行
+step, s --------------------------------- 单步执行并进入函数
+out, o ---------------------------------- 从函数中步出
+setBreakpoint(), sb() ------------------- 在当前行设置断点
+setBreakpoint(‘f()’), sb(...) ----------- 在函数f的第一行设置断点
+setBreakpoint(‘script.js’, 20), sb(...) - 在 script.js 的第20行设置断点
+clearBreakpoint, cb(...) ---------------- 清除所有断点
+backtrace, bt --------------------------- 显示当前的调用栈
+list(5) --------------------------------- 显示当前执行到的前后5行代码
+watch(expr)  ---------------------------- 把表达式 expr 加入监视列表
+unwatch(expr) --------------------------- 把表达式 expr 从监视列表移除
+watchers -------------------------------- 显示监视列表中所有的表达式和值
+repl ------------------------------------ 在当前上下文打开即时求值环境
+kill ------------------------------------ 终止当前执行的脚本
+scripts --------------------------------- 显示当前已加载的所有脚本
+version --------------------------------- 显示 V8 的版本
 </code></pre>
 
-<p>为了避免疏忽，多打了空格，造成得到不想要的结果</p>
+<h2>新建js文件，并调试之</h2>
+
+<pre><code>$ &gt; node-debug.js
+$ vi node-debug.js
+</code></pre>
+
+<p>随便写一点...</p>
+
+<pre><code>var debugFoo = 'Node.js'
+,debugBar = '~'
+,debugFun = function(xxoo){
+    console.log('I love you ' + xxoo + debugBar);
+}
+
+debugFun(debugFoo);
+</code></pre>
+
+<p>启动调试</p>
+
+<pre><code>$ node debug node-debug.js
+</code></pre>
+
+<h2>结果</h2>
+
+<p>接下来就是胡乱的玩一下，玩熟了就可以应用到实际的调试过程中了</p>
+
+<pre><code>&lt; debugger listening on port 5858
+connecting... ok
+break in node-debug.js:1
+  1 var debugFoo = 'Node.js'
+  2 ,debugBar = '~'
+  3 ,debugFun = function(xxoo){
+debug&gt; sb(3)
+  1 var debugFoo = 'Node.js'
+  2 ,debugBar = '~'
+* 3 ,debugFun = function(xxoo){
+  4     console.log('I love you ' + xxoo + debugBar);
+  5 }
+  6 
+debug&gt; c
+break in node-debug.js:7
+  5 }
+  6 
+  7 debugFun(debugFoo);
+  8 
+  9 });
+debug&gt; s
+break in node-debug.js:4
+  2 ,debugBar = '~'
+* 3 ,debugFun = function(xxoo){
+  4     console.log('I love you ' + xxoo + debugBar);
+  5 }
+  6 
+debug&gt; repl
+Press Ctrl + C to leave debug repl
+&gt; xxoo
+'Node.js'
+&gt; de
+decodeURI           decodeURIComponent  
+
+debugBar            
+
+&gt; debugBar
+'~'
+debug&gt; c
+&lt; I love you Node.js~
+program terminated
+</code></pre>
 
         </div>
         <div class="share clearfix">
@@ -146,117 +229,86 @@
                      
                     
                         
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/work-za" title="工作杂积累">&raquo;&nbsp;工作杂积累</a></li>
+                                    <li><a href="/articles/nodejs-debug" title="Node.js的调试">&raquo;&nbsp;Node.js的调试</a></li>
                                 
                             
-                                
-                                    <li><a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">&raquo;&nbsp;JavaScript如何判断变量类型</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/baidu-examination" title="百度-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;百度-web前端开发工程师-笔试+面试-经历</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/js-insertAfter" title="insertAfter()?">&raquo;&nbsp;insertAfter()?</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/java-vs-javascript" title="Java vs JavaScript">&raquo;&nbsp;Java vs JavaScript</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
-                                
-                            
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
                         
                     
                 
