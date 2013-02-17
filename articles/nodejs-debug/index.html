@@ -68,7 +68,7 @@
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-01-05">2013-01-05</time>
+                    <time class="date" pubdate="2013-02-17">2013-02-17</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -93,7 +93,9 @@
         </div>
         <p class="description">Node.js的调试，作为备忘</p>
         <div class="article-div-content">
-        	<h2>Node.js调试命令一览</h2>
+        	<h2>Node.js调试 - 命令界面</h2>
+
+<h3>Node.js调试命令一览</h3>
 
 <pre><code>命令                                       功能
 run ------------------------------------- 执行脚本,在第一行暂停
@@ -117,7 +119,7 @@ scripts --------------------------------- 显示当前已加载的所有脚本
 version --------------------------------- 显示 V8 的版本
 </code></pre>
 
-<h2>新建js文件，并调试之</h2>
+<h3>新建js文件，并调试之</h3>
 
 <pre><code>$ &gt; node-debug.js
 $ vi node-debug.js
@@ -139,7 +141,7 @@ debugFun(debugFoo);
 <pre><code>$ node debug node-debug.js
 </code></pre>
 
-<h2>结果</h2>
+<h3>结果</h3>
 
 <p>接下来就是胡乱的玩一下，玩熟了就可以应用到实际的调试过程中了</p>
 
@@ -185,6 +187,45 @@ debug&gt; c
 &lt; I love you Node.js~
 program terminated
 </code></pre>
+
+<h2>Node.js调试 - 图形界面</h2>
+
+<p>想更爽，玩的成本更低的调试 -。-</p>
+
+<h3>使用node-inspector</h3>
+
+<p>node-inspector 是一个完全基于 Node.js 的开源在线调试工具,提供了强大的调试功能和友好的用户界面,它的使用方法十分简便。</p>
+
+<pre><code>$ npm install -g node-inspector //(时间略长)
+</code></pre>
+
+<p>安装完成之后</p>
+
+<pre><code>$ node --debug-brk=5858 node-debug.js
+//(=5858可以不写，因为默认就是他，当然也可以写成别的)
+</code></pre>
+
+<p>在另一个终端中</p>
+
+<pre><code>$ node-inspector
+</code></pre>
+
+<h3>浏览器中访问</h3>
+
+<p>有提示的，很爽</p>
+
+<pre><code>"http://0.0.0.0:8080/debug?port=5858"
+</code></pre>
+
+<p>这样，就可以用熟悉的环境和方法，调试了</p>
+
+<h3>截图</h3>
+
+<p><img src="/images/articles/nodejs-debug/nodejs-debug-chrome.png" title="在chrome中调试Node.js" alt="nodejs-debug-chrome" /></p>
+
+<h2>结语</h2>
+
+<p>还是图形界面爽啊!</p>
 
         </div>
         <div class="share clearfix">

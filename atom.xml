@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-02-17T15:35:50+08:00</updated>
+   <updated>2013-02-17T16:38:15+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
@@ -15,9 +15,11 @@
    <entry>
      <title>Node.js的调试</title>
      <link href="http://webcraft.malei.tk/articles/nodejs-debug"/>
-     <updated>2013-01-05T00:00:00+08:00</updated>
+     <updated>2013-02-17T00:00:00+08:00</updated>
      <id>http://webcraft.malei.tk/articles/nodejs-debug</id>
-     <content type="html">&lt;h2&gt;Node.js调试命令一览&lt;/h2&gt;
+     <content type="html">&lt;h2&gt;Node.js调试 - 命令界面&lt;/h2&gt;
+
+&lt;h3&gt;Node.js调试命令一览&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;命令                                       功能
 run ------------------------------------- 执行脚本,在第一行暂停
@@ -41,7 +43,7 @@ scripts --------------------------------- 显示当前已加载的所有脚本
 version --------------------------------- 显示 V8 的版本
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2&gt;新建js文件，并调试之&lt;/h2&gt;
+&lt;h3&gt;新建js文件，并调试之&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;$ &amp;gt; node-debug.js
 $ vi node-debug.js
@@ -63,7 +65,7 @@ debugFun(debugFoo);
 &lt;pre&gt;&lt;code&gt;$ node debug node-debug.js
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2&gt;结果&lt;/h2&gt;
+&lt;h3&gt;结果&lt;/h3&gt;
 
 &lt;p&gt;接下来就是胡乱的玩一下，玩熟了就可以应用到实际的调试过程中了&lt;/p&gt;
 
@@ -109,6 +111,45 @@ debug&amp;gt; c
 &amp;lt; I love you Node.js~
 program terminated
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Node.js调试 - 图形界面&lt;/h2&gt;
+
+&lt;p&gt;想更爽，玩的成本更低的调试 -。-&lt;/p&gt;
+
+&lt;h3&gt;使用node-inspector&lt;/h3&gt;
+
+&lt;p&gt;node-inspector 是一个完全基于 Node.js 的开源在线调试工具,提供了强大的调试功能和友好的用户界面,它的使用方法十分简便。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ npm install -g node-inspector //(时间略长)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;安装完成之后&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ node --debug-brk=5858 node-debug.js
+//(=5858可以不写，因为默认就是他，当然也可以写成别的)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在另一个终端中&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ node-inspector
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;浏览器中访问&lt;/h3&gt;
+
+&lt;p&gt;有提示的，很爽&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&quot;http://0.0.0.0:8080/debug?port=5858&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样，就可以用熟悉的环境和方法，调试了&lt;/p&gt;
+
+&lt;h3&gt;截图&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/nodejs-debug/nodejs-debug-chrome.png&quot; title=&quot;在chrome中调试Node.js&quot; alt=&quot;nodejs-debug-chrome&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;还是图形界面爽啊!&lt;/p&gt;
 </content>
    </entry>
    
