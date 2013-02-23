@@ -4,13 +4,279 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-02-17T16:38:15+08:00</updated>
+   <updated>2013-02-23T17:31:18+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>从 (97 & ~32) == 65 //true 入手js的位操作符</title>
+     <link href="http://webcraft.malei.tk/articles/js-bitwise-operators"/>
+     <updated>2013-02-22T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/js-bitwise-operators</id>
+     <content type="html">&lt;h2&gt;先来个列表&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;操作符     用法      描述
+按位与     a &amp;amp; b     如果两个操作数对应位都是 1 的话则在该位返回 1。
+按位或     a | b     如果两个操作数对应位都是 0 的话则在该位返回 0。
+按位异或   a ^ b     如果两个操作数对应位只有一个 1 的话则在该位返回 1。
+求反       ~ a       反转操作数的每一位。
+左移       a &amp;lt;&amp;lt; b    将 a 的二进制形式左移 b 位。右面的空位补零。
+算术右移   a &amp;gt;&amp;gt; b       将 a 的二进制形式右移 b 位。忽略被移出的位。
+逻辑右移   a &amp;gt;&amp;gt;&amp;gt; b    将 a 的二进制形式右移 b 位。忽略被移出的位，左侧补入 0。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;先知道一点：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;数据在内存中是以二进制形式存放的。数值是以补码表示的。一个正数的补码和其原码的形式相同。
+而负数的补码方式是将其绝对值的二进制形式“按位求反再加1” 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;二元位操作符&lt;/h2&gt;
+
+&lt;h3&gt;用作测试的函数&lt;/h3&gt;
+
+&lt;p&gt;扔到console里直接用即可&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var hex10to2 = function (o){
+    //鉴于parseInt('0101') 与 parseInt(0101) 的不同结果(纠结，各浏览器应该不同，待测试)，
+    //在您输入的时候请直接输入8进制数时，请直接输入数字（0101）
+    //测试用，所以先只支持整数
+
+    if(parseInt(o)){
+        return parseInt(o).toString(2);
+    } else{
+        console.log('参数不正确，正确的参数为：1.整数 2.合法字符串（如&quot;123&quot;,&quot;0123&quot;,&quot;0x123&quot;）');
+    }   
+}
+
+//忽略符号处理
+var hex2to10 = function(str){
+    //TODO:判断是否只包括 1 , 0
+    return parseInt(str,2);
+}
+//两个函数的合并作业待做
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;我还比较熟悉的： &lt;code&gt;&amp;amp;,|,^&lt;/code&gt; 三种，举例如下：&lt;/h3&gt;
+
+&lt;p&gt;65 &amp;amp; 32 结果为 0&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1000001
+ 100000
+-------
+0000000
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;65 | 32 结果为 97&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1000001
+ 100000
+-------
+1100001
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;65 ^ 32 结果为 97&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1000001
+ 100000
+-------
+1100001
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;另外~很少用，也不熟悉&lt;/h3&gt;
+
+&lt;h4&gt;详细说明&lt;/h4&gt;
+
+&lt;p&gt;取反运算符~对运算数按位取反，将运算数各位值由1变为0，或由0变为1.因为计算机中数值以带符号位二进制表示，所以取反后，最高位符号位发生变化。&lt;/p&gt;
+
+&lt;p&gt;32按位取反后结果为（-33）。我们采用32的8位二进制形式:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;hex10to2(32) =&amp;gt; 100000 补全得：00100000
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;00100000 按位取反为 11011111，这是一个补码形式，最高位为符号位。将该补码再求补（符号位保持不变，其他位按位取反，最后加1），得到10100001，该值是带符号的真值&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;hex2to10('100001'); //33
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;加个负号得：-33&lt;/p&gt;
+
+&lt;h4&gt;另外：&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;97 &amp;amp; -33 //65
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;将 -33（10100001）符号位保持不变，其他位按位取反，最后加1，为：11011111&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;01100001
+11011111
+--------
+01000001
+
+hex2to10('01000001'); //65
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;正如你看到的，原码和补码是可逆的, 写成&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;97 &amp;amp; ~32
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;更一目了然一些，因为我只需要去掉从右向左数的第6个 1,那个1 =&gt; 2的（6-1）次方,所以 &lt;code&gt;&amp;amp;&lt;/code&gt; 一下 &lt;code&gt;~32&lt;/code&gt; 即可&lt;/p&gt;
+
+&lt;h4&gt;位操作进行加减运算&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;... 64 32 16 8 4 2 1
+...  7  6  5 4 3 2 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果想让第x位变成 1，也就是加上 2 的 &lt;code&gt;x-1&lt;/code&gt; 次方（如果那位不是1的话）,令 y = 2 的 &lt;code&gt;x-1&lt;/code&gt; 次方&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;x | y
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果想让第x位变成 0，也就是减去 2 的 &lt;code&gt;x-1&lt;/code&gt; 次方（如果那位不是0的话）,令 y = 2 的 &lt;code&gt;x-1&lt;/code&gt; 次方&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;x &amp;amp; ~ y
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;有意思的实现&lt;/h3&gt;
+
+&lt;h4&gt;手动大小写&lt;/h4&gt;
+
+&lt;p&gt;因为javascript已经实现了（toUpperCase() and toLowerCase()）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function isString(value){return typeof value == 'string';}
+
+var manualLowercase = function(s) {
+    return isString(s)
+            ? s.replace(/[A-Z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) | 32);})
+            : s;
+};
+var manualUppercase = function(s) {
+    return isString(s)
+            ? s.replace(/[a-z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) &amp;amp; ~32);})
+            : s;
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;奇偶数判断&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;function isNumber(value){return typeof value == 'number';}
+
+//利用 0 或 1 对 1 的 &amp;amp; 运算都是原数值，可得：
+var isOdd = function(num){ //奇数
+    if(isNumber(num)){
+        return num &amp;amp; 1 ? true : false;
+    } else{
+        return false;
+    }
+}
+
+var isEven = function(num){ //偶数           
+    if(isNumber(num)){
+        return num &amp;amp; 1 ? false : true;
+    } else{
+        return false;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;移位操作符&lt;/h2&gt;
+
+&lt;p&gt;移位操作符需要两个操作数：第一个是要进行移位的数值，第二个指定要对第一个数移位的数目。移位的方向由使用的操作符决定。&lt;/p&gt;
+
+&lt;p&gt;移位操作符将把两个操作符转换为 32 位整型数值，并返回与左操作数类型相同的结果。&lt;/p&gt;
+
+&lt;h3&gt;&amp;lt;&amp;lt; (左移)&lt;/h3&gt;
+
+&lt;p&gt;该操作符将把第一个操作数向左移若干位。移出的位将被忽略。右侧空位补零。
+例如，9&amp;lt;&amp;lt;2 结果为 36，因为 1001 向左移两位变成 100100，这是 36。快捷算法:9 * (2的移位次方)&lt;/p&gt;
+
+&lt;h3&gt;&gt;&gt; (算术右移)&lt;/h3&gt;
+
+&lt;p&gt;该操作符将把第一个操作数向右移若干位。移出的位将被忽略。左侧的空位补上与原来最左面位相同的值。
+例如，9&gt;&gt;2 结果为 2，因为 1001 右移两位变成 10，这是 2。。快捷算法:9 / (2的移位次方)&lt;/p&gt;
+
+&lt;p&gt;反之，-9&gt;&gt;2 结果为 -3，因为要考虑到符号位。&lt;/p&gt;
+
+&lt;p&gt;9在计算机中表示为(我们采用9的8位二进制形式)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;00001001
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;则 -9，为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;10001001
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;重复上面的算法：符号位保持不变，其他位按位取反，最后加1，得到 -9 在计算机中的表示&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;11110111
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;算数右移两位 =&gt; 补1&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;11111101
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;重复补码算法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;10000011
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;得到 -3&lt;/p&gt;
+
+&lt;h3&gt;&gt;&gt;&gt; (逻辑右移)&lt;/h3&gt;
+
+&lt;p&gt;该操作符将把第一个操作数向右移若干位。移出的位将被忽略。左侧的空位补零。
+例如，19&gt;&gt;&gt;2 结果为 4，因为 10011 右移两位变成 100，这是 4。对于非负数，算术右移和逻辑右移结果相同。&lt;/p&gt;
+
+&lt;p&gt;那么负数呢？&lt;/p&gt;
+
+&lt;p&gt;-9&gt;&gt;2 结果为 ?&lt;/p&gt;
+
+&lt;p&gt;9在计算机中表示为(我们采用9的8位二进制形式)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;00001001
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;则 -9，为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;10001001
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;重复上面的算法：符号位保持不变，其他位按位取反，最后加1，得到 -9 在计算机中的表示&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;11110111
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;逻辑右移两位 =&gt; 补0&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;00111101
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;因为变成正数了，所以不用重复补码算法了&lt;/p&gt;
+
+&lt;p&gt;计算机采用的是32位二进制形式，所以&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;0011...1101 //中间是30个1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;得到 1073741821&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;hex10to2(1073741821) //111111111111111111111111111101
+&quot;111111111111111111111111111101&quot;.length //30,略去了前面两个0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.malei.tk/negative-number-binary&quot; title=&quot;原码，反码，补码&quot;&gt;原码，反码，补码&lt;/a&gt;&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>Node.js的调试</title>
@@ -936,50 +1202,6 @@ document.write(&quot;今天是&quot;+dayArray[day]);
 &lt;p&gt;根据微软的说法，Windows 7版本IE10的平台标准和Windows 8版本IE10是一样的。&lt;/p&gt;
 
 &lt;p&gt;很期待，传说中某些方面比 Chrome 还要快的IE10，等win7版的IE10出来后一定要马上试用。&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>insertAfter()?</title>
-     <link href="http://webcraft.malei.tk/articles/js-insertAfter"/>
-     <updated>2012-09-25T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/js-insertAfter</id>
-     <content type="html">&lt;h2&gt;直接写&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;var referenceNode=document.getElementById('foo');
-var node=document.createElement('div');
-var nodeText=document.createTextNode('hello world!');
-node.appendChild(nodeText);
-referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;函数1&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;function insertAfter(node, referenceNode){
-    var parent = referenceNode.parentNode;
-    if(parent.lastChild == referenceNode){
-        parent.appendChild(node);
-    }
-    else{
-        parent.insertBefore(node,referenceNode.nextSibling);
-    }            
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;函数2&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;function insertAfter(node, referenceNode){
-    var parent = referenceNode.parentNode,v;
-    (v=referenceNode.nextSibling)?parent.insertBefore(node,v):parent.appendChild(node);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;函数3&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;function insertAfter(node,referenceNode){
-    referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
-}
-&lt;/code&gt;&lt;/pre&gt;
 </content>
    </entry>
    

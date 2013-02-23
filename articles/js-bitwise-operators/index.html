@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>insertAfter()? | WebCraft</title>
+    <title>从 (97 & ~32) == 65 //true 入手js的位操作符 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="关于几种自定义的insertAfter() | malei0311's Blog" />
-    <meta name="keywords" content="js,insertAfter,malei0311" />
+    <meta name="description" content="js位操作符，好好搞一下 | malei0311's Blog" />
+    <meta name="keywords" content="js, bitwise operator,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/js-insertAfter">insertAfter()?</a></h1>
+            <h1><a href="/articles/js-bitwise-operators">从 (97 & ~32) == 65 //true 入手js的位操作符</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2012-09-25">2012-09-25</time>
+                    <time class="date" pubdate="2013-02-22">2013-02-22</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -91,44 +91,266 @@
                 
             </div>
         </div>
-        <p class="description">关于几种自定义的insertAfter()</p>
+        <p class="description">js位操作符，好好搞一下</p>
         <div class="article-div-content">
-        	<h2>直接写</h2>
+        	<h2>先来个列表</h2>
 
-<pre><code>var referenceNode=document.getElementById('foo');
-var node=document.createElement('div');
-var nodeText=document.createTextNode('hello world!');
-node.appendChild(nodeText);
-referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
+<pre><code>操作符     用法      描述
+按位与     a &amp; b     如果两个操作数对应位都是 1 的话则在该位返回 1。
+按位或     a | b     如果两个操作数对应位都是 0 的话则在该位返回 0。
+按位异或   a ^ b     如果两个操作数对应位只有一个 1 的话则在该位返回 1。
+求反       ~ a       反转操作数的每一位。
+左移       a &lt;&lt; b    将 a 的二进制形式左移 b 位。右面的空位补零。
+算术右移   a &gt;&gt; b       将 a 的二进制形式右移 b 位。忽略被移出的位。
+逻辑右移   a &gt;&gt;&gt; b    将 a 的二进制形式右移 b 位。忽略被移出的位，左侧补入 0。
 </code></pre>
 
-<h2>函数1</h2>
+<p>先知道一点：</p>
 
-<pre><code>function insertAfter(node, referenceNode){
-    var parent = referenceNode.parentNode;
-    if(parent.lastChild == referenceNode){
-        parent.appendChild(node);
+<pre><code>数据在内存中是以二进制形式存放的。数值是以补码表示的。一个正数的补码和其原码的形式相同。
+而负数的补码方式是将其绝对值的二进制形式“按位求反再加1” 
+</code></pre>
+
+<h2>二元位操作符</h2>
+
+<h3>用作测试的函数</h3>
+
+<p>扔到console里直接用即可</p>
+
+<pre><code>var hex10to2 = function (o){
+    //鉴于parseInt('0101') 与 parseInt(0101) 的不同结果(纠结，各浏览器应该不同，待测试)，
+    //在您输入的时候请直接输入8进制数时，请直接输入数字（0101）
+    //测试用，所以先只支持整数
+
+    if(parseInt(o)){
+        return parseInt(o).toString(2);
+    } else{
+        console.log('参数不正确，正确的参数为：1.整数 2.合法字符串（如"123","0123","0x123"）');
+    }   
+}
+
+//忽略符号处理
+var hex2to10 = function(str){
+    //TODO:判断是否只包括 1 , 0
+    return parseInt(str,2);
+}
+//两个函数的合并作业待做
+</code></pre>
+
+<h3>我还比较熟悉的： <code>&amp;,|,^</code> 三种，举例如下：</h3>
+
+<p>65 &amp; 32 结果为 0</p>
+
+<pre><code>1000001
+ 100000
+-------
+0000000
+</code></pre>
+
+<p>65 | 32 结果为 97</p>
+
+<pre><code>1000001
+ 100000
+-------
+1100001
+</code></pre>
+
+<p>65 ^ 32 结果为 97</p>
+
+<pre><code>1000001
+ 100000
+-------
+1100001
+</code></pre>
+
+<h3>另外~很少用，也不熟悉</h3>
+
+<h4>详细说明</h4>
+
+<p>取反运算符~对运算数按位取反，将运算数各位值由1变为0，或由0变为1.因为计算机中数值以带符号位二进制表示，所以取反后，最高位符号位发生变化。</p>
+
+<p>32按位取反后结果为（-33）。我们采用32的8位二进制形式:</p>
+
+<pre><code>hex10to2(32) =&gt; 100000 补全得：00100000
+</code></pre>
+
+<p>00100000 按位取反为 11011111，这是一个补码形式，最高位为符号位。将该补码再求补（符号位保持不变，其他位按位取反，最后加1），得到10100001，该值是带符号的真值</p>
+
+<pre><code>hex2to10('100001'); //33
+</code></pre>
+
+<p>加个负号得：-33</p>
+
+<h4>另外：</h4>
+
+<pre><code>97 &amp; -33 //65
+</code></pre>
+
+<p>将 -33（10100001）符号位保持不变，其他位按位取反，最后加1，为：11011111</p>
+
+<pre><code>01100001
+11011111
+--------
+01000001
+
+hex2to10('01000001'); //65
+</code></pre>
+
+<p>正如你看到的，原码和补码是可逆的, 写成</p>
+
+<pre><code>97 &amp; ~32
+</code></pre>
+
+<p>更一目了然一些，因为我只需要去掉从右向左数的第6个 1,那个1 => 2的（6-1）次方,所以 <code>&amp;</code> 一下 <code>~32</code> 即可</p>
+
+<h4>位操作进行加减运算</h4>
+
+<pre><code>... 64 32 16 8 4 2 1
+...  7  6  5 4 3 2 1
+</code></pre>
+
+<p>如果想让第x位变成 1，也就是加上 2 的 <code>x-1</code> 次方（如果那位不是1的话）,令 y = 2 的 <code>x-1</code> 次方</p>
+
+<pre><code>x | y
+</code></pre>
+
+<p>如果想让第x位变成 0，也就是减去 2 的 <code>x-1</code> 次方（如果那位不是0的话）,令 y = 2 的 <code>x-1</code> 次方</p>
+
+<pre><code>x &amp; ~ y
+</code></pre>
+
+<h3>有意思的实现</h3>
+
+<h4>手动大小写</h4>
+
+<p>因为javascript已经实现了（toUpperCase() and toLowerCase()）</p>
+
+<pre><code>function isString(value){return typeof value == 'string';}
+
+var manualLowercase = function(s) {
+    return isString(s)
+            ? s.replace(/[A-Z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) | 32);})
+            : s;
+};
+var manualUppercase = function(s) {
+    return isString(s)
+            ? s.replace(/[a-z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) &amp; ~32);})
+            : s;
+};
+</code></pre>
+
+<h4>奇偶数判断</h4>
+
+<pre><code>function isNumber(value){return typeof value == 'number';}
+
+//利用 0 或 1 对 1 的 &amp; 运算都是原数值，可得：
+var isOdd = function(num){ //奇数
+    if(isNumber(num)){
+        return num &amp; 1 ? true : false;
+    } else{
+        return false;
     }
-    else{
-        parent.insertBefore(node,referenceNode.nextSibling);
-    }            
+}
+
+var isEven = function(num){ //偶数           
+    if(isNumber(num)){
+        return num &amp; 1 ? false : true;
+    } else{
+        return false;
+    }
 }
 </code></pre>
 
-<h2>函数2</h2>
+<h2>移位操作符</h2>
 
-<pre><code>function insertAfter(node, referenceNode){
-    var parent = referenceNode.parentNode,v;
-    (v=referenceNode.nextSibling)?parent.insertBefore(node,v):parent.appendChild(node);
-}
+<p>移位操作符需要两个操作数：第一个是要进行移位的数值，第二个指定要对第一个数移位的数目。移位的方向由使用的操作符决定。</p>
+
+<p>移位操作符将把两个操作符转换为 32 位整型数值，并返回与左操作数类型相同的结果。</p>
+
+<h3>&lt;&lt; (左移)</h3>
+
+<p>该操作符将把第一个操作数向左移若干位。移出的位将被忽略。右侧空位补零。
+例如，9&lt;&lt;2 结果为 36，因为 1001 向左移两位变成 100100，这是 36。快捷算法:9 * (2的移位次方)</p>
+
+<h3>>> (算术右移)</h3>
+
+<p>该操作符将把第一个操作数向右移若干位。移出的位将被忽略。左侧的空位补上与原来最左面位相同的值。
+例如，9>>2 结果为 2，因为 1001 右移两位变成 10，这是 2。。快捷算法:9 / (2的移位次方)</p>
+
+<p>反之，-9>>2 结果为 -3，因为要考虑到符号位。</p>
+
+<p>9在计算机中表示为(我们采用9的8位二进制形式)</p>
+
+<pre><code>00001001
 </code></pre>
 
-<h2>函数3</h2>
+<p>则 -9，为：</p>
 
-<pre><code>function insertAfter(node,referenceNode){
-    referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
-}
+<pre><code>10001001
 </code></pre>
+
+<p>重复上面的算法：符号位保持不变，其他位按位取反，最后加1，得到 -9 在计算机中的表示</p>
+
+<pre><code>11110111
+</code></pre>
+
+<p>算数右移两位 => 补1</p>
+
+<pre><code>11111101
+</code></pre>
+
+<p>重复补码算法</p>
+
+<pre><code>10000011
+</code></pre>
+
+<p>得到 -3</p>
+
+<h3>>>> (逻辑右移)</h3>
+
+<p>该操作符将把第一个操作数向右移若干位。移出的位将被忽略。左侧的空位补零。
+例如，19>>>2 结果为 4，因为 10011 右移两位变成 100，这是 4。对于非负数，算术右移和逻辑右移结果相同。</p>
+
+<p>那么负数呢？</p>
+
+<p>-9>>2 结果为 ?</p>
+
+<p>9在计算机中表示为(我们采用9的8位二进制形式)</p>
+
+<pre><code>00001001
+</code></pre>
+
+<p>则 -9，为：</p>
+
+<pre><code>10001001
+</code></pre>
+
+<p>重复上面的算法：符号位保持不变，其他位按位取反，最后加1，得到 -9 在计算机中的表示</p>
+
+<pre><code>11110111
+</code></pre>
+
+<p>逻辑右移两位 => 补0</p>
+
+<pre><code>00111101
+</code></pre>
+
+<p>因为变成正数了，所以不用重复补码算法了</p>
+
+<p>计算机采用的是32位二进制形式，所以</p>
+
+<pre><code>0011...1101 //中间是30个1
+</code></pre>
+
+<p>得到 1073741821</p>
+
+<pre><code>hex10to2(1073741821) //111111111111111111111111111101
+"111111111111111111111111111101".length //30,略去了前面两个0
+</code></pre>
+
+<h2>Reference</h2>
+
+<p><a href="http://blog.malei.tk/negative-number-binary" title="原码，反码，补码">原码，反码，补码</a></p>
 
         </div>
         <div class="share clearfix">
@@ -140,10 +362,8 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/browsers" rel="bookmark" title="旧一篇">&laquo;&nbsp;browsers</a>
+                <a class="left" href="/articles/nodejs-debug" rel="bookmark" title="旧一篇">&laquo;&nbsp;Node.js的调试</a>
             
-            
-                <a class="right" href="/demos/js-print" rel="bookmark" title="新一篇">JavaScript打印&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -301,10 +521,6 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
                 <ul>
                    
                     <li>
-                        <a href="/articles/js-bitwise-operators" title="从 (97 & ~32) == 65 //true 入手js的位操作符" rel="bookmark">&raquo;&nbsp;从 (97 & ~32) == 65 //true 入手js的位操作符</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/nodejs-debug" title="Node.js的调试" rel="bookmark">&raquo;&nbsp;Node.js的调试</a>
                     </li>                                   
                    
@@ -338,6 +554,10 @@ referenceNode.parentNode.insertBefore(node,referenceNode.nextSibling);
                    
                     <li>
                         <a href="/demos/bishi-baidu" title="Baidu笔试，CSS布局题" rel="bookmark">&raquo;&nbsp;Baidu笔试，CSS布局题</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/win7-ie10" title="Windows 7版本IE10浏览器11月中旬推出" rel="bookmark">&raquo;&nbsp;Windows 7版本IE10浏览器11月中旬推出</a>
                     </li>                                   
                 
                 </ul>
