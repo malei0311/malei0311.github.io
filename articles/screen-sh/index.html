@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>写在新年第一天 | WebCraft</title>
+    <title>传说中的 screen | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="新年伊始，结束了2012，要重新规划自己新的一年——2013。 | malei0311's Blog" />
-    <meta name="keywords" content="new_year,2012,2013,malei0311" />
+    <meta name="description" content="nohup vs screen vs tmux ... | malei0311's Blog" />
+    <meta name="keywords" content="ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/happy-new-year-2013">写在新年第一天</a></h1>
+            <h1><a href="/articles/screen-sh">传说中的 screen</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-01-01">2013-01-01</time>
+                    <time class="date" pubdate="2013-03-06">2013-03-06</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#life">
-                                    life
+                                <a href="/tags.html#ubuntu">
+                                    ubuntu
                                 </a>
                                 <span>
                                     ,
@@ -91,29 +91,91 @@
                 
             </div>
         </div>
-        <p class="description">新年伊始，结束了2012，要重新规划自己新的一年——2013。</p>
+        <p class="description">nohup vs screen vs tmux ...</p>
         <div class="article-div-content">
-        	<h2>总述</h2>
+        	<h2>基本语法</h2>
 
-<p>玛雅人遗传下来的手卷——“德雷斯顿抄本”，并没有如期的使 2012/12/21 变为世界末日，这就使得 2013 有了可能，不！应该说 2013 已经来了，因为第一屡慢慢爬上窗户的曙光，宣告着新的一年的开始！</p>
+<p>Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。Screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/SSH连接窗口那样。</p>
 
-<h2>总结2012</h2>
+<pre><code>screen [-AmRvx -ls -wipe][-d &lt;作业名称&gt;][-h &lt;行数&gt;][-r &lt;作业名称&gt;][-s ][-S &lt;作业名称&gt;]
+</code></pre>
 
-<h3>学业方面</h3>
+<h3>参数说明</h3>
 
-<p>这一年，从大三跨越到了大四，不知不觉中已经到了毕业季。匆匆忙忙的过完了大三的下半学期，没有什么印象太深刻的课程，只是在不断追寻着自己的爱好，自己以后想要从事的职业。Web前端，这个在同学间很非主流的职位，被我一无反顾的追逐着。因为我确实爱好这一块，虽然很菜，但是骨子里还是认为把自己喜欢的当成职业是一件很酷的事情。就这样慢慢积累着前端知识，一步一步的走着...</p>
+<pre><code>-A              将所有的视窗都调整为目前终端机的大小。
+-d &lt;作业名称&gt;       将指定的screen作业离线。
+-h &lt;行数&gt; 　     指定视窗的缓冲区行数。
+-m              即使目前已在作业中的screen作业，仍强制建立新的screen作业。
+-r &lt;作业名称&gt;       恢复离线的screen作业。
+-R              先试图恢复离线的作业。若找不到离线的作业，即建立新的screen作业。
+-s              指定建立新视窗时，所要执行的shell。
+-S &lt;作业名称&gt;   指定screen作业的名称。
+-v              显示版本信息。
+-x              恢复之前离线的screen作业。
+-ls或--list    显示目前所有的screen作业。
+-wipe           检查目前所有的screen作业，并删除已经无法使用的screen作业。
+</code></pre>
 
-<p>过了一个充实的暑假，大四了。这学期还有两门课，缚住了前去企业实习的脚步（为了避免补考，重修，你懂的，老师很严格，缺一次课减5分）</p>
+<h3>nohup vs screen</h3>
 
-<h3>面试实习</h3>
+<p>如果我们可以忽略SIGHUP信号，关掉窗口应该就不会影响程序的运行了。nohup命令可以达到这个目的，如果程序的标准输出/标准错误是终端，nohup默认将其重定向到nohup.out文件。值得注意的是nohup命令只是使得程序忽略SIGHUP信号，还需要使用标记&amp;把它放在后台运行。</p>
 
-<p>鉴于现状：小公司没有web前端的职位，或者有职位但不够重视。于是想去大平台尝试一番，因为我相信每个人都是遇强则强的，这样的机会可以促进自己快速成长（不想成为团队中猪一样的队友）。当然，我也不是一条路走到黑的那种，所以来北京带着两个求职意向：首选Web前端；其次PHP开发。</p>
+<pre><code>nohup &lt;command&gt; [argument…] &amp;
 
-<p>在紧凑的时间安排上（周五 <code>2012-12-07</code> 晚上考完最后一门试，周六同学小聚，周日就背上行囊来北京了），辗转面试(周一，周二，周三)，获得了三个offer，最后决定在sina云计算实习。周四 <code>2012-12-13</code> ，来sina云计算实习了。</p>
+//我最常用nohup的地方就是开启 goagent 代理
+$ !nohup //执行最近执行的一条 nohup 命令，我最近的一条通常都是 nohup python ~/programs/goagent/local/proxy.py &amp;
+</code></pre>
 
-<h2>展望2013</h2>
+<p>虽然nohup很容易使用，但还是比较“简陋”的，对于简单的命令能够应付过来，对于复杂的需要人机交互的任务就麻烦了。</p>
 
-<p>相信未来总是美好的，在新的一年里，要在各方面（武装 / 改变）自己，Just Do It!</p>
+<h2>快捷键</h2>
+
+<pre><code>C-a ?   显示所有键绑定信息 //貌似我的 ubuntu 这条没反应啊
+C-a w   显示所有窗口列表
+C-a C-a 切换到之前显示的窗口
+C-a c   创建一个新的运行shell的窗口并切换到该窗口
+C-a n   切换到下一个窗口
+C-a p   切换到前一个窗口(与C-a n相对)
+C-a 0..9    切换到窗口0..9
+C-a a   发送 C-a 到当前窗口
+C-a d   暂时断开screen会话
+C-a k   杀掉当前窗口  =。=
+C-a [   进入拷贝/回滚模式
+</code></pre>
+
+<h2>一个小例子</h2>
+
+<p>你可以不中断screen窗口中程序的运行而暂时断开（detach）screen会话，并在随后时间重新连接（attach）该会话，重新控制各窗口中运行的程序</p>
+
+<pre><code>$ &gt;screen.test
+$ screen vi screen.test //作为测试，随便敲点东西，然后键入 C-a d
+  [detached from 4804.pts-0.malei-Inspiron-N4010]
+$ screen -ls
+  There is a screen on:
+    4804.pts-0.malei-Inspiron-N4010 (2013年03月06日 17时52分03秒) (Detached)
+  1 Socket in /var/run/screen/S-malei.
+
+$ screen -r 4804.pts-0.malei-Inspiron-N4010 //4804 [tab] 补全即可(进入我们断开的绘画继续工作) C-a d
+  [detached from 4804.pts-0.malei-Inspiron-N4010]
+$ screen -ls
+  There is a screen on:
+    4804.pts-0.malei-Inspiron-N4010 (2013年03月06日 17时52分04秒) (Detached)
+  1 Socket in /var/run/screen/S-malei.
+
+//发现时间，暂停了 =。= 有木有  =========&gt; 靠，颜色高亮好混乱啊
+</code></pre>
+
+<p>如果screen的进程打开的比较多，为了方便识别不同的screen，可以加上 -S 参数，给每个screen不同的
+名称 比如 screen -S test ,进程里就会看到这个screen被标为 test.ttyn.host,而不是进程ID了。</p>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://www.gnu.org/software/screen/manual/screen.html" title="screen命令官方文档">screen命令官方文档</a></li>
+<li><a href="http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html" title="linux screen 命令详解">linux screen 命令详解</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-screen/" title="使用 screen 管理你的远程会话">使用 screen 管理你的远程会话</a></li>
+</ul>
+
 
         </div>
         <div class="share clearfix">
@@ -125,10 +187,10 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/ubuntu-github-git-jekyll" rel="bookmark" title="旧一篇">&laquo;&nbsp;ubuntu配置github+git+jekyll环境</a>
+                <a class="left" href="/articles/ubuntu-xrandr-sh" rel="bookmark" title="旧一篇">&laquo;&nbsp;xrandr 命令小用</a>
             
             
-                <a class="right" href="/articles/nodejs-debug" rel="bookmark" title="新一篇">Node.js的调试&nbsp;&raquo;</a>
+                <a class="right" href="/articles/ubuntu-wine" rel="bookmark" title="新一篇">wine 你懂的&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -190,50 +252,66 @@
                      
                     
                         
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/happy-new-year-2013" title="写在新年第一天">&raquo;&nbsp;写在新年第一天</a></li>
+                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/how-to-do" title="该怎么做？">&raquo;&nbsp;该怎么做？</a></li>
+                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
                                 
                             
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
+                                
+                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
+                                
+                            
                         
                     
                 
@@ -263,10 +341,6 @@
                     </li>                                   
                    
                     <li>
-                        <a href="/articles/screen-sh" title="传说中的 screen" rel="bookmark">&raquo;&nbsp;传说中的 screen</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用" rel="bookmark">&raquo;&nbsp;xrandr 命令小用</a>
                     </li>                                   
                    
@@ -284,6 +358,10 @@
                    
                     <li>
                         <a href="/articles/nodejs-debug" title="Node.js的调试" rel="bookmark">&raquo;&nbsp;Node.js的调试</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/happy-new-year-2013" title="写在新年第一天" rel="bookmark">&raquo;&nbsp;写在新年第一天</a>
                     </li>                                   
                    
                     <li>

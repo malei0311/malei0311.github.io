@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>写在新年第一天 | WebCraft</title>
+    <title>菜鸟学习linux | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="新年伊始，结束了2012，要重新规划自己新的一年——2013。 | malei0311's Blog" />
-    <meta name="keywords" content="new_year,2012,2013,malei0311" />
+    <meta name="description" content="完全切换到 linux(ubuntu) 了，不得不多学一点命令了... | malei0311's Blog" />
+    <meta name="keywords" content="ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/happy-new-year-2013">写在新年第一天</a></h1>
+            <h1><a href="/articles/linux-study">菜鸟学习linux</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-01-01">2013-01-01</time>
+                    <time class="date" pubdate="2013-03-02">2013-03-02</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#life">
-                                    life
+                                <a href="/tags.html#ubuntu">
+                                    ubuntu
                                 </a>
                                 <span>
                                     ,
@@ -91,29 +91,136 @@
                 
             </div>
         </div>
-        <p class="description">新年伊始，结束了2012，要重新规划自己新的一年——2013。</p>
+        <p class="description">完全切换到 linux(ubuntu) 了，不得不多学一点命令了...</p>
         <div class="article-div-content">
         	<h2>总述</h2>
 
-<p>玛雅人遗传下来的手卷——“德雷斯顿抄本”，并没有如期的使 2012/12/21 变为世界末日，这就使得 2013 有了可能，不！应该说 2013 已经来了，因为第一屡慢慢爬上窗户的曙光，宣告着新的一年的开始！</p>
+<p>昨天重装系统:64位ubuntu（为了便于开发，支持8G内存），在同事帮忙配置开发环境的时候，看着他们一路命令敲下来，真是酷啊，于是一冲动，卸载了原来的 win7 + ubuntu(32bit) 双系统，开始了纯正的 linux 之旅. 先坦白一下历经坎坷的 <code>dell</code> 小本的血泪史:</p>
 
-<h2>总结2012</h2>
+<ul>
+<li>2011年元旦，它拔山涉水，从石家庄的中山路来到了北二环</li>
+<li>由纯正的 win7 血统 => win7旗舰版(伪)</li>
+<li>=> vmware 虚拟机上装着各种系统的杂乱</li>
+<li>=> win7 + ubuntu的双系统</li>
+<li>(小插曲)大四上半学期快结束的时候:2011-12-09:跟我来到了帝都</li>
+<li>=> 完全开源的世界 linux(ubuntu) =。= EOF;</li>
+<li>// 内存：2G => 2G * 2 => 4G * 2</li>
+</ul>
 
-<h3>学业方面</h3>
 
-<p>这一年，从大三跨越到了大四，不知不觉中已经到了毕业季。匆匆忙忙的过完了大三的下半学期，没有什么印象太深刻的课程，只是在不断追寻着自己的爱好，自己以后想要从事的职业。Web前端，这个在同学间很非主流的职位，被我一无反顾的追逐着。因为我确实爱好这一块，虽然很菜，但是骨子里还是认为把自己喜欢的当成职业是一件很酷的事情。就这样慢慢积累着前端知识，一步一步的走着...</p>
+<p>听说《鸟哥的linux私房菜》不错，可以在闲的无聊的时候看一看...</p>
 
-<p>过了一个充实的暑假，大四了。这学期还有两门课，缚住了前去企业实习的脚步（为了避免补考，重修，你懂的，老师很严格，缺一次课减5分）</p>
+<h2>KVM vs VirtualBox</h2>
 
-<h3>面试实习</h3>
+<h3>Deferences</h3>
 
-<p>鉴于现状：小公司没有web前端的职位，或者有职位但不够重视。于是想去大平台尝试一番，因为我相信每个人都是遇强则强的，这样的机会可以促进自己快速成长（不想成为团队中猪一样的队友）。当然，我也不是一条路走到黑的那种，所以来北京带着两个求职意向：首选Web前端；其次PHP开发。</p>
+<p>vbox 是由 qemu 改写而成，包含大量 qemu 代码。</p>
 
-<p>在紧凑的时间安排上（周五 <code>2012-12-07</code> 晚上考完最后一门试，周六同学小聚，周日就背上行囊来北京了），辗转面试(周一，周二，周三)，获得了三个offer，最后决定在sina云计算实习。周四 <code>2012-12-13</code> ，来sina云计算实习了。</p>
+<ul>
+<li>可以使用于"不支持"虚拟化技术的cpu。</li>
+<li>值得说的一点：vbox 在图形方面比较好，能进行2D 3D加速。</li>
+<li>但cpu控制不理想（估计是因为图形支持的缘故）。</li>
+<li>操作上有独立的图形界面，易于上手。</li>
+</ul>
 
-<h2>展望2013</h2>
 
-<p>相信未来总是美好的，在新的一年里，要在各方面（武装 / 改变）自己，Just Do It!</p>
+<p>kvm(Kernel-based Virtual Machine) 是linux内核包含的东西，使用qemu作为上层管理（命令行）。</p>
+
+<ul>
+<li>要求 cpu 必须支持虚拟化。</li>
+<li>性能：作为服务器很好，可是图形能力十分的差。即使放电影，图像也是像刷油漆一样，一层一层的。</li>
+<li>cpu使用率控制很好。</li>
+<li>控制上比较简洁，功能比较丰富：比如使用 “无敌功能” 所有更改指向内存，你的镜像永远保持干净。 “母镜像”功能让你拥有n个独立快照点。还有很多参数。另外，kvm作为内核级的虚拟机，刚开始发展关注的公司比较多——但是还没有达到商业应用的水平。</li>
+</ul>
+
+
+<p>总体而言：在支持 虚拟化 的情况下，vbox 和 kvm 的性能差不多，主要是面向对象不同：kvm使用于服务器，vbox使用于桌面应用。</p>
+
+<p>如果要看性能对比：<a href="http://os.51cto.com/art/201203/324172.htm" title="Ubuntu 11.10 Xen、KVM 和 VirtualBox 比拼">Ubuntu 11.10 Xen、KVM 和 VirtualBox 比拼</a></p>
+
+<p>这里详细学一下 KVM，官网有详细的教程 <a href="http://wiki.ubuntu.org.cn/Kvm%E6%95%99%E7%A8%8B" title="Kvm 教程">传送门</a></p>
+
+<h3>Fix BUG</h3>
+
+<p>by the way,当安装 VirtualBox 增强功能时，报这个错误：</p>
+
+<pre><code>Failed to open the CD/DVD image /home/malei/.VirtualBox/VBoxGuestAdditions_4.1.18.iso.
+The medium '/home/malei/.VirtualBox/VBoxGuestAdditions_4.1.18.iso' can't be used as the requested device type
+</code></pre>
+
+<p>我们可以这样解决：</p>
+
+<pre><code>sudo apt-get install virtualbox-guest-additions
+</code></pre>
+
+<h2>常用命令一览</h2>
+
+<p>他们很简单，但是初学者，你懂的</p>
+
+<h3>某端口被占用</h3>
+
+<pre><code>sudo netstat -antup | grep &lt;要查询的端口&gt;
+</code></pre>
+
+<h4>example:</h4>
+
+<p>查找 <code>3306</code> 端口被谁占用了:</p>
+
+<pre><code>sudo netstat -antup | grep 3306
+</code></pre>
+
+<p>结果:</p>
+
+<pre><code>tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      4090/mysqld 
+</code></pre>
+
+<p><code>4090</code> 就是他的端口</p>
+
+<pre><code>kill 4090
+</code></pre>
+
+<p>杀掉他就行了</p>
+
+<p>如果不放心，在杀之前</p>
+
+<pre><code>ps -ef | grep mysqld
+</code></pre>
+
+<p>果然，是那个进程号，杀对了</p>
+
+<h3>对一个文件夹下的目录和文件分别赋权限</h3>
+
+<h4>shell 脚本</h4>
+
+<p>写一个脚本(给他可执行的权限)，命名为 chmod.sh  放在目的路径下</p>
+
+<pre><code>for a in $(find .)
+do
+    if [ -d "$a" ]
+        then
+            chmod 755 $a
+        else
+            chmod 644 $a
+    fi
+done
+</code></pre>
+
+<p>然后(貌似遇到文件或目录中有空格的 =。= 不行)</p>
+
+<pre><code>./chmod.sh
+</code></pre>
+
+<p>完事</p>
+
+<h4>避免麻烦，直接在 terminal 中敲命令</h4>
+
+<pre><code>find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;
+</code></pre>
+
+<p>搞定</p>
+
+<h2>结语</h2>
 
         </div>
         <div class="share clearfix">
@@ -125,10 +232,10 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/ubuntu-github-git-jekyll" rel="bookmark" title="旧一篇">&laquo;&nbsp;ubuntu配置github+git+jekyll环境</a>
+                <a class="left" href="/articles/js-bitwise-operators" rel="bookmark" title="旧一篇">&laquo;&nbsp;从 (97 & ~32) ==...</a>
             
             
-                <a class="right" href="/articles/nodejs-debug" rel="bookmark" title="新一篇">Node.js的调试&nbsp;&raquo;</a>
+                <a class="right" href="/articles/drupal-theme" rel="bookmark" title="新一篇">Drupal 主题开发&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -190,50 +297,66 @@
                      
                     
                         
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/happy-new-year-2013" title="写在新年第一天">&raquo;&nbsp;写在新年第一天</a></li>
+                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/how-to-do" title="该怎么做？">&raquo;&nbsp;该怎么做？</a></li>
+                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
                                 
                             
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
+                                
+                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
+                                
+                            
                         
                     
                 
@@ -275,15 +398,15 @@
                     </li>                                   
                    
                     <li>
-                        <a href="/articles/linux-study" title="菜鸟学习linux" rel="bookmark">&raquo;&nbsp;菜鸟学习linux</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/js-bitwise-operators" title="从 (97 & ~32) == 65 //true 入手js的位操作符" rel="bookmark">&raquo;&nbsp;从 (97 & ~32) == 65 //true 入手js的位操作符</a>
                     </li>                                   
                    
                     <li>
                         <a href="/articles/nodejs-debug" title="Node.js的调试" rel="bookmark">&raquo;&nbsp;Node.js的调试</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/happy-new-year-2013" title="写在新年第一天" rel="bookmark">&raquo;&nbsp;写在新年第一天</a>
                     </li>                                   
                    
                     <li>

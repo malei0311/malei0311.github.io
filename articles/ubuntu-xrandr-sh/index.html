@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>写在新年第一天 | WebCraft</title>
+    <title>xrandr 命令小用 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="新年伊始，结束了2012，要重新规划自己新的一年——2013。 | malei0311's Blog" />
-    <meta name="keywords" content="new_year,2012,2013,malei0311" />
+    <meta name="description" content="因为要切换屏幕，你懂的... | malei0311's Blog" />
+    <meta name="keywords" content="ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/happy-new-year-2013">写在新年第一天</a></h1>
+            <h1><a href="/articles/ubuntu-xrandr-sh">xrandr 命令小用</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-01-01">2013-01-01</time>
+                    <time class="date" pubdate="2013-03-04">2013-03-04</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#life">
-                                    life
+                                <a href="/tags.html#ubuntu">
+                                    ubuntu
                                 </a>
                                 <span>
                                     ,
@@ -91,29 +91,91 @@
                 
             </div>
         </div>
-        <p class="description">新年伊始，结束了2012，要重新规划自己新的一年——2013。</p>
+        <p class="description">因为要切换屏幕，你懂的...</p>
         <div class="article-div-content">
-        	<h2>总述</h2>
+        	<h2>外接设备一览</h2>
 
-<p>玛雅人遗传下来的手卷——“德雷斯顿抄本”，并没有如期的使 2012/12/21 变为世界末日，这就使得 2013 有了可能，不！应该说 2013 已经来了，因为第一屡慢慢爬上窗户的曙光，宣告着新的一年的开始！</p>
+<p>在终端输入 <code>xrandr</code> ：</p>
 
-<h2>总结2012</h2>
+<pre><code>LVDS connected (normal left inverted right x axis y axis)
+   1366x768       60.0 +
+   1360x768       60.0  
+   1280x768       60.0  
+   1280x720       60.0  
+   1024x768       60.0  
+   1024x600       60.0  
+   800x600        60.0  
+   800x480        60.0  
+   640x480        60.0  
+DFP1 disconnected (normal left inverted right x axis y axis)
+CRT1 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 510mm x 287mm
+   1920x1080      60.0*+
+   1680x1050      60.0  
+   1400x1050      60.0  
+   1600x900       60.0  
+   1280x1024      75.0     60.0  
+   1440x900       60.0  
+   1280x960       75.0     60.0  
+   1152x864       60.0     75.0  
+   1280x768       75.0     60.0  
+   1280x720       75.0     60.0  
+   1024x768       75.0     60.0  
+   1024x600       75.0     60.0  
+   800x600        75.0     60.3  
+   800x480        75.0     60.3  
+   640x480        75.0     59.9 
+</code></pre>
 
-<h3>学业方面</h3>
+<p>说明：</p>
 
-<p>这一年，从大三跨越到了大四，不知不觉中已经到了毕业季。匆匆忙忙的过完了大三的下半学期，没有什么印象太深刻的课程，只是在不断追寻着自己的爱好，自己以后想要从事的职业。Web前端，这个在同学间很非主流的职位，被我一无反顾的追逐着。因为我确实爱好这一块，虽然很菜，但是骨子里还是认为把自己喜欢的当成职业是一件很酷的事情。就这样慢慢积累着前端知识，一步一步的走着...</p>
+<pre><code>LVDS 就是笔记本的显示器输出(Low Voltage Differential Signaling，是一种低压差分信号技术接口)
+DTP1 就是笔记本的HDMI端口(High Definition Multimedia Interface，中文名称是高清晰多媒体接口)
+CRT1 就是笔记本上的VGA端口(Video Graphics Array，即视频图形阵列) =。= CRT是一种使用阴极射线管(Cathode Ray Tube）的显示器
+</code></pre>
 
-<p>过了一个充实的暑假，大四了。这学期还有两门课，缚住了前去企业实习的脚步（为了避免补考，重修，你懂的，老师很严格，缺一次课减5分）</p>
+<h2>xrandr 命令常用方式如下：</h2>
 
-<h3>面试实习</h3>
+<p>打开外接显示器(最高分辨率)，与笔记本液晶屏幕显示同样内容（克隆）:</p>
 
-<p>鉴于现状：小公司没有web前端的职位，或者有职位但不够重视。于是想去大平台尝试一番，因为我相信每个人都是遇强则强的，这样的机会可以促进自己快速成长（不想成为团队中猪一样的队友）。当然，我也不是一条路走到黑的那种，所以来北京带着两个求职意向：首选Web前端；其次PHP开发。</p>
+<pre><code>xrandr --output CRT1 --same-as LVDS --auto  
+</code></pre>
 
-<p>在紧凑的时间安排上（周五 <code>2012-12-07</code> 晚上考完最后一门试，周六同学小聚，周日就背上行囊来北京了），辗转面试(周一，周二，周三)，获得了三个offer，最后决定在sina云计算实习。周四 <code>2012-12-13</code> ，来sina云计算实习了。</p>
+<p>打开外接显示器(分辨率为1024x768)，与笔记本液晶屏幕显示同样内容（克隆）:</p>
 
-<h2>展望2013</h2>
+<pre><code>xrandr --output CRT1 --same-as LVDS --mode 1024x768  
+</code></pre>
 
-<p>相信未来总是美好的，在新的一年里，要在各方面（武装 / 改变）自己，Just Do It!</p>
+<p>打开外接显示器(最高分辨率)，设置为右侧扩展屏幕:</p>
+
+<pre><code>xrandr --output CRT1 --right-of LVDS --auto  
+</code></pre>
+
+<p>关闭外接显示器:</p>
+
+<pre><code>xrandr --output CRT1 --off  
+</code></pre>
+
+<p>打开外接显示器，同时关闭笔记本液晶屏幕（只用外接显示器工作）:</p>
+
+<pre><code>xrandr --output CRT1 --auto --output LVDS --off  
+</code></pre>
+
+<p>关闭外接显示器，同时打开笔记本液晶屏幕 (只用笔记本液晶屏)</p>
+
+<pre><code>xrandr --output CRT1 --off --output LVDS --auto  
+</code></pre>
+
+<h2>小结</h2>
+
+<p>由于在图形界面配置总是报错，所以。。。；如果命令没达到你想要的效果重启一下就可以了，貌似这里有问题，待测试：</p>
+
+<ul>
+<li>先连VGA线，再开机</li>
+<li>先开机，再连VGA线</li>
+</ul>
+
+
+<p>经测试，对于我这个悲催的 <code>A卡</code> 来说，<code>先连VGA线，再开机</code> 是个不错的选择.</p>
 
         </div>
         <div class="share clearfix">
@@ -125,10 +187,10 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/ubuntu-github-git-jekyll" rel="bookmark" title="旧一篇">&laquo;&nbsp;ubuntu配置github+git+jekyll环境</a>
+                <a class="left" href="/articles/drupal-theme" rel="bookmark" title="旧一篇">&laquo;&nbsp;Drupal 主题开发</a>
             
             
-                <a class="right" href="/articles/nodejs-debug" rel="bookmark" title="新一篇">Node.js的调试&nbsp;&raquo;</a>
+                <a class="right" href="/articles/screen-sh" rel="bookmark" title="新一篇">传说中的 screen&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -190,50 +252,66 @@
                      
                     
                         
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/happy-new-year-2013" title="写在新年第一天">&raquo;&nbsp;写在新年第一天</a></li>
+                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/how-to-do" title="该怎么做？">&raquo;&nbsp;该怎么做？</a></li>
+                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
                                 
                             
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
+                                
+                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
+                                
+                            
                         
                     
                 
@@ -267,10 +345,6 @@
                     </li>                                   
                    
                     <li>
-                        <a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用" rel="bookmark">&raquo;&nbsp;xrandr 命令小用</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/drupal-theme" title="Drupal 主题开发" rel="bookmark">&raquo;&nbsp;Drupal 主题开发</a>
                     </li>                                   
                    
@@ -284,6 +358,10 @@
                    
                     <li>
                         <a href="/articles/nodejs-debug" title="Node.js的调试" rel="bookmark">&raquo;&nbsp;Node.js的调试</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/happy-new-year-2013" title="写在新年第一天" rel="bookmark">&raquo;&nbsp;写在新年第一天</a>
                     </li>                                   
                    
                     <li>
