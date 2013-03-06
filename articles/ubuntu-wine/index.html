@@ -93,9 +93,73 @@
         </div>
         <p class="description"></p>
         <div class="article-div-content">
-        	<h2>Reference</h2>
+        	<h2>bug:=。=:solve</h2>
 
-<p><a href="https://help.ubuntu.com/community/Wine" title="Wine Documentation">Wine Documentation</a></p>
+<p>you know, my ubuntu => 12.10 64bit</p>
+
+<h3>bug详情：</h3>
+
+<p>p11-kit: couldn't load module: /usr/lib/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so: /usr/lib/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so: 无法打开共享对象文件: 没有那个文件或目录</p>
+
+<h3>解决方案：</h3>
+
+<p>1) 安装 getlibs:</p>
+
+<pre><code>wget https://launchpadlibrarian.net/53907140/getlibs_2.06-0ubuntu1~ppa2_all.deb
+sudo dpkg -i getlibs_2.06-0ubuntu1~ppa2_all.deb
+</code></pre>
+
+<p>2)安装 32bit 库:</p>
+
+<pre><code>sudo getlibs -p gnome-keyring:i386
+</code></pre>
+
+<p>如果遇到此错误:</p>
+
+<pre><code>Failed to download file http://mirrors.kernel.org/ubuntu/pool/main/g/gnome-keyring/gnome-keyring_3.4.1-4ubuntu1~precise1_i386.deb
+</code></pre>
+
+<p>请在这下载:</p>
+
+<pre><code>wget https://launchpad.net/~gnome3-team/+archive/gnome3/+files/gnome-keyring_3.4.1-4ubuntu1~precise1_i386.deb
+</code></pre>
+
+<p>然后:</p>
+
+<pre><code>getlibs -i "path-of-the-file"/gnome-keyring_3.4.1-4ubuntu1~precise1_i386.deb
+</code></pre>
+
+<p>如果所给链接损坏，请在这搜：https://launchpad.net</p>
+
+<p>3) 生成符号链接:</p>
+
+<pre><code>sudo mkdir -p /usr/lib/i386-linux-gnu/pkcs11/ 
+sudo ln -s /usr/lib32/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so /usr/lib/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so
+</code></pre>
+
+<p>O啦!</p>
+
+<h3>当遇到这个bug时</h3>
+
+<pre><code>fixme:winediag:AUDDRV_GetAudioEndpoint Winepulse is not officially supported by the wine project
+fixme:winediag:AUDDRV_GetAudioEndpoint For sound related feedback and support, please visit http://ubuntuforums.org/showthread.php?t=1960599
+</code></pre>
+
+<p>bug中给了链接，照着链接中的做，可解</p>
+
+<h2>几个常用命令</h2>
+
+<pre><code>winecfg
+winefile
+wine uninstaller
+wine xxoo.exe
+</code></pre>
+
+<h2>Reference</h2>
+
+<p><a href="https://help.ubuntu.com/community/Wine" title="Wine Documentation">Wine Documentation</a>
+<a href="http://askubuntu.com/questions/127848/wine-cant-find-gnome-keyring-pkcs11-so" title="Wine can't find gnome-keyring-pkcs11.so">Wine can't find gnome-keyring-pkcs11.so</a>
+<a href="http://ubuntuforums.org/showthread.php?t=1960599" title="winepulse">Winepulse</a></p>
 
         </div>
         <div class="share clearfix">
