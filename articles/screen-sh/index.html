@@ -9,7 +9,7 @@
     <title>传说中的 screen | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="nohup vs screen vs tmux ... | malei0311's Blog" />
+    <meta name="description" content="nohup vs screen vs tmux ... 你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。 | malei0311's Blog" />
     <meta name="keywords" content="ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
@@ -91,7 +91,7 @@
                 
             </div>
         </div>
-        <p class="description">nohup vs screen vs tmux ...</p>
+        <p class="description">nohup vs screen vs tmux ... 你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。</p>
         <div class="article-div-content">
         	<h2>基本语法</h2>
 
@@ -166,7 +166,7 @@ $ screen -ls
 </code></pre>
 
 <p>如果screen的进程打开的比较多，为了方便识别不同的screen，可以加上 -S 参数，给每个screen不同的
-名称 比如 screen -S test ,进程里就会看到这个screen被标为 test.ttyn.host,而不是进程ID了。</p>
+名称 比如 <code>screen -S test</code> ,进程里就会看到这个screen被标为 <code>test.pts-0.host</code> ,而不是进程ID了。</p>
 
 <h2>Reference</h2>
 

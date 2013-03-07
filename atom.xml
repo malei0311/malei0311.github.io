@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-03-06T23:39:03+08:00</updated>
+   <updated>2013-03-07T09:44:42+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
@@ -20,6 +20,8 @@
      <content type="html">&lt;h2&gt;bug:=。=:solve&lt;/h2&gt;
 
 &lt;p&gt;you know, my ubuntu =&gt; 12.10 64bit&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/ubuntu-wine/wine.png&quot; title=&quot;wine logo&quot; alt=&quot;wine logo&quot; /&gt; Wine Cheers!&lt;/p&gt;
 
 &lt;h3&gt;bug详情：&lt;/h3&gt;
 
@@ -79,11 +81,18 @@ wine uninstaller
 wine xxoo.exe
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;h2&gt;结论&lt;/h2&gt;
+
+&lt;p&gt;wine 不如 virtualbox 安装的 xp 好用&lt;/p&gt;
+
 &lt;h2&gt;Reference&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://help.ubuntu.com/community/Wine&quot; title=&quot;Wine Documentation&quot;&gt;Wine Documentation&lt;/a&gt;
-&lt;a href=&quot;http://askubuntu.com/questions/127848/wine-cant-find-gnome-keyring-pkcs11-so&quot; title=&quot;Wine can't find gnome-keyring-pkcs11.so&quot;&gt;Wine can't find gnome-keyring-pkcs11.so&lt;/a&gt;
-&lt;a href=&quot;http://ubuntuforums.org/showthread.php?t=1960599&quot; title=&quot;winepulse&quot;&gt;Winepulse&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://help.ubuntu.com/community/Wine&quot; title=&quot;Wine Documentation&quot;&gt;Wine Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://askubuntu.com/questions/127848/wine-cant-find-gnome-keyring-pkcs11-so&quot; title=&quot;Wine can't find gnome-keyring-pkcs11.so&quot;&gt;Wine can't find gnome-keyring-pkcs11.so&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://ubuntuforums.org/showthread.php?t=1960599&quot; title=&quot;winepulse&quot;&gt;Winepulse&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 </content>
    </entry>
    
@@ -165,7 +174,7 @@ $ screen -ls
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;如果screen的进程打开的比较多，为了方便识别不同的screen，可以加上 -S 参数，给每个screen不同的
-名称 比如 screen -S test ,进程里就会看到这个screen被标为 test.ttyn.host,而不是进程ID了。&lt;/p&gt;
+名称 比如 &lt;code&gt;screen -S test&lt;/code&gt; ,进程里就会看到这个screen被标为 &lt;code&gt;test.pts-0.host&lt;/code&gt; ,而不是进程ID了。&lt;/p&gt;
 
 &lt;h2&gt;Reference&lt;/h2&gt;
 
