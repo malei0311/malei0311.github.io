@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>PHP随机显示图片（目录不限深度） | WebCraft</title>
+    <title>前端测试框架搭建 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度 | malei0311's Blog" />
-    <meta name="keywords" content="php,readImage,malei0311" />
+    <meta name="description" content="前端测试框架搭建 | malei0311's Blog" />
+    <meta name="keywords" content="test,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/php-random-image">PHP随机显示图片（目录不限深度）</a></h1>
+            <h1><a href="/articles/web-front-end-test">前端测试框架搭建</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2011-12-31">2011-12-31</time>
+                    <time class="date" pubdate="2013-04-11">2013-04-11</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,17 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#php">
-                                    php
+                                <a href="/tags.html#test">
+                                    test
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                             
+                            <li>
+                                <a href="/tags.html#js">
+                                    js
                                 </a>
                                 <span>
                                     ,
@@ -91,124 +100,19 @@
                 
             </div>
         </div>
-        <p class="description">编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度</p>
+        <p class="description">前端测试框架搭建</p>
         <div class="article-div-content">
-        	<h2>总述</h2>
+        	<h2>要了解的列表</h2>
 
-<p>这是在 jekyll 引擎上的第一篇正式博文，也作为一篇测试文章(测试隔年文章的显示效果)，故意把时间调整到了 2011-12-31。此篇原文，在我搭建在GAE的<a href="http://blog.malei.tk/" title="malei0311的专栏">blog</a>上。那篇只是简单地贴出了代码，这篇稍微加工一下。好，现在先把类的“皮”，写出来。</p>
+<ul>
+<li><a href="http://yeoman.io/">yeoman</a></li>
+<li><a href="http://log4js.berlios.de/">log4.js</a></li>
+<li><a href="http://karma-runner.github.io/">karma</a></li>
+<li><a href="http://pivotal.github.io/jasmine/">jasmine</a></li>
+<li><a href="http://gruntjs.com/getting-started">grunt</a></li>
+<li><a href="https://github.com/twitter/bower">bower</a></li>
+</ul>
 
-<pre><code>&lt;?php
-/*
- * @fileoverview handle-file 随机显示目录中的图片
- *
- * @author &lt;a href="mailto:leiman0311@gmail.com"&gt;Lei Ma&lt;/a&gt;
- * @time  Jul 31, 2012
- */
-
-/*
- * @description {class} ReadImage
- */
-class ReadImage{}
-?&gt;
-</code></pre>
-
-<h2>ReadImage类的三部曲</h2>
-
-<h3>1.读取文件夹目录</h3>
-
-<p>此方法返回的是一个不规则的多维数组，实现起来很简单，PHP 手册上写的很清楚</p>
-
-<pre><code>/*
- *@description 读取文件夹目录(遍历所有目录)
- *@param {String} dir 要读取的目录
- */
-public function read_folder_directory($dir){ 
-    $listDir = array(); 
-    if($handler = opendir($dir)) { 
-        while (($sub = readdir($handler)) !== FALSE) { 
-            if ($sub != "." &amp;&amp; $sub != "..") {
-                    if(is_file($dir."/".$sub)) {
-                        if(substr($sub,-3)=='gif' || substr($sub,-3)=='jpg' || substr($sub,-3)=='png')
-                        $listDir[] = $sub; 
-                    }
-                    //递归
-                    elseif(is_dir($dir."/".$sub)){ 
-                        $listDir[$sub] = $this-&gt;read_folder_directory($dir."/".$sub); 
-                    } 
-            } 
-        } 
-        closedir($handler); 
-    } 
-    return $listDir; 
-}  
-</code></pre>
-
-<h3>2. 遍历多维数组到一维数组中</h3>
-
-<p>此方法着实令我费了一些周折，需要实现的是：把上个方法返回的不规则数组，注入到一维数组中，细化到 <code>叶子</code> ，把 <code>叶子</code> 到 <code>根</code> 的路径排列好，写入一维数组中。难点是：<code>static</code> 关键字 和 参数控制。</p>
-
-<pre><code>/*
- *@description 遍历多维数组，把值注入到一维数组
- *@param {array} arr 不规则多维数组
- *@param {boolean} flag 标志位
- *@param {string} subFolder 图片根目录下的子目录名
- */ 
-public function arr_foreach ($arr,$flag=false,$subFolder=""){
-    static $newArr=array();
-    if(!is_array($arr)){
-        return $newArr;
-    }
-    if(!$flag){
-        foreach($arr as $key =&gt; $val){
-            if(is_array($val)){
-                $this-&gt;arr_foreach($val,true,$key);
-            }
-            else $newArr[]=$val;
-        }
-    }
-    else{
-        foreach($arr as $key =&gt; $val){
-            if(is_array($val)){
-               $this-&gt;arr_foreach($val,true,$subFolder."/".$key);
-            }
-            else  $newArr[]=$subFolder."/".$val;
-        }
-    }
-
-    return $newArr;
-}
-</code></pre>
-
-<h3>3.读取数据</h3>
-
-<p>终于到了读取数据的方法了，这就比较简单了，随机取那个一维数组中的一项，写出相应格式图片的 <code>header</code> ，直接 <code>readfile()</code>。</p>
-
-<pre><code>/*
- * @description 读取数据
- */
-function read_a_random_file(){
-    $files = $this-&gt;read_folder_directory ($_SERVER["DOCUMENT_ROOT"].'/images/');
-    $dumpFiles=array();
-    $dumpFiles=$this-&gt;arr_foreach ($files);
-    $random=rand(0,count($dumpFiles)-1);
-    if(substr($dumpFiles[$random],-3)=='gif') header("Content-type: image/gif");
-    if(substr($dumpFiles[$random],-3)=='jpg') header("Content-type: image/jpeg");
-    if(substr($dumpFiles[$random],-3)=="png") header("Content-type: image/png");
-    readfile($_SERVER["DOCUMENT_ROOT"].'/images/'.$dumpFiles[$random]);
-}
-</code></pre>
-
-<h2>调用</h2>
-
-<p>只需把以上三个方法，放入最开始的类 “皮” 中，就可以调用了。</p>
-
-<pre><code>$readImage=new ReadImage;
-$readImage-&gt;read_a_random_file();
-</code></pre>
-
-<h2>结语</h2>
-
-<p>对<code>递归</code>稍微有点认识了</p>
 
         </div>
         <div class="share clearfix">
@@ -220,10 +124,10 @@ $readImage-&gt;read_a_random_file();
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/flag" rel="bookmark" title="旧一篇">&laquo;&nbsp;article-flag</a>
+                <a class="left" href="/demos/xx-slides" rel="bookmark" title="旧一篇">&laquo;&nbsp;slides</a>
             
             
-                <a class="right" href="/articles/chocolate-pure-css" rel="bookmark" title="新一篇">本博客使用PureCss&nbsp;&raquo;</a>
+                <a class="right" href="/articles/ubuntu-thinkpad-e430-disable-touchpad" rel="bookmark" title="新一篇">ubuntu 禁用 thinkpad e430 触摸板...&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -235,17 +139,79 @@ $readImage-&gt;read_a_random_file();
                      
                     
                         
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/drupal-theme" title="Drupal 主题开发">&raquo;&nbsp;Drupal 主题开发</a></li>
+                                    <li><a href="/articles/web-front-end-test" title="前端测试框架搭建">&raquo;&nbsp;前端测试框架搭建</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/mysql-copy-table" title="mysql拷贝表">&raquo;&nbsp;mysql拷贝表</a></li>
+                                    <li><a href="/articles/js-bitwise-operators" title="从 (97 & ~32) == 65 //true 入手js的位操作符">&raquo;&nbsp;从 (97 & ~32) == 65 //true 入手js的位操作符</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/php-random-image" title="PHP随机显示图片（目录不限深度）">&raquo;&nbsp;PHP随机显示图片（目录不限深度）</a></li>
+                                    <li><a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">&raquo;&nbsp;JavaScript如何判断变量类型</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/baidu-examination" title="XX-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;XX-web前端开发工程师-笔试+面试-经历</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/js-insertAfter" title="insertAfter()?">&raquo;&nbsp;insertAfter()?</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/java-vs-javascript" title="Java vs JavaScript">&raquo;&nbsp;Java vs JavaScript</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
                                 
                             
                         
@@ -255,8 +221,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -265,8 +235,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -275,8 +249,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -285,8 +263,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -295,8 +277,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -305,8 +291,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -315,8 +305,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -325,9 +319,6 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
-                
-                     
-                    
                         
                     
                 
@@ -335,8 +326,18 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/web-front-end-test" title="前端测试框架搭建">&raquo;&nbsp;前端测试框架搭建</a></li>
+                                
+                            
+                        
                     
                         
                     
@@ -344,19 +345,6 @@ $readImage-&gt;read_a_random_file();
                      
                     
                         
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
                     
                         
                     
@@ -369,10 +357,6 @@ $readImage-&gt;read_a_random_file();
                    
                     <li>
                         <a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板" rel="bookmark">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a>
-                    </li>                                   
-                   
-                    <li>
-                        <a href="/articles/web-front-end-test" title="前端测试框架搭建" rel="bookmark">&raquo;&nbsp;前端测试框架搭建</a>
                     </li>                                   
                    
                     <li>
@@ -405,6 +389,10 @@ $readImage-&gt;read_a_random_file();
                    
                     <li>
                         <a href="/articles/js-bitwise-operators" title="从 (97 & ~32) == 65 //true 入手js的位操作符" rel="bookmark">&raquo;&nbsp;从 (97 & ~32) == 65 //true 入手js的位操作符</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/nodejs-debug" title="Node.js的调试" rel="bookmark">&raquo;&nbsp;Node.js的调试</a>
                     </li>                                   
                 
                 </ul>

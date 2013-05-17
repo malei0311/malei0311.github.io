@@ -4,13 +4,125 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-03-30T02:08:21+08:00</updated>
+   <updated>2013-04-12T15:40:48+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>ubuntu 禁用 thinkpad e430 触摸板</title>
+     <link href="http://webcraft.malei.tk/articles/ubuntu-thinkpad-e430-disable-touchpad"/>
+     <updated>2013-04-13T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/ubuntu-thinkpad-e430-disable-touchpad</id>
+     <content type="html">&lt;h2&gt;请打开终端&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;ctrl + alt + t
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;输入&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;xinput
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;⎡ Virtual core pointer                        id=2    [master pointer  (3)]
+⎜   ↳ Virtual core XTEST pointer                id=4    [slave  pointer  (2)]
+⎜   ↳ ThinkPad USB Travel Mouse                 id=10   [slave  pointer  (2)]
+⎜   //注意下面一行的id在后面的命令中要用
+⎜   ↳ SynPS/2 Synaptics TouchPad                id=13   [slave  pointer  (2)]
+⎜   ↳ TPPS/2 IBM TrackPoint                     id=15   [slave  pointer  (2)]
+⎣ Virtual core keyboard                       id=3    [master keyboard (2)]
+    ↳ Virtual core XTEST keyboard                 id=5    [slave  keyboard (3)]
+    ↳ Power Button                                id=6    [slave  keyboard (3)]
+    ↳ Video Bus                                   id=7    [slave  keyboard (3)]
+    ↳ Video Bus                                   id=8    [slave  keyboard (3)]
+    ↳ Power Button                                id=9    [slave  keyboard (3)]
+    ↳ Integrated Camera                           id=11   [slave  keyboard (3)]
+    ↳ AT Translated Set 2 keyboard                id=12   [slave  keyboard (3)]
+    ↳ ThinkPad Extra Buttons                      id=14   [slave  keyboard (3)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;接下来&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;xinput list-props 13 | grep Enabled
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    Device Enabled (137):   1   //说明是开启状态
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;最后&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;xinput set-prop 13 137 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O了，检查一下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;xinput list-props 13 | grep Enabled
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    Device Enabled (137):   0
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>前端测试框架搭建</title>
+     <link href="http://webcraft.malei.tk/articles/web-front-end-test"/>
+     <updated>2013-04-11T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/web-front-end-test</id>
+     <content type="html">&lt;h2&gt;要了解的列表&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://yeoman.io/&quot;&gt;yeoman&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://log4js.berlios.de/&quot;&gt;log4.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://karma-runner.github.io/&quot;&gt;karma&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://pivotal.github.io/jasmine/&quot;&gt;jasmine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://gruntjs.com/getting-started&quot;&gt;grunt&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/twitter/bower&quot;&gt;bower&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>ubuntu 12.10 x64 ATI 5650 安装显卡驱动</title>
+     <link href="http://webcraft.malei.tk/articles/ubuntu-ati-driver"/>
+     <updated>2013-03-30T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/ubuntu-ati-driver</id>
+     <content type="html">&lt;h2&gt;开始&lt;/h2&gt;
+
+&lt;p&gt;由于在安装显卡驱动方面走了不少弯路，也花费了不少时间，害怕了。。。，此篇笔记旨在加深了解，等时机成熟了再实践&lt;/p&gt;
+
+&lt;h3&gt;几条小命令&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;lspci | grep VGA
+
+lsb_release -a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;结果&lt;/h2&gt;
+
+&lt;p&gt;还没来得及安装，就...&lt;/p&gt;
+
+&lt;p&gt;真的悲剧了,dell 小本近期衰老现象严重，先是换了一块硬盘，没用几天，就又出问题了，表示现已壮烈牺牲，仅此纪念&lt;/p&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://support.amd.com/cn/gpudownload/linux/Pages/radeon_linux.aspx&quot;&gt;官方驱动下载&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://wiki.cchtml.com/index.php/Category:Installation_Documentation&quot;&gt;非官方 ATI linux按装Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
    
    <entry>
      <title>wine 你懂的</title>
@@ -421,6 +533,32 @@ find . -type f -exec chmod 644 {} \;
 
 &lt;p&gt;搞定&lt;/p&gt;
 
+&lt;h2&gt;源&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;deb http://mirrors.163.com/ubuntu/ quantal main restricted  
+deb-src http://mirrors.163.com/ubuntu/ quantal main restricted  
+deb http://mirrors.163.com/ubuntu/ quantal-updates main restricted  
+deb-src http://mirrors.163.com/ubuntu/ quantal-updates main restricted  
+deb http://mirrors.163.com/ubuntu/ quantal universe  
+deb-src http://mirrors.163.com/ubuntu/ quantal universe  
+deb http://mirrors.163.com/ubuntu/ quantal-updates universe  
+deb-src http://mirrors.163.com/ubuntu/ quantal-updates universe  
+deb http://mirrors.163.com/ubuntu/ quantal multiverse  
+deb-src http://mirrors.163.com/ubuntu/ quantal multiverse  
+deb http://mirrors.163.com/ubuntu/ quantal-updates multiverse  
+deb-src http://mirrors.163.com/ubuntu/ quantal-updates multiverse  
+deb http://mirrors.163.com/ubuntu/ quantal-backports main restricted universe multiverse  
+deb-src http://mirrors.163.com/ubuntu/ quantal-backports main restricted universe multiverse  
+deb http://mirrors.163.com/ubuntu/ quantal-security main restricted  
+deb-src http://mirrors.163.com/ubuntu/ quantal-security main restricted  
+deb http://mirrors.163.com/ubuntu/ quantal-security universe  
+deb-src http://mirrors.163.com/ubuntu/ quantal-security universe  
+deb http://mirrors.163.com/ubuntu/ quantal-security multiverse  
+deb-src http://mirrors.163.com/ubuntu/ quantal-security multiverse  
+deb http://extras.ubuntu.com/ubuntu quantal main  
+deb-src http://extras.ubuntu.com/ubuntu quantal main
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h2&gt;结语&lt;/h2&gt;
 </content>
    </entry>
@@ -829,213 +967,6 @@ program terminated
 &lt;h2&gt;结语&lt;/h2&gt;
 
 &lt;p&gt;还是图形界面爽啊!&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>写在新年第一天</title>
-     <link href="http://webcraft.malei.tk/articles/happy-new-year-2013"/>
-     <updated>2013-01-01T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/happy-new-year-2013</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;玛雅人遗传下来的手卷——“德雷斯顿抄本”，并没有如期的使 2012/12/21 变为世界末日，这就使得 2013 有了可能，不！应该说 2013 已经来了，因为第一屡慢慢爬上窗户的曙光，宣告着新的一年的开始！&lt;/p&gt;
-
-&lt;h2&gt;总结2012&lt;/h2&gt;
-
-&lt;h3&gt;学业方面&lt;/h3&gt;
-
-&lt;p&gt;这一年，从大三跨越到了大四，不知不觉中已经到了毕业季。匆匆忙忙的过完了大三的下半学期，没有什么印象太深刻的课程，只是在不断追寻着自己的爱好，自己以后想要从事的职业。Web前端，这个在同学间很非主流的职位，被我一无反顾的追逐着。因为我确实爱好这一块，虽然很菜，但是骨子里还是认为把自己喜欢的当成职业是一件很酷的事情。就这样慢慢积累着前端知识，一步一步的走着...&lt;/p&gt;
-
-&lt;p&gt;过了一个充实的暑假，大四了。这学期还有两门课，缚住了前去企业实习的脚步（为了避免补考，重修，你懂的，老师很严格，缺一次课减5分）&lt;/p&gt;
-
-&lt;h3&gt;面试实习&lt;/h3&gt;
-
-&lt;p&gt;鉴于现状：小公司没有web前端的职位，或者有职位但不够重视。于是想去大平台尝试一番，因为我相信每个人都是遇强则强的，这样的机会可以促进自己快速成长（不想成为团队中猪一样的队友）。当然，我也不是一条路走到黑的那种，所以来北京带着两个求职意向：首选Web前端；其次PHP开发。&lt;/p&gt;
-
-&lt;p&gt;在紧凑的时间安排上（周五 &lt;code&gt;2012-12-07&lt;/code&gt; 晚上考完最后一门试，周六同学小聚，周日就背上行囊来北京了），辗转面试(周一，周二，周三)，获得了三个offer，最后决定在sina云计算实习。周四 &lt;code&gt;2012-12-13&lt;/code&gt; ，来sina云计算实习了。&lt;/p&gt;
-
-&lt;h2&gt;展望2013&lt;/h2&gt;
-
-&lt;p&gt;相信未来总是美好的，在新的一年里，要在各方面（武装 / 改变）自己，Just Do It!&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>ubuntu配置github+git+jekyll环境</title>
-     <link href="http://webcraft.malei.tk/articles/ubuntu-github-git-jekyll"/>
-     <updated>2012-11-26T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/ubuntu-github-git-jekyll</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;在 windows 中，如果我们只是在本地完成编码，然后在 github 上看效果，那么我们只需安装 &lt;a href=&quot;http://windows.github.com/&quot;&gt;github for windows&lt;/a&gt; 就可以了。如果要在本地编码调试还要看效果，那么推荐安装 RailsInstaller，里面包含了 Ruby、Rails、Bundler、Git、Sqlite、TinyTDS、SQL Server support 和 DevKit。我在 wnidows 用的是 github for windows + RailsInstaller 的方式，既有很好的本地与 github 交互的 metro 风格的客户端，又有在本地调试预览的环境。由于禁不住  metro 风格的诱惑，总是在用 metro 风格的客户端，git 命令到没怎么学，为了加强一下命令学习，遂玩一下 ubuntu 版的 git + github +jekyll。&lt;/p&gt;
-
-&lt;h2&gt;安装 ruby 环境&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.ruby-lang.org/zh_cn/downloads/&quot;&gt;下载并安装 ruby&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;如果按照官网上的方法&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install ruby irb rdoc
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;稍微对配置做一下修改，把淘宝的镜像加到gem的镜像列表里&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ gem sources --remove http://rubygems.org/
-$ gem sources -a http://ruby.taobao.org/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然后用gem sources -l看看现在源列表&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;*** CURRENT SOURCES ***
-
-http://ruby.taobao.org
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;在终端输入 &lt;code&gt;ruby -v&lt;/code&gt; 或 &lt;code&gt;irb&lt;/code&gt; 或 &lt;code&gt;gem -v&lt;/code&gt; 或 &lt;code&gt;which gem&lt;/code&gt;，你会发现， ruby 已经安装好了。但是，当 &lt;code&gt;sudo gem install jekyll&lt;/code&gt; 时，会报错&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ERROR:  Error installing jekyll:
-ERROR:  Failed to build gem native extension.
-....
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;解决方案：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install ruby-dev
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;solve the problem perfectly!&lt;/p&gt;
-
-&lt;p&gt;如果你想用 RDiscount 取代 Maruku 作为你的Markdown标记语言转换引擎，只需确认安装：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ gem install rdiscount
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;并通过以下命令行参数执行Jekyll：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ jekyll --rdiscount
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;或者也可以在你站点下的 _config.yml 文件中加入以下配置，以便以后每次执行时不必再指定命令行参数：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;markdown: rdiscount
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;配置和使用github&lt;/h2&gt;
-
-&lt;h3&gt;1、安装 git&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;2、检查SSH keys的设置&lt;/h3&gt;
-
-&lt;p&gt;首先我们需要检查你电脑上现有的ssh key：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ cd ~/.ssh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果显示“No such file or directory”，跳到第四步，否则继续。&lt;/p&gt;
-
-&lt;h3&gt;3、备份和移除原来的ssh key设置：&lt;/h3&gt;
-
-&lt;p&gt;因为已经存在key文件，所以需要备份旧的数据并删除：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ ls
-config id_rsa id_rsa.pub known_hosts
-$ mkdir key_backup
-$ cp id_rsa* key_backup
-$ rm id_rsa*
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;4、生成新的SSH Key：&lt;/h3&gt;
-
-&lt;p&gt;输入下面的代码，就可以生成新的key文件，我们只需要默认设置就好，所以当需要输入文件名的时候，回车就好。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ ssh-keygen -t rsa -C &quot;邮件地址@youremail.com&quot;
-Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&amp;lt;回车就好&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然后系统会要你输入加密串（Passphrase）：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Enter passphrase (empty for no passphrase):&amp;lt;输入加密串&amp;gt;
-Enter same passphrase again:&amp;lt;再次输入加密串&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;最后看到这样的界面，就成功设置ssh key了：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/articles/ubuntu-github-git-jekyll/ubuntu-git.png&quot; alt=&quot;ubuntu-git&quot; /&gt;&lt;/p&gt;
-
-&lt;h3&gt;5、添加SSH Key到GitHub：&lt;/h3&gt;
-
-&lt;p&gt;在本机设置SSH Key之后，需要添加到GitHub上，以完成SSH链接的设置。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ cat ~/.ssh/id_rsa.pub
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然后，复制其中的内容到 Account settings -&gt; SSH Keys，自己起一个能标识的名字，add 就可以了。&lt;/p&gt;
-
-&lt;h3&gt;6、修改信息&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;$ git config --global user.name &quot;malei0311&quot;
-$ git config --global user.email &quot;leiman0311@gmail.com&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;Clone自己的库&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;git clone git@github.com:malei0311/myBlog.git&lt;/li&gt;
-&lt;li&gt;git add .表示添加当前目录下的所有文件&lt;/li&gt;
-&lt;li&gt;git commit -am &quot;message&quot; 表示提交所有更改，这是提交到本地，”message” 换成自己的注释信息&lt;/li&gt;
-&lt;li&gt;git push 把在本地的更改提交到远程服务器&lt;/li&gt;
-&lt;/ul&gt;
-
-</content>
-   </entry>
-   
-   <entry>
-     <title>Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</title>
-     <link href="http://webcraft.malei.tk/articles/sublime_text_2-vs-ubuntu%2BiBus"/>
-     <updated>2012-11-26T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/sublime_text_2-vs-ubuntu+iBus</id>
-     <content type="html">&lt;h2&gt;解决方案&lt;/h2&gt;
-
-&lt;p&gt;先安装能在sublime text 2显示中文的字体，有一个非常好的开源字体，叫做“文泉驿字体”，安装如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install xfonts-wqy
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;官方网站：&lt;a href=&quot;http://wenq.org/index.cgi?%E9%A6%96%E9%A1%B5&quot;&gt;http://wenq.org/index.cgi?%E9%A6%96%E9%A1%B5&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;然后配置sublime text 2的 “Settings-User”，在里面加上：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&quot;font_face&quot;: &quot;WenQuanYi Micro Hei Mono&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;最后安装一个sublime text 2的插件 InputHelper，用于输入中文，安装如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cd ~/.config/sublime-text-2/Packages
-git clone https://github.com/xgenvn/InputHelper.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;使用方法：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;1.保证ibus/scim是在gtk程序下正常运行。&lt;/li&gt;
-&lt;li&gt;2.Ctrl+Shift+Z 调出输入框（虽然不习惯也不爽，但能支持中文输入已经不错啦_^)&lt;/li&gt;
-&lt;li&gt;3.在输入框窗口输入中文，然后按下Enter或者Ctrl+Enter键输入文字到sublime text 2&lt;/li&gt;
-&lt;li&gt;4.点击&gt;右方向键或者End键把光标移动到最后，进行继续输入（回到1）&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;说明：&lt;/p&gt;
-
-&lt;p&gt;该插件只能在linux下使用，对于windows或者mac是不支持的。&lt;/p&gt;
-
-&lt;h2&gt;Reference&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.zhihu.com/question/20163104&quot;&gt;知乎&lt;/a&gt;&lt;/p&gt;
 </content>
    </entry>
    

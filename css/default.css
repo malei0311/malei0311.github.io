@@ -5,13 +5,6 @@
  *@time  Aug 2, 2012
  */
 
-/*+++++++++++++++++声明 Start++++++++++++++
- *|                                       |
- *|  以下Beiyuu css块继承自 beiyuu.com    |
- *|                                       |
- *+++++++++++++++++声明 End++++++++++++++++
- */
-/*===========Beiyuu Start===============*/
 /* 重置浏览器CSS */
 /* 防止用户自定义背景颜色对网页的影响 */
 html{color:#000;background:#f8f8f8;}
@@ -56,7 +49,7 @@ body .hide{display:none;}
 .left{float:left;}
 .right{float:right;}
 .none{display: none;}
-/*===========Beiyuu End===============*/
+
 ::-webkit-scrollbar{
 	width:8px;
 	height:8px;

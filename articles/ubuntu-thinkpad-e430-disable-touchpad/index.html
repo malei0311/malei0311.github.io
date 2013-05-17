@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>PHP随机显示图片（目录不限深度） | WebCraft</title>
+    <title>ubuntu 禁用 thinkpad e430 触摸板 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度 | malei0311's Blog" />
-    <meta name="keywords" content="php,readImage,malei0311" />
+    <meta name="description" content="笔记本有触摸板，使用笔记本上的键盘会很不爽，还是用指点杆 + 键盘比较爽 | malei0311's Blog" />
+    <meta name="keywords" content="thinkpad,e430,ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/php-random-image">PHP随机显示图片（目录不限深度）</a></h1>
+            <h1><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad">ubuntu 禁用 thinkpad e430 触摸板</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2011-12-31">2011-12-31</time>
+                    <time class="date" pubdate="2013-04-13">2013-04-13</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,17 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#php">
-                                    php
+                                <a href="/tags.html#ubuntu">
+                                    ubuntu
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                             
+                            <li>
+                                <a href="/tags.html#thinkpad">
+                                    thinkpad
                                 </a>
                                 <span>
                                     ,
@@ -91,124 +100,61 @@
                 
             </div>
         </div>
-        <p class="description">编写 ReadImage 类来具体实现，随机显示站点图片目录中的 picture ，注：目录不限深度</p>
+        <p class="description">笔记本有触摸板，使用笔记本上的键盘会很不爽，还是用指点杆 + 键盘比较爽</p>
         <div class="article-div-content">
-        	<h2>总述</h2>
+        	<h2>请打开终端</h2>
 
-<p>这是在 jekyll 引擎上的第一篇正式博文，也作为一篇测试文章(测试隔年文章的显示效果)，故意把时间调整到了 2011-12-31。此篇原文，在我搭建在GAE的<a href="http://blog.malei.tk/" title="malei0311的专栏">blog</a>上。那篇只是简单地贴出了代码，这篇稍微加工一下。好，现在先把类的“皮”，写出来。</p>
-
-<pre><code>&lt;?php
-/*
- * @fileoverview handle-file 随机显示目录中的图片
- *
- * @author &lt;a href="mailto:leiman0311@gmail.com"&gt;Lei Ma&lt;/a&gt;
- * @time  Jul 31, 2012
- */
-
-/*
- * @description {class} ReadImage
- */
-class ReadImage{}
-?&gt;
+<pre><code>ctrl + alt + t
 </code></pre>
 
-<h2>ReadImage类的三部曲</h2>
+<h2>输入</h2>
 
-<h3>1.读取文件夹目录</h3>
-
-<p>此方法返回的是一个不规则的多维数组，实现起来很简单，PHP 手册上写的很清楚</p>
-
-<pre><code>/*
- *@description 读取文件夹目录(遍历所有目录)
- *@param {String} dir 要读取的目录
- */
-public function read_folder_directory($dir){ 
-    $listDir = array(); 
-    if($handler = opendir($dir)) { 
-        while (($sub = readdir($handler)) !== FALSE) { 
-            if ($sub != "." &amp;&amp; $sub != "..") {
-                    if(is_file($dir."/".$sub)) {
-                        if(substr($sub,-3)=='gif' || substr($sub,-3)=='jpg' || substr($sub,-3)=='png')
-                        $listDir[] = $sub; 
-                    }
-                    //递归
-                    elseif(is_dir($dir."/".$sub)){ 
-                        $listDir[$sub] = $this-&gt;read_folder_directory($dir."/".$sub); 
-                    } 
-            } 
-        } 
-        closedir($handler); 
-    } 
-    return $listDir; 
-}  
+<pre><code>xinput
 </code></pre>
 
-<h3>2. 遍历多维数组到一维数组中</h3>
+<p>output:</p>
 
-<p>此方法着实令我费了一些周折，需要实现的是：把上个方法返回的不规则数组，注入到一维数组中，细化到 <code>叶子</code> ，把 <code>叶子</code> 到 <code>根</code> 的路径排列好，写入一维数组中。难点是：<code>static</code> 关键字 和 参数控制。</p>
-
-<pre><code>/*
- *@description 遍历多维数组，把值注入到一维数组
- *@param {array} arr 不规则多维数组
- *@param {boolean} flag 标志位
- *@param {string} subFolder 图片根目录下的子目录名
- */ 
-public function arr_foreach ($arr,$flag=false,$subFolder=""){
-    static $newArr=array();
-    if(!is_array($arr)){
-        return $newArr;
-    }
-    if(!$flag){
-        foreach($arr as $key =&gt; $val){
-            if(is_array($val)){
-                $this-&gt;arr_foreach($val,true,$key);
-            }
-            else $newArr[]=$val;
-        }
-    }
-    else{
-        foreach($arr as $key =&gt; $val){
-            if(is_array($val)){
-               $this-&gt;arr_foreach($val,true,$subFolder."/".$key);
-            }
-            else  $newArr[]=$subFolder."/".$val;
-        }
-    }
-
-    return $newArr;
-}
+<pre><code>⎡ Virtual core pointer                        id=2    [master pointer  (3)]
+⎜   ↳ Virtual core XTEST pointer                id=4    [slave  pointer  (2)]
+⎜   ↳ ThinkPad USB Travel Mouse                 id=10   [slave  pointer  (2)]
+⎜   //注意下面一行的id在后面的命令中要用
+⎜   ↳ SynPS/2 Synaptics TouchPad                id=13   [slave  pointer  (2)]
+⎜   ↳ TPPS/2 IBM TrackPoint                     id=15   [slave  pointer  (2)]
+⎣ Virtual core keyboard                       id=3    [master keyboard (2)]
+    ↳ Virtual core XTEST keyboard                 id=5    [slave  keyboard (3)]
+    ↳ Power Button                                id=6    [slave  keyboard (3)]
+    ↳ Video Bus                                   id=7    [slave  keyboard (3)]
+    ↳ Video Bus                                   id=8    [slave  keyboard (3)]
+    ↳ Power Button                                id=9    [slave  keyboard (3)]
+    ↳ Integrated Camera                           id=11   [slave  keyboard (3)]
+    ↳ AT Translated Set 2 keyboard                id=12   [slave  keyboard (3)]
+    ↳ ThinkPad Extra Buttons                      id=14   [slave  keyboard (3)]
 </code></pre>
 
-<h3>3.读取数据</h3>
+<h2>接下来</h2>
 
-<p>终于到了读取数据的方法了，这就比较简单了，随机取那个一维数组中的一项，写出相应格式图片的 <code>header</code> ，直接 <code>readfile()</code>。</p>
-
-<pre><code>/*
- * @description 读取数据
- */
-function read_a_random_file(){
-    $files = $this-&gt;read_folder_directory ($_SERVER["DOCUMENT_ROOT"].'/images/');
-    $dumpFiles=array();
-    $dumpFiles=$this-&gt;arr_foreach ($files);
-    $random=rand(0,count($dumpFiles)-1);
-    if(substr($dumpFiles[$random],-3)=='gif') header("Content-type: image/gif");
-    if(substr($dumpFiles[$random],-3)=='jpg') header("Content-type: image/jpeg");
-    if(substr($dumpFiles[$random],-3)=="png") header("Content-type: image/png");
-    readfile($_SERVER["DOCUMENT_ROOT"].'/images/'.$dumpFiles[$random]);
-}
+<pre><code>xinput list-props 13 | grep Enabled
 </code></pre>
 
-<h2>调用</h2>
+<p>output:</p>
 
-<p>只需把以上三个方法，放入最开始的类 “皮” 中，就可以调用了。</p>
-
-<pre><code>$readImage=new ReadImage;
-$readImage-&gt;read_a_random_file();
+<pre><code>    Device Enabled (137):   1   //说明是开启状态
 </code></pre>
 
-<h2>结语</h2>
+<h2>最后</h2>
 
-<p>对<code>递归</code>稍微有点认识了</p>
+<pre><code>xinput set-prop 13 137 0
+</code></pre>
+
+<p>O了，检查一下：</p>
+
+<pre><code>xinput list-props 13 | grep Enabled
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>    Device Enabled (137):   0
+</code></pre>
 
         </div>
         <div class="share clearfix">
@@ -220,10 +166,8 @@ $readImage-&gt;read_a_random_file();
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/flag" rel="bookmark" title="旧一篇">&laquo;&nbsp;article-flag</a>
+                <a class="left" href="/articles/web-front-end-test" rel="bookmark" title="旧一篇">&laquo;&nbsp;前端测试框架搭建</a>
             
-            
-                <a class="right" href="/articles/chocolate-pure-css" rel="bookmark" title="新一篇">本博客使用PureCss&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -235,23 +179,166 @@ $readImage-&gt;read_a_random_file();
                      
                     
                         
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/drupal-theme" title="Drupal 主题开发">&raquo;&nbsp;Drupal 主题开发</a></li>
+                                    <li><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/mysql-copy-table" title="mysql拷贝表">&raquo;&nbsp;mysql拷贝表</a></li>
+                                    <li><a href="/articles/ubuntu-ati-driver" title="ubuntu 12.10 x64 ATI 5650 安装显卡驱动">&raquo;&nbsp;ubuntu 12.10 x64 ATI 5650 安装显卡驱动</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/php-random-image" title="PHP随机显示图片（目录不限深度）">&raquo;&nbsp;PHP随机显示图片（目录不限深度）</a></li>
+                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
                                 
                             
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -260,8 +347,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
+                        
+                    
                 
                      
+                    
+                        
                     
                         
                     
@@ -270,9 +361,6 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
-                
-                     
-                    
                         
                     
                 
@@ -280,84 +368,12 @@ $readImage-&gt;read_a_random_file();
                     
                         
                     
-                
-                     
-                    
                         
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
+                            
+                                
+                                    <li><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a></li>
+                                
+                            
                         
                     
                 
@@ -366,10 +382,6 @@ $readImage-&gt;read_a_random_file();
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
-                   
-                    <li>
-                        <a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板" rel="bookmark">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a>
-                    </li>                                   
                    
                     <li>
                         <a href="/articles/web-front-end-test" title="前端测试框架搭建" rel="bookmark">&raquo;&nbsp;前端测试框架搭建</a>
@@ -405,6 +417,10 @@ $readImage-&gt;read_a_random_file();
                    
                     <li>
                         <a href="/articles/js-bitwise-operators" title="从 (97 & ~32) == 65 //true 入手js的位操作符" rel="bookmark">&raquo;&nbsp;从 (97 & ~32) == 65 //true 入手js的位操作符</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/nodejs-debug" title="Node.js的调试" rel="bookmark">&raquo;&nbsp;Node.js的调试</a>
                     </li>                                   
                 
                 </ul>
