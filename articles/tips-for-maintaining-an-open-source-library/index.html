@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Demos界面的伪瀑布流布局的实现 | WebCraft</title>
+    <title>维护一个开源项目的小建议 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="很早以前，就想搞一下瀑布流布局，各种原因吧，借这次玩jekyll构建本博客的机会，稍微玩一下瀑布流。 | malei0311's Blog" />
-    <meta name="keywords" content="demos,waterfall,js,malei0311" />
+    <meta name="description" content="just translate | malei0311's Blog" />
+    <meta name="keywords" content="thinkpad,e430,ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/water-fall-layout">Demos界面的伪瀑布流布局的实现</a></h1>
+            <h1><a href="/articles/tips-for-maintaining-an-open-source-library">维护一个开源项目的小建议</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2012-08-07">2012-08-07</time>
+                    <time class="date" pubdate="2013-05-14">2013-05-14</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#js">
-                                    js
+                                <a href="/tags.html#ubuntu">
+                                    ubuntu
                                 </a>
                                 <span>
                                     ,
@@ -86,17 +86,8 @@
                             </li>
                              
                             <li>
-                                <a href="/tags.html#waterFall">
-                                    waterFall
-                                </a>
-                                <span>
-                                    ,
-                                </span>
-                            </li>
-                             
-                            <li>
-                                <a href="/tags.html#博客志">
-                                    博客志
+                                <a href="/tags.html#thinkpad">
+                                    thinkpad
                                 </a>
                                 <span>
                                     ,
@@ -109,132 +100,43 @@
                 
             </div>
         </div>
-        <p class="description">很早以前，就想搞一下瀑布流布局，各种原因吧，借这次玩jekyll构建本博客的机会，稍微玩一下瀑布流。</p>
+        <p class="description">just translate</p>
         <div class="article-div-content">
-        	<h2>为什么叫伪瀑布流</h2>
+        	<p>大约在五个月前我们团队通过Hacker News发布了我们自己的JavaScript库 <a href="https://github.com/segmentio/analytics.js">Analytics.js</a>，在刚发布的几个小时内一只排名第一的好成绩，并且在一天里它的评分从最初的20星突破了1000星。从这件事上我们学到了非常多的管理开源项目的技巧。所以我想把其中一些有用的技巧分享给大家。</p>
 
-<p>因为并没有实现动态loading...，也没有用脚本去嗅探浏览器的宽度，以确定具体有几条瀑布。这是由博客的具体情况决定的，因为所有的demo都是慢慢生成的，所以这个Demos界面主要是做了个collection。写的比较死，主要针对本博客所写。</p>
+<p>起初，我们对管理一个开源项目一无所知。甚至我认为我们在pull之前没有任何merge别人代码的资格。所以我们不得不快速学习。</p>
 
-<h2>liquid脚本</h2>
+<p>从最初我们发布Analytics.js超过2000个星至今，非常多的人在开源社区做出了惊人的贡献。在此期间我们学会了很多关于如何保持高质量的pull以及如何为贡献者简化开发流程的技巧。</p>
 
-<h3>遍历所有demo</h3>
+<h2>保持编码风格的统一</h2>
 
-<p>给每篇文章一个特定的<code>ID</code>，我这里是从<code>1</code>开始，即<code>demo-index-1</code>，因为我在<code>demo-index-0</code>中存放了所有demo数量的概览，这个总数将由<code>js</code>获取，留待后用。</p>
+<p>新的开发者将会从现有的代码库中学习如何为库增添新的功能，而这才是他们应该做的事情。所有的开发者都想按照代码库的规范去增加新的功能而不是他们自己的规范。你的主要工作就是使这种规范尽可能的简单。新的开发者将会从现有的代码库中学习如何为库增添新的功能，而这才是他们应该做的事情。所有的开发者都想按照代码库的规范去增加新的功能而不是他们自己的规范。作为一个开源项目的维护着主要工作就是使以上情况尽可能的简单。</p>
 
-<pre><code>{% assign index = 0 %}
-{% for post in site.categories.demos %}
-{% capture index %}{{ index | plus:1 }}{% endcapture %}
-{% capture demo_index %}demo-index-{{ index }}{% endcapture %}
-    &lt;article id="{{ demo_index }}"&gt;
-            &lt;div class="demo-title"&gt;
-                &lt;h3&gt;&lt;a href="{{ post.url }}"&gt;{{ post.title }}&lt;/a&gt;&lt;/h3&gt;
-                &lt;p&gt;{{ post.description }}&lt;/p&gt;
-            &lt;/div&gt;
-            &lt;div class="demo-time"&gt;
-                &lt;p&gt;&lt;span&gt;&amp;#8227;&lt;/span&gt;&lt;time pubdate="{{ post.date | date: '%b %d, %Y' }}"&gt;{{ post.date | date: '%b %d, %Y' }}&lt;/time&gt;&lt;/p&gt;
-            &lt;/div&gt;
-    &lt;/article&gt;
-{% endfor %}
-</code></pre>
+<p>当你的分支代码和核心代码表意含糊不清时无数的麻烦就来了，如果你在两个不同的地方用两种不同的方式做同一件事情，开发者怎么知道哪一种方式才是推荐的呢？答案是：他们不知道。</p>
 
-<h3>demo数量概览</h3>
+<p>更糟糕的是由于你的编码风格不统一，开发者无从决定，那么也会编码不统一（按自己的偏好来）。</p>
 
-<pre><code>&lt;article id="demo-index-0"&gt;
-    {% capture list_size %}{{ site.categories.demos | size }}{% endcapture %}
-    &lt;h3&gt;
-        All demos:
-        (&lt;span&gt;
-            {{list_size}}
-        &lt;/span&gt;)
-    &lt;/h3&gt;         
-&lt;/article&gt;
-</code></pre>
+<p>解决这个问题你需要花费很多的时间规范代码风格。作为一个准则，你不应该尝试在一个简单的开源库中用两种不同的方式。如果你一定要改变风格，那一定要迅速的在全球都改变。否则新人将无法区分你之前代码和现有代码的约定。</p>
 
-<h3>给出瀑布流容器</h3>
+<p>我们一开始用一种很差劲的方式处理这个问题，所有的代码在一个文件里面，函数没有一个良好的结构组织。（并且如果你检查我们的提交，就必须先理清代码）我们在设计代码规范统一上没有花时间，所以库里的代码编写风格混杂不堪。</p>
 
-<pre><code>&lt;div id="waterFallContainer"&gt;&lt;/div&gt;
-</code></pre>
+<p>当pull代码的时候我们每个人都与别人的代码发生冲突，因为每个人都修改了同一个文件，并且在他们想要介入新函数的地方加入自己的功能函数</p>
 
-<h2>生成瀑布</h2>
+<h2>使用正确的方法，简单的方法</h2>
 
-<p>主要就是用<code>js</code>操作<code>DOM</code>树，把文档呈现成自己想要的样子。</p>
+<p>最初我们构建代码的方式，导致在合并pull requests的时候遇到了许多问题：换句话说，刚开始我们的代码就没有结构。我们做出的改善代码结构的比较大的改变之一是使用 <a href="https://github.com/component/component">Component</a>。</p>
 
-<h3>首先声明一个静态类</h3>
+<p><img src="https://segment.io/blog/posts/2013-05-09-tips-for-maintaining-an-open-source-library/component.png" alt="Component" /></p>
 
-<p>这里声明了如下属性、方法。具体分了5条瀑布，下面分别介绍每个方法的作用。</p>
+<p>我们喜欢 Component 因为它消除了编码风格不统一的问题，减少了代码库的规模。Component 使用 <a href="http://zh.wikipedia.org/wiki/CommonJS">CommonJS</a>，所以我们只需要在我们需要的地方，引入我们需要的模块即可。所有的事情都简单明了，这就意味着我们的代码对于新人来说更容易跟进。这是代码库维护者的梦想。</p>
 
-<pre><code>var waterFall = {
-    container: $("#waterFallContainer"),
-    columnNumber: 5,
-    columnWidth: 184,
-    demoIndex: 0,
-    loadFinish: false,
-    demosNum: parseInt($('#demo-index-0 span').text())+1,
-    create: function(){  },
-    loadAllDemos: function() {  },
-    loadSingleDemo: function(column) {  },
-    init:function(){  }
-};
-</code></pre>
+<p>在进行切换期间，我们写了一堆自己的组件来替换已经附在全局对象 analytics 上的通用函数。现在，组件可以在库的任何地方很简单的包含进来和使用，pull requesters 只是默认使用他们。</p>
 
-<h3>生成空瀑布</h3>
+<p>自从我们发布了正确的方法，并且使他更加清晰，pull request 的代码质量获得了显著提升。</p>
 
-<pre><code>create: function(){
-    var start=0, spans = '';
-    for (start; start &lt; this.columnNumber; start++) {
-        spans = spans + '&lt;span id="waterFallColumn-'+ start +'" class="waterFallColumns" style="width:'+ this.columnWidth +'px;"&gt;'+ '&lt;/span&gt; ';
-    }
-    this.container.html(spans);
-    return this;
-}
-</code></pre>
+<p>为了尽可能保持统一编码风格的延续，当有新的代码提交上来的时候，你必须积极主动。不要害怕给 pull request 的代码添加注释，即使看起来只是一处很小的更正，也不要害怕拒绝不必要的可能会搞乱你的 API 的 requests。</p>
 
-<h3>填入内容</h3>
-
-<p>把所有的demo剪切到瀑布流容器中。首先，在剪切一个节点前，先判断是否所有demo都已加载完毕。</p>
-
-<pre><code>loadSingleDemo: function(column) {
-
-    if (this.demoIndex &gt; this.demosNum) {
-        this.loadFinish = true;
-    }
-    else{
-        column.append($("#demo-index-"+this.demoIndex));
-        this.demoIndex += 1;
-    }
-    return this;
-}
-</code></pre>
-
-<p>其次，有了上述方法，就可以放心的加载了</p>
-
-<pre><code>loadAllDemos: function() {
-    var index=0;
-    for(index;index&lt;this.demosNum;index +=5){
-        var start = 0;
-        for (start; start &lt; this.columnNumber; start++) {
-            var eleColumn = $("#waterFallColumn-" + start);
-            if (eleColumn &amp;&amp; !this.loadFinish) {
-                this.loadSingleDemo(eleColumn);
-            }           
-        }
-    }
-    return this;
-}
-</code></pre>
-
-<h3>初始化</h3>
-
-<p>每个方法都<code>return this;</code>,这样就可以像下面连着写了。</p>
-
-<pre><code>init:function(){
-    this.create().loadAllDemos();
-}
-</code></pre>
-
-<h2>FAQ</h2>
-
-<p>这里我遇到了一个问题，纠结了半天也没解决。本来想着 <code>span</code>的<code>display:inline-block</code> 就可以能解决问题了，诡异的是<code>span</code>之间总有4像素的间隔（ps:<code>span</code>的<code>margin</code>为<code>0</code>），怎么也找不出是哪的猫腻。于是乎，<code>display:block;float:left;</code>。纠结啊。</p>
+<p>必须牢记的是，同样要严格要求自己的代码。如果在添加新特性时，自己开小差，懒得统一编码风格，为什么项目的贡献者不可以呢？总之。你的代码越干净，对于新手来说就有越多的例子学习。</p>
 
         </div>
         <div class="share clearfix">
@@ -246,10 +148,8 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/tags-js-liquid" rel="bookmark" title="旧一篇">&laquo;&nbsp;Tags界面构建之123</a>
+                <a class="left" href="/articles/ubuntu-thinkpad-e430-disable-touchpad" rel="bookmark" title="旧一篇">&laquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板...</a>
             
-            
-                <a class="right" href="/articles/articlesLayout-directory" rel="bookmark" title="新一篇">articlesLayout构建之右侧目录索引&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -264,6 +164,11 @@
                     
                         
                     
+                
+                     
+                    
+                        
+                    
                         
                     
                 
@@ -273,273 +178,192 @@
                     
                         
                     
+                
+                     
+                    
+                        
+                    
                         
                     
                 
                      
                     
                         
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/tips-for-maintaining-an-open-source-library" title="维护一个开源项目的小建议">&raquo;&nbsp;维护一个开源项目的小建议</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-ati-driver" title="ubuntu 12.10 x64 ATI 5650 安装显卡驱动">&raquo;&nbsp;ubuntu 12.10 x64 ATI 5650 安装显卡驱动</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
+                                
+                            
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                        
+                    
+                
+                     
                     
                         
                     
                         
                             
                                 
-                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
+                                    <li><a href="/articles/tips-for-maintaining-an-open-source-library" title="维护一个开源项目的小建议">&raquo;&nbsp;维护一个开源项目的小建议</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                    <li><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a></li>
                                 
                             
-                                
-                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/chocolate-pure-css" title="本博客使用PureCss">&raquo;&nbsp;本博客使用PureCss</a></li>
-                                
-                            
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                            
-                                
-                                    <li><a href="/articles/web-front-end-test" title="前端测试框架搭建">&raquo;&nbsp;前端测试框架搭建</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/js-bitwise-operators" title="从 (97 & ~32) == 65 //true 入手js的位操作符">&raquo;&nbsp;从 (97 & ~32) == 65 //true 入手js的位操作符</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">&raquo;&nbsp;JavaScript如何判断变量类型</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/baidu-examination" title="XX-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;XX-web前端开发工程师-笔试+面试-经历</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/js-insertAfter" title="insertAfter()?">&raquo;&nbsp;insertAfter()?</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/java-vs-javascript" title="Java vs JavaScript">&raquo;&nbsp;Java vs JavaScript</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
-                                
-                            
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                            
-                                
-                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
-                                
-                            
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
                         
                     
                 
@@ -548,10 +372,6 @@
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
-                   
-                    <li>
-                        <a href="/articles/tips-for-maintaining-an-open-source-library" title="维护一个开源项目的小建议" rel="bookmark">&raquo;&nbsp;维护一个开源项目的小建议</a>
-                    </li>                                   
                    
                     <li>
                         <a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板" rel="bookmark">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a>
@@ -587,6 +407,10 @@
                    
                     <li>
                         <a href="/articles/linux-study" title="菜鸟学习linux" rel="bookmark">&raquo;&nbsp;菜鸟学习linux</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/js-bitwise-operators" title="从 (97 & ~32) == 65 //true 入手js的位操作符" rel="bookmark">&raquo;&nbsp;从 (97 & ~32) == 65 //true 入手js的位操作符</a>
                     </li>                                   
                 
                 </ul>
