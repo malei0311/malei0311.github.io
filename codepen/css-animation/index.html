@@ -1,389 +1,1820 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+
 <head>
+
   <meta charset="UTF-8">
-  <title>css</title>
-  <style>
-    html, body {
-      overflow: hidden;
+
+  <title>css-animation-series-multi - malei0311</title>
+
+  <style>html,
+body {
+  margin: 0;
+}
+div[class^=demo] {
+  float: left;
+  width: 50%;
+  height: 600px;
+  position: relative;
+  background-image: -webkit-radial-gradient(center center, circle cover, #95a5a6 0%, #34495e 100%);
+  background-image: -moz-radial-gradient(center center, circle cover, #95a5a6 0%, #34495e 100%);
+  box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.2) inset;
+}
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  animation-name: rotate;
+  animation-direction: reverse;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+}
+i {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  background: #fff;
+  opacity: 1;
+  border: 2px solid #ECF0F1;
+  border-radius: 10px;
+  animation-name: spin;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+}
+i:nth-child(2n) {
+  background: #E74C3C;
+}
+i:nth-child(2n+1) {
+  background: #E67E22;
+}
+i:nth-child(3n) {
+  background: #2ECC71;
+}
+i:nth-child(3n+1) {
+  background: #9B59B6;
+}
+.demo1 i:nth-child(1) {
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  margin-left: -7px;
+  z-index: 19;
+  transform: rotate(18deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.1s;
+}
+.demo1 i:nth-child(2) {
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  margin-left: -14px;
+  z-index: 18;
+  transform: rotate(36deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.2s;
+}
+.demo1 i:nth-child(3) {
+  width: 42px;
+  height: 42px;
+  margin-top: -21px;
+  margin-left: -21px;
+  z-index: 17;
+  transform: rotate(54deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.30000000000000004s;
+}
+.demo1 i:nth-child(4) {
+  width: 56px;
+  height: 56px;
+  margin-top: -28px;
+  margin-left: -28px;
+  z-index: 16;
+  transform: rotate(72deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.4s;
+}
+.demo1 i:nth-child(5) {
+  width: 70px;
+  height: 70px;
+  margin-top: -35px;
+  margin-left: -35px;
+  z-index: 15;
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.5s;
+}
+.demo1 i:nth-child(6) {
+  width: 84px;
+  height: 84px;
+  margin-top: -42px;
+  margin-left: -42px;
+  z-index: 14;
+  transform: rotate(108deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.6000000000000001s;
+}
+.demo1 i:nth-child(7) {
+  width: 98px;
+  height: 98px;
+  margin-top: -49px;
+  margin-left: -49px;
+  z-index: 13;
+  transform: rotate(125.99999999999999deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.7000000000000001s;
+}
+.demo1 i:nth-child(8) {
+  width: 112px;
+  height: 112px;
+  margin-top: -56px;
+  margin-left: -56px;
+  z-index: 12;
+  transform: rotate(144deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.8s;
+}
+.demo1 i:nth-child(9) {
+  width: 126px;
+  height: 126px;
+  margin-top: -63px;
+  margin-left: -63px;
+  z-index: 11;
+  transform: rotate(162deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.9s;
+}
+.demo1 i:nth-child(10) {
+  width: 140px;
+  height: 140px;
+  margin-top: -70px;
+  margin-left: -70px;
+  z-index: 10;
+  transform: rotate(180deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1s;
+}
+.demo1 i:nth-child(11) {
+  width: 154px;
+  height: 154px;
+  margin-top: -77px;
+  margin-left: -77px;
+  z-index: 9;
+  transform: rotate(198.00000000000003deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.1s;
+}
+.demo1 i:nth-child(12) {
+  width: 168px;
+  height: 168px;
+  margin-top: -84px;
+  margin-left: -84px;
+  z-index: 8;
+  transform: rotate(216deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.2000000000000002s;
+}
+.demo1 i:nth-child(13) {
+  width: 182px;
+  height: 182px;
+  margin-top: -91px;
+  margin-left: -91px;
+  z-index: 7;
+  transform: rotate(234deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.3s;
+}
+.demo1 i:nth-child(14) {
+  width: 196px;
+  height: 196px;
+  margin-top: -98px;
+  margin-left: -98px;
+  z-index: 6;
+  transform: rotate(251.99999999999997deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.4000000000000001s;
+}
+.demo1 i:nth-child(15) {
+  width: 210px;
+  height: 210px;
+  margin-top: -105px;
+  margin-left: -105px;
+  z-index: 5;
+  transform: rotate(270deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.5s;
+}
+.demo1 i:nth-child(16) {
+  width: 224px;
+  height: 224px;
+  margin-top: -112px;
+  margin-left: -112px;
+  z-index: 4;
+  transform: rotate(288deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.6s;
+}
+.demo1 i:nth-child(17) {
+  width: 238px;
+  height: 238px;
+  margin-top: -119px;
+  margin-left: -119px;
+  z-index: 3;
+  transform: rotate(306deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.7000000000000002s;
+}
+.demo1 i:nth-child(18) {
+  width: 252px;
+  height: 252px;
+  margin-top: -126px;
+  margin-left: -126px;
+  z-index: 2;
+  transform: rotate(324deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.8s;
+}
+.demo1 i:nth-child(19) {
+  width: 266px;
+  height: 266px;
+  margin-top: -133px;
+  margin-left: -133px;
+  z-index: 1;
+  transform: rotate(342deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.9000000000000001s;
+}
+.demo1 i:nth-child(20) {
+  width: 280px;
+  height: 280px;
+  margin-top: -140px;
+  margin-left: -140px;
+  z-index: 0;
+  transform: rotate(360deg);
+  transform-origin: 50% 50%;
+  animation-delay: 2s;
+}
+.demo2 i:nth-child(1) {
+  width: 14px;
+  margin-top: -7px;
+  margin-left: -7px;
+  z-index: 19;
+  transform: rotate(18deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.1s;
+}
+.demo2 i:nth-child(2) {
+  width: 28px;
+  margin-top: -14px;
+  margin-left: -14px;
+  z-index: 18;
+  transform: rotate(36deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.2s;
+}
+.demo2 i:nth-child(3) {
+  width: 42px;
+  margin-top: -21px;
+  margin-left: -21px;
+  z-index: 17;
+  transform: rotate(54deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.30000000000000004s;
+}
+.demo2 i:nth-child(4) {
+  width: 56px;
+  margin-top: -28px;
+  margin-left: -28px;
+  z-index: 16;
+  transform: rotate(72deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.4s;
+}
+.demo2 i:nth-child(5) {
+  width: 70px;
+  margin-top: -35px;
+  margin-left: -35px;
+  z-index: 15;
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.5s;
+}
+.demo2 i:nth-child(6) {
+  width: 84px;
+  margin-top: -42px;
+  margin-left: -42px;
+  z-index: 14;
+  transform: rotate(108deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.6000000000000001s;
+}
+.demo2 i:nth-child(7) {
+  width: 98px;
+  margin-top: -49px;
+  margin-left: -49px;
+  z-index: 13;
+  transform: rotate(125.99999999999999deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.7000000000000001s;
+}
+.demo2 i:nth-child(8) {
+  width: 112px;
+  margin-top: -56px;
+  margin-left: -56px;
+  z-index: 12;
+  transform: rotate(144deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.8s;
+}
+.demo2 i:nth-child(9) {
+  width: 126px;
+  margin-top: -63px;
+  margin-left: -63px;
+  z-index: 11;
+  transform: rotate(162deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.9s;
+}
+.demo2 i:nth-child(10) {
+  width: 140px;
+  margin-top: -70px;
+  margin-left: -70px;
+  z-index: 10;
+  transform: rotate(180deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1s;
+}
+.demo2 i:nth-child(11) {
+  width: 154px;
+  margin-top: -77px;
+  margin-left: -77px;
+  z-index: 9;
+  transform: rotate(198.00000000000003deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.1s;
+}
+.demo2 i:nth-child(12) {
+  width: 168px;
+  margin-top: -84px;
+  margin-left: -84px;
+  z-index: 8;
+  transform: rotate(216deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.2000000000000002s;
+}
+.demo2 i:nth-child(13) {
+  width: 182px;
+  margin-top: -91px;
+  margin-left: -91px;
+  z-index: 7;
+  transform: rotate(234deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.3s;
+}
+.demo2 i:nth-child(14) {
+  width: 196px;
+  margin-top: -98px;
+  margin-left: -98px;
+  z-index: 6;
+  transform: rotate(251.99999999999997deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.4000000000000001s;
+}
+.demo2 i:nth-child(15) {
+  width: 210px;
+  margin-top: -105px;
+  margin-left: -105px;
+  z-index: 5;
+  transform: rotate(270deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.5s;
+}
+.demo2 i:nth-child(16) {
+  width: 224px;
+  margin-top: -112px;
+  margin-left: -112px;
+  z-index: 4;
+  transform: rotate(288deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.6s;
+}
+.demo2 i:nth-child(17) {
+  width: 238px;
+  margin-top: -119px;
+  margin-left: -119px;
+  z-index: 3;
+  transform: rotate(306deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.7000000000000002s;
+}
+.demo2 i:nth-child(18) {
+  width: 252px;
+  margin-top: -126px;
+  margin-left: -126px;
+  z-index: 2;
+  transform: rotate(324deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.8s;
+}
+.demo2 i:nth-child(19) {
+  width: 266px;
+  margin-top: -133px;
+  margin-left: -133px;
+  z-index: 1;
+  transform: rotate(342deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.9000000000000001s;
+}
+.demo2 i:nth-child(20) {
+  width: 280px;
+  margin-top: -140px;
+  margin-left: -140px;
+  z-index: 0;
+  transform: rotate(360deg);
+  transform-origin: 50% 50%;
+  animation-delay: 2s;
+}
+.demo3 i:nth-child(1) {
+  margin-top: -7px;
+  margin-left: -7px;
+  z-index: 19;
+  transform: rotate(18deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.1s;
+}
+.demo3 i:nth-child(2) {
+  margin-top: -14px;
+  margin-left: -14px;
+  z-index: 18;
+  transform: rotate(36deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.2s;
+}
+.demo3 i:nth-child(3) {
+  margin-top: -21px;
+  margin-left: -21px;
+  z-index: 17;
+  transform: rotate(54deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.30000000000000004s;
+}
+.demo3 i:nth-child(4) {
+  margin-top: -28px;
+  margin-left: -28px;
+  z-index: 16;
+  transform: rotate(72deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.4s;
+}
+.demo3 i:nth-child(5) {
+  margin-top: -35px;
+  margin-left: -35px;
+  z-index: 15;
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.5s;
+}
+.demo3 i:nth-child(6) {
+  margin-top: -42px;
+  margin-left: -42px;
+  z-index: 14;
+  transform: rotate(108deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.6000000000000001s;
+}
+.demo3 i:nth-child(7) {
+  margin-top: -49px;
+  margin-left: -49px;
+  z-index: 13;
+  transform: rotate(125.99999999999999deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.7000000000000001s;
+}
+.demo3 i:nth-child(8) {
+  margin-top: -56px;
+  margin-left: -56px;
+  z-index: 12;
+  transform: rotate(144deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.8s;
+}
+.demo3 i:nth-child(9) {
+  margin-top: -63px;
+  margin-left: -63px;
+  z-index: 11;
+  transform: rotate(162deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.9s;
+}
+.demo3 i:nth-child(10) {
+  margin-top: -70px;
+  margin-left: -70px;
+  z-index: 10;
+  transform: rotate(180deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1s;
+}
+.demo3 i:nth-child(11) {
+  margin-top: -77px;
+  margin-left: -77px;
+  z-index: 9;
+  transform: rotate(198.00000000000003deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.1s;
+}
+.demo3 i:nth-child(12) {
+  margin-top: -84px;
+  margin-left: -84px;
+  z-index: 8;
+  transform: rotate(216deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.2000000000000002s;
+}
+.demo3 i:nth-child(13) {
+  margin-top: -91px;
+  margin-left: -91px;
+  z-index: 7;
+  transform: rotate(234deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.3s;
+}
+.demo3 i:nth-child(14) {
+  margin-top: -98px;
+  margin-left: -98px;
+  z-index: 6;
+  transform: rotate(251.99999999999997deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.4000000000000001s;
+}
+.demo3 i:nth-child(15) {
+  margin-top: -105px;
+  margin-left: -105px;
+  z-index: 5;
+  transform: rotate(270deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.5s;
+}
+.demo3 i:nth-child(16) {
+  margin-top: -112px;
+  margin-left: -112px;
+  z-index: 4;
+  transform: rotate(288deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.6s;
+}
+.demo3 i:nth-child(17) {
+  margin-top: -119px;
+  margin-left: -119px;
+  z-index: 3;
+  transform: rotate(306deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.7000000000000002s;
+}
+.demo3 i:nth-child(18) {
+  margin-top: -126px;
+  margin-left: -126px;
+  z-index: 2;
+  transform: rotate(324deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.8s;
+}
+.demo3 i:nth-child(19) {
+  margin-top: -133px;
+  margin-left: -133px;
+  z-index: 1;
+  transform: rotate(342deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.9000000000000001s;
+}
+.demo3 i:nth-child(20) {
+  margin-top: -140px;
+  margin-left: -140px;
+  z-index: 0;
+  transform: rotate(360deg);
+  transform-origin: 50% 50%;
+  animation-delay: 2s;
+}
+.demo4 i:nth-child(1) {
+  width: 14px;
+  margin-left: -7px;
+  transform: rotate(18deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(2) {
+  width: 28px;
+  margin-left: -14px;
+  transform: rotate(36deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(3) {
+  width: 42px;
+  margin-left: -21px;
+  transform: rotate(54deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(4) {
+  width: 56px;
+  margin-left: -28px;
+  transform: rotate(72deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(5) {
+  width: 70px;
+  margin-left: -35px;
+  transform: rotate(90deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(6) {
+  width: 84px;
+  margin-left: -42px;
+  transform: rotate(108deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(7) {
+  width: 98px;
+  margin-left: -49px;
+  transform: rotate(125.99999999999999deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(8) {
+  width: 112px;
+  margin-left: -56px;
+  transform: rotate(144deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(9) {
+  width: 126px;
+  margin-left: -63px;
+  transform: rotate(162deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(10) {
+  width: 140px;
+  margin-left: -70px;
+  transform: rotate(180deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(11) {
+  width: 154px;
+  margin-left: -77px;
+  transform: rotate(198.00000000000003deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(12) {
+  width: 168px;
+  margin-left: -84px;
+  transform: rotate(216deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(13) {
+  width: 182px;
+  margin-left: -91px;
+  transform: rotate(234deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(14) {
+  width: 196px;
+  margin-left: -98px;
+  transform: rotate(251.99999999999997deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(15) {
+  width: 210px;
+  margin-left: -105px;
+  transform: rotate(270deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(16) {
+  width: 224px;
+  margin-left: -112px;
+  transform: rotate(288deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(17) {
+  width: 238px;
+  margin-left: -119px;
+  transform: rotate(306deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(18) {
+  width: 252px;
+  margin-left: -126px;
+  transform: rotate(324deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(19) {
+  width: 266px;
+  margin-left: -133px;
+  transform: rotate(342deg);
+  transform-origin: 30% 50%;
+}
+.demo4 i:nth-child(20) {
+  width: 280px;
+  margin-left: -140px;
+  transform: rotate(360deg);
+  transform-origin: 30% 50%;
+}
+.demo5 i:nth-child(1) {
+  width: 14px;
+  height: 14px;
+  z-index: 19;
+  transform: rotate(18deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.1s;
+}
+.demo5 i:nth-child(2) {
+  width: 28px;
+  height: 28px;
+  z-index: 18;
+  transform: rotate(36deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.2s;
+}
+.demo5 i:nth-child(3) {
+  width: 42px;
+  height: 42px;
+  z-index: 17;
+  transform: rotate(54deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.30000000000000004s;
+}
+.demo5 i:nth-child(4) {
+  width: 56px;
+  height: 56px;
+  z-index: 16;
+  transform: rotate(72deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.4s;
+}
+.demo5 i:nth-child(5) {
+  width: 70px;
+  height: 70px;
+  z-index: 15;
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.5s;
+}
+.demo5 i:nth-child(6) {
+  width: 84px;
+  height: 84px;
+  z-index: 14;
+  transform: rotate(108deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.6000000000000001s;
+}
+.demo5 i:nth-child(7) {
+  width: 98px;
+  height: 98px;
+  z-index: 13;
+  transform: rotate(125.99999999999999deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.7000000000000001s;
+}
+.demo5 i:nth-child(8) {
+  width: 112px;
+  height: 112px;
+  z-index: 12;
+  transform: rotate(144deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.8s;
+}
+.demo5 i:nth-child(9) {
+  width: 126px;
+  height: 126px;
+  z-index: 11;
+  transform: rotate(162deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.9s;
+}
+.demo5 i:nth-child(10) {
+  width: 140px;
+  height: 140px;
+  z-index: 10;
+  transform: rotate(180deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1s;
+}
+.demo5 i:nth-child(11) {
+  width: 154px;
+  height: 154px;
+  z-index: 9;
+  transform: rotate(198.00000000000003deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.1s;
+}
+.demo5 i:nth-child(12) {
+  width: 168px;
+  height: 168px;
+  z-index: 8;
+  transform: rotate(216deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.2000000000000002s;
+}
+.demo5 i:nth-child(13) {
+  width: 182px;
+  height: 182px;
+  z-index: 7;
+  transform: rotate(234deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.3s;
+}
+.demo5 i:nth-child(14) {
+  width: 196px;
+  height: 196px;
+  z-index: 6;
+  transform: rotate(251.99999999999997deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.4000000000000001s;
+}
+.demo5 i:nth-child(15) {
+  width: 210px;
+  height: 210px;
+  z-index: 5;
+  transform: rotate(270deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.5s;
+}
+.demo5 i:nth-child(16) {
+  width: 224px;
+  height: 224px;
+  z-index: 4;
+  transform: rotate(288deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.6s;
+}
+.demo5 i:nth-child(17) {
+  width: 238px;
+  height: 238px;
+  z-index: 3;
+  transform: rotate(306deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.7000000000000002s;
+}
+.demo5 i:nth-child(18) {
+  width: 252px;
+  height: 252px;
+  z-index: 2;
+  transform: rotate(324deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.8s;
+}
+.demo5 i:nth-child(19) {
+  width: 266px;
+  height: 266px;
+  z-index: 1;
+  transform: rotate(342deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.9000000000000001s;
+}
+.demo5 i:nth-child(20) {
+  width: 280px;
+  height: 280px;
+  z-index: 0;
+  transform: rotate(360deg);
+  transform-origin: 50% 50%;
+  animation-delay: 2s;
+}
+.demo6 i:nth-child(1) {
+  width: 14px;
+  margin-top: -7px;
+  z-index: 19;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(2) {
+  width: 28px;
+  margin-top: -14px;
+  z-index: 18;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(3) {
+  width: 42px;
+  margin-top: -21px;
+  z-index: 17;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(4) {
+  width: 56px;
+  margin-top: -28px;
+  z-index: 16;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(5) {
+  width: 70px;
+  margin-top: -35px;
+  z-index: 15;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(6) {
+  width: 84px;
+  margin-top: -42px;
+  z-index: 14;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(7) {
+  width: 98px;
+  margin-top: -49px;
+  z-index: 13;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(8) {
+  width: 112px;
+  margin-top: -56px;
+  z-index: 12;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(9) {
+  width: 126px;
+  margin-top: -63px;
+  z-index: 11;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(10) {
+  width: 140px;
+  margin-top: -70px;
+  z-index: 10;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(11) {
+  width: 154px;
+  margin-top: -77px;
+  z-index: 9;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(12) {
+  width: 168px;
+  margin-top: -84px;
+  z-index: 8;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(13) {
+  width: 182px;
+  margin-top: -91px;
+  z-index: 7;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(14) {
+  width: 196px;
+  margin-top: -98px;
+  z-index: 6;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(15) {
+  width: 210px;
+  margin-top: -105px;
+  z-index: 5;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(16) {
+  width: 224px;
+  margin-top: -112px;
+  z-index: 4;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(17) {
+  width: 238px;
+  margin-top: -119px;
+  z-index: 3;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(18) {
+  width: 252px;
+  margin-top: -126px;
+  z-index: 2;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(19) {
+  width: 266px;
+  margin-top: -133px;
+  z-index: 1;
+  transform-origin: 0% 10%;
+}
+.demo6 i:nth-child(20) {
+  width: 280px;
+  margin-top: -140px;
+  z-index: 0;
+  transform-origin: 0% 10%;
+}
+.demo7 i:nth-child(1) {
+  width: 14px;
+  margin-left: -7px;
+  transform: rotate(18deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.1s;
+}
+.demo7 i:nth-child(2) {
+  width: 28px;
+  margin-left: -14px;
+  transform: rotate(36deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.2s;
+}
+.demo7 i:nth-child(3) {
+  width: 42px;
+  margin-left: -21px;
+  transform: rotate(54deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.30000000000000004s;
+}
+.demo7 i:nth-child(4) {
+  width: 56px;
+  margin-left: -28px;
+  transform: rotate(72deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.4s;
+}
+.demo7 i:nth-child(5) {
+  width: 70px;
+  margin-left: -35px;
+  transform: rotate(90deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.5s;
+}
+.demo7 i:nth-child(6) {
+  width: 84px;
+  margin-left: -42px;
+  transform: rotate(108deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.6000000000000001s;
+}
+.demo7 i:nth-child(7) {
+  width: 98px;
+  margin-left: -49px;
+  transform: rotate(125.99999999999999deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.7000000000000001s;
+}
+.demo7 i:nth-child(8) {
+  width: 112px;
+  margin-left: -56px;
+  transform: rotate(144deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.8s;
+}
+.demo7 i:nth-child(9) {
+  width: 126px;
+  margin-left: -63px;
+  transform: rotate(162deg);
+  transform-origin: 30% 50%;
+  animation-delay: 0.9s;
+}
+.demo7 i:nth-child(10) {
+  width: 140px;
+  margin-left: -70px;
+  transform: rotate(180deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1s;
+}
+.demo7 i:nth-child(11) {
+  width: 154px;
+  margin-left: -77px;
+  transform: rotate(198.00000000000003deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.1s;
+}
+.demo7 i:nth-child(12) {
+  width: 168px;
+  margin-left: -84px;
+  transform: rotate(216deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.2000000000000002s;
+}
+.demo7 i:nth-child(13) {
+  width: 182px;
+  margin-left: -91px;
+  transform: rotate(234deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.3s;
+}
+.demo7 i:nth-child(14) {
+  width: 196px;
+  margin-left: -98px;
+  transform: rotate(251.99999999999997deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.4000000000000001s;
+}
+.demo7 i:nth-child(15) {
+  width: 210px;
+  margin-left: -105px;
+  transform: rotate(270deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.5s;
+}
+.demo7 i:nth-child(16) {
+  width: 224px;
+  margin-left: -112px;
+  transform: rotate(288deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.6s;
+}
+.demo7 i:nth-child(17) {
+  width: 238px;
+  margin-left: -119px;
+  transform: rotate(306deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.7000000000000002s;
+}
+.demo7 i:nth-child(18) {
+  width: 252px;
+  margin-left: -126px;
+  transform: rotate(324deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.8s;
+}
+.demo7 i:nth-child(19) {
+  width: 266px;
+  margin-left: -133px;
+  transform: rotate(342deg);
+  transform-origin: 30% 50%;
+  animation-delay: 1.9000000000000001s;
+}
+.demo7 i:nth-child(20) {
+  width: 280px;
+  margin-left: -140px;
+  transform: rotate(360deg);
+  transform-origin: 30% 50%;
+  animation-delay: 2s;
+}
+.demo8 i:nth-child(1) {
+  width: 14px;
+  margin-left: -7px;
+  z-index: 19;
+  transform: rotate(18deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.1s;
+}
+.demo8 i:nth-child(2) {
+  width: 28px;
+  margin-left: -14px;
+  z-index: 18;
+  transform: rotate(36deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.2s;
+}
+.demo8 i:nth-child(3) {
+  width: 42px;
+  margin-left: -21px;
+  z-index: 17;
+  transform: rotate(54deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.30000000000000004s;
+}
+.demo8 i:nth-child(4) {
+  width: 56px;
+  margin-left: -28px;
+  z-index: 16;
+  transform: rotate(72deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.4s;
+}
+.demo8 i:nth-child(5) {
+  width: 70px;
+  margin-left: -35px;
+  z-index: 15;
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.5s;
+}
+.demo8 i:nth-child(6) {
+  width: 84px;
+  margin-left: -42px;
+  z-index: 14;
+  transform: rotate(108deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.6000000000000001s;
+}
+.demo8 i:nth-child(7) {
+  width: 98px;
+  margin-left: -49px;
+  z-index: 13;
+  transform: rotate(125.99999999999999deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.7000000000000001s;
+}
+.demo8 i:nth-child(8) {
+  width: 112px;
+  margin-left: -56px;
+  z-index: 12;
+  transform: rotate(144deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.8s;
+}
+.demo8 i:nth-child(9) {
+  width: 126px;
+  margin-left: -63px;
+  z-index: 11;
+  transform: rotate(162deg);
+  transform-origin: 50% 50%;
+  animation-delay: 0.9s;
+}
+.demo8 i:nth-child(10) {
+  width: 140px;
+  margin-left: -70px;
+  z-index: 10;
+  transform: rotate(180deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1s;
+}
+.demo8 i:nth-child(11) {
+  width: 154px;
+  margin-left: -77px;
+  z-index: 9;
+  transform: rotate(198.00000000000003deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.1s;
+}
+.demo8 i:nth-child(12) {
+  width: 168px;
+  margin-left: -84px;
+  z-index: 8;
+  transform: rotate(216deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.2000000000000002s;
+}
+.demo8 i:nth-child(13) {
+  width: 182px;
+  margin-left: -91px;
+  z-index: 7;
+  transform: rotate(234deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.3s;
+}
+.demo8 i:nth-child(14) {
+  width: 196px;
+  margin-left: -98px;
+  z-index: 6;
+  transform: rotate(251.99999999999997deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.4000000000000001s;
+}
+.demo8 i:nth-child(15) {
+  width: 210px;
+  margin-left: -105px;
+  z-index: 5;
+  transform: rotate(270deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.5s;
+}
+.demo8 i:nth-child(16) {
+  width: 224px;
+  margin-left: -112px;
+  z-index: 4;
+  transform: rotate(288deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.6s;
+}
+.demo8 i:nth-child(17) {
+  width: 238px;
+  margin-left: -119px;
+  z-index: 3;
+  transform: rotate(306deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.7000000000000002s;
+}
+.demo8 i:nth-child(18) {
+  width: 252px;
+  margin-left: -126px;
+  z-index: 2;
+  transform: rotate(324deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.8s;
+}
+.demo8 i:nth-child(19) {
+  width: 266px;
+  margin-left: -133px;
+  z-index: 1;
+  transform: rotate(342deg);
+  transform-origin: 50% 50%;
+  animation-delay: 1.9000000000000001s;
+}
+.demo8 i:nth-child(20) {
+  width: 280px;
+  margin-left: -140px;
+  z-index: 0;
+  transform: rotate(360deg);
+  transform-origin: 50% 50%;
+  animation-delay: 2s;
+}
+@keyframes spin {
+  40% {
+    border-radius: 30px;
+    transform: rotate(180deg);
+    background: #1ABC9C;
+  }
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}</style>
+
+  <script style="display: none !important;">
+    window.confirm = function(){};
+    window.prompt  = function(){};
+    window.open    = function(){};
+    window.print   = function(){};
+  </script>
+
+  <script>/**
+ * StyleFix 1.0.3 & PrefixFree 1.0.7
+ * @author Lea Verou
+ * MIT license
+ */
+
+(function(){
+
+if(!window.addEventListener) {
+  return;
+}
+
+var self = window.StyleFix = {
+  link: function(link) {
+    try {
+      // Ignore stylesheets with data-noprefix attribute as well as alternate stylesheets
+      if(link.rel !== 'stylesheet' || link.hasAttribute('data-noprefix')) {
+        return;
+      }
+    }
+    catch(e) {
+      return;
     }
 
-    html{
-      height: 100%;
-      background-image: -webkit-radial-gradient(center center,circle cover, #95A5A6 0%,#34495E 100%);
-      background-image: -moz-radial-gradient(center center,circle cover, #95A5A6 0%,#34495E 100%);
-    }
+    var url = link.href || link.getAttribute('data-href'),
+        base = url.replace(/[^\/]+$/, ''),
+        base_scheme = (/^[a-z]{3,10}:/.exec(base) || [''])[0],
+        base_domain = (/^[a-z]{3,10}:\/\/[^\/]+/.exec(base) || [''])[0],
+        base_query = /^([^?]*)\??/.exec(url)[1],
+        parent = link.parentNode,
+        xhr = new XMLHttpRequest(),
+        process;
 
-    .spinner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      z-index: 2;
-      animation-name: rotate;
-      animation-direction: reverse;
-      animation-duration: 10s;
-      animation-iteration-count: infinite;
-      animation-timing-function: ease;
-    }
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === 4) {
+        process();
+      }
+    };
 
-    i {
-      box-sizing: border-box;
-      display: block;
-      position: absolute;
-      width: 52px;
-      height: 52px;
-      background: #fff;
-      opacity: 1;
-      border: 2px solid #ECF0F1;
-      border-radius: 10px;
-      animation-name: spin;
-      animation-duration: 3s;
-      animation-iteration-count: infinite;
-      animation-timing-function: ease;
-    }
+    process = function() {
+        var css = xhr.responseText;
 
-    i:nth-child(1) {
-      width: 14px;
-      height: 14px;
-      margin-top: -7px;
-      margin-left: -7px;
-      z-index: 19;
-      transform: rotate(18deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.1s;
-    }
+        if(css && link.parentNode && (!xhr.status || xhr.status < 400 || xhr.status > 600)) {
+          css = self.fix(css, true, link);
 
-    i:nth-child(2) {
-      width: 28px;
-      height: 28px;
-      margin-top: -14px;
-      margin-left: -14px;
-      z-index: 18;
-      transform: rotate(36deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.2s;
-    }
+          // Convert relative URLs to absolute, if needed
+          if(base) {
+            css = css.replace(/url\(\s*?((?:"|')?)(.+?)\1\s*?\)/gi, function($0, quote, url) {
+              if(/^([a-z]{3,10}:|#)/i.test(url)) { // Absolute & or hash-relative
+                return $0;
+              }
+              else if(/^\/\//.test(url)) { // Scheme-relative
+                // May contain sequences like /../ and /./ but those DO work
+                return 'url("' + base_scheme + url + '")';
+              }
+              else if(/^\//.test(url)) { // Domain-relative
+                return 'url("' + base_domain + url + '")';
+              }
+              else if(/^\?/.test(url)) { // Query-relative
+                return 'url("' + base_query + url + '")';
+              }
+              else {
+                // Path-relative
+                return 'url("' + base + url + '")';
+              }
+            });
 
-    i:nth-child(3) {
-      width: 42px;
-      height: 42px;
-      margin-top: -21px;
-      margin-left: -21px;
-      z-index: 17;
-      transform: rotate(54deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.3s;
-    }
+            // behavior URLs shoudn’t be converted (Issue #19)
+            // base should be escaped before added to RegExp (Issue #81)
+            var escaped_base = base.replace(/([\\\^\$*+[\]?{}.=!:(|)])/g,"\\$1");
+            css = css.replace(RegExp('\\b(behavior:\\s*?url\\(\'?"?)' + escaped_base, 'gi'), '$1');
+            }
 
-    i:nth-child(4) {
-      width: 56px;
-      height: 56px;
-      margin-top: -28px;
-      margin-left: -28px;
-      z-index: 16;
-      transform: rotate(72deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.4s;
-    }
+          var style = document.createElement('style');
+          style.textContent = css;
+          style.media = link.media;
+          style.disabled = link.disabled;
+          style.setAttribute('data-href', link.getAttribute('href'));
 
-    i:nth-child(5) {
-      width: 70px;
-      height: 70px;
-      margin-top: -35px;
-      margin-left: -35px;
-      z-index: 15;
-      transform: rotate(90deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.5s;
-    }
+          parent.insertBefore(style, link);
+          parent.removeChild(link);
 
-    i:nth-child(6) {
-      width: 84px;
-      height: 84px;
-      margin-top: -42px;
-      margin-left: -42px;
-      z-index: 14;
-      transform: rotate(108deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.6s;
-    }
+          style.media = link.media; // Duplicate is intentional. See issue #31
+        }
+    };
 
-    i:nth-child(7) {
-      width: 98px;
-      height: 98px;
-      margin-top: -49px;
-      margin-left: -49px;
-      z-index: 13;
-      transform: rotate(126.0deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.7s;
-    }
-
-    i:nth-child(8) {
-      width: 112px;
-      height: 112px;
-      margin-top: -56px;
-      margin-left: -56px;
-      z-index: 12;
-      transform: rotate(144deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.8s;
-    }
-
-    i:nth-child(9) {
-      width: 126px;
-      height: 126px;
-      margin-top: -63px;
-      margin-left: -63px;
-      z-index: 11;
-      transform: rotate(162deg);
-      transform-origin: 50% 50%;
-      animation-delay: 0.9s;
-    }
-
-    i:nth-child(10) {
-      width: 140px;
-      height: 140px;
-      margin-top: -70px;
-      margin-left: -70px;
-      z-index: 10;
-      transform: rotate(180deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1s;
-    }
-
-    i:nth-child(11) {
-      width: 154px;
-      height: 154px;
-      margin-top: -77px;
-      margin-left: -77px;
-      z-index: 9;
-      transform: rotate(198.0deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.1s;
-    }
-
-    i:nth-child(12) {
-      width: 168px;
-      height: 168px;
-      margin-top: -84px;
-      margin-left: -84px;
-      z-index: 8;
-      transform: rotate(216deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.2s;
-    }
-
-    i:nth-child(13) {
-      width: 182px;
-      height: 182px;
-      margin-top: -91px;
-      margin-left: -91px;
-      z-index: 7;
-      transform: rotate(234deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.3s;
-    }
-
-    i:nth-child(14) {
-      width: 196px;
-      height: 196px;
-      margin-top: -98px;
-      margin-left: -98px;
-      z-index: 6;
-      transform: rotate(252.0deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.4s;
-    }
-
-    i:nth-child(15) {
-      width: 210px;
-      height: 210px;
-      margin-top: -105px;
-      margin-left: -105px;
-      z-index: 5;
-      transform: rotate(270deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.5s;
-    }
-
-    i:nth-child(16) {
-      width: 224px;
-      height: 224px;
-      margin-top: -112px;
-      margin-left: -112px;
-      z-index: 4;
-      transform: rotate(288deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.6s;
-    }
-
-    i:nth-child(17) {
-      width: 238px;
-      height: 238px;
-      margin-top: -119px;
-      margin-left: -119px;
-      z-index: 3;
-      transform: rotate(306deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.7s;
-    }
-
-    i:nth-child(18) {
-      width: 252px;
-      height: 252px;
-      margin-top: -126px;
-      margin-left: -126px;
-      z-index: 2;
-      transform: rotate(324deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.8s;
-    }
-
-    i:nth-child(19) {
-      width: 266px;
-      height: 266px;
-      margin-top: -133px;
-      margin-left: -133px;
-      z-index: 1;
-      transform: rotate(342deg);
-      transform-origin: 50% 50%;
-      animation-delay: 1.9s;
-    }
-
-    i:nth-child(20) {
-      width: 280px;
-      height: 280px;
-      margin-top: -140px;
-      margin-left: -140px;
-      z-index: 0;
-      transform: rotate(360deg);
-      transform-origin: 50% 50%;
-      animation-delay: 2s;
-    }
-
-    i:nth-child(2n){
-      background: #E74C3C;
-    }
-    i:nth-child(2n+1){
-      background: #E67E22;
-    }
-
-    i:nth-child(3n){
-      background: #2ECC71;
-    }
-
-    i:nth-child(3n+1){
-      background: #9B59B6;
-    }
-
-    @keyframes spin {
-      40% {
-        border-radius: 30px;
-        transform: rotate(180deg);
-        background: #1ABC9C;
+    try {
+      xhr.open('GET', url);
+      xhr.send(null);
+    } catch (e) {
+      // Fallback to XDomainRequest if available
+      if (typeof XDomainRequest != "undefined") {
+        xhr = new XDomainRequest();
+        xhr.onerror = xhr.onprogress = function() {};
+        xhr.onload = process;
+        xhr.open("GET", url);
+        xhr.send(null);
       }
     }
 
-    @keyframes rotate {
-      100% {
-        transform: rotate(360deg);
-      }
+    link.setAttribute('data-inprogress', '');
+  },
+
+  styleElement: function(style) {
+    if (style.hasAttribute('data-noprefix')) {
+      return;
+    }
+    var disabled = style.disabled;
+
+    style.textContent = self.fix(style.textContent, true, style);
+
+    style.disabled = disabled;
+  },
+
+  styleAttribute: function(element) {
+    var css = element.getAttribute('style');
+
+    css = self.fix(css, false, element);
+
+    element.setAttribute('style', css);
+  },
+
+  process: function() {
+    // Linked stylesheets
+    $('link[rel="stylesheet"]:not([data-inprogress])').forEach(StyleFix.link);
+
+    // Inline stylesheets
+    $('style').forEach(StyleFix.styleElement);
+
+    // Inline styles
+    $('[style]').forEach(StyleFix.styleAttribute);
+  },
+
+  register: function(fixer, index) {
+    (self.fixers = self.fixers || [])
+      .splice(index === undefined? self.fixers.length : index, 0, fixer);
+  },
+
+  fix: function(css, raw, element) {
+    for(var i=0; i<self.fixers.length; i++) {
+      css = self.fixers[i](css, raw, element) || css;
     }
 
-    /* scss css 预处理
-      $particles: 20;
-      $radius: 50; 
+    return css;
+  },
 
-      html, body {
-        overflow: hidden;
-        background: #111;
-      }
+  camelCase: function(str) {
+    return str.replace(/-([a-z])/g, function($0, $1) { return $1.toUpperCase(); }).replace('-','');
+  },
 
-      .spinner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        z-index: 2;
-        
-        animation-name: rotate;
-        animation-direction: reverse;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
-        animation-timing-function: ease;
-      }
+  deCamelCase: function(str) {
+    return str.replace(/[A-Z]/g, function($0) { return '-' + $0.toLowerCase() });
+  }
+};
 
-      i {
-        box-sizing: border-box;
-        display: block;
-        position: absolute;
-        width: 52px;
-        height: 52px;
-        
-        background: #fff;
-        opacity: 1;
-        border: 6px solid #111;
-        border-radius: 0px;
-          
-        animation-name: spin;
-      //  animation-direction: reverse;
-        animation-duration: 3s;
-        animation-iteration-count: infinite;
-        animation-timing-function: ease;
-      }
+/**************************************
+ * Process styles
+ **************************************/
+(function(){
+  setTimeout(function(){
+    $('link[rel="stylesheet"]').forEach(StyleFix.link);
+  }, 10);
 
-      i:nth-child(2n){
-        background: #E74C3C;
-      }
-      i:nth-child(2n+1){
-        background: #E67E22;
-      }
+  document.addEventListener('DOMContentLoaded', StyleFix.process, false);
+})();
 
-      i:nth-child(3n){
-        background: #2ECC71;
-      }
+function $(expr, con) {
+  return [].slice.call((con || document).querySelectorAll(expr));
+}
 
-      i:nth-child(3n+1){
-        background: #9B59B6;
-      }
+})();
 
+/**
+ * PrefixFree
+ */
+(function(root){
 
-      @for $i from 1 through $particles {
-        i:nth-child(#{$i}) {
-          $angle: $i / $particles * 360;
-          
-          width: ($i * 14) + px;
-          height: ($i * 14) + px;
-          margin-top: - ($i * 14) / 2 + px;
-          margin-left: - ($i * 14) / 2 + px;
-          z-index: $particles - $i;
-          transform:
-            rotate( #{$angle}deg );
-        
-            transform-origin: 50% 50%;
-            animation-delay: $i * (2s / $particles);
+if(!window.StyleFix || !window.getComputedStyle) {
+  return;
+}
+
+// Private helper
+function fix(what, before, after, replacement, css) {
+  what = self[what];
+
+  if(what.length) {
+    var regex = RegExp(before + '(' + what.join('|') + ')' + after, 'gi');
+
+    css = css.replace(regex, replacement);
+  }
+
+  return css;
+}
+
+var self = window.PrefixFree = {
+  prefixCSS: function(css, raw, element) {
+    var prefix = self.prefix;
+
+    // Gradient angles hotfix
+    if(self.functions.indexOf('linear-gradient') > -1) {
+      // Gradients are supported with a prefix, convert angles to legacy
+      css = css.replace(/(\s|:|,)(repeating-)?linear-gradient\(\s*(-?\d*\.?\d*)deg/ig, function ($0, delim, repeating, deg) {
+        return delim + (repeating || '') + 'linear-gradient(' + (90-deg) + 'deg';
+      });
+    }
+
+    css = fix('functions', '(\\s|:|,)', '\\s*\\(', '$1' + prefix + '$2(', css);
+    css = fix('keywords', '(\\s|:)', '(\\s|;|\\}|$)', '$1' + prefix + '$2$3', css);
+    css = fix('properties', '(^|\\{|\\s|;)', '\\s*:', '$1' + prefix + '$2:', css);
+
+    // Prefix properties *inside* values (issue #8)
+    if (self.properties.length) {
+      var regex = RegExp('\\b(' + self.properties.join('|') + ')(?!:)', 'gi');
+
+      css = fix('valueProperties', '\\b', ':(.+?);', function($0) {
+        return $0.replace(regex, prefix + "$1")
+      }, css);
+    }
+
+    if(raw) {
+      css = fix('selectors', '', '\\b', self.prefixSelector, css);
+      css = fix('atrules', '@', '\\b', '@' + prefix + '$1', css);
+    }
+
+    // Fix double prefixing
+    css = css.replace(RegExp('-' + prefix, 'g'), '-');
+
+    // Prefix wildcard
+    css = css.replace(/-\*-(?=[a-z]+)/gi, self.prefix);
+
+    return css;
+  },
+
+  property: function(property) {
+    return (self.properties.indexOf(property)? self.prefix : '') + property;
+  },
+
+  value: function(value, property) {
+    value = fix('functions', '(^|\\s|,)', '\\s*\\(', '$1' + self.prefix + '$2(', value);
+    value = fix('keywords', '(^|\\s)', '(\\s|$)', '$1' + self.prefix + '$2$3', value);
+
+    // TODO properties inside values
+
+    return value;
+  },
+
+  // Warning: Prefixes no matter what, even if the selector is supported prefix-less
+  prefixSelector: function(selector) {
+    return selector.replace(/^:{1,2}/, function($0) { return $0 + self.prefix })
+  },
+
+  // Warning: Prefixes no matter what, even if the property is supported prefix-less
+  prefixProperty: function(property, camelCase) {
+    var prefixed = self.prefix + property;
+
+    return camelCase? StyleFix.camelCase(prefixed) : prefixed;
+  }
+};
+
+/**************************************
+ * Properties
+ **************************************/
+(function() {
+  var prefixes = {},
+    properties = [],
+    shorthands = {},
+    style = getComputedStyle(document.documentElement, null),
+    dummy = document.createElement('div').style;
+
+  // Why are we doing this instead of iterating over properties in a .style object? Cause Webkit won't iterate over those.
+  var iterate = function(property) {
+    if(property.charAt(0) === '-') {
+      properties.push(property);
+
+      var parts = property.split('-'),
+        prefix = parts[1];
+
+      // Count prefix uses
+      prefixes[prefix] = ++prefixes[prefix] || 1;
+
+      // This helps determining shorthands
+      while(parts.length > 3) {
+        parts.pop();
+
+        var shorthand = parts.join('-');
+
+        if(supported(shorthand) && properties.indexOf(shorthand) === -1) {
+          properties.push(shorthand);
         }
       }
+    }
+  },
+  supported = function(property) {
+    return StyleFix.camelCase(property) in dummy;
+  }
 
-      @keyframes spin {
-        40% {
-          border-radius: 50px;
-          
-          transform: rotate( 180deg );
-        }
-      }
+  // Some browsers have numerical indices for the properties, some don't
+  if(style.length > 0) {
+    for(var i=0; i<style.length; i++) {
+      iterate(style[i])
+    }
+  }
+  else {
+    for(var property in style) {
+      iterate(StyleFix.deCamelCase(property));
+    }
+  }
 
-      @keyframes rotate {
-        100% {
-          transform: rotate( 360deg );
-        }
+  // Find most frequently used prefix
+  var highest = {uses:0};
+  for(var prefix in prefixes) {
+    var uses = prefixes[prefix];
+
+    if(highest.uses < uses) {
+      highest = {prefix: prefix, uses: uses};
+    }
+  }
+
+  self.prefix = '-' + highest.prefix + '-';
+  self.Prefix = StyleFix.camelCase(self.prefix);
+
+  self.properties = [];
+
+  // Get properties ONLY supported with a prefix
+  for(var i=0; i<properties.length; i++) {
+    var property = properties[i];
+
+    if(property.indexOf(self.prefix) === 0) { // we might have multiple prefixes, like Opera
+      var unprefixed = property.slice(self.prefix.length);
+
+      if(!supported(unprefixed)) {
+        self.properties.push(unprefixed);
       }
-     */
-  </style>
-  <script src="prefixfree.min.js"></script>
+    }
+  }
+
+  // IE fix
+  if(self.Prefix == 'Ms'
+    && !('transform' in dummy)
+    && !('MsTransform' in dummy)
+    && ('msTransform' in dummy)) {
+    self.properties.push('transform', 'transform-origin');
+  }
+
+  self.properties.sort();
+})();
+
+/**************************************
+ * Values
+ **************************************/
+(function() {
+// Values that might need prefixing
+var functions = {
+  'linear-gradient': {
+    property: 'backgroundImage',
+    params: 'red, teal'
+  },
+  'calc': {
+    property: 'width',
+    params: '1px + 5%'
+  },
+  'element': {
+    property: 'backgroundImage',
+    params: '#foo'
+  },
+  'cross-fade': {
+    property: 'backgroundImage',
+    params: 'url(a.png), url(b.png), 50%'
+  }
+};
+
+functions['repeating-linear-gradient'] =
+functions['repeating-radial-gradient'] =
+functions['radial-gradient'] =
+functions['linear-gradient'];
+
+// Note: The properties assigned are just to *test* support.
+// The keywords will be prefixed everywhere.
+var keywords = {
+  'initial': 'color',
+  'zoom-in': 'cursor',
+  'zoom-out': 'cursor',
+  'box': 'display',
+  'flexbox': 'display',
+  'inline-flexbox': 'display',
+  'flex': 'display',
+  'inline-flex': 'display',
+  'grid': 'display',
+  'inline-grid': 'display',
+  'min-content': 'width'
+};
+
+self.functions = [];
+self.keywords = [];
+
+var style = document.createElement('div').style;
+
+function supported(value, property) {
+  style[property] = '';
+  style[property] = value;
+
+  return !!style[property];
+}
+
+for (var func in functions) {
+  var test = functions[func],
+    property = test.property,
+    value = func + '(' + test.params + ')';
+
+  if (!supported(value, property)
+    && supported(self.prefix + value, property)) {
+    // It's supported, but with a prefix
+    self.functions.push(func);
+  }
+}
+
+for (var keyword in keywords) {
+  var property = keywords[keyword];
+
+  if (!supported(keyword, property)
+    && supported(self.prefix + keyword, property)) {
+    // It's supported, but with a prefix
+    self.keywords.push(keyword);
+  }
+}
+
+})();
+
+/**************************************
+ * Selectors and @-rules
+ **************************************/
+(function() {
+
+var
+selectors = {
+  ':read-only': null,
+  ':read-write': null,
+  ':any-link': null,
+  '::selection': null
+},
+
+atrules = {
+  'keyframes': 'name',
+  'viewport': null,
+  'document': 'regexp(".")'
+};
+
+self.selectors = [];
+self.atrules = [];
+
+var style = root.appendChild(document.createElement('style'));
+
+function supported(selector) {
+  style.textContent = selector + '{}';  // Safari 4 has issues with style.innerHTML
+
+  return !!style.sheet.cssRules.length;
+}
+
+for(var selector in selectors) {
+  var test = selector + (selectors[selector]? '(' + selectors[selector] + ')' : '');
+
+  if(!supported(test) && supported(self.prefixSelector(test))) {
+    self.selectors.push(selector);
+  }
+}
+
+for(var atrule in atrules) {
+  var test = atrule + ' ' + (atrules[atrule] || '');
+
+  if(!supported('@' + test) && supported('@' + self.prefix + test)) {
+    self.atrules.push(atrule);
+  }
+}
+
+root.removeChild(style);
+
+})();
+
+// Properties that accept properties as their value
+self.valueProperties = [
+  'transition',
+  'transition-property'
+]
+
+// Add class for current prefix
+root.className += ' ' + self.prefix;
+
+StyleFix.register(self.prefixCSS);
+
+})(document.documentElement);</script>
+
 </head>
+
 <body>
-  <div class="spinner">
+
+  <div class='demo1'>
+  <div class='spinner'>
     <i></i>
     <i></i>
     <i></i>
@@ -405,5 +1836,180 @@
     <i></i>
     <i></i>
   </div>
+</div>
+<div class='demo2'>
+  <div class='spinner'>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+</div>
+<div class='demo3'>
+  <div class='spinner'>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+</div>
+<div class='demo4'>
+  <div class='spinner'>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+</div>
+<div class='demo5'>
+  <div class='spinner'>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+</div>
+<div class='demo6'>
+  <div class='spinner'>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+</div>
+<div class='demo7'>
+  <div class='spinner'>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+</div>
+<div class='demo8'>
+  <div class='spinner'>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+</div>
+
+  <script>
+    console.log("%cleiman0311@gmail.com","background-image:-webkit-gradient(linear,0% 0%,100% 0%,color-stop(0%,#0EF8D8),color-stop(20%,#BAF84A),color-stop(40%,#F7E22C),color-stop(60%,#F7AD51),color-stop(80%,#F76E8E),color-stop(100%,#AE37F9));padding:10px;background-origin:border-box;-webkit-background-clip:text;color:transparent;font-size:60px;text-transform:uppercase;")
+  </script>
+
 </body>
+
 </html>
