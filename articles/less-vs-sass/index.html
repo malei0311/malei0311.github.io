@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>传说中的 screen | WebCraft</title>
+    <title>CSS 预处理器  LESS vs SASS | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="nohup vs screen vs tmux ... 你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。 | malei0311's Blog" />
-    <meta name="keywords" content="ubuntu,malei0311" />
+    <meta name="description" content="这段时间，混合使用这两种预处理器，总结出来的一点小。。 | malei0311's Blog" />
+    <meta name="keywords" content="css3, less, sass,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/screen-sh">传说中的 screen</a></h1>
+            <h1><a href="/articles/less-vs-sass">CSS 预处理器  LESS vs SASS</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-03-06">2013-03-06</time>
+                    <time class="date" pubdate="2013-07-30">2013-07-30</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#ubuntu">
-                                    ubuntu
+                                <a href="/tags.html#css">
+                                    css
                                 </a>
                                 <span>
                                     ,
@@ -91,89 +91,170 @@
                 
             </div>
         </div>
-        <p class="description">nohup vs screen vs tmux ... 你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。</p>
+        <p class="description">这段时间，混合使用这两种预处理器，总结出来的一点小。。</p>
         <div class="article-div-content">
-        	<h2>基本语法</h2>
+        	<h2>总述</h2>
 
-<p>Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。Screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/SSH连接窗口那样。</p>
+<h3>SASS 的前世今生</h3>
 
-<pre><code>screen [-AmRvx -ls -wipe][-d &lt;作业名称&gt;][-h &lt;行数&gt;][-r &lt;作业名称&gt;][-s ][-S &lt;作业名称&gt;]
+<p>Sass是是一种基于ruby编写的CSS预处理器，诞生于2007年，是最早也是最成熟的一款CSS预处理器语言，它可以使用变量、嵌套、混入、继承，运算，函数等功能，使得CSS的开发，变得简单清晰可维护，同时也大大节省了设计者的时间，提高了效率。Sass最后还是会编译出合法的CSS让浏览器使用，也就是说它本身的语法并不太容易让浏览器识别，因为它不是标准的CSS格式，在它的语法内部可以使用动态变量等，所以它更像一种极简单的动态语言。</p>
+
+<p>其实现在的Sass已经有了两套语法规则：一个依旧是用缩进作为分隔符来区分代码块的；另一套规则和CSS一样采用了大括号（｛｝）作为分隔符。后一种语法规则又名SCSS，在Sass3之后的版本都支持这种语法规则。</p>
+
+<p>sass虽然是最早的，但是一开始还是不太好用，而且使用缩进作为分隔符，不符合css使用大括号的习惯，所以less以后起之秀的身份轻松赢得了人心，后来sass借鉴于less的一些思想，改进了自己的设计，并有了scss，然后经过几个版本的更新，特别版本3.2.0做了些革命性的更新，以使它从其他几个编译处理器中脱颖而出。</p>
+
+<p>由上面可见，有时太激进了，用户是不领情的，“步子走大了，容易...”，你懂的。不过现在类 sass 的写法还挺受欢迎的：HAML，Slim，CoffeeScript，jade等...</p>
+
+<h3>ㄟ(￣▽￣ㄟ)</h3>
+
+<p>下面主要是自己在这段时间的使用中遇到的...</p>
+
+<h2>比较</h2>
+
+<h3>calc</h3>
+
+<p>less 中使用 calc 有 bug，例如：</p>
+
+<pre><code>calc(100% - 8px);
 </code></pre>
 
-<h3>参数说明</h3>
+<p>他会无情的给你解析成 92%，而在 sass 中没有问题。上一个比较 撮 的 demo：<a href="http://codepen.io/malei0311/full/thAim">click me</a></p>
 
-<pre><code>-A              将所有的视窗都调整为目前终端机的大小。
--d &lt;作业名称&gt;       将指定的screen作业离线。
--h &lt;行数&gt; 　     指定视窗的缓冲区行数。
--m              即使目前已在作业中的screen作业，仍强制建立新的screen作业。
--r &lt;作业名称&gt;       恢复离线的screen作业。
--R              先试图恢复离线的作业。若找不到离线的作业，即建立新的screen作业。
--s              指定建立新视窗时，所要执行的shell。
--S &lt;作业名称&gt;   指定screen作业的名称。
--v              显示版本信息。
--x              恢复之前离线的screen作业。
--ls或--list    显示目前所有的screen作业。
--wipe           检查目前所有的screen作业，并删除已经无法使用的screen作业。
+<p>点击左下脚的 <code>edit</code> ，把 calc() 法 中写在行内的 style calc，写入 less 中，靠，他变成 92%了</p>
+
+<h3>循环</h3>
+
+<p>虽然都能实现循环，但是 sass 使用起来更方便，例如 sass 中循环  for ，很简单，也方便。</p>
+
+<h4>sass demo:</h4>
+
+<ul>
+<li>demo 地址: <a href="/codepen/css-fibonacci/">click me</a></li>
+<li>demo 源码: <a href="https://gist.github.com/malei0311/6099394">click me</a></li>
+<li>不怕慢也可以 codepen: <a href="http://codepen.io/malei0311/pen/IsfLm">click me</a></li>
+</ul>
+
+
+<pre><code>@for $i from 1 through $num {
+  $temp: $i / 2 + 0px;
+
+  .circle-#{$i} {  
+    width: $temp;
+
+    transform: rotate($i*137.5deg);
+    &amp;:after{
+      animation-duration: 10s;
+      animation-delay: 0.01s * $i;
+    }
+  }
+}
 </code></pre>
 
-<h3>nohup vs screen</h3>
+<h4>less demo:</h4>
 
-<p>如果我们可以忽略SIGHUP信号，关掉窗口应该就不会影响程序的运行了。nohup命令可以达到这个目的，如果程序的标准输出/标准错误是终端，nohup默认将其重定向到nohup.out文件。值得注意的是nohup命令只是使得程序忽略SIGHUP信号，还需要使用标记&amp;把它放在后台运行。</p>
+<ul>
+<li>demo 地址: <a href="/codepen/css-animation/">click me</a></li>
+<li>demo 源码: <a href="https://gist.github.com/malei0311/6093738">click me</a></li>
+<li>不怕慢也可以 codepen: <a href="http://codepen.io/malei0311/pen/eqyid">click me</a></li>
+</ul>
 
-<pre><code>nohup &lt;command&gt; [argument…] &amp;
 
-//我最常用nohup的地方就是开启 goagent 代理
-$ !nohup //执行最近执行的一条 nohup 命令，我最近的一条通常都是 nohup python ~/programs/goagent/local/proxy.py &amp;
+<pre><code>.loopingClass (@index,@father) when (@index =&lt; @particles) {
+  //这里需要一个恶心的 mixin + 关键字 when 实现一个条件判断，有木有 =。= !
+  .father(@father) when (@father = demo1){
+    .@{father} i:nth-child(@{index}) {
+
+      @angle: @index / @particles * 360;      
+      width: (@index * 14) + 0px;
+      height: (@index * 14) + 0px;
+      margin-top: -(@index * 14) / 2 + 0px;
+      margin-left: -(@index * 14) / 2 + 0px;
+      z-index: @particles - @index;
+      transform:rotate( @angle + 0deg );
+
+      transform-origin: 50% 50%;
+      animation-delay: @index * (2s / @particles);
+     }
+  }
+
+  .father(@father);
+  .loopingClass(@index + 1, @father);
+}
 </code></pre>
 
-<p>虽然nohup很容易使用，但还是比较“简陋”的，对于简单的命令能够应付过来，对于复杂的需要人机交互的任务就麻烦了。</p>
+<h3>条件判断</h3>
 
-<h2>快捷键</h2>
+<p>sass => if, less => when，下面两段代码，是 <code>上面循环</code> 一节中 <code>less demo</code> 的不同实现</p>
 
-<pre><code>C-a ?   显示所有键绑定信息 //貌似我的 ubuntu 这条没反应啊
-C-a w   显示所有窗口列表
-C-a C-a 切换到之前显示的窗口
-C-a c   创建一个新的运行shell的窗口并切换到该窗口
-C-a n   切换到下一个窗口
-C-a p   切换到前一个窗口(与C-a n相对)
-C-a 0..9    切换到窗口0..9
-C-a a   发送 C-a 到当前窗口
-C-a d   暂时断开screen会话
-C-a k   杀掉当前窗口  =。=
-C-a [   进入拷贝/回滚模式
+<p>sass:</p>
+
+<pre><code>@mixin paintChild($father) {
+  @for $i from 1 through $particles {
+    .#{$father} i:nth-child(#{$i}) {
+      @if $father == demo1 {
+        $angle: $i / $particles * 360;
+
+        width: ($i * 14) + px;
+        height: ($i * 14) + px;
+        margin-top: - ($i * 14) / 2 + px;
+        margin-left: - ($i * 14) / 2 + px;
+        z-index: $particles - $i;
+        transform:rotate( #{$angle}deg );
+
+        transform-origin: 50% 50%;
+        animation-delay: $i * (2s / $particles);  
+      } @else if $father == demo2 {
+        ... // your code
+      }
+    }
+  }
+}
+
+@include paintChild(demo1);
+@include paintChild(demo2);
 </code></pre>
 
-<h2>一个小例子</h2>
+<p>less:</p>
 
-<p>你可以不中断screen窗口中程序的运行而暂时断开（detach）screen会话，并在随后时间重新连接（attach）该会话，重新控制各窗口中运行的程序</p>
+<pre><code>.loopingClass (@index,@father) when (@index =&lt; @particles) {
+  //这里需要一个恶心的 mixin + 关键字 when 实现一个条件判断，有木有 =。= !
+  .father(@father) when (@father = demo1){
+    .@{father} i:nth-child(@{index}) {
 
-<pre><code>$ &gt;screen.test
-$ screen vi screen.test //作为测试，随便敲点东西，然后键入 C-a d
-  [detached from 4804.pts-0.malei-Inspiron-N4010]
-$ screen -ls
-  There is a screen on:
-    4804.pts-0.malei-Inspiron-N4010 (2013年03月06日 17时52分03秒) (Detached)
-  1 Socket in /var/run/screen/S-malei.
+      @angle: @index / @particles * 360;      
+      width: (@index * 14) + 0px;
+      height: (@index * 14) + 0px;
+      margin-top: -(@index * 14) / 2 + 0px;
+      margin-left: -(@index * 14) / 2 + 0px;
+      z-index: @particles - @index;
+      transform:rotate( @angle + 0deg );
 
-$ screen -r 4804.pts-0.malei-Inspiron-N4010 //4804 [tab] 补全即可(进入我们断开的绘画继续工作) C-a d
-  [detached from 4804.pts-0.malei-Inspiron-N4010]
-$ screen -ls
-  There is a screen on:
-    4804.pts-0.malei-Inspiron-N4010 (2013年03月06日 17时52分04秒) (Detached)
-  1 Socket in /var/run/screen/S-malei.
+      transform-origin: 50% 50%;
+      animation-delay: @index * (2s / @particles);
+     }
+  }
+  .father(@father) when (@father = demo2){
+    ... // your code
+  }
+  .father(@father);
+  .loopingClass(@index + 1, @father);
+}
 
-//发现时间，暂停了 =。= 有木有  =========&gt; 靠，颜色高亮好混乱啊
+.loopingClass (1, demo1);
+.loopingClass (1, demo2);
 </code></pre>
 
-<p>如果screen的进程打开的比较多，为了方便识别不同的screen，可以加上 -S 参数，给每个screen不同的
-名称 比如 <code>screen -S test</code> ,进程里就会看到这个screen被标为 <code>test.pts-0.host</code> ,而不是进程ID了。</p>
+<p>less会重复写 <code>.father(@father) when (...</code> 有木有，另外，注意他们的单位计算方式，负号与后面有没有空格，与单位相加时怎么处理。</p>
+
+<h2>结语</h2>
+
+<p>萝卜白菜，各有所爱，不过还是觉的 sass 在某些方面比较方便，另外 chrome 中还可以直接调试。其次，也要看项目历史原因、团队偏好，为了易维护性以及项目的一致性，怎么选，你懂的。</p>
 
 <h2>Reference</h2>
 
 <ul>
-<li><a href="http://www.gnu.org/software/screen/manual/screen.html" title="screen命令官方文档">screen命令官方文档</a></li>
-<li><a href="http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html" title="linux screen 命令详解">linux screen 命令详解</a></li>
-<li><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-screen/" title="使用 screen 管理你的远程会话">使用 screen 管理你的远程会话</a></li>
+<li><a href="http://css-tricks.com/sass-vs-less/">sass-vs-less</a></li>
+<li><a href="http://sass-lang.com/docs/yardoc/_index.html">SASS官方文档</a></li>
 </ul>
 
 
@@ -187,10 +268,8 @@ $ screen -ls
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/ubuntu-xrandr-sh" rel="bookmark" title="旧一篇">&laquo;&nbsp;xrandr 命令小用</a>
+                <a class="left" href="/articles/background-origin-and-clip" rel="bookmark" title="旧一篇">&laquo;&nbsp;background-origin and background-clip</a>
             
-            
-                <a class="right" href="/articles/ubuntu-wine" rel="bookmark" title="新一篇">wine 你懂的&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -207,119 +286,115 @@ $ screen -ls
                      
                     
                         
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
                             
                                 
-                                    <li><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a></li>
+                                    <li><a href="/articles/less-vs-sass" title="CSS 预处理器  LESS vs SASS">&raquo;&nbsp;CSS 预处理器  LESS vs SASS</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/ubuntu-ati-driver" title="ubuntu 12.10 x64 ATI 5650 安装显卡驱动">&raquo;&nbsp;ubuntu 12.10 x64 ATI 5650 安装显卡驱动</a></li>
+                                    <li><a href="/articles/background-origin-and-clip" title="background-origin and background-clip">&raquo;&nbsp;background-origin and background-clip</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
+                                    <li><a href="/articles/css3-linear-gradient" title="关于 CSS3 的 linear-gradient">&raquo;&nbsp;关于 CSS3 的 linear-gradient</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
+                                    <li><a href="/articles/baidu-examination" title="XX-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;XX-web前端开发工程师-笔试+面试-经历</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
+                                    <li><a href="/articles/sae-cloud-icon" title="仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本">&raquo;&nbsp;仿 SAE 的收藏夹图标，做了一个 Pure CSS 的版本</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
+                                    <li><a href="/articles/image-shadow" title="制作图像 picture 的阴影显示效果">&raquo;&nbsp;制作图像 picture 的阴影显示效果</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
+                                    <li><a href="/articles/chocolate-pure-css" title="本博客使用PureCss">&raquo;&nbsp;本博客使用PureCss</a></li>
                                 
                             
-                                
-                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
-                                
-                            
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
                         
                     
                 
@@ -360,10 +435,6 @@ $ screen -ls
                 <ul>
                    
                     <li>
-                        <a href="/articles/less-vs-sass" title="CSS 预处理器  LESS vs SASS" rel="bookmark">&raquo;&nbsp;CSS 预处理器  LESS vs SASS</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/background-origin-and-clip" title="background-origin and background-clip" rel="bookmark">&raquo;&nbsp;background-origin and background-clip</a>
                     </li>                                   
                    
@@ -389,6 +460,10 @@ $ screen -ls
                    
                     <li>
                         <a href="/articles/ubuntu-wine" title="wine 你懂的" rel="bookmark">&raquo;&nbsp;wine 你懂的</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/screen-sh" title="传说中的 screen" rel="bookmark">&raquo;&nbsp;传说中的 screen</a>
                     </li>                                   
                    
                     <li>

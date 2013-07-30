@@ -4,13 +4,185 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-07-29T01:39:54+08:00</updated>
+   <updated>2013-07-30T16:41:20+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>CSS 预处理器  LESS vs SASS</title>
+     <link href="http://webcraft.malei.tk/articles/less-vs-sass"/>
+     <updated>2013-07-30T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/less-vs-sass</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;h3&gt;SASS 的前世今生&lt;/h3&gt;
+
+&lt;p&gt;Sass是是一种基于ruby编写的CSS预处理器，诞生于2007年，是最早也是最成熟的一款CSS预处理器语言，它可以使用变量、嵌套、混入、继承，运算，函数等功能，使得CSS的开发，变得简单清晰可维护，同时也大大节省了设计者的时间，提高了效率。Sass最后还是会编译出合法的CSS让浏览器使用，也就是说它本身的语法并不太容易让浏览器识别，因为它不是标准的CSS格式，在它的语法内部可以使用动态变量等，所以它更像一种极简单的动态语言。&lt;/p&gt;
+
+&lt;p&gt;其实现在的Sass已经有了两套语法规则：一个依旧是用缩进作为分隔符来区分代码块的；另一套规则和CSS一样采用了大括号（｛｝）作为分隔符。后一种语法规则又名SCSS，在Sass3之后的版本都支持这种语法规则。&lt;/p&gt;
+
+&lt;p&gt;sass虽然是最早的，但是一开始还是不太好用，而且使用缩进作为分隔符，不符合css使用大括号的习惯，所以less以后起之秀的身份轻松赢得了人心，后来sass借鉴于less的一些思想，改进了自己的设计，并有了scss，然后经过几个版本的更新，特别版本3.2.0做了些革命性的更新，以使它从其他几个编译处理器中脱颖而出。&lt;/p&gt;
+
+&lt;p&gt;由上面可见，有时太激进了，用户是不领情的，“步子走大了，容易...”，你懂的。不过现在类 sass 的写法还挺受欢迎的：HAML，Slim，CoffeeScript，jade等...&lt;/p&gt;
+
+&lt;h3&gt;ㄟ(￣▽￣ㄟ)&lt;/h3&gt;
+
+&lt;p&gt;下面主要是自己在这段时间的使用中遇到的...&lt;/p&gt;
+
+&lt;h2&gt;比较&lt;/h2&gt;
+
+&lt;h3&gt;calc&lt;/h3&gt;
+
+&lt;p&gt;less 中使用 calc 有 bug，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;calc(100% - 8px);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;他会无情的给你解析成 92%，而在 sass 中没有问题。上一个比较 撮 的 demo：&lt;a href=&quot;http://codepen.io/malei0311/full/thAim&quot;&gt;click me&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;点击左下脚的 &lt;code&gt;edit&lt;/code&gt; ，把 calc() 法 中写在行内的 style calc，写入 less 中，靠，他变成 92%了&lt;/p&gt;
+
+&lt;h3&gt;循环&lt;/h3&gt;
+
+&lt;p&gt;虽然都能实现循环，但是 sass 使用起来更方便，例如 sass 中循环  for ，很简单，也方便。&lt;/p&gt;
+
+&lt;h4&gt;sass demo:&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/css-fibonacci/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6099394&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;不怕慢也可以 codepen: &lt;a href=&quot;http://codepen.io/malei0311/pen/IsfLm&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;@for $i from 1 through $num {
+  $temp: $i / 2 + 0px;
+
+  .circle-#{$i} {  
+    width: $temp;
+
+    transform: rotate($i*137.5deg);
+    &amp;amp;:after{
+      animation-duration: 10s;
+      animation-delay: 0.01s * $i;
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;less demo:&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/css-animation/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6093738&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;不怕慢也可以 codepen: &lt;a href=&quot;http://codepen.io/malei0311/pen/eqyid&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;.loopingClass (@index,@father) when (@index =&amp;lt; @particles) {
+  //这里需要一个恶心的 mixin + 关键字 when 实现一个条件判断，有木有 =。= !
+  .father(@father) when (@father = demo1){
+    .@{father} i:nth-child(@{index}) {
+
+      @angle: @index / @particles * 360;      
+      width: (@index * 14) + 0px;
+      height: (@index * 14) + 0px;
+      margin-top: -(@index * 14) / 2 + 0px;
+      margin-left: -(@index * 14) / 2 + 0px;
+      z-index: @particles - @index;
+      transform:rotate( @angle + 0deg );
+
+      transform-origin: 50% 50%;
+      animation-delay: @index * (2s / @particles);
+     }
+  }
+
+  .father(@father);
+  .loopingClass(@index + 1, @father);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;条件判断&lt;/h3&gt;
+
+&lt;p&gt;sass =&gt; if, less =&gt; when，下面两段代码，是 &lt;code&gt;上面循环&lt;/code&gt; 一节中 &lt;code&gt;less demo&lt;/code&gt; 的不同实现&lt;/p&gt;
+
+&lt;p&gt;sass:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@mixin paintChild($father) {
+  @for $i from 1 through $particles {
+    .#{$father} i:nth-child(#{$i}) {
+      @if $father == demo1 {
+        $angle: $i / $particles * 360;
+
+        width: ($i * 14) + px;
+        height: ($i * 14) + px;
+        margin-top: - ($i * 14) / 2 + px;
+        margin-left: - ($i * 14) / 2 + px;
+        z-index: $particles - $i;
+        transform:rotate( #{$angle}deg );
+
+        transform-origin: 50% 50%;
+        animation-delay: $i * (2s / $particles);  
+      } @else if $father == demo2 {
+        ... // your code
+      }
+    }
+  }
+}
+
+@include paintChild(demo1);
+@include paintChild(demo2);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;less:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.loopingClass (@index,@father) when (@index =&amp;lt; @particles) {
+  //这里需要一个恶心的 mixin + 关键字 when 实现一个条件判断，有木有 =。= !
+  .father(@father) when (@father = demo1){
+    .@{father} i:nth-child(@{index}) {
+
+      @angle: @index / @particles * 360;      
+      width: (@index * 14) + 0px;
+      height: (@index * 14) + 0px;
+      margin-top: -(@index * 14) / 2 + 0px;
+      margin-left: -(@index * 14) / 2 + 0px;
+      z-index: @particles - @index;
+      transform:rotate( @angle + 0deg );
+
+      transform-origin: 50% 50%;
+      animation-delay: @index * (2s / @particles);
+     }
+  }
+  .father(@father) when (@father = demo2){
+    ... // your code
+  }
+  .father(@father);
+  .loopingClass(@index + 1, @father);
+}
+
+.loopingClass (1, demo1);
+.loopingClass (1, demo2);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;less会重复写 &lt;code&gt;.father(@father) when (...&lt;/code&gt; 有木有，另外，注意他们的单位计算方式，负号与后面有没有空格，与单位相加时怎么处理。&lt;/p&gt;
+
+&lt;h2&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;萝卜白菜，各有所爱，不过还是觉的 sass 在某些方面比较方便，另外 chrome 中还可以直接调试。其次，也要看项目历史原因、团队偏好，为了易维护性以及项目的一致性，怎么选，你懂的。&lt;/p&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://css-tricks.com/sass-vs-less/&quot;&gt;sass-vs-less&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://sass-lang.com/docs/yardoc/_index.html&quot;&gt;SASS官方文档&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
    
    <entry>
      <title>background-origin and background-clip</title>
@@ -504,168 +676,6 @@ CRT1 就是笔记本上的VGA端口(Video Graphics Array，即视频图形阵列
      <content type="html">&lt;h2&gt;Drupal的预处理函数&lt;/h2&gt;
 
 &lt;p&gt;ads&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>菜鸟学习linux</title>
-     <link href="http://webcraft.malei.tk/articles/linux-study"/>
-     <updated>2013-03-02T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/linux-study</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;昨天重装系统:64位ubuntu（为了便于开发，支持8G内存），在同事帮忙配置开发环境的时候，看着他们一路命令敲下来，真是酷啊，于是一冲动，卸载了原来的 win7 + ubuntu(32bit) 双系统，开始了纯正的 linux 之旅. 先坦白一下历经坎坷的 &lt;code&gt;dell&lt;/code&gt; 小本的血泪史:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;2011年元旦，它拔山涉水，从石家庄的中山路来到了北二环&lt;/li&gt;
-&lt;li&gt;由纯正的 win7 血统 =&gt; win7旗舰版(伪)&lt;/li&gt;
-&lt;li&gt;=&gt; vmware 虚拟机上装着各种系统的杂乱&lt;/li&gt;
-&lt;li&gt;=&gt; win7 + ubuntu的双系统&lt;/li&gt;
-&lt;li&gt;(小插曲)大四上半学期快结束的时候:2011-12-09:跟我来到了帝都&lt;/li&gt;
-&lt;li&gt;=&gt; 完全开源的世界 linux(ubuntu) =。= EOF;&lt;/li&gt;
-&lt;li&gt;// 内存：2G =&gt; 2G * 2 =&gt; 4G * 2&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;听说《鸟哥的linux私房菜》不错，可以在闲的无聊的时候看一看...&lt;/p&gt;
-
-&lt;h2&gt;KVM vs VirtualBox&lt;/h2&gt;
-
-&lt;h3&gt;Deferences&lt;/h3&gt;
-
-&lt;p&gt;vbox 是由 qemu 改写而成，包含大量 qemu 代码。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;可以使用于&quot;不支持&quot;虚拟化技术的cpu。&lt;/li&gt;
-&lt;li&gt;值得说的一点：vbox 在图形方面比较好，能进行2D 3D加速。&lt;/li&gt;
-&lt;li&gt;但cpu控制不理想（估计是因为图形支持的缘故）。&lt;/li&gt;
-&lt;li&gt;操作上有独立的图形界面，易于上手。&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;kvm(Kernel-based Virtual Machine) 是linux内核包含的东西，使用qemu作为上层管理（命令行）。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;要求 cpu 必须支持虚拟化。&lt;/li&gt;
-&lt;li&gt;性能：作为服务器很好，可是图形能力十分的差。即使放电影，图像也是像刷油漆一样，一层一层的。&lt;/li&gt;
-&lt;li&gt;cpu使用率控制很好。&lt;/li&gt;
-&lt;li&gt;控制上比较简洁，功能比较丰富：比如使用 “无敌功能” 所有更改指向内存，你的镜像永远保持干净。 “母镜像”功能让你拥有n个独立快照点。还有很多参数。另外，kvm作为内核级的虚拟机，刚开始发展关注的公司比较多——但是还没有达到商业应用的水平。&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;总体而言：在支持 虚拟化 的情况下，vbox 和 kvm 的性能差不多，主要是面向对象不同：kvm使用于服务器，vbox使用于桌面应用。&lt;/p&gt;
-
-&lt;p&gt;如果要看性能对比：&lt;a href=&quot;http://os.51cto.com/art/201203/324172.htm&quot; title=&quot;Ubuntu 11.10 Xen、KVM 和 VirtualBox 比拼&quot;&gt;Ubuntu 11.10 Xen、KVM 和 VirtualBox 比拼&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;这里详细学一下 KVM，官网有详细的教程 &lt;a href=&quot;http://wiki.ubuntu.org.cn/Kvm%E6%95%99%E7%A8%8B&quot; title=&quot;Kvm 教程&quot;&gt;传送门&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3&gt;Fix BUG&lt;/h3&gt;
-
-&lt;p&gt;by the way,当安装 VirtualBox 增强功能时，报这个错误：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Failed to open the CD/DVD image /home/malei/.VirtualBox/VBoxGuestAdditions_4.1.18.iso.
-The medium '/home/malei/.VirtualBox/VBoxGuestAdditions_4.1.18.iso' can't be used as the requested device type
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;我们可以这样解决：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install virtualbox-guest-additions
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;常用命令一览&lt;/h2&gt;
-
-&lt;p&gt;他们很简单，但是初学者，你懂的&lt;/p&gt;
-
-&lt;h3&gt;某端口被占用&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo netstat -antup | grep &amp;lt;要查询的端口&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4&gt;example:&lt;/h4&gt;
-
-&lt;p&gt;查找 &lt;code&gt;3306&lt;/code&gt; 端口被谁占用了:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo netstat -antup | grep 3306
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;结果:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      4090/mysqld 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;4090&lt;/code&gt; 就是他的端口&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;kill 4090
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;杀掉他就行了&lt;/p&gt;
-
-&lt;p&gt;如果不放心，在杀之前&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ps -ef | grep mysqld
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;果然，是那个进程号，杀对了&lt;/p&gt;
-
-&lt;h3&gt;对一个文件夹下的目录和文件分别赋权限&lt;/h3&gt;
-
-&lt;h4&gt;shell 脚本&lt;/h4&gt;
-
-&lt;p&gt;写一个脚本(给他可执行的权限)，命名为 chmod.sh  放在目的路径下&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;for a in $(find .)
-do
-    if [ -d &quot;$a&quot; ]
-        then
-            chmod 755 $a
-        else
-            chmod 644 $a
-    fi
-done
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然后(貌似遇到文件或目录中有空格的 =。= 不行)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./chmod.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;完事&lt;/p&gt;
-
-&lt;h4&gt;避免麻烦，直接在 terminal 中敲命令&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;find . -type d -exec chmod 755 {} \;
-find . -type f -exec chmod 644 {} \;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;搞定&lt;/p&gt;
-
-&lt;h2&gt;源&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;deb http://mirrors.163.com/ubuntu/ quantal main restricted  
-deb-src http://mirrors.163.com/ubuntu/ quantal main restricted  
-deb http://mirrors.163.com/ubuntu/ quantal-updates main restricted  
-deb-src http://mirrors.163.com/ubuntu/ quantal-updates main restricted  
-deb http://mirrors.163.com/ubuntu/ quantal universe  
-deb-src http://mirrors.163.com/ubuntu/ quantal universe  
-deb http://mirrors.163.com/ubuntu/ quantal-updates universe  
-deb-src http://mirrors.163.com/ubuntu/ quantal-updates universe  
-deb http://mirrors.163.com/ubuntu/ quantal multiverse  
-deb-src http://mirrors.163.com/ubuntu/ quantal multiverse  
-deb http://mirrors.163.com/ubuntu/ quantal-updates multiverse  
-deb-src http://mirrors.163.com/ubuntu/ quantal-updates multiverse  
-deb http://mirrors.163.com/ubuntu/ quantal-backports main restricted universe multiverse  
-deb-src http://mirrors.163.com/ubuntu/ quantal-backports main restricted universe multiverse  
-deb http://mirrors.163.com/ubuntu/ quantal-security main restricted  
-deb-src http://mirrors.163.com/ubuntu/ quantal-security main restricted  
-deb http://mirrors.163.com/ubuntu/ quantal-security universe  
-deb-src http://mirrors.163.com/ubuntu/ quantal-security universe  
-deb http://mirrors.163.com/ubuntu/ quantal-security multiverse  
-deb-src http://mirrors.163.com/ubuntu/ quantal-security multiverse  
-deb http://extras.ubuntu.com/ubuntu quantal main  
-deb-src http://extras.ubuntu.com/ubuntu quantal main
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;结语&lt;/h2&gt;
 </content>
    </entry>
    
