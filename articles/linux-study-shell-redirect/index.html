@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？ | WebCraft</title>
+    <title>shell 之重定向 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="under Ubuntu+iBus, you can't enter Chinese into Sublime Text 2, how to solve it, let's go! | malei0311's Blog" />
-    <meta name="keywords" content="sublime_text_2,ubuntu,iBus,malei0311" />
+    <meta name="description" content="还是从 goagent 的那条nohup 入手 | malei0311's Blog" />
+    <meta name="keywords" content="ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,35 +64,17 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus">Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></h1>
+            <h1><a href="/articles/linux-study-shell-redirect">shell 之重定向</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2012-11-26">2012-11-26</time>
+                    <time class="date" pubdate="2013-07-31">2013-07-31</time>
                 </div>
                 
                 <div class="article-tags left">
                     <span class="pure-css-tag">&nbsp;</span>
                     <span class="pure-css-tag-behind left">
                         <ul>
-                             
-                            <li>
-                                <a href="/tags.html#editor">
-                                    editor
-                                </a>
-                                <span>
-                                    ,
-                                </span>
-                            </li>
-                             
-                            <li>
-                                <a href="/tags.html#ST2">
-                                    ST2
-                                </a>
-                                <span>
-                                    ,
-                                </span>
-                            </li>
                              
                             <li>
                                 <a href="/tags.html#ubuntu">
@@ -109,45 +91,61 @@
                 
             </div>
         </div>
-        <p class="description">under Ubuntu+iBus, you can't enter Chinese into Sublime Text 2, how to solve it, let's go!</p>
+        <p class="description">还是从 goagent 的那条nohup 入手</p>
         <div class="article-div-content">
-        	<h2>解决方案</h2>
+        	<h2>总述</h2>
 
-<p>先安装能在sublime text 2显示中文的字体，有一个非常好的开源字体，叫做“文泉驿字体”，安装如下：</p>
+<p>在前面的文章学习 <a href="/articles/screen-sh/">screen</a> 时，已经用过 <code>nohup</code> 。不过，像那么用，每次他都会写入默认的 nohup.out 文件中，并且每次都是叠加的，这么就造成一个可见的丑陋的文件无休止的增大，( ︶︿︶)_╭∩╮，那么就让他隐藏吧....</p>
 
-<pre><code>sudo apt-get install xfonts-wqy
+<h2>开始</h2>
+
+<pre><code>nohup python /home/malei/programs/goagent/local/proxy.py &gt; .nohup.out 2&gt;&amp;1 &amp;
 </code></pre>
 
-<p>官方网站：<a href="http://wenq.org/index.cgi?%E9%A6%96%E9%A1%B5">http://wenq.org/index.cgi?%E9%A6%96%E9%A1%B5</a></p>
+<p>这样就好了，看不见那个令人不愉快的文件，且每次都是重写的，不会变得相当大了，︵(@￣︶￣@)︵。这种写法是 重定向标准输出和错误到同一个文件，详情，如下 ⟱</p>
 
-<p>然后配置sublime text 2的 “Settings-User”，在里面加上：</p>
+<h2>重定向标准输出和错误到同一个文件</h2>
 
-<pre><code>"font_face": "WenQuanYi Micro Hei Mono"
+<h3>旧版 shell</h3>
+
+<p>可能有这种情况，我们希望捕捉一个命令的所有输出到一个文件。为了完成这个，我们 必须同时重定向标准输出和标准错误。有两种方法来完成任务。第一个，传统的方法， 在旧版本 shell 中也有效：</p>
+
+<pre><code>ls -l /bin/usr &gt; ls-output.txt 2&gt;&amp;1
 </code></pre>
 
-<p>最后安装一个sublime text 2的插件 InputHelper，用于输入中文，安装如下：</p>
+<p>使用这种方法，我们完成两个重定向。首先重定向标准输出到文件 ls-output.txt，然后 重定向文件描述符2（标准错误）到文件描述符1（标准输出）使用表示法 <code>2&gt;&amp;1</code>。</p>
 
-<pre><code>cd ~/.config/sublime-text-2/Packages
-git clone https://github.com/xgenvn/InputHelper.git
+<p>注意重定向的顺序安排非常重要。标准错误的重定向必须总是出现在标准输出 重定向之后，要不然它不起作用。上面的例子，</p>
+
+<pre><code>&gt;ls-output.txt 2&gt;&amp;1
 </code></pre>
 
-<p>使用方法：</p>
+<p>重定向标准错误到文件 ls-output.txt，但是如果命令顺序改为：</p>
 
-<ul>
-<li>1.保证ibus/scim是在gtk程序下正常运行。</li>
-<li>2.Ctrl+Shift+Z 调出输入框（虽然不习惯也不爽，但能支持中文输入已经不错啦_^)</li>
-<li>3.在输入框窗口输入中文，然后按下Enter或者Ctrl+Enter键输入文字到sublime text 2</li>
-<li>4.点击>右方向键或者End键把光标移动到最后，进行继续输入（回到1）</li>
-</ul>
+<pre><code>2&gt;&amp;1 &gt;ls-output.txt
+</code></pre>
 
+<p>则标准错误定向到屏幕。</p>
 
-<p>说明：</p>
+<h3>新版 shell</h3>
 
-<p>该插件只能在linux下使用，对于windows或者mac是不支持的。</p>
+<p>现在的 bash 版本提供了第二种方法，更精简合理的方法来执行这种联合的重定向。</p>
+
+<pre><code>ls -l /bin/usr &amp;&gt; ls-output.txt 
+</code></pre>
+
+<p>在这个例子里面，我们使用单单一个表示法 &amp;> 来重定向标准输出和错误到文件 ls-output.txt。</p>
+
+<h2>结语</h2>
+
+<p>入门级别的学习，Θ_Θ。比起 《鸟哥的 Linux 私房菜》，推荐下面这个简短轻快的读物，见 Reference。</p>
 
 <h2>Reference</h2>
 
-<p><a href="http://www.zhihu.com/question/20163104">知乎</a></p>
+<ul>
+<li><a href="http://billie66.github.io/TLCL/book/zh/chap07.html">The Linux Command Line</a></li>
+</ul>
+
 
         </div>
         <div class="share clearfix">
@@ -159,10 +157,8 @@ git clone https://github.com/xgenvn/InputHelper.git
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/css3-linear-gradient" rel="bookmark" title="旧一篇">&laquo;&nbsp;关于 CSS3 的 linear-gradient</a>
+                <a class="left" href="/articles/less-vs-sass" rel="bookmark" title="旧一篇">&laquo;&nbsp;CSS 预处理器 LESS vs SASS...</a>
             
-            
-                <a class="right" href="/articles/ubuntu-github-git-jekyll" rel="bookmark" title="新一篇">ubuntu配置github+git+jekyll环境&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -175,7 +171,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -184,7 +181,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -193,7 +191,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -202,7 +201,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -211,7 +211,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -220,7 +221,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -229,7 +231,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -238,7 +241,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -247,108 +251,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
-                    
-                        
-                    
                 
                      
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                            
-                                
-                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/sublime-text-2" title="sublime text 2 插件使用">&raquo;&nbsp;sublime text 2 插件使用</a></li>
-                                
-                            
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                            
-                                
-                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/sublime-text-2" title="sublime text 2 插件使用">&raquo;&nbsp;sublime text 2 插件使用</a></li>
-                                
-                            
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
                     
                         
                             
@@ -395,7 +299,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -404,7 +309,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
+                
+                     
                     
                         
                     
@@ -413,34 +319,8 @@ git clone https://github.com/xgenvn/InputHelper.git
                     
                         
                     
-                        
-                    
-                        
-                    
                 
                      
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                        
                     
                         
                     
@@ -450,10 +330,6 @@ git clone https://github.com/xgenvn/InputHelper.git
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
-                   
-                    <li>
-                        <a href="/articles/linux-study-shell-redirect" title="shell 之重定向" rel="bookmark">&raquo;&nbsp;shell 之重定向</a>
-                    </li>                                   
                    
                     <li>
                         <a href="/articles/less-vs-sass" title="CSS 预处理器  LESS vs SASS" rel="bookmark">&raquo;&nbsp;CSS 预处理器  LESS vs SASS</a>
@@ -489,6 +365,10 @@ git clone https://github.com/xgenvn/InputHelper.git
                    
                     <li>
                         <a href="/articles/screen-sh" title="传说中的 screen" rel="bookmark">&raquo;&nbsp;传说中的 screen</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用" rel="bookmark">&raquo;&nbsp;xrandr 命令小用</a>
                     </li>                                   
                 
                 </ul>

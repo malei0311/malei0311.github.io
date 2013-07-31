@@ -4,13 +4,74 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-07-30T16:41:20+08:00</updated>
+   <updated>2013-07-31T11:17:49+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>shell 之重定向</title>
+     <link href="http://webcraft.malei.tk/articles/linux-study-shell-redirect"/>
+     <updated>2013-07-31T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/linux-study-shell-redirect</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;在前面的文章学习 &lt;a href=&quot;/articles/screen-sh/&quot;&gt;screen&lt;/a&gt; 时，已经用过 &lt;code&gt;nohup&lt;/code&gt; 。不过，像那么用，每次他都会写入默认的 nohup.out 文件中，并且每次都是叠加的，这么就造成一个可见的丑陋的文件无休止的增大，( ︶︿︶)_╭∩╮，那么就让他隐藏吧....&lt;/p&gt;
+
+&lt;h2&gt;开始&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;nohup python /home/malei/programs/goagent/local/proxy.py &amp;gt; .nohup.out 2&amp;gt;&amp;amp;1 &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就好了，看不见那个令人不愉快的文件，且每次都是重写的，不会变得相当大了，︵(@￣︶￣@)︵。这种写法是 重定向标准输出和错误到同一个文件，详情，如下 ⟱&lt;/p&gt;
+
+&lt;h2&gt;重定向标准输出和错误到同一个文件&lt;/h2&gt;
+
+&lt;h3&gt;旧版 shell&lt;/h3&gt;
+
+&lt;p&gt;可能有这种情况，我们希望捕捉一个命令的所有输出到一个文件。为了完成这个，我们 必须同时重定向标准输出和标准错误。有两种方法来完成任务。第一个，传统的方法， 在旧版本 shell 中也有效：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ls -l /bin/usr &amp;gt; ls-output.txt 2&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用这种方法，我们完成两个重定向。首先重定向标准输出到文件 ls-output.txt，然后 重定向文件描述符2（标准错误）到文件描述符1（标准输出）使用表示法 &lt;code&gt;2&amp;gt;&amp;amp;1&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;注意重定向的顺序安排非常重要。标准错误的重定向必须总是出现在标准输出 重定向之后，要不然它不起作用。上面的例子，&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;ls-output.txt 2&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;重定向标准错误到文件 ls-output.txt，但是如果命令顺序改为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;2&amp;gt;&amp;amp;1 &amp;gt;ls-output.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;则标准错误定向到屏幕。&lt;/p&gt;
+
+&lt;h3&gt;新版 shell&lt;/h3&gt;
+
+&lt;p&gt;现在的 bash 版本提供了第二种方法，更精简合理的方法来执行这种联合的重定向。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ls -l /bin/usr &amp;amp;&amp;gt; ls-output.txt 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在这个例子里面，我们使用单单一个表示法 &amp;amp;&gt; 来重定向标准输出和错误到文件 ls-output.txt。&lt;/p&gt;
+
+&lt;h2&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;入门级别的学习，Θ_Θ。比起 《鸟哥的 Linux 私房菜》，推荐下面这个简短轻快的读物，见 Reference。&lt;/p&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://billie66.github.io/TLCL/book/zh/chap07.html&quot;&gt;The Linux Command Line&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
    
    <entry>
      <title>CSS 预处理器  LESS vs SASS</title>
@@ -27,7 +88,7 @@
 
 &lt;p&gt;sass虽然是最早的，但是一开始还是不太好用，而且使用缩进作为分隔符，不符合css使用大括号的习惯，所以less以后起之秀的身份轻松赢得了人心，后来sass借鉴于less的一些思想，改进了自己的设计，并有了scss，然后经过几个版本的更新，特别版本3.2.0做了些革命性的更新，以使它从其他几个编译处理器中脱颖而出。&lt;/p&gt;
 
-&lt;p&gt;由上面可见，有时太激进了，用户是不领情的，“步子走大了，容易...”，你懂的。不过现在类 sass 的写法还挺受欢迎的：HAML，Slim，CoffeeScript，jade等...&lt;/p&gt;
+&lt;p&gt;由上面可见，有时太激进了，用户是不领情的，“步子走大了，容易...”，你懂的。不过现在类 sass 的写法还挺受欢迎的：HAML，Slim，CoffeeScript，jade，styleus等...&lt;/p&gt;
 
 &lt;h3&gt;ㄟ(￣▽￣ㄟ)&lt;/h3&gt;
 
@@ -665,17 +726,6 @@ CRT1 就是笔记本上的VGA端口(Video Graphics Array，即视频图形阵列
 
 
 &lt;p&gt;经测试，对于我这个悲催的 &lt;code&gt;A卡&lt;/code&gt; 来说，&lt;code&gt;先连VGA线，再开机&lt;/code&gt; 是个不错的选择.&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>Drupal 主题开发</title>
-     <link href="http://webcraft.malei.tk/articles/drupal-theme"/>
-     <updated>2013-03-04T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/drupal-theme</id>
-     <content type="html">&lt;h2&gt;Drupal的预处理函数&lt;/h2&gt;
-
-&lt;p&gt;ads&lt;/p&gt;
 </content>
    </entry>
    
