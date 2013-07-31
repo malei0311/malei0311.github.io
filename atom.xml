@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-07-31T11:17:49+08:00</updated>
+   <updated>2013-07-31T15:47:30+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
@@ -116,7 +116,7 @@
 &lt;ul&gt;
 &lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/css-fibonacci/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6099394&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;不怕慢也可以 codepen: &lt;a href=&quot;http://codepen.io/malei0311/pen/IsfLm&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;在线调试: &lt;a href=&quot;http://codepen.io/malei0311/pen/IsfLm&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 
@@ -140,7 +140,7 @@
 &lt;ul&gt;
 &lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/css-animation/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6093738&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;不怕慢也可以 codepen: &lt;a href=&quot;http://codepen.io/malei0311/pen/eqyid&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;在线调试:  &lt;a href=&quot;http://codepen.io/malei0311/pen/eqyid&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 
@@ -242,6 +242,42 @@
 &lt;li&gt;&lt;a href=&quot;http://sass-lang.com/docs/yardoc/_index.html&quot;&gt;SASS官方文档&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
+</content>
+   </entry>
+   
+   <entry>
+     <title>css vertical align</title>
+     <link href="http://webcraft.malei.tk/articles/css-vertical-align"/>
+     <updated>2013-07-20T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/css-vertical-align</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;垂直居中，自适应垂直居中的一些栗子 ╲⊙⊙╱&lt;/p&gt;
+
+&lt;h2&gt;栗子&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/css-vertical-align/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6119999&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;在线调试: &lt;a href=&quot;http://codepen.io/malei0311/pen/mKGgn&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;注：有的 demo 不支持，屌丝浏览器&lt;/p&gt;
+
+&lt;h2&gt;各 demo 预览&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-vertical-align/demo1.png&quot; alt=&quot;demo1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-vertical-align/demo2.png&quot; alt=&quot;demo1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-vertical-align/demo3.png&quot; alt=&quot;demo1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-vertical-align/demo4.png&quot; alt=&quot;demo1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-vertical-align/demo5.png&quot; alt=&quot;demo1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-vertical-align/demo6.png&quot; alt=&quot;demo1&quot; /&gt;&lt;/p&gt;
 </content>
    </entry>
    
@@ -635,97 +671,6 @@ $ screen -ls
 &lt;li&gt;&lt;a href=&quot;http://www.ibm.com/developerworks/cn/linux/l-cn-screen/&quot; title=&quot;使用 screen 管理你的远程会话&quot;&gt;使用 screen 管理你的远程会话&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-</content>
-   </entry>
-   
-   <entry>
-     <title>xrandr 命令小用</title>
-     <link href="http://webcraft.malei.tk/articles/ubuntu-xrandr-sh"/>
-     <updated>2013-03-04T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/ubuntu-xrandr-sh</id>
-     <content type="html">&lt;h2&gt;外接设备一览&lt;/h2&gt;
-
-&lt;p&gt;在终端输入 &lt;code&gt;xrandr&lt;/code&gt; ：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;LVDS connected (normal left inverted right x axis y axis)
-   1366x768       60.0 +
-   1360x768       60.0  
-   1280x768       60.0  
-   1280x720       60.0  
-   1024x768       60.0  
-   1024x600       60.0  
-   800x600        60.0  
-   800x480        60.0  
-   640x480        60.0  
-DFP1 disconnected (normal left inverted right x axis y axis)
-CRT1 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 510mm x 287mm
-   1920x1080      60.0*+
-   1680x1050      60.0  
-   1400x1050      60.0  
-   1600x900       60.0  
-   1280x1024      75.0     60.0  
-   1440x900       60.0  
-   1280x960       75.0     60.0  
-   1152x864       60.0     75.0  
-   1280x768       75.0     60.0  
-   1280x720       75.0     60.0  
-   1024x768       75.0     60.0  
-   1024x600       75.0     60.0  
-   800x600        75.0     60.3  
-   800x480        75.0     60.3  
-   640x480        75.0     59.9 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;说明：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;LVDS 就是笔记本的显示器输出(Low Voltage Differential Signaling，是一种低压差分信号技术接口)
-DTP1 就是笔记本的HDMI端口(High Definition Multimedia Interface，中文名称是高清晰多媒体接口)
-CRT1 就是笔记本上的VGA端口(Video Graphics Array，即视频图形阵列) =。= CRT是一种使用阴极射线管(Cathode Ray Tube）的显示器
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;xrandr 命令常用方式如下：&lt;/h2&gt;
-
-&lt;p&gt;打开外接显示器(最高分辨率)，与笔记本液晶屏幕显示同样内容（克隆）:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;xrandr --output CRT1 --same-as LVDS --auto  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;打开外接显示器(分辨率为1024x768)，与笔记本液晶屏幕显示同样内容（克隆）:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;xrandr --output CRT1 --same-as LVDS --mode 1024x768  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;打开外接显示器(最高分辨率)，设置为右侧扩展屏幕:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;xrandr --output CRT1 --right-of LVDS --auto  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;关闭外接显示器:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;xrandr --output CRT1 --off  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;打开外接显示器，同时关闭笔记本液晶屏幕（只用外接显示器工作）:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;xrandr --output CRT1 --auto --output LVDS --off  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;关闭外接显示器，同时打开笔记本液晶屏幕 (只用笔记本液晶屏)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;xrandr --output CRT1 --off --output LVDS --auto  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;小结&lt;/h2&gt;
-
-&lt;p&gt;由于在图形界面配置总是报错，所以。。。；如果命令没达到你想要的效果重启一下就可以了，貌似这里有问题，待测试：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;先连VGA线，再开机&lt;/li&gt;
-&lt;li&gt;先开机，再连VGA线&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;经测试，对于我这个悲催的 &lt;code&gt;A卡&lt;/code&gt; 来说，&lt;code&gt;先连VGA线，再开机&lt;/code&gt; 是个不错的选择.&lt;/p&gt;
 </content>
    </entry>
    
