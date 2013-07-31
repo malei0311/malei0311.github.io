@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-07-31T15:47:30+08:00</updated>
+   <updated>2013-07-31T16:11:08+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
@@ -120,6 +120,8 @@
 &lt;/ul&gt;
 
 
+&lt;p&gt;&lt;img src=&quot;/images/articles/less-vs-sass/css-fibonacci.png&quot; alt=&quot;css-fibonacci&quot; /&gt;&lt;/p&gt;
+
 &lt;pre&gt;&lt;code&gt;@for $i from 1 through $num {
   $temp: $i / 2 + 0px;
 
@@ -143,6 +145,8 @@
 &lt;li&gt;在线调试:  &lt;a href=&quot;http://codepen.io/malei0311/pen/eqyid&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/less-vs-sass/css-animation-series-multi.png&quot; alt=&quot;css-animation-series-multi&quot; /&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;.loopingClass (@index,@father) when (@index =&amp;lt; @particles) {
   //这里需要一个恶心的 mixin + 关键字 when 实现一个条件判断，有木有 =。= !
