@@ -4,7 +4,7 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-07-31T16:11:08+08:00</updated>
+   <updated>2013-08-01T20:50:25+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
@@ -244,6 +244,46 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://css-tricks.com/sass-vs-less/&quot;&gt;sass-vs-less&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://sass-lang.com/docs/yardoc/_index.html&quot;&gt;SASS官方文档&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>A pure CSS demo Camera</title>
+     <link href="http://webcraft.malei.tk/articles/css-camera"/>
+     <updated>2013-07-28T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/css-camera</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;用 pure css3 实现了一个相机，镜头会转动...&lt;/p&gt;
+
+&lt;h2&gt;demo&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/pure-css-camera/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6130923&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;在线调试: &lt;a href=&quot;http://codepen.io/malei0311/pen/gBpuq&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;预览&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/pure-css-camera/pure-css-camera.png&quot; alt=&quot;css-camera&quot; /&gt;&lt;/p&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>Image 的用例</title>
+     <link href="http://webcraft.malei.tk/articles/image%27s-usage"/>
+     <updated>2013-07-25T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/image's-usage</id>
+     <content type="html">&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://bug257454.bugzilla.mozilla.org/attachment.cgi?id=157438&quot;&gt;test timeout mozilla&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jsperf.com/smallest-timeout&quot; title=&quot;or add /2&quot;&gt;Smallest timeout value&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#timers&quot;&gt;WHATWG Timers&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 </content>
@@ -498,181 +538,6 @@ lsb_release -a
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://support.amd.com/cn/gpudownload/linux/Pages/radeon_linux.aspx&quot;&gt;官方驱动下载&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://wiki.cchtml.com/index.php/Category:Installation_Documentation&quot;&gt;非官方 ATI linux按装Wiki&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-</content>
-   </entry>
-   
-   <entry>
-     <title>wine 你懂的</title>
-     <link href="http://webcraft.malei.tk/articles/ubuntu-wine"/>
-     <updated>2013-03-06T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/ubuntu-wine</id>
-     <content type="html">&lt;h2&gt;bug:=。=:solve&lt;/h2&gt;
-
-&lt;p&gt;you know, my ubuntu =&gt; 12.10 64bit&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/articles/ubuntu-wine/wine.png&quot; title=&quot;wine logo&quot; alt=&quot;wine logo&quot; /&gt; Wine Cheers!&lt;/p&gt;
-
-&lt;h3&gt;bug详情：&lt;/h3&gt;
-
-&lt;p&gt;p11-kit: couldn't load module: /usr/lib/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so: /usr/lib/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so: 无法打开共享对象文件: 没有那个文件或目录&lt;/p&gt;
-
-&lt;h3&gt;解决方案：&lt;/h3&gt;
-
-&lt;p&gt;1) 安装 getlibs:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;wget https://launchpadlibrarian.net/53907140/getlibs_2.06-0ubuntu1~ppa2_all.deb
-sudo dpkg -i getlibs_2.06-0ubuntu1~ppa2_all.deb
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;2)安装 32bit 库:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo getlibs -p gnome-keyring:i386
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果遇到此错误:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Failed to download file http://mirrors.kernel.org/ubuntu/pool/main/g/gnome-keyring/gnome-keyring_3.4.1-4ubuntu1~precise1_i386.deb
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;请在这下载:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;wget https://launchpad.net/~gnome3-team/+archive/gnome3/+files/gnome-keyring_3.4.1-4ubuntu1~precise1_i386.deb
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然后:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;getlibs -i &quot;path-of-the-file&quot;/gnome-keyring_3.4.1-4ubuntu1~precise1_i386.deb
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果所给链接损坏，请在这搜：https://launchpad.net&lt;/p&gt;
-
-&lt;p&gt;3) 生成符号链接:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo mkdir -p /usr/lib/i386-linux-gnu/pkcs11/ 
-sudo ln -s /usr/lib32/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so /usr/lib/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O啦!&lt;/p&gt;
-
-&lt;h3&gt;当遇到这个bug时&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;fixme:winediag:AUDDRV_GetAudioEndpoint Winepulse is not officially supported by the wine project
-fixme:winediag:AUDDRV_GetAudioEndpoint For sound related feedback and support, please visit http://ubuntuforums.org/showthread.php?t=1960599
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;bug中给了链接，照着链接中的做，可解&lt;/p&gt;
-
-&lt;h2&gt;几个常用命令&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;winecfg
-winefile
-wine uninstaller
-wine xxoo.exe
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;结论&lt;/h2&gt;
-
-&lt;p&gt;wine 不如 virtualbox 安装的 xp 好用&lt;/p&gt;
-
-&lt;h2&gt;Reference&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://help.ubuntu.com/community/Wine&quot; title=&quot;Wine Documentation&quot;&gt;Wine Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://askubuntu.com/questions/127848/wine-cant-find-gnome-keyring-pkcs11-so&quot; title=&quot;Wine can't find gnome-keyring-pkcs11.so&quot;&gt;Wine can't find gnome-keyring-pkcs11.so&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://ubuntuforums.org/showthread.php?t=1960599&quot; title=&quot;winepulse&quot;&gt;Winepulse&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-</content>
-   </entry>
-   
-   <entry>
-     <title>传说中的 screen</title>
-     <link href="http://webcraft.malei.tk/articles/screen-sh"/>
-     <updated>2013-03-06T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/screen-sh</id>
-     <content type="html">&lt;h2&gt;基本语法&lt;/h2&gt;
-
-&lt;p&gt;Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。Screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/SSH连接窗口那样。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;screen [-AmRvx -ls -wipe][-d &amp;lt;作业名称&amp;gt;][-h &amp;lt;行数&amp;gt;][-r &amp;lt;作业名称&amp;gt;][-s ][-S &amp;lt;作业名称&amp;gt;]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;参数说明&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;-A              将所有的视窗都调整为目前终端机的大小。
--d &amp;lt;作业名称&amp;gt;       将指定的screen作业离线。
--h &amp;lt;行数&amp;gt; 　     指定视窗的缓冲区行数。
--m              即使目前已在作业中的screen作业，仍强制建立新的screen作业。
--r &amp;lt;作业名称&amp;gt;       恢复离线的screen作业。
--R              先试图恢复离线的作业。若找不到离线的作业，即建立新的screen作业。
--s              指定建立新视窗时，所要执行的shell。
--S &amp;lt;作业名称&amp;gt;   指定screen作业的名称。
--v              显示版本信息。
--x              恢复之前离线的screen作业。
--ls或--list    显示目前所有的screen作业。
--wipe           检查目前所有的screen作业，并删除已经无法使用的screen作业。
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;nohup vs screen&lt;/h3&gt;
-
-&lt;p&gt;如果我们可以忽略SIGHUP信号，关掉窗口应该就不会影响程序的运行了。nohup命令可以达到这个目的，如果程序的标准输出/标准错误是终端，nohup默认将其重定向到nohup.out文件。值得注意的是nohup命令只是使得程序忽略SIGHUP信号，还需要使用标记&amp;amp;把它放在后台运行。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;nohup &amp;lt;command&amp;gt; [argument…] &amp;amp;
-
-//我最常用nohup的地方就是开启 goagent 代理
-$ !nohup //执行最近执行的一条 nohup 命令，我最近的一条通常都是 nohup python ~/programs/goagent/local/proxy.py &amp;amp;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;虽然nohup很容易使用，但还是比较“简陋”的，对于简单的命令能够应付过来，对于复杂的需要人机交互的任务就麻烦了。&lt;/p&gt;
-
-&lt;h2&gt;快捷键&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;C-a ?   显示所有键绑定信息 //貌似我的 ubuntu 这条没反应啊
-C-a w   显示所有窗口列表
-C-a C-a 切换到之前显示的窗口
-C-a c   创建一个新的运行shell的窗口并切换到该窗口
-C-a n   切换到下一个窗口
-C-a p   切换到前一个窗口(与C-a n相对)
-C-a 0..9    切换到窗口0..9
-C-a a   发送 C-a 到当前窗口
-C-a d   暂时断开screen会话
-C-a k   杀掉当前窗口  =。=
-C-a [   进入拷贝/回滚模式
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;一个小例子&lt;/h2&gt;
-
-&lt;p&gt;你可以不中断screen窗口中程序的运行而暂时断开（detach）screen会话，并在随后时间重新连接（attach）该会话，重新控制各窗口中运行的程序&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ &amp;gt;screen.test
-$ screen vi screen.test //作为测试，随便敲点东西，然后键入 C-a d
-  [detached from 4804.pts-0.malei-Inspiron-N4010]
-$ screen -ls
-  There is a screen on:
-    4804.pts-0.malei-Inspiron-N4010 (2013年03月06日 17时52分03秒) (Detached)
-  1 Socket in /var/run/screen/S-malei.
-
-$ screen -r 4804.pts-0.malei-Inspiron-N4010 //4804 [tab] 补全即可(进入我们断开的绘画继续工作) C-a d
-  [detached from 4804.pts-0.malei-Inspiron-N4010]
-$ screen -ls
-  There is a screen on:
-    4804.pts-0.malei-Inspiron-N4010 (2013年03月06日 17时52分04秒) (Detached)
-  1 Socket in /var/run/screen/S-malei.
-
-//发现时间，暂停了 =。= 有木有  =========&amp;gt; 靠，颜色高亮好混乱啊
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果screen的进程打开的比较多，为了方便识别不同的screen，可以加上 -S 参数，给每个screen不同的
-名称 比如 &lt;code&gt;screen -S test&lt;/code&gt; ,进程里就会看到这个screen被标为 &lt;code&gt;test.pts-0.host&lt;/code&gt; ,而不是进程ID了。&lt;/p&gt;
-
-&lt;h2&gt;Reference&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.gnu.org/software/screen/manual/screen.html&quot; title=&quot;screen命令官方文档&quot;&gt;screen命令官方文档&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html&quot; title=&quot;linux screen 命令详解&quot;&gt;linux screen 命令详解&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ibm.com/developerworks/cn/linux/l-cn-screen/&quot; title=&quot;使用 screen 管理你的远程会话&quot;&gt;使用 screen 管理你的远程会话&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 </content>

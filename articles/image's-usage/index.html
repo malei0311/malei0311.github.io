@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>菜鸟学习linux | WebCraft</title>
+    <title>Image 的用例 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="完全切换到 linux(ubuntu) 了，不得不多学一点命令了...，包括 kvm vs vbox、查看进程或端口、对一个文件夹下的目录和文件分别赋权限等 | malei0311's Blog" />
-    <meta name="keywords" content="ubuntu,malei0311" />
+    <meta name="description" content="... | malei0311's Blog" />
+    <meta name="keywords" content="image, html,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/linux-study">菜鸟学习linux</a></h1>
+            <h1><a href="/articles/image%27s-usage">Image 的用例</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-03-02">2013-03-02</time>
+                    <time class="date" pubdate="2013-07-25">2013-07-25</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#ubuntu">
-                                    ubuntu
+                                <a href="/tags.html#html">
+                                    html
                                 </a>
                                 <span>
                                     ,
@@ -91,162 +91,16 @@
                 
             </div>
         </div>
-        <p class="description">完全切换到 linux(ubuntu) 了，不得不多学一点命令了...，包括 kvm vs vbox、查看进程或端口、对一个文件夹下的目录和文件分别赋权限等</p>
+        <p class="description">...</p>
         <div class="article-div-content">
-        	<h2>总述</h2>
-
-<p>昨天重装系统:64位ubuntu（为了便于开发，支持8G内存），在同事帮忙配置开发环境的时候，看着他们一路命令敲下来，真是酷啊，于是一冲动，卸载了原来的 win7 + ubuntu(32bit) 双系统，开始了纯正的 linux 之旅. 先坦白一下历经坎坷的 <code>dell</code> 小本的血泪史:</p>
+        	<h2>Reference</h2>
 
 <ul>
-<li>2011年元旦，它拔山涉水，从石家庄的中山路来到了北二环</li>
-<li>由纯正的 win7 血统 => win7旗舰版(伪)</li>
-<li>=> vmware 虚拟机上装着各种系统的杂乱</li>
-<li>=> win7 + ubuntu的双系统</li>
-<li>(小插曲)大四上半学期快结束的时候:2011-12-09:跟我来到了帝都</li>
-<li>=> 完全开源的世界 linux(ubuntu) =。= EOF;</li>
-<li>// 内存：2G => 2G * 2 => 4G * 2</li>
+<li><a href="https://bug257454.bugzilla.mozilla.org/attachment.cgi?id=157438">test timeout mozilla</a></li>
+<li><a href="http://jsperf.com/smallest-timeout" title="or add /2">Smallest timeout value</a></li>
+<li><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#timers">WHATWG Timers</a></li>
 </ul>
 
-
-<p>听说《鸟哥的linux私房菜》不错，可以在闲的无聊的时候看一看...</p>
-
-<h2>KVM vs VirtualBox</h2>
-
-<h3>Deferences</h3>
-
-<p>vbox 是由 qemu 改写而成，包含大量 qemu 代码。</p>
-
-<ul>
-<li>可以使用于"不支持"虚拟化技术的cpu。</li>
-<li>值得说的一点：vbox 在图形方面比较好，能进行2D 3D加速。</li>
-<li>但cpu控制不理想（估计是因为图形支持的缘故）。</li>
-<li>操作上有独立的图形界面，易于上手。</li>
-</ul>
-
-
-<p>kvm(Kernel-based Virtual Machine) 是linux内核包含的东西，使用qemu作为上层管理（命令行）。</p>
-
-<ul>
-<li>要求 cpu 必须支持虚拟化。</li>
-<li>性能：作为服务器很好，可是图形能力十分的差。即使放电影，图像也是像刷油漆一样，一层一层的。</li>
-<li>cpu使用率控制很好。</li>
-<li>控制上比较简洁，功能比较丰富：比如使用 “无敌功能” 所有更改指向内存，你的镜像永远保持干净。 “母镜像”功能让你拥有n个独立快照点。还有很多参数。另外，kvm作为内核级的虚拟机，刚开始发展关注的公司比较多——但是还没有达到商业应用的水平。</li>
-</ul>
-
-
-<p>总体而言：在支持 虚拟化 的情况下，vbox 和 kvm 的性能差不多，主要是面向对象不同：kvm使用于服务器，vbox使用于桌面应用。</p>
-
-<p>如果要看性能对比：<a href="http://os.51cto.com/art/201203/324172.htm" title="Ubuntu 11.10 Xen、KVM 和 VirtualBox 比拼">Ubuntu 11.10 Xen、KVM 和 VirtualBox 比拼</a></p>
-
-<p>这里详细学一下 KVM，官网有详细的教程 <a href="http://wiki.ubuntu.org.cn/Kvm%E6%95%99%E7%A8%8B" title="Kvm 教程">传送门</a></p>
-
-<h3>Fix BUG</h3>
-
-<p>by the way,当安装 VirtualBox 增强功能时，报这个错误：</p>
-
-<pre><code>Failed to open the CD/DVD image /home/malei/.VirtualBox/VBoxGuestAdditions_4.1.18.iso.
-The medium '/home/malei/.VirtualBox/VBoxGuestAdditions_4.1.18.iso' can't be used as the requested device type
-</code></pre>
-
-<p>我们可以这样解决：</p>
-
-<pre><code>sudo apt-get install virtualbox-guest-additions
-</code></pre>
-
-<h2>常用命令一览</h2>
-
-<p>他们很简单，但是初学者，你懂的</p>
-
-<h3>某端口被占用</h3>
-
-<pre><code>sudo netstat -antup | grep &lt;要查询的端口&gt;
-</code></pre>
-
-<h4>example:</h4>
-
-<p>查找 <code>3306</code> 端口被谁占用了:</p>
-
-<pre><code>sudo netstat -antup | grep 3306
-</code></pre>
-
-<p>结果:</p>
-
-<pre><code>tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      4090/mysqld 
-</code></pre>
-
-<p><code>4090</code> 就是他的端口</p>
-
-<pre><code>kill 4090
-</code></pre>
-
-<p>杀掉他就行了</p>
-
-<p>如果不放心，在杀之前</p>
-
-<pre><code>ps -ef | grep mysqld
-</code></pre>
-
-<p>果然，是那个进程号，杀对了</p>
-
-<h3>对一个文件夹下的目录和文件分别赋权限</h3>
-
-<h4>shell 脚本</h4>
-
-<p>写一个脚本(给他可执行的权限)，命名为 chmod.sh  放在目的路径下</p>
-
-<pre><code>for a in $(find .)
-do
-    if [ -d "$a" ]
-        then
-            chmod 755 $a
-        else
-            chmod 644 $a
-    fi
-done
-</code></pre>
-
-<p>然后(貌似遇到文件或目录中有空格的 =。= 不行)</p>
-
-<pre><code>./chmod.sh
-</code></pre>
-
-<p>完事</p>
-
-<h4>避免麻烦，直接在 terminal 中敲命令</h4>
-
-<pre><code>find . -type d -exec chmod 755 {} \;
-find . -type f -exec chmod 644 {} \;
-</code></pre>
-
-<p>搞定</p>
-
-<h2>源</h2>
-
-<pre><code>deb http://mirrors.163.com/ubuntu/ quantal main restricted  
-deb-src http://mirrors.163.com/ubuntu/ quantal main restricted  
-deb http://mirrors.163.com/ubuntu/ quantal-updates main restricted  
-deb-src http://mirrors.163.com/ubuntu/ quantal-updates main restricted  
-deb http://mirrors.163.com/ubuntu/ quantal universe  
-deb-src http://mirrors.163.com/ubuntu/ quantal universe  
-deb http://mirrors.163.com/ubuntu/ quantal-updates universe  
-deb-src http://mirrors.163.com/ubuntu/ quantal-updates universe  
-deb http://mirrors.163.com/ubuntu/ quantal multiverse  
-deb-src http://mirrors.163.com/ubuntu/ quantal multiverse  
-deb http://mirrors.163.com/ubuntu/ quantal-updates multiverse  
-deb-src http://mirrors.163.com/ubuntu/ quantal-updates multiverse  
-deb http://mirrors.163.com/ubuntu/ quantal-backports main restricted universe multiverse  
-deb-src http://mirrors.163.com/ubuntu/ quantal-backports main restricted universe multiverse  
-deb http://mirrors.163.com/ubuntu/ quantal-security main restricted  
-deb-src http://mirrors.163.com/ubuntu/ quantal-security main restricted  
-deb http://mirrors.163.com/ubuntu/ quantal-security universe  
-deb-src http://mirrors.163.com/ubuntu/ quantal-security universe  
-deb http://mirrors.163.com/ubuntu/ quantal-security multiverse  
-deb-src http://mirrors.163.com/ubuntu/ quantal-security multiverse  
-deb http://extras.ubuntu.com/ubuntu quantal main  
-deb-src http://extras.ubuntu.com/ubuntu quantal main
-</code></pre>
-
-<h2>结语</h2>
 
         </div>
         <div class="share clearfix">
@@ -258,10 +112,10 @@ deb-src http://extras.ubuntu.com/ubuntu quantal main
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/js-bitwise-operators" rel="bookmark" title="旧一篇">&laquo;&nbsp;从 (97 & ~32) ==...</a>
+                <a class="left" href="/articles/css-vertical-align" rel="bookmark" title="旧一篇">&laquo;&nbsp;css vertical align</a>
             
             
-                <a class="right" href="/articles/drupal-theme" rel="bookmark" title="新一篇">Drupal 主题开发&nbsp;&raquo;</a>
+                <a class="right" href="/articles/css-camera" rel="bookmark" title="新一篇">A pure CSS demo Camera...&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -343,10 +197,15 @@ deb-src http://extras.ubuntu.com/ubuntu quantal main
                      
                     
                         
-                    
-                
-                     
-                    
+                            
+                                
+                                    <li><a href="/articles/image%27s-usage" title="Image 的用例">&raquo;&nbsp;Image 的用例</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/the-diff-between-alt-and-title" title="img 中alt和tittle的区别">&raquo;&nbsp;img 中alt和tittle的区别</a></li>
+                                
+                            
                         
                     
                 
@@ -358,43 +217,10 @@ deb-src http://extras.ubuntu.com/ubuntu quantal main
                      
                     
                         
-                            
-                                
-                                    <li><a href="/articles/linux-study-shell-redirect" title="shell 之重定向">&raquo;&nbsp;shell 之重定向</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/ubuntu-ati-driver" title="ubuntu 12.10 x64 ATI 5650 安装显卡驱动">&raquo;&nbsp;ubuntu 12.10 x64 ATI 5650 安装显卡驱动</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
-                                
-                            
-                                
-                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
-                                
-                            
+                    
+                
+                     
+                    
                         
                     
                 
@@ -447,10 +273,6 @@ deb-src http://extras.ubuntu.com/ubuntu quantal main
                     </li>                                   
                    
                     <li>
-                        <a href="/articles/image%27s-usage" title="Image 的用例" rel="bookmark">&raquo;&nbsp;Image 的用例</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/css-vertical-align" title="css vertical align" rel="bookmark">&raquo;&nbsp;css vertical align</a>
                     </li>                                   
                    
@@ -472,6 +294,10 @@ deb-src http://extras.ubuntu.com/ubuntu quantal main
                    
                     <li>
                         <a href="/demos/xx-slides" title="slides" rel="bookmark">&raquo;&nbsp;slides</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/ubuntu-ati-driver" title="ubuntu 12.10 x64 ATI 5650 安装显卡驱动" rel="bookmark">&raquo;&nbsp;ubuntu 12.10 x64 ATI 5650 安装显卡驱动</a>
                     </li>                                   
                 
                 </ul>
