@@ -9,7 +9,7 @@
     <title>Image 的用例 | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="... | malei0311's Blog" />
+    <meta name="description" content="未完，待续... | malei0311's Blog" />
     <meta name="keywords" content="image, html,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
@@ -91,14 +91,70 @@
                 
             </div>
         </div>
-        <p class="description">...</p>
+        <p class="description">未完，待续...</p>
         <div class="article-div-content">
-        	<h2>Reference</h2>
+        	<h2>总述</h2>
+
+<p>貌似话说 image 的应用还挺多的，这里不自量力的试着总结一下，难免遗漏...isMap 和 useMap 这里不涉及</p>
+
+<h2>属性 height &amp;&amp; width</h2>
+
+<p>为图像指定 height 和 width 属性是一个好习惯。如果设置了这些属性，就可以在页面加载时为图像预留空间。如果没有这些属性，浏览器就无法了解图像的尺寸，也就无法为图像保留合适的空间，因此当图像加载时，页面的布局就会发生变化。</p>
+
+<p>无论有没有指定 width 和 height，在 css 的作用下（重绘），img 的大小都会乖乖听 css 的，另外，如果只制定 height 和 width 的其中之一，他会按照您的意思等比例的缩放（无论是 css 中，还是 靠 height or width 属性，它都会听话）</p>
+
+<h2>获取 Image 的真实大小</h2>
+
+<p>前面说 image 能够缩放（虽然不推荐缩放），但是有时候我们并不知道 img 是否进行了缩放，并且我们很想知道他的真实大小。How to do ?</p>
+
+<h3>惯用的、并且支持屌丝浏览器的做法</h3>
+
+<p>用 Image 对象的方法，如下：</p>
+
+<pre><code>var preloadImg = function(url,callback) {
+  var img = new Image(); // HTML5 Constructor
+  img.src = url;
+  if(img.complete) {
+    callback(img);
+    return;
+  }
+  img.onload = function(){
+    callback(img); // callback 你就可以任意操作了
+  }
+}
+</code></pre>
+
+<h3>do you know naturalWidth and naturalHeight ?</h3>
+
+<pre><code>// 等所有资源都下载完
+window.onload = function(){
+  var img = document.querySelector('#img-test');
+  console.log(img.naturalHeight,img.naturalWidth); // 图片本身的大小
+}
+</code></pre>
+
+<h2>Image 在 timeout 中的应用</h2>
+
+<p>...</p>
+
+<h2>Image ping ?</h2>
+
+<p>...</p>
+
+<h2>img src xss ?</h2>
+
+<p>...</p>
+
+<h2>Reference</h2>
 
 <ul>
 <li><a href="https://bug257454.bugzilla.mozilla.org/attachment.cgi?id=157438">test timeout mozilla</a></li>
 <li><a href="http://jsperf.com/smallest-timeout" title="or add /2">Smallest timeout value</a></li>
 <li><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#timers">WHATWG Timers</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement">HTMLImageElement-MDN</a></li>
+<li><a href="https://github.com/wangxiao/jsping/blob/master/jsping.js">js-ping</a></li>
+<li><a href="http://www.cnblogs.com/TomXu/archive/2011/12/31/2289423.html" title="严重推荐 汤姆大叔 系列">立即调用的函数表达式</a></li>
+<li><a href="http://sofish.de/2138">通过 img URL 实施 XSS 的解决方案</a></li>
 </ul>
 
 
