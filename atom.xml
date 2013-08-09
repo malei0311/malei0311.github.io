@@ -4,13 +4,117 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-08-02T20:10:35+08:00</updated>
+   <updated>2013-08-09T23:23:17+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>郁闷的一天 大战 git review</title>
+     <link href="http://webcraft.malei.tk/articles/solve-git-review-problem"/>
+     <updated>2013-08-09T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/solve-git-review-problem</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;伴着昨天的问题入睡啊，张开眼，随之而来的就是郁闷的一天。。。how  to get rid of it, let's go...&lt;/p&gt;
+
+&lt;h2&gt;问题描述&lt;/h2&gt;
+
+&lt;h3&gt;情况一 UnicodeEncodeError&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
+  File &quot;/usr/bin/git-review&quot;, line 1170, in &amp;lt;module&amp;gt;
+    print(e)
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 180-183: ordinal not in range(128)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;just google it, you can get some resolution:&lt;/p&gt;
+
+&lt;h4&gt;No.1 在文件的前几行加上，这里加在 /usr/bin/git-review 中&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;No.2 号称可以重启后，也是 utf8 编码，可是在我这不 work。python的 /usr/local/lib/python2.7/site-packages 文件夹下新建一个 sitecustomize.py，内容为：&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;# encoding=utf8  
+import sys  
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另外，ubuntu13.04 存在两个版本的 python:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;python 2.7.*;&lt;/li&gt;
+&lt;li&gt;python 3.3.*&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;默认是 python2.7，默认编码 ascii； python3 默认编码 utf8&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd /usr/bin &amp;amp;&amp;amp; ll python* // you will see details
+// test default encoding
+$ python
+&amp;gt;&amp;gt;&amp;gt; import sys
+&amp;gt;&amp;gt;&amp;gt; sys.getdefaultencoding() // 'ascii'
+
+$ python3
+&amp;gt;&amp;gt;&amp;gt; import sys
+&amp;gt;&amp;gt;&amp;gt; sys.getdefaultencoding() // 'utf-8'
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;情况二&lt;/h3&gt;
+
+&lt;p&gt;when I : &lt;code&gt;$ git review&lt;/code&gt; or &lt;code&gt;$ git review -s&lt;/code&gt; , it feedback me:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Problems encountered installing commit-msg hook
+The following command failed with exit code 1
+    &quot;scp -P None :hooks/commit-msg .git/hooks/commit-msg&quot;
+-----------------------
+cp: 无法获取&quot;:hooks/commit-msg&quot; 的文件状态(stat): 没有那个文件或目录
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;when I :  &lt;code&gt;ssh -p 29418 username@review.*****.com&lt;/code&gt; (username is your username of gerrit), it feedback me:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  ****    Welcome to Gerrit Code Review    ****
+
+  Hi Ma Lei, you have successfully connected over SSH.
+
+  Unfortunately, interactive shells are disabled.
+  To clone a hosted Git repository, use:
+
+  git clone ssh://malei0311@review.*****.com:29418/REPOSITORY_NAME.git
+
+Connection to review.*****.com closed.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;so.....,how to do ?&lt;/p&gt;
+
+&lt;p&gt;according to the feedback message:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cp: 无法获取&quot;:hooks/commit-msg&quot; 的文件状态(stat): 没有那个文件或目录
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;let's just create the file &lt;code&gt;commit-msg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ll .git/hooks/
+// you will see commit-msg.sample
+$ cd .git/hooks &amp;amp;&amp;amp; cp commit-msg.sample commit-msg &amp;amp;&amp;amp; cd -
+$ git review // wow, success!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;郁闷的一天，纠缠于 &lt;code&gt;git-review&lt;/code&gt;，唉，悲剧。。。&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>shell 之重定向</title>
@@ -562,38 +666,6 @@ text：从前景内容的形状（比如文字）作为裁剪区域向外裁剪�
 &lt;li&gt;&lt;a href=&quot;https://github.com/twitter/bower&quot;&gt;bower&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;OptiPNG&lt;/li&gt;
 &lt;li&gt;JPEGtran&lt;/li&gt;
-&lt;/ul&gt;
-
-</content>
-   </entry>
-   
-   <entry>
-     <title>ubuntu 12.10 x64 ATI 5650 安装显卡驱动</title>
-     <link href="http://webcraft.malei.tk/articles/ubuntu-ati-driver"/>
-     <updated>2013-03-30T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/ubuntu-ati-driver</id>
-     <content type="html">&lt;h2&gt;开始&lt;/h2&gt;
-
-&lt;p&gt;由于在安装显卡驱动方面走了不少弯路，也花费了不少时间，害怕了。。。，此篇笔记旨在加深了解，等时机成熟了再实践&lt;/p&gt;
-
-&lt;h3&gt;几条小命令&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;lspci | grep VGA
-
-lsb_release -a
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;结果&lt;/h2&gt;
-
-&lt;p&gt;还没来得及安装，就...&lt;/p&gt;
-
-&lt;p&gt;真的悲剧了,dell 小本近期衰老现象严重，先是换了一块硬盘，没用几天，就又出问题了，表示现已壮烈牺牲，仅此纪念&lt;/p&gt;
-
-&lt;h2&gt;Reference&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://support.amd.com/cn/gpudownload/linux/Pages/radeon_linux.aspx&quot;&gt;官方驱动下载&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://wiki.cchtml.com/index.php/Category:Installation_Documentation&quot;&gt;非官方 ATI linux按装Wiki&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 </content>

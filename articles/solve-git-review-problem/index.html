@@ -6,10 +6,10 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>xrandr 命令小用 | WebCraft</title>
+    <title>郁闷的一天 大战 git review | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="XRandR是 X Rotate and Reflect Extension（改变大小与旋转扩充）的缩写，用来在命令行界面中对linux系统中的 X窗口系统的多屏幕做出一些设定的软件，能更改外接屏幕的大小、分辨率等。因为要切换屏幕，你懂的... | malei0311's Blog" />
+    <meta name="description" content="准确的说是 升级 ubuntu 13.04 后，昨天 凌晨 git review bug，在各路大神的帮助下，搞定了，thanks list： xcl,yjx,xcy | malei0311's Blog" />
     <meta name="keywords" content="ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/ubuntu-xrandr-sh">xrandr 命令小用</a></h1>
+            <h1><a href="/articles/solve-git-review-problem">郁闷的一天 大战 git review</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-03-04">2013-03-04</time>
+                    <time class="date" pubdate="2013-08-09">2013-08-09</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -91,91 +91,104 @@
                 
             </div>
         </div>
-        <p class="description">XRandR是 X Rotate and Reflect Extension（改变大小与旋转扩充）的缩写，用来在命令行界面中对linux系统中的 X窗口系统的多屏幕做出一些设定的软件，能更改外接屏幕的大小、分辨率等。因为要切换屏幕，你懂的...</p>
+        <p class="description">准确的说是 升级 ubuntu 13.04 后，昨天 凌晨 git review bug，在各路大神的帮助下，搞定了，thanks list： xcl,yjx,xcy</p>
         <div class="article-div-content">
-        	<h2>外接设备一览</h2>
+        	<h2>总述</h2>
 
-<p>在终端输入 <code>xrandr</code> ：</p>
+<p>伴着昨天的问题入睡啊，张开眼，随之而来的就是郁闷的一天。。。how  to get rid of it, let's go...</p>
 
-<pre><code>LVDS connected (normal left inverted right x axis y axis)
-   1366x768       60.0 +
-   1360x768       60.0  
-   1280x768       60.0  
-   1280x720       60.0  
-   1024x768       60.0  
-   1024x600       60.0  
-   800x600        60.0  
-   800x480        60.0  
-   640x480        60.0  
-DFP1 disconnected (normal left inverted right x axis y axis)
-CRT1 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 510mm x 287mm
-   1920x1080      60.0*+
-   1680x1050      60.0  
-   1400x1050      60.0  
-   1600x900       60.0  
-   1280x1024      75.0     60.0  
-   1440x900       60.0  
-   1280x960       75.0     60.0  
-   1152x864       60.0     75.0  
-   1280x768       75.0     60.0  
-   1280x720       75.0     60.0  
-   1024x768       75.0     60.0  
-   1024x600       75.0     60.0  
-   800x600        75.0     60.3  
-   800x480        75.0     60.3  
-   640x480        75.0     59.9 
+<h2>问题描述</h2>
+
+<h3>情况一 UnicodeEncodeError</h3>
+
+<pre><code>Traceback (most recent call last):
+  File "/usr/bin/git-review", line 1170, in &lt;module&gt;
+    print(e)
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 180-183: ordinal not in range(128)
 </code></pre>
 
-<p>说明：</p>
+<p>just google it, you can get some resolution:</p>
 
-<pre><code>LVDS 就是笔记本的显示器输出(Low Voltage Differential Signaling，是一种低压差分信号技术接口)
-DTP1 就是笔记本的HDMI端口(High Definition Multimedia Interface，中文名称是高清晰多媒体接口)
-CRT1 就是笔记本上的VGA端口(Video Graphics Array，即视频图形阵列) =。= CRT是一种使用阴极射线管(Cathode Ray Tube）的显示器
+<h4>No.1 在文件的前几行加上，这里加在 /usr/bin/git-review 中</h4>
+
+<pre><code>import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 </code></pre>
 
-<h2>xrandr 命令常用方式如下：</h2>
+<h4>No.2 号称可以重启后，也是 utf8 编码，可是在我这不 work。python的 /usr/local/lib/python2.7/site-packages 文件夹下新建一个 sitecustomize.py，内容为：</h4>
 
-<p>打开外接显示器(最高分辨率)，与笔记本液晶屏幕显示同样内容（克隆）:</p>
+<pre><code># encoding=utf8  
+import sys  
 
-<pre><code>xrandr --output CRT1 --same-as LVDS --auto  
+reload(sys)  
+sys.setdefaultencoding('utf8')
 </code></pre>
 
-<p>打开外接显示器(分辨率为1024x768)，与笔记本液晶屏幕显示同样内容（克隆）:</p>
-
-<pre><code>xrandr --output CRT1 --same-as LVDS --mode 1024x768  
-</code></pre>
-
-<p>打开外接显示器(最高分辨率)，设置为右侧扩展屏幕:</p>
-
-<pre><code>xrandr --output CRT1 --right-of LVDS --auto  
-</code></pre>
-
-<p>关闭外接显示器:</p>
-
-<pre><code>xrandr --output CRT1 --off  
-</code></pre>
-
-<p>打开外接显示器，同时关闭笔记本液晶屏幕（只用外接显示器工作）:</p>
-
-<pre><code>xrandr --output CRT1 --auto --output LVDS --off  
-</code></pre>
-
-<p>关闭外接显示器，同时打开笔记本液晶屏幕 (只用笔记本液晶屏)</p>
-
-<pre><code>xrandr --output CRT1 --off --output LVDS --auto  
-</code></pre>
-
-<h2>小结</h2>
-
-<p>由于在图形界面配置总是报错，所以。。。；如果命令没达到你想要的效果重启一下就可以了，貌似这里有问题，待测试：</p>
+<p>另外，ubuntu13.04 存在两个版本的 python:</p>
 
 <ul>
-<li>先连VGA线，再开机</li>
-<li>先开机，再连VGA线</li>
+<li>python 2.7.*;</li>
+<li>python 3.3.*</li>
 </ul>
 
 
-<p>经测试，对于我这个悲催的 <code>A卡</code> 来说，<code>先连VGA线，再开机</code> 是个不错的选择.</p>
+<p>默认是 python2.7，默认编码 ascii； python3 默认编码 utf8</p>
+
+<pre><code>$ cd /usr/bin &amp;&amp; ll python* // you will see details
+// test default encoding
+$ python
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.getdefaultencoding() // 'ascii'
+
+$ python3
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.getdefaultencoding() // 'utf-8'
+</code></pre>
+
+<h3>情况二</h3>
+
+<p>when I : <code>$ git review</code> or <code>$ git review -s</code> , it feedback me:</p>
+
+<pre><code>Problems encountered installing commit-msg hook
+The following command failed with exit code 1
+    "scp -P None :hooks/commit-msg .git/hooks/commit-msg"
+-----------------------
+cp: 无法获取":hooks/commit-msg" 的文件状态(stat): 没有那个文件或目录
+</code></pre>
+
+<p>when I :  <code>ssh -p 29418 username@review.*****.com</code> (username is your username of gerrit), it feedback me:</p>
+
+<pre><code>  ****    Welcome to Gerrit Code Review    ****
+
+  Hi Ma Lei, you have successfully connected over SSH.
+
+  Unfortunately, interactive shells are disabled.
+  To clone a hosted Git repository, use:
+
+  git clone ssh://malei0311@review.*****.com:29418/REPOSITORY_NAME.git
+
+Connection to review.*****.com closed.
+</code></pre>
+
+<p>so.....,how to do ?</p>
+
+<p>according to the feedback message:</p>
+
+<pre><code>cp: 无法获取":hooks/commit-msg" 的文件状态(stat): 没有那个文件或目录
+</code></pre>
+
+<p>let's just create the file <code>commit-msg</code>.</p>
+
+<pre><code>$ ll .git/hooks/
+// you will see commit-msg.sample
+$ cd .git/hooks &amp;&amp; cp commit-msg.sample commit-msg &amp;&amp; cd -
+$ git review // wow, success!
+</code></pre>
+
+<h2>结语</h2>
+
+<p>郁闷的一天，纠缠于 <code>git-review</code>，唉，悲剧。。。</p>
 
         </div>
         <div class="share clearfix">
@@ -187,10 +200,8 @@ CRT1 就是笔记本上的VGA端口(Video Graphics Array，即视频图形阵列
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/drupal-theme" rel="bookmark" title="旧一篇">&laquo;&nbsp;Drupal 主题开发</a>
+                <a class="left" href="/articles/linux-study-shell-redirect" rel="bookmark" title="旧一篇">&laquo;&nbsp;shell 之重定向</a>
             
-            
-                <a class="right" href="/articles/screen-sh" rel="bookmark" title="新一篇">传说中的 screen&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -368,10 +379,6 @@ CRT1 就是笔记本上的VGA端口(Video Graphics Array，即视频图形阵列
                 <ul>
                    
                     <li>
-                        <a href="/articles/solve-git-review-problem" title="郁闷的一天 大战 git review" rel="bookmark">&raquo;&nbsp;郁闷的一天 大战 git review</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/linux-study-shell-redirect" title="shell 之重定向" rel="bookmark">&raquo;&nbsp;shell 之重定向</a>
                     </li>                                   
                    
@@ -405,6 +412,10 @@ CRT1 就是笔记本上的VGA端口(Video Graphics Array，即视频图形阵列
                    
                     <li>
                         <a href="/articles/web-front-end-test" title="前端测试框架搭建" rel="bookmark">&raquo;&nbsp;前端测试框架搭建</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/demos/xx-slides" title="slides" rel="bookmark">&raquo;&nbsp;slides</a>
                     </li>                                   
                 
                 </ul>
