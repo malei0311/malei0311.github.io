@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>从 (97 & ~32) == 65 //true 入手js的位操作符 | WebCraft</title>
+    <title>A Brief Introduction to IRC | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="js位操作符，好好搞一下 | malei0311's Blog" />
-    <meta name="keywords" content="js, bitwise operator,malei0311" />
+    <meta name="description" content="thanks @jianingy | malei0311's Blog" />
+    <meta name="keywords" content="ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,11 +64,11 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/js-bitwise-operators">从 (97 & ~32) == 65 //true 入手js的位操作符</a></h1>
+            <h1><a href="/articles/a-brief-introduce-to-irc">A Brief Introduction to IRC</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2013-02-22">2013-02-22</time>
+                    <time class="date" pubdate="2013-08-19">2013-08-19</time>
                 </div>
                 
                 <div class="article-tags left">
@@ -77,8 +77,8 @@
                         <ul>
                              
                             <li>
-                                <a href="/tags.html#js">
-                                    js
+                                <a href="/tags.html#ubuntu">
+                                    ubuntu
                                 </a>
                                 <span>
                                     ,
@@ -91,266 +91,321 @@
                 
             </div>
         </div>
-        <p class="description">js位操作符，好好搞一下</p>
+        <p class="description">thanks @jianingy</p>
         <div class="article-div-content">
-        	<h2>先来个列表</h2>
+        	<h2>声明</h2>
 
-<pre><code>操作符     用法      描述
-按位与     a &amp; b     如果两个操作数对应位都是 1 的话则在该位返回 1。
-按位或     a | b     如果两个操作数对应位都是 0 的话则在该位返回 0。
-按位异或   a ^ b     如果两个操作数对应位只有一个 1 的话则在该位返回 1。
-求反       ~ a       反转操作数的每一位。
-左移       a &lt;&lt; b    将 a 的二进制形式左移 b 位。右面的空位补零。
-算术右移   a &gt;&gt; b       将 a 的二进制形式右移 b 位。忽略被移出的位。
-逻辑右移   a &gt;&gt;&gt; b    将 a 的二进制形式右移 b 位。忽略被移出的位，左侧补入 0。
+<p>thanks <a href="http://weibo.com/jianingy">@jianingy</a> 的总结&amp;教程，以下正文:</p>
+
+<h2>简介</h2>
+
+<p>IRC 的全称是 Internet Relay Chat。它是一个多人、多频道实时聊天系统。通
+俗地讲就是我们平常说的“网络聊天室”。功能上类似于腾讯的“QQ群”。然而 IRC
+开放的通讯协议不但使得它可以被广泛使用于各个平台的系统，也让它的周边软
+件和生态系统变得非常繁茂。</p>
+
+<p>目前全球有很多免费的 IRC 服务网络，例如 freenode, oftc 等等。因此你不
+用花费任何额外的费用就能和全球各地的朋友在大家感兴趣的频道里畅所欲言。</p>
+
+<h2>起源</h2>
+
+<p>IRC 的发明人是芬兰小伙 Jarkko Oikarinen。
+他在 Oulu 读大学的时候受到一个叫 Bitnet Relay 聊天系统的启发，开发了
+IRC 系统。</p>
+
+<h2>架构</h2>
+
+<p>IRC 是一个 CS 模式的系统（服务器、客户端模式）。你需要一个专用的客户端
+软件连接到 IRC 服务器上。如今，这类客户端软件已经发展到几十种，其中不乏
+非常优秀的开源软件。本文下面的内容会基于一个叫做 /Irssi/
+(http://irssi.org/) 的客户端软件进行介绍。</p>
+
+<p>IRC 名字中的 Relay 暗示了其服务端是以消息中继形态构成的。用户的消息可以
+在一个 IRC 网络中的多个 IRC 服务器之间进行转发。这样做的好处是无论你登陆
+该网络的哪个 IRC 服务器，你都可以和所有其他用户进行交流。例如：你登陆了新加坡
+的 brooks.freenode.net 而你的朋友登陆了巴黎的 barjavel.freenode.net，你
+们仍然可以在一个频道里聊天。</p>
+
+<h2>基本操作</h2>
+
+<h3>安装客户端软件</h3>
+
+<p>在我们进行下面的讲解之前，你首先需要安装一下 /irssi/ 这个客户端软件。下
+面我会给出几种主流系统的客户端软件安装方法。</p>
+
+<h4>Ubuntu Linux / Debian Linux</h4>
+
+<pre><code>sudo apt-get install irssi
 </code></pre>
 
-<p>先知道一点：</p>
+<h4>Fedora / CentOS / Redhat Linux</h4>
 
-<pre><code>数据在内存中是以二进制形式存放的。数值是以补码表示的。一个正数的补码和其原码的形式相同。
-而负数的补码方式是将其绝对值的二进制形式“按位求反再加1” 
+<pre><code>sudo yum install irssi
 </code></pre>
 
-<h2>二元位操作符</h2>
+<h4>MacOSX</h4>
 
-<h3>用作测试的函数</h3>
-
-<p>扔到console里直接用即可</p>
-
-<pre><code>var hex10to2 = function (o){
-    //鉴于parseInt('0101') 与 parseInt(0101) 的不同结果(纠结，各浏览器应该不同，待测试)，
-    //在您输入的时候请直接输入8进制数时，请直接输入数字（0101）
-    //测试用，所以先只支持整数
-
-    if(parseInt(o)){
-        return parseInt(o).toString(2);
-    } else{
-        console.log('参数不正确，正确的参数为：1.整数 2.合法字符串（如"123","0123","0x123"）');
-    }   
-}
-
-//忽略符号处理
-var hex2to10 = function(str){
-    //TODO:判断是否只包括 1 , 0
-    return parseInt(str,2);
-}
-//两个函数的合并作业待做
+<pre><code>brew install irssi
 </code></pre>
 
-<h3>我还比较熟悉的： <code>&amp;,|,^</code> 三种，举例如下：</h3>
+<h3>IRSSI 的界面布局</h3>
 
-<p>65 &amp; 32 结果为 0</p>
+<p>首先我们在命令行下键入 /irssi/ 来启动这个客户端程序，你会看到如下的界面：</p>
 
-<pre><code>1000001
- 100000
--------
-0000000
+<p>靠下方蓝色的部分是状态条，他把屏幕分成其上方的主区域和命令区域两个部分。
+我们在主区域里会看到聊天的内容以及服务器发送的信息。在命令区域里输入我
+们想发送的内容或者是以 "/" 开头的 IRC 命令。</p>
+
+<h3>登陆 IRC 服务器</h3>
+
+<p>下面让我们来登陆一个 IRC 服务器。在命令区域输入 <code>/connect
+irc.freenode.net</code> 。连接成功后，我们会看到服务器返回的 MOTD 信息。
+/irssi/ 会自动用你登陆用户的用户名作为昵称登陆服务器。如果你看到下面的
+信息，则说明你的昵称已经有人使用了。这时 /irssi/ 会为你自动生成一个昵称。</p>
+
+<pre><code>16:52 -!- Irssi: Your nick is owned by Jianing Yang [~jianingy@106.3.xx.yy]
 </code></pre>
 
-<p>65 | 32 结果为 97</p>
+<h3>设置昵称</h3>
 
-<pre><code>1000001
- 100000
--------
-1100001
+<p>默认的昵称是你的 linux 登录名，如果你用虚拟机登录，很可能是 ubuntu 或 root 之类。使用 <code>/nick &lt;yourname&gt;</code> 来更改昵称。后面有教程教你注册昵称确保这个昵称只是你在使用。</p>
+
+<h3>加入、创建聊天频道</h3>
+
+<p>使用命令 <code>/join</code> 来加入一个频道。如果该频道还不存在，那么系统会自动创建
+一个新的频道。频道名一般都是以 <code>#</code> 开头的。例如：要加入 openstack 频道，
+我们可以使用</p>
+
+<pre><code>/join #openstack
 </code></pre>
 
-<p>65 ^ 32 结果为 97</p>
+<p>加入频道后，在主区域会看到频道中已有用户的信息、以及频道的主题（topic）。
+你可以持续使用 join 命令加入多个频道。<code>/irssi/</code> 会为每一个频道分配一个窗
+口（window），每个窗口会有一个窗口编号。我们可以使用 <code>/win</code> 命令来切换不
+同的窗口。例如：</p>
 
-<pre><code>1000001
- 100000
--------
-1100001
+<pre><code>/win 3
 </code></pre>
 
-<h3>另外~很少用，也不熟悉</h3>
+<p>如果窗口太多，或者你忘记了窗口号码，也可以用 <code>/join</code> 命令来切换到相应的频
+道。</p>
 
-<h4>详细说明</h4>
+<h3>信息提示</h3>
 
-<p>取反运算符~对运算数按位取反，将运算数各位值由1变为0，或由0变为1.因为计算机中数值以带符号位二进制表示，所以取反后，最高位符号位发生变化。</p>
+<p>如果你所加入的频道有新的消息，那么频道号码会以高亮方式显示出来。这时可
+以使用 <code>/win</code> 切换过去读新的消息。如果频道好码以红色高亮，说明有人在该频
+道里提到了你的名字，这时你需要特别关注一下。</p>
 
-<p>32按位取反后结果为（-33）。我们采用32的8位二进制形式:</p>
+<h3>表情</h3>
 
-<pre><code>hex10to2(32) =&gt; 100000 补全得：00100000
+<p>IRC 并不是真正支持发送什么表情，它只是提供一种专门用来做表情的命令
+<code>/me + 表情</code> 。当你使用这个命令发送信息时，大部分客户端都会以缩进或高亮
+的方式来消息。当你看到表情消息时，你只能脑补一下了。</p>
+
+<pre><code>17:18  * jianingy is confused
 </code></pre>
 
-<p>00100000 按位取反为 11011111，这是一个补码形式，最高位为符号位。将该补码再求补（符号位保持不变，其他位按位取反，最后加1），得到10100001，该值是带符号的真值</p>
+<h3>私聊</h3>
 
-<pre><code>hex2to10('100001'); //33
+<p>IRC 鼓励大家在公开频道聊天。任何问题的讨论对每一个在频道里的人都是透明
+的。然而，你还是偶尔可能想跟某个人单独对话。这个时候可以使用 <code>/query</code> 命令。例如：你想要单独和 /jianingy/ 聊两句</p>
+
+<pre><code>/query jianingy
 </code></pre>
 
-<p>加个负号得：-33</p>
+<p>irssi 会为你俩创建一个单独的窗口。聊天的内容只有你俩能看到。但是千万不
+要以为这是你发送密码的好手段。因为 IRC 的协议是明文的，因此你所发送的
+内容还是会被网络上的嗅探器看到[fn:1]。</p>
 
-<h4>另外：</h4>
+<p>[fn:1] 如果你使用的是基于 SSL 协议的 IRC 这个问题到不用特别担心。</p>
 
-<pre><code>97 &amp; -33 //65
+<h3>离开频道</h3>
+
+<p>当你决定要退出一个频道时，使用 <code>/leave + 频道名称</code> 命令退出频道。如果
+当前窗口就是你所在的频道，那么这个命令就可以简写为 <code>/leave</code> 。</p>
+
+<h2>阶进操作</h2>
+
+<h3>挂机</h3>
+
+<p>如果你经常出没于 freenode 等 IRC ，你会发现很多人常年在线从未退出过。这
+是因为他们使用了一个叫做 /screen/ 的工具挂机。下面简单介绍一下这种挂机
+的方法。然而这并不是一个讨论 /screen/ 的专题，因此这里仅仅介绍一些基本
+的用法。</p>
+
+<p>首先，你需要找一个常年开机的服务器或者 VPS 虚拟机 。在这台服务器上通过
+/screen/ 命令启动一个 /irssi/ 程序，</p>
+
+<pre><code>screen irssi
 </code></pre>
 
-<p>将 -33（10100001）符号位保持不变，其他位按位取反，最后加1，为：11011111</p>
+<p>当你离开时，你可以直接关掉终端窗口或者使用快捷键 <code>Control + a d</code> 退出
+/screen/ 。这时 /irssi/ 仍然会以后台方式运行在 /screen/ 中。当你再次登
+录的时候，可以使用下面的命令重新回到之前的 /irssi/ 操作界面。</p>
 
-<pre><code>01100001
-11011111
---------
-01000001
-
-hex2to10('01000001'); //65
+<pre><code>screen -R
 </code></pre>
 
-<p>正如你看到的，原码和补码是可逆的, 写成</p>
+<p>如此一来你将不用担心漏掉 IRC 上的消息。你可以告诉朋友们：“给我在 IRC
+上留言”。你可以在任何能够登录你服务器的地方看到那些未读的消息。</p>
 
-<pre><code>97 &amp; ~32
+<h3>注册昵称</h3>
+
+<p>在 IRC 的世界里，别人主要靠昵称来认识你。因此保护自己那特有的昵称不被占
+用是非常重要的。IRC 网络通过一个叫 NickServ 的机器人来管理用户的昵
+称。当需要注册昵称时，你只需要跟 NickServ 这个机器人私聊两句就可以了。</p>
+
+<p>首先， 通过 <code>/query NickServ</code> 进入和 NickServ 私聊的模式并通过
+<code>register</code> 命令给出一个密码和你的邮箱。</p>
+
+<pre><code>21:15 &lt;jianingy&gt; register mypassword mail@example.com
+21:15 -NickServ(NickServ@services.)- An email containing nickname activation instructions has been sent to mail@example.com
+21:15 -NickServ(NickServ@services.)- If you do not complete registration within one day, your nickname will expire.
+21:15 -NickServ(NickServ@services.)- jianingy is now registered to mail@example.com, with the password mypassword.
+21:15 -NickServ(NickServ@services.)-
+21:15 -NickServ(NickServ@services.)- For frequently-asked questions about the network, please see the
+21:15 -NickServ(NickServ@services.)- FAQ page (http://freenode.net/faq.shtml). Should you need more
+21:15 -NickServ(NickServ@services.)- help you can /join #freenode to find network staff.
 </code></pre>
 
-<p>更一目了然一些，因为我只需要去掉从右向左数的第6个 1,那个1 => 2的（6-1）次方,所以 <code>&amp;</code> 一下 <code>~32</code> 即可</p>
+<p>接下来，正如 NickServ 说，下面的步骤在他发给你的邮件中。这里我们剧透一
+下，下一步需要做的就是讲邮件里的验证码通过 <code>verify register</code> 命令告诉
+NickServ:</p>
 
-<h4>位操作进行加减运算</h4>
-
-<pre><code>... 64 32 16 8 4 2 1
-...  7  6  5 4 3 2 1
+<pre><code>21:17 &lt;jianingy&gt; VERIFY REGISTER jianingy raufkqeuugns
+21:17 -NickServ(NickServ@services.)- jianingy has now been verified.
+21:17 -NickServ(NickServ@services.)- Thank you for verifying your e-mail address! You have taken steps in ensuring that your registrations are not exploited.
 </code></pre>
 
-<p>如果想让第x位变成 1，也就是加上 2 的 <code>x-1</code> 次方（如果那位不是1的话）,令 y = 2 的 <code>x-1</code> 次方</p>
+<p>昵称注册成功后，如果你发现别人占用了你的昵称，你可以通过 <code>ghost</code> 命令
+强制对方下线，在通过 <code>/nick</code> 命令要回自己的昵称。 <code>ghost</code> 命令的用法如
+下:</p>
 
-<pre><code>x | y
+<pre><code>21:34 &lt;jianingy&gt; ghost jianingy mypassword
+21:34 -NickServ(NickServ@services.)- jianingy has been ghosted.
+21:34 -NickServ(NickServ@services.)- This nickname is registered. Please choose a different nickname, or identify via /msg NickServ identify &lt;password&gt;.
+21:34 &lt;jianingy&gt; identify mypassword
+21:34 -NickServ(NickServ@services.)- You are now identified for jianingy.
 </code></pre>
 
-<p>如果想让第x位变成 0，也就是减去 2 的 <code>x-1</code> 次方（如果那位不是0的话）,令 y = 2 的 <code>x-1</code> 次方</p>
+<h3>UI 主题</h3>
 
-<pre><code>x &amp; ~ y
+<p>别看 /Irssi/ 只是一款 CLI 软件，他也是有换肤支持的。网络上有很多爱好者
+给 /Irssi/ 开发皮肤。皮肤文件是一个以 <code>.theme</code> 结尾的文本文件。更换皮
+肤的方法是，将下载好的皮肤文件放到 <code>~/.irssi/</code> 这个目录下，然后运行如
+下命令：</p>
+
+<pre><code>/set theme 皮肤名称（即皮肤文件名去掉.theme）
 </code></pre>
 
-<h3>有意思的实现</h3>
+<p>如果你决定长久使用这款皮肤，就要通过 <code>/save</code> 命令保存设置。</p>
 
-<h4>手动大小写</h4>
+<p>这里给出两个 /irssi/ 的皮肤下载站：</p>
 
-<p>因为javascript已经实现了（toUpperCase() and toLowerCase()）</p>
+<ul>
+<li><a href="http://www.irssi.org/themes">http://www.irssi.org/themes</a></li>
+<li><a href="http://dotshare.it/category/chat/irssi/">http://dotshare.it/category/chat/irssi/</a></li>
+</ul>
 
-<pre><code>function isString(value){return typeof value == 'string';}
 
-var manualLowercase = function(s) {
-    return isString(s)
-            ? s.replace(/[A-Z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) | 32);})
-            : s;
-};
-var manualUppercase = function(s) {
-    return isString(s)
-            ? s.replace(/[a-z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) &amp; ~32);})
-            : s;
-};
+<h3>使用 Irssi 插件</h3>
+
+<p>毫无疑问像 /irssi/ 这么具有黑客范儿的程序一定是支持插件的。这些插件让
+/irssi/ 的功能更为全面、强大。你可以在 <a href="http://scripts.irssi.org">http://scripts.irssi.org</a> 找到很
+多有用的插件。</p>
+
+<p>加载插件的方法是：把插件文件下载到 <code>~/.irssi/scripts</code> 里面，然后在
+/irssi/ 里执行命令：</p>
+
+<pre><code>/script load 插件名称
 </code></pre>
 
-<h4>奇偶数判断</h4>
+<p>如果你想让一个插件在 /irssi/ 启动的时候就被自动加载，就做一个符号链接
+把该插件链接到 <code>~/.irssi/scripts/autorun</code> 这个目录里面。</p>
 
-<pre><code>function isNumber(value){return typeof value == 'number';}
+<p>其他和插件相关的命令还有：</p>
 
-//利用 0 或 1 对 1 的 &amp; 运算都是原数值，可得：
-var isOdd = function(num){ //奇数
-    if(isNumber(num)){
-        return num &amp; 1 ? true : false;
-    } else{
-        return false;
-    }
-}
+<ul>
+<li><code>/script unload</code> : 卸载一个插件。</li>
+<li><code>/script</code> : 列出当前加载的插件。</li>
+<li><code>/script reset</code> : 卸载所有插件，并且重置插件的 Perl 解释器。</li>
+</ul>
 
-var isEven = function(num){ //偶数           
-    if(isNumber(num)){
-        return num &amp; 1 ? false : true;
-    } else{
-        return false;
-    }
-}
+
+<p>接下来介绍几个非常实用的插件：</p>
+
+<h4>adv_windowlist</h4>
+
+<p>下载地址：
+<a href="http://anti.teamidiot.de/static/nei/*/Code/Irssi/adv_windowlist.pl">http://anti.teamidiot.de/static/nei/*/Code/Irssi/adv_windowlist.pl</a></p>
+
+<p>默认的 window list 只能显示一行。用了这个插件后 window list 可以显示多
+行。特别适合那些加入频道比较多的朋友。</p>
+
+<h4>screen away</h4>
+
+<p>下载地址：<a href="http://scripts.irssi.org/scripts/screen_away.pl">http://scripts.irssi.org/scripts/screen_away.pl</a></p>
+
+<p>在你 detach screen 的时候把你的 IRC 状态设置为 away。当你 attach 回来
+时，将 away 状态取消。让频道里的人了解你是在挂机中还是在线中。</p>
+
+<h4>nickcolor</h4>
+
+<p>下载地址：<a href="http://scripts.irssi.org/scripts/nickcolor.pl">http://scripts.irssi.org/scripts/nickcolor.pl</a></p>
+
+<p>给频道里每个人的名字以不同颜色显示出来。方便你认清每一个人。</p>
+
+<h4>go</h4>
+
+<p>下载地址：<a href="http://scripts.irssi.org/scripts/go.pl">http://scripts.irssi.org/scripts/go.pl</a></p>
+
+<p>使用 =/win= 命令切换窗口需要自己记住窗口号码和频道之间的关系。 =go= 让
+我们可以直接使用频道名字切换窗口，并且还支持自动补齐功能。</p>
+
+<h4>trackbar</h4>
+
+<p>下载地址：<a href="http://scripts.irssi.org/scripts/trackbar.pl">http://scripts.irssi.org/scripts/trackbar.pl</a></p>
+
+<p>在你上次浏览内容下方画一道横线。如果你同时看多个频道的话，这个插件非常
+有用。他能帮你了解该频道自你上次浏览后有哪些新内容。</p>
+
+<h4>queryresume</h4>
+
+<p>下载地址：<a href="http://scripts.irssi.org/scripts/queryresume.pl">http://scripts.irssi.org/scripts/queryresume.pl</a></p>
+
+<p>每次跟人私聊的时候先显示上次你俩聊天时的最后几行。</p>
+
+<h2>小技巧</h2>
+
+<h3>命令别名</h3>
+
+<p>给命令设置短别名能极大提高我们的使用效率。 /irssi/ 中有一些内置的别名，
+例如：</p>
+
+<pre><code>别名      全称
+/q       /query
+/wc      /windowclose
+/j       /join
 </code></pre>
 
-<h2>移位操作符</h2>
+<p>当然， /irssi/ 也支持用户自定义别名。比如：我们要给 <code>/window list</code> 命
+令起个别名，就可以用</p>
 
-<p>移位操作符需要两个操作数：第一个是要进行移位的数值，第二个指定要对第一个数移位的数目。移位的方向由使用的操作符决定。</p>
-
-<p>移位操作符将把两个操作符转换为 32 位整型数值，并返回与左操作数类型相同的结果。</p>
-
-<h3>&lt;&lt; (左移)</h3>
-
-<p>该操作符将把第一个操作数向左移若干位。移出的位将被忽略。右侧空位补零。
-例如，9&lt;&lt;2 结果为 36，因为 1001 向左移两位变成 100100，这是 36。快捷算法:9 * (2的移位次方)</p>
-
-<h3>>> (算术右移)</h3>
-
-<p>该操作符将把第一个操作数向右移若干位。移出的位将被忽略。左侧的空位补上与原来最左面位相同的值。
-例如，9>>2 结果为 2，因为 1001 右移两位变成 10，这是 2。。快捷算法:9 / (2的移位次方)</p>
-
-<p>反之，-9>>2 结果为 -3，因为要考虑到符号位。</p>
-
-<p>9在计算机中表示为(我们采用9的8位二进制形式)</p>
-
-<pre><code>00001001
+<pre><code>/alias wl window list
 </code></pre>
 
-<p>则 -9，为：</p>
+<h3>彩色文字</h3>
 
-<pre><code>10001001
-</code></pre>
+<p>作为一个 CLI 程序，当然要支持最具表现力的彩色文字了。要想让你的话富有
+色彩，先按下 <code>Control + C</code> 看到输入区域出现一个反白的字母“C”之后输入一
+个颜色数码，之后再输入的内容就可以带有相应的颜色了。</p>
 
-<p>重复上面的算法：符号位保持不变，其他位按位取反，最后加1，得到 -9 在计算机中的表示</p>
+<h3>其他</h3>
 
-<pre><code>11110111
-</code></pre>
+<ul>
+<li><a href="http://www.irssi.org/documentation/tips">http://www.irssi.org/documentation/tips</a></li>
+</ul>
 
-<p>算数右移两位 => 补1</p>
-
-<pre><code>11111101
-</code></pre>
-
-<p>重复补码算法</p>
-
-<pre><code>10000011
-</code></pre>
-
-<p>得到 -3</p>
-
-<h3>>>> (逻辑右移)</h3>
-
-<p>该操作符将把第一个操作数向右移若干位。移出的位将被忽略。左侧的空位补零。
-例如，19>>>2 结果为 4，因为 10011 右移两位变成 100，这是 4。对于非负数，算术右移和逻辑右移结果相同。</p>
-
-<p>那么负数呢？</p>
-
-<p>-9>>2 结果为 ?</p>
-
-<p>9在计算机中表示为(我们采用9的8位二进制形式)</p>
-
-<pre><code>00001001
-</code></pre>
-
-<p>则 -9，为：</p>
-
-<pre><code>10001001
-</code></pre>
-
-<p>重复上面的算法：符号位保持不变，其他位按位取反，最后加1，得到 -9 在计算机中的表示</p>
-
-<pre><code>11110111
-</code></pre>
-
-<p>逻辑右移两位 => 补0</p>
-
-<pre><code>00111101
-</code></pre>
-
-<p>因为变成正数了，所以不用重复补码算法了</p>
-
-<p>计算机采用的是32位二进制形式，所以</p>
-
-<pre><code>0011...1101 //中间是30个1
-</code></pre>
-
-<p>得到 1073741821</p>
-
-<pre><code>hex10to2(1073741821) //111111111111111111111111111101
-"111111111111111111111111111101".length //30,略去了前面两个0
-</code></pre>
-
-<h2>Reference</h2>
-
-<p><a href="http://blog.malei.tk/negative-number-binary" title="原码，反码，补码">原码，反码，补码</a></p>
 
         </div>
         <div class="share clearfix">
@@ -362,10 +417,8 @@ var isEven = function(num){ //偶数
         </div>
         <nav class="article-bottom-nav clearfix">
             
-                <a class="left" href="/articles/nodejs-debug" rel="bookmark" title="旧一篇">&laquo;&nbsp;Node.js的调试</a>
+                <a class="left" href="/articles/solve-git-review-problem" rel="bookmark" title="旧一篇">&laquo;&nbsp;郁闷的一天 大战 git review</a>
             
-            
-                <a class="right" href="/articles/linux-study" rel="bookmark" title="新一篇">菜鸟学习linux&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -397,116 +450,116 @@ var isEven = function(num){ //偶数
                      
                     
                         
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
                             
                                 
-                                    <li><a href="/articles/web-front-end-test" title="前端测试框架搭建">&raquo;&nbsp;前端测试框架搭建</a></li>
+                                    <li><a href="/articles/a-brief-introduce-to-irc" title="A Brief Introduction to IRC">&raquo;&nbsp;A Brief Introduction to IRC</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/js-bitwise-operators" title="从 (97 & ~32) == 65 //true 入手js的位操作符">&raquo;&nbsp;从 (97 & ~32) == 65 //true 入手js的位操作符</a></li>
+                                    <li><a href="/articles/solve-git-review-problem" title="郁闷的一天 大战 git review">&raquo;&nbsp;郁闷的一天 大战 git review</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/how-to-detect-variable-type" title="JavaScript如何判断变量类型">&raquo;&nbsp;JavaScript如何判断变量类型</a></li>
+                                    <li><a href="/articles/linux-study-shell-redirect" title="shell 之重定向">&raquo;&nbsp;shell 之重定向</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/baidu-examination" title="XX-web前端开发工程师-笔试+面试-经历">&raquo;&nbsp;XX-web前端开发工程师-笔试+面试-经历</a></li>
+                                    <li><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/js-insertAfter" title="insertAfter()?">&raquo;&nbsp;insertAfter()?</a></li>
+                                    <li><a href="/articles/ubuntu-ati-driver" title="ubuntu 12.10 x64 ATI 5650 安装显卡驱动">&raquo;&nbsp;ubuntu 12.10 x64 ATI 5650 安装显卡驱动</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/java-vs-javascript" title="Java vs JavaScript">&raquo;&nbsp;Java vs JavaScript</a></li>
+                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/3D-jquery" title="JQuery插件之tags的3D旋转球制作">&raquo;&nbsp;JQuery插件之tags的3D旋转球制作</a></li>
+                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/random-color" title="容器透明，内容不透明，随机变色">&raquo;&nbsp;容器透明，内容不透明，随机变色</a></li>
+                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/articlesLayout-directory" title="articlesLayout构建之右侧目录索引">&raquo;&nbsp;articlesLayout构建之右侧目录索引</a></li>
+                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/water-fall-layout" title="Demos界面的伪瀑布流布局的实现">&raquo;&nbsp;Demos界面的伪瀑布流布局的实现</a></li>
+                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
                                 
                             
                                 
-                                    <li><a href="/articles/tags-js-liquid" title="Tags界面构建之123">&raquo;&nbsp;Tags界面构建之123</a></li>
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
                                 
                             
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
-                        
-                    
-                
-                     
-                    
                         
                     
                 
@@ -547,10 +600,6 @@ var isEven = function(num){ //偶数
                 <ul>
                    
                     <li>
-                        <a href="/articles/a-brief-introduce-to-irc" title="A Brief Introduction to IRC" rel="bookmark">&raquo;&nbsp;A Brief Introduction to IRC</a>
-                    </li>                                   
-                   
-                    <li>
                         <a href="/articles/solve-git-review-problem" title="郁闷的一天 大战 git review" rel="bookmark">&raquo;&nbsp;郁闷的一天 大战 git review</a>
                     </li>                                   
                    
@@ -584,6 +633,10 @@ var isEven = function(num){ //偶数
                    
                     <li>
                         <a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板" rel="bookmark">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/web-front-end-test" title="前端测试框架搭建" rel="bookmark">&raquo;&nbsp;前端测试框架搭建</a>
                     </li>                                   
                 
                 </ul>
