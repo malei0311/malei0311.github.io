@@ -4,13 +4,188 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-08-19T14:37:27+08:00</updated>
+   <updated>2013-08-21T09:54:55+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>Some Interesting Terminal Command in Linux</title>
+     <link href="http://webcraft.malei.tk/articles/some-insteresting-terminal-commands"/>
+     <updated>2013-08-20T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/some-insteresting-terminal-commands</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;在 linux 的终端中，好多有意思的东西，那就尝试一下吧！&lt;/p&gt;
+
+&lt;h2&gt;Commands list&lt;/h2&gt;
+
+&lt;h3&gt;Irssi&lt;/h3&gt;
+
+&lt;p&gt;一个 IRC 客户端，&lt;a href=&quot;/articles/a-brief-introduce-to-irc/&quot;&gt;上篇文章&lt;/a&gt;有详细介绍&lt;/p&gt;
+
+&lt;h3&gt;Finch&lt;/h3&gt;
+
+&lt;p&gt;pidgin 的终端版本:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;┌─────┤好友列表├──────┐             
+│+ 好友             ▒│                                                         
+│+ 网络中心          ▒│                                                          
+│+ 高中同学          ▒│                                                        
+│+ 大学同学           ▒┌┤大学同学├┐                                              
+│+ 聊天              ▒│在线：8    │                                       
+│                   ▒│总计：36   │                                    
+│                   ▒└──────────┘ 
+│                   ▒│                                              
+│                   ▒│                                            
+│                   ▒│
+│                   ▒│
+│                   ▒│
+│                    │                                                         
+│┌──────────────────┐│                                 
+││可用              ↓││
+│└──────────────────┘│                                                       
+│____________________│
+└────────────────────┘
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Fortune&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install fortune
+$ fortune
+In Marseilles they make half the toilet soap we consume in America, but
+the Marseillaise only have a vague theoretical idea of its use, which they
+have obtained from books of travel.
+                -- Mark Twain
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Figlet &amp;amp;&amp;amp; Toilet&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install figlet
+$ figlet WEBCRAFT
+__        _______ ____   ____ ____      _    _____ _____ 
+\ \      / / ____| __ ) / ___|  _ \    / \  |  ___|_   _|
+ \ \ /\ / /|  _| |  _ \| |   | |_) |  / _ \ | |_    | |  
+  \ V  V / | |___| |_) | |___|  _ &amp;lt;  / ___ \|  _|   | |  
+   \_/\_/  |_____|____/ \____|_| \_\/_/   \_\_|     |_|  
+
+$ cd /usr/share/figlet
+$ figlet -f ascii12.tlf -w 100 WEBCRAFT
+
+'mm      mm mmmmmmmm  mmmmmm       mmmm   mmmmmm       mm     mmmmmmmm  mmmmmmmm 
+ ##      ## ##&quot;&quot;&quot;&quot;&quot;&quot;  ##&quot;&quot;&quot;&quot;##   ##&quot;&quot;&quot;&quot;#  ##&quot;&quot;&quot;&quot;##    ####    ##&quot;&quot;&quot;&quot;&quot;&quot;  &quot;&quot;&quot;##&quot;&quot;&quot; 
+ &quot;#m ## m#&quot; ##        ##    ##  ##&quot;       ##    ##    ####    ##           ##    
+  ## ## ##  #######   #######   ##        #######    ##  ##   #######      ##    
+  ###&quot;&quot;###  ##        ##    ##  ##m       ##  &quot;##m   ######   ##           ##    
+  ###  ###  ##mmmmmm  ##mmmm##   ##mmmm#  ##    ##  m##  ##m  ##           ##    
+  &quot;&quot;&quot;  &quot;&quot;&quot;  &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;  &quot;&quot;&quot;&quot;&quot;&quot;&quot;      &quot;&quot;&quot;&quot;   &quot;&quot;    &quot;&quot;&quot; &quot;&quot;    &quot;&quot;  &quot;&quot;           &quot;&quot;' 
+$ ls // 可以看见字体
+$ toilet -f mono9.tlf -F metal WEBCRAFT
+
+▄     ▄ ▄▄▄▄▄▄ ▄▄▄▄▄    ▄▄▄  ▄▄▄▄▄    ▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄
+█  █  █ █      █    █ ▄▀   ▀ █   ▀█   ██   █        █   
+▀ █▀█ █ █▄▄▄▄▄ █▄▄▄▄▀ █      █▄▄▄▄▀  █  █  █▄▄▄▄▄   █   
+ ██ ██▀ █      █    █ █      █   ▀▄  █▄▄█  █        █   
+ █   █  █▄▄▄▄▄ █▄▄▄▄▀  ▀▄▄▄▀ █    ▀ █    █ █        █   
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Cowsay &amp;amp;&amp;amp; Cowthink&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;-d   死掉的母牛&lt;/li&gt;
+&lt;li&gt;-b   瞎眼母牛？&lt;/li&gt;
+&lt;li&gt;-g   财迷母牛&lt;/li&gt;
+&lt;li&gt;-p   多疑的母牛&lt;/li&gt;
+&lt;li&gt;-s   喝醉的母牛&lt;/li&gt;
+&lt;li&gt;-t   疲劳母牛&lt;/li&gt;
+&lt;li&gt;-w   吃惊的母牛&lt;/li&gt;
+&lt;li&gt;-y   小母牛&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install cowsay
+$ cd /usr/share/cowsay/cows &amp;amp;&amp;amp; ls // you will see all files
+// or
+$ cowsay -l // you will see also
+$ uptime | cowsay -f kiss
+ _____________________________________
+/  23:56:10 up 5 days, 1:23, 6 users, \
+\ load average: 1.22, 1.16, 1.17      /
+ -------------------------------------
+     \
+      \
+             ,;;;;;;;,
+            ;;;;;;;;;;;,
+           ;;;;;'_____;'
+           ;;;(/))))|((\
+           _;;((((((|))))
+          / |_\\\\\\\\\\\\
+     .--~(  \ ~))))))))))))
+    /     \  `\-(((((((((((\\
+    |    | `\   ) |\       /|)
+     |    |  `. _/  \_____/ |
+      |    , `\~            /
+       |    \  \           /
+      | `.   `\|          /
+      |   ~-   `\        /
+       \____~._/~ -_,   (\
+        |-----|\   \    ';;
+       |      | :;;;'     \
+      |  /    |            |
+      |       |            |
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Cmatrix&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install cmatrix
+$ cmatrix
+// it's cool
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Jp2a&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install jp2a
+$ jp2a --width=50 logoOfshijiazhuangTieDaoUniversity.jpg
+
+&quot;NWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWN
+ WMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMW
+ WMMMMMMMMMMMMMMMMMW0ko:;,;::',;cdOXMMMMMMMMMMMMMMW
+ WMMMMMMMMMMMMMMXd;.;oc..'clc...,d:.'ckWMMMMMMMMMMW
+ WMMMMMMMMMMMMO:o'..,o,:odkkOxdll:.....,lXMMMMMMMMW
+ WMMMMMMMMMMK;..,d:ck0Odc;,,,;:lx00d;:o:..lWMMMMMMW
+ WMMMMMMMMMd;:'..oXk;''',lxk0000Oxod00:.',:cXMMMMMW
+ WMMMMMMMMo.;o,;XO,'',dXMMMMMMMMMMMMWXMk:cc;'KMMMMW
+ WMMMMMMMO...,:Wo'''dWMXkkkkkkkkkkNMMMMM0....,WMMMW
+ WMMMMMMM;....Xk'''kMMWdc''lo,';o''KMMMMMo....xMMMW
+ WMMMMMMN....;Ml;;:MMMM0,'OWl'cWM,'0MMMMMK....cMMMW
+ WMMMMMMN.';.;MMMMMMMMk';XW:'oMNc'oMXlll0K.,;.cMMMW
+ WMMMMMMM,;o,.NMMMMMMo':NX;':xc':0MMl'''Xx.:,.dMMMW
+ WMMMMMMMx.::.cMMMMMKxkWWdoodx0NMMWo'''xX',l,'NMMMW
+ WMMMMMMMMc':;.cWWWMMMMMMMMMMMMMWk;'',OK,'l;.OMMMMW
+ WMMMMMMMMWc'c;',kKkxOKNWWWNXOxc''',dKo.,c;'OMMMMMW
+ WMMMMMMMMMMk',l;',d0Oo:''''''',cdOOc.,:c';XMMMMMMW
+ WMMMMMMMMMMMWd';;c;'':oxkkkkkkxl;..;:c';OMMMMMMMMW
+ WMMMMMMMMMMMMMWOc,;;;..;,,;';':::...,oKMMMMMMMMMMW
+ WMMMMMMMMMMMMMMMMWKxl:,,'':';',;coOXMMMMMMMMMMMMMW
+ WMMMMMMMMMMMMMMMMMMMMMMMWNXNNWMMMMMMMMMMMMMMMMMMMW
+ WMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMW
+ NWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWN&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Bb&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install bb
+$ bb // amazing!!!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Over&lt;/h2&gt;
+
+&lt;p&gt;Oops!!!&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>A Brief Introduction to IRC</title>
@@ -907,67 +1082,6 @@ text：从前景内容的形状（比如文字）作为裁剪区域向外裁剪�
 &lt;p&gt;为了尽可能保持统一编码风格的延续，当有新的代码提交上来的时候，你必须积极主动。不要害怕给 pull request 的代码添加注释，即使看起来只是一处很小的更正，也不要害怕拒绝不必要的可能会搞乱你的 API 的 requests。&lt;/p&gt;
 
 &lt;p&gt;必须牢记的是，同样要严格要求自己的代码。如果在添加新特性时，自己开小差，懒得统一编码风格，为什么项目的贡献者不可以呢？总之。你的代码越干净，对于新手来说就有越多的例子学习。&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>ubuntu 禁用 thinkpad e430 触摸板</title>
-     <link href="http://webcraft.malei.tk/articles/ubuntu-thinkpad-e430-disable-touchpad"/>
-     <updated>2013-04-13T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/ubuntu-thinkpad-e430-disable-touchpad</id>
-     <content type="html">&lt;h2&gt;请打开终端&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;ctrl + alt + t
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;输入&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;xinput
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;⎡ Virtual core pointer                        id=2    [master pointer  (3)]
-⎜   ↳ Virtual core XTEST pointer                id=4    [slave  pointer  (2)]
-⎜   ↳ ThinkPad USB Travel Mouse                 id=10   [slave  pointer  (2)]
-⎜   //注意下面一行的id在后面的命令中要用
-⎜   ↳ SynPS/2 Synaptics TouchPad                id=13   [slave  pointer  (2)]
-⎜   ↳ TPPS/2 IBM TrackPoint                     id=15   [slave  pointer  (2)]
-⎣ Virtual core keyboard                       id=3    [master keyboard (2)]
-    ↳ Virtual core XTEST keyboard                 id=5    [slave  keyboard (3)]
-    ↳ Power Button                                id=6    [slave  keyboard (3)]
-    ↳ Video Bus                                   id=7    [slave  keyboard (3)]
-    ↳ Video Bus                                   id=8    [slave  keyboard (3)]
-    ↳ Power Button                                id=9    [slave  keyboard (3)]
-    ↳ Integrated Camera                           id=11   [slave  keyboard (3)]
-    ↳ AT Translated Set 2 keyboard                id=12   [slave  keyboard (3)]
-    ↳ ThinkPad Extra Buttons                      id=14   [slave  keyboard (3)]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;接下来&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;xinput list-props 13 | grep Enabled
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;    Device Enabled (137):   1   //说明是开启状态
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;最后&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;xinput set-prop 13 137 0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O了，检查一下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;xinput list-props 13 | grep Enabled
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;    Device Enabled (137):   0
-&lt;/code&gt;&lt;/pre&gt;
 </content>
    </entry>
    

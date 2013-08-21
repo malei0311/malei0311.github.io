@@ -6,11 +6,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>article-flag | WebCraft</title>
+    <title>Some Interesting Terminal Command in Linux | WebCraft</title>
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="Lei Ma" />
-    <meta name="description" content="just a flag for per year articles | malei0311's Blog" />
-    <meta name="keywords" content="article-flag,malei0311" />
+    <meta name="description" content="It's interesting, right? | malei0311's Blog" />
+    <meta name="keywords" content="ubuntu,malei0311" />
     <!-- <meta name="baidu-tc-verification" content="df5e36c3ee0984287b85c38111c23f84" /> -->
     <link rel="stylesheet" href="/css/default.css" type="text/css" />
     
@@ -64,62 +64,202 @@
         <section class="content-cnt">
 	<article class="article-main-content">
 		<div class="article-title">
-            <h1><a href="/articles/flag">article-flag</a></h1>
+            <h1><a href="/articles/some-insteresting-terminal-commands">Some Interesting Terminal Command in Linux</a></h1>
             <div class="clearfix">
                 <div class="article-post-time right">
                     <span>&#8227;</span>
-                    <time class="date" pubdate="2000-01-01">2000-01-01</time>
+                    <time class="date" pubdate="2013-08-20">2013-08-20</time>
+                </div>
+                
+                <div class="article-tags left">
+                    <span class="pure-css-tag">&nbsp;</span>
+                    <span class="pure-css-tag-behind left">
+                        <ul>
+                             
+                            <li>
+                                <a href="/tags.html#ubuntu">
+                                    ubuntu
+                                </a>
+                                <span>
+                                    ,
+                                </span>
+                            </li>
+                            
+                        </ul>
+                    </span> 
                 </div>
                 
             </div>
         </div>
-        <p class="description">just a flag for per year articles</p>
+        <p class="description">It's interesting, right?</p>
         <div class="article-div-content">
-        	<h2>药！药！切克闹！</h2>
+        	<h2>总述</h2>
 
-<p>这是一篇并不存在的文章，说不存在，主要是因为它只作为一篇 <code>flag</code>，这篇文章是我在构建博客中应用一个小 <code>hack</code> 的产物，如有雷同，不胜荣幸。</p>
+<p>在 linux 的终端中，好多有意思的东西，那就尝试一下吧！</p>
 
-<h2>为什么要采用这个 <code>hack</code></h2>
+<h2>Commands list</h2>
 
-<p>首先声明：<code>hack</code> 不安全，应用需谨慎</p>
+<h3>Irssi</h3>
 
-<h3>起因</h3>
+<p>一个 IRC 客户端，<a href="/articles/a-brief-introduce-to-irc/">上篇文章</a>有详细介绍</p>
 
-<p>想着遍历一次，就遍历出每年的文章数（当然遍历两次很容易实现）。但是，我想到的所有不应用 <code>hack</code> 的方法，都无法实现，遂，退而求其次，用 <code>hack</code> 吧。</p>
+<h3>Finch</h3>
 
-<h3>可乘之机</h3>
+<p>pidgin 的终端版本:</p>
 
-<p>发现每次遍历文章时，都是按<code>时间</code>顺序、<code>规则</code>遍历的（总是从最新的文章开始），这就有了可乘之机。</p>
-
-<pre><code>&lt;ul&gt;
-{% capture post_year_now_head %}{{ site.time | date: '%Y' }}{% endcapture %}
-{% assign per_year_total = 0 %}
-{% for post in site.categories.articles %}
-    {% capture post_year_article_head %}{{ post.date | date: '%Y' }}{% endcapture %}
-    {% if post_year_now_head == post_year_article_head %}
-        {% capture per_year_total %}{{ per_year_total | plus:1 }}{% endcapture %}
-    {% else %}        
-        &lt;li&gt;
-            &lt;a class="pointer" href="#{{ post_year_now_head }}"&gt;
-                &lt;span&gt;{{ post_year_now_head }}&lt;/span&gt;
-                &lt;span&gt;({{ per_year_total }})&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/li&gt;
-        {% assign post_year_now_head = post_year_article_head %}
-        {% assign per_year_total =1 %}
-    {% endif %}
-{% endfor %}
-&lt;/ul&gt;
+<pre><code>┌─────┤好友列表├──────┐             
+│+ 好友             ▒│                                                         
+│+ 网络中心          ▒│                                                          
+│+ 高中同学          ▒│                                                        
+│+ 大学同学           ▒┌┤大学同学├┐                                              
+│+ 聊天              ▒│在线：8    │                                       
+│                   ▒│总计：36   │                                    
+│                   ▒└──────────┘ 
+│                   ▒│                                              
+│                   ▒│                                            
+│                   ▒│
+│                   ▒│
+│                   ▒│
+│                    │                                                         
+│┌──────────────────┐│                                 
+││可用              ↓││
+│└──────────────────┘│                                                       
+│____________________│
+└────────────────────┘
 </code></pre>
 
-<p>不让<code>liquid</code>运行，包裹其中
-    {\% raw %}
-        “加 "\" ，防止运行”
-    {\% endraw %}</p>
+<h3>Fortune</h3>
 
-<h2>诞生</h2>
+<pre><code>$ sudo apt-get install fortune
+$ fortune
+In Marseilles they make half the toilet soap we consume in America, but
+the Marseillaise only have a vague theoretical idea of its use, which they
+have obtained from books of travel.
+                -- Mark Twain
+</code></pre>
 
-<p>但这并不完结，发现最后一年的文章是遍历不出来的，这就需要做一篇很久以前的文章则作为 <code>hack</code> <code>flag</code>，于是这篇文章就诞生了。</p>
+<h3>Figlet &amp;&amp; Toilet</h3>
+
+<pre><code>$ sudo apt-get install figlet
+$ figlet WEBCRAFT
+__        _______ ____   ____ ____      _    _____ _____ 
+\ \      / / ____| __ ) / ___|  _ \    / \  |  ___|_   _|
+ \ \ /\ / /|  _| |  _ \| |   | |_) |  / _ \ | |_    | |  
+  \ V  V / | |___| |_) | |___|  _ &lt;  / ___ \|  _|   | |  
+   \_/\_/  |_____|____/ \____|_| \_\/_/   \_\_|     |_|  
+
+$ cd /usr/share/figlet
+$ figlet -f ascii12.tlf -w 100 WEBCRAFT
+
+'mm      mm mmmmmmmm  mmmmmm       mmmm   mmmmmm       mm     mmmmmmmm  mmmmmmmm 
+ ##      ## ##""""""  ##""""##   ##""""#  ##""""##    ####    ##""""""  """##""" 
+ "#m ## m#" ##        ##    ##  ##"       ##    ##    ####    ##           ##    
+  ## ## ##  #######   #######   ##        #######    ##  ##   #######      ##    
+  ###""###  ##        ##    ##  ##m       ##  "##m   ######   ##           ##    
+  ###  ###  ##mmmmmm  ##mmmm##   ##mmmm#  ##    ##  m##  ##m  ##           ##    
+  """  """  """"""""  """""""      """"   ""    """ ""    ""  ""           ""' 
+$ ls // 可以看见字体
+$ toilet -f mono9.tlf -F metal WEBCRAFT
+
+▄     ▄ ▄▄▄▄▄▄ ▄▄▄▄▄    ▄▄▄  ▄▄▄▄▄    ▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄
+█  █  █ █      █    █ ▄▀   ▀ █   ▀█   ██   █        █   
+▀ █▀█ █ █▄▄▄▄▄ █▄▄▄▄▀ █      █▄▄▄▄▀  █  █  █▄▄▄▄▄   █   
+ ██ ██▀ █      █    █ █      █   ▀▄  █▄▄█  █        █   
+ █   █  █▄▄▄▄▄ █▄▄▄▄▀  ▀▄▄▄▀ █    ▀ █    █ █        █   
+</code></pre>
+
+<h3>Cowsay &amp;&amp; Cowthink</h3>
+
+<ul>
+<li>-d   死掉的母牛</li>
+<li>-b   瞎眼母牛？</li>
+<li>-g   财迷母牛</li>
+<li>-p   多疑的母牛</li>
+<li>-s   喝醉的母牛</li>
+<li>-t   疲劳母牛</li>
+<li>-w   吃惊的母牛</li>
+<li>-y   小母牛</li>
+</ul>
+
+
+<pre><code>$ sudo apt-get install cowsay
+$ cd /usr/share/cowsay/cows &amp;&amp; ls // you will see all files
+// or
+$ cowsay -l // you will see also
+$ uptime | cowsay -f kiss
+ _____________________________________
+/  23:56:10 up 5 days, 1:23, 6 users, \
+\ load average: 1.22, 1.16, 1.17      /
+ -------------------------------------
+     \
+      \
+             ,;;;;;;;,
+            ;;;;;;;;;;;,
+           ;;;;;'_____;'
+           ;;;(/))))|((\
+           _;;((((((|))))
+          / |_\\\\\\\\\\\\
+     .--~(  \ ~))))))))))))
+    /     \  `\-(((((((((((\\
+    |    | `\   ) |\       /|)
+     |    |  `. _/  \_____/ |
+      |    , `\~            /
+       |    \  \           /
+      | `.   `\|          /
+      |   ~-   `\        /
+       \____~._/~ -_,   (\
+        |-----|\   \    ';;
+       |      | :;;;'     \
+      |  /    |            |
+      |       |            |
+</code></pre>
+
+<h3>Cmatrix</h3>
+
+<pre><code>$ sudo apt-get install cmatrix
+$ cmatrix
+// it's cool
+</code></pre>
+
+<h3>Jp2a</h3>
+
+<pre><code>$ sudo apt-get install jp2a
+$ jp2a --width=50 logoOfshijiazhuangTieDaoUniversity.jpg
+
+"NWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWN
+ WMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMW
+ WMMMMMMMMMMMMMMMMMW0ko:;,;::',;cdOXMMMMMMMMMMMMMMW
+ WMMMMMMMMMMMMMMXd;.;oc..'clc...,d:.'ckWMMMMMMMMMMW
+ WMMMMMMMMMMMMO:o'..,o,:odkkOxdll:.....,lXMMMMMMMMW
+ WMMMMMMMMMMK;..,d:ck0Odc;,,,;:lx00d;:o:..lWMMMMMMW
+ WMMMMMMMMMd;:'..oXk;''',lxk0000Oxod00:.',:cXMMMMMW
+ WMMMMMMMMo.;o,;XO,'',dXMMMMMMMMMMMMWXMk:cc;'KMMMMW
+ WMMMMMMMO...,:Wo'''dWMXkkkkkkkkkkNMMMMM0....,WMMMW
+ WMMMMMMM;....Xk'''kMMWdc''lo,';o''KMMMMMo....xMMMW
+ WMMMMMMN....;Ml;;:MMMM0,'OWl'cWM,'0MMMMMK....cMMMW
+ WMMMMMMN.';.;MMMMMMMMk';XW:'oMNc'oMXlll0K.,;.cMMMW
+ WMMMMMMM,;o,.NMMMMMMo':NX;':xc':0MMl'''Xx.:,.dMMMW
+ WMMMMMMMx.::.cMMMMMKxkWWdoodx0NMMWo'''xX',l,'NMMMW
+ WMMMMMMMMc':;.cWWWMMMMMMMMMMMMMWk;'',OK,'l;.OMMMMW
+ WMMMMMMMMWc'c;',kKkxOKNWWWNXOxc''',dKo.,c;'OMMMMMW
+ WMMMMMMMMMMk',l;',d0Oo:''''''',cdOOc.,:c';XMMMMMMW
+ WMMMMMMMMMMMWd';;c;'':oxkkkkkkxl;..;:c';OMMMMMMMMW
+ WMMMMMMMMMMMMMWOc,;;;..;,,;';':::...,oKMMMMMMMMMMW
+ WMMMMMMMMMMMMMMMMWKxl:,,'':';',;coOXMMMMMMMMMMMMMW
+ WMMMMMMMMMMMMMMMMMMMMMMMWNXNNWMMMMMMMMMMMMMMMMMMMW
+ WMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMW
+ NWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWN"
+</code></pre>
+
+<h3>Bb</h3>
+
+<pre><code>$ sudo apt-get install bb
+$ bb // amazing!!!
+</code></pre>
+
+<h2>Over</h2>
+
+<p>Oops!!!</p>
 
         </div>
         <div class="share clearfix">
@@ -131,8 +271,8 @@
         </div>
         <nav class="article-bottom-nav clearfix">
             
+                <a class="left" href="/articles/a-brief-introduce-to-irc" rel="bookmark" title="旧一篇">&laquo;&nbsp;A Brief Introduction to IRC...</a>
             
-                <a class="right" href="/articles/php-random-image" rel="bookmark" title="新一篇">PHP随机显示图片（目录不限深度）&nbsp;&raquo;</a>
             
         </nav>
         <div class="clearfix">
@@ -143,74 +283,172 @@
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
-                
-                     
+                        
                     
                 
                      
                     
+                        
+                    
                 
                      
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                            
+                                
+                                    <li><a href="/articles/some-insteresting-terminal-commands" title="Some Interesting Terminal Command in Linux">&raquo;&nbsp;Some Interesting Terminal Command in Linux</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/a-brief-introduce-to-irc" title="A Brief Introduction to IRC">&raquo;&nbsp;A Brief Introduction to IRC</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/solve-git-review-problem" title="郁闷的一天 大战 git review">&raquo;&nbsp;郁闷的一天 大战 git review</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/linux-study-shell-redirect" title="shell 之重定向">&raquo;&nbsp;shell 之重定向</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-ati-driver" title="ubuntu 12.10 x64 ATI 5650 安装显卡驱动">&raquo;&nbsp;ubuntu 12.10 x64 ATI 5650 安装显卡驱动</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-wine" title="wine 你懂的">&raquo;&nbsp;wine 你懂的</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/screen-sh" title="传说中的 screen">&raquo;&nbsp;传说中的 screen</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-xrandr-sh" title="xrandr 命令小用">&raquo;&nbsp;xrandr 命令小用</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/linux-study" title="菜鸟学习linux">&raquo;&nbsp;菜鸟学习linux</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/ubuntu-github-git-jekyll" title="ubuntu配置github+git+jekyll环境">&raquo;&nbsp;ubuntu配置github+git+jekyll环境</a></li>
+                                
+                            
+                                
+                                    <li><a href="/articles/sublime_text_2-vs-ubuntu%2BiBus" title="Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？">&raquo;&nbsp;Sublime Text 2 如何在 Ubuntu+iBus 下输入中文？</a></li>
+                                
+                            
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
+                    
+                
+                     
+                    
+                        
                     
                 
                 </ul>
@@ -218,10 +456,6 @@
             <div id="recentPosts">
                 <h3>最新发布</h3>
                 <ul>
-                   
-                    <li>
-                        <a href="/articles/some-insteresting-terminal-commands" title="Some Interesting Terminal Command in Linux" rel="bookmark">&raquo;&nbsp;Some Interesting Terminal Command in Linux</a>
-                    </li>                                   
                    
                     <li>
                         <a href="/articles/a-brief-introduce-to-irc" title="A Brief Introduction to IRC" rel="bookmark">&raquo;&nbsp;A Brief Introduction to IRC</a>
@@ -257,6 +491,10 @@
                    
                     <li>
                         <a href="/articles/tips-for-maintaining-an-open-source-library" title="维护一个开源项目的小建议" rel="bookmark">&raquo;&nbsp;维护一个开源项目的小建议</a>
+                    </li>                                   
+                   
+                    <li>
+                        <a href="/articles/ubuntu-thinkpad-e430-disable-touchpad" title="ubuntu 禁用 thinkpad e430 触摸板" rel="bookmark">&raquo;&nbsp;ubuntu 禁用 thinkpad e430 触摸板</a>
                     </li>                                   
                 
                 </ul>
