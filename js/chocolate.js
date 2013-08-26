@@ -66,7 +66,6 @@ var Chocolate = {
     init: function() {
         Chocolate.killIE();
         Chocolate.highLightMenu();
-        Chocolate.styleIndexIframe();
     },
     /**
      * @description
