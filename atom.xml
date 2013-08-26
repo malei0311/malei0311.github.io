@@ -4,13 +4,69 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-08-21T09:54:55+08:00</updated>
+   <updated>2013-08-26T16:14:46+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>Install Oracle Java JDK 7 in Ubuntu 13.04</title>
+     <link href="http://webcraft.malei.tk/articles/install-jdk7-in-ubuntu"/>
+     <updated>2013-08-25T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/install-jdk7-in-ubuntu</id>
+     <content type="html">&lt;h2&gt;OpenJDK&lt;/h2&gt;
+
+&lt;p&gt;OpenJDK是甲骨文公司公司为Java平台构建的Java开发环境的开源版本，完全自由，开放源码。Sun公司在2006年的JavaOne大会上称将对Java开放源代码，于2009年4月15日正式发布OpenJDK。2009年7月，Ubuntu 9.04中的二进制版本OpenJDK在Java SE 6 JCK中通过了所有的兼容性测试。&lt;/p&gt;
+
+&lt;h2&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;You can download it &lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Extract the file&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo mkdir -p /usr/lib/jvm
+sudo tar -xf jdk-7u25-linux-x64.tar.gz -C /usr/lib/jvm/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Install&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo update-alternatives --install &quot;/usr/bin/java&quot; &quot;java&quot; &quot;/usr/lib/jvm/jdk1.7.0_25/bin/java&quot; 1
+sudo update-alternatives --install &quot;/usr/bin/javac&quot; &quot;javac&quot; &quot;/usr/lib/jvm/jdk1.7.0_25/bin/javac&quot; 1
+sudo update-alternatives --install &quot;/usr/bin/javaws&quot; &quot;javaws&quot; &quot;/usr/lib/jvm/jdk1.7.0_25/bin/javaws&quot; 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Check&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If it shows you the correct version which you just downloaded and installed, it seems to have installed completely.&lt;/li&gt;
+&lt;li&gt;If it shows you an old or another version of java which is not what you want , do like this:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;sudo update-alternatives --config java
+sudo update-alternatives --config javac 
+sudo update-alternatives --config javaws
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;just choose the right directory&lt;/p&gt;
+
+&lt;h2&gt;Finally enable firefox plugin&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir ~/.mozilla/plugins
+ln -s /usr/lib/jvm/jdk1.7.0_25/jre/lib/amd64/libnpjp2.sp ~/.mozilla/plugins
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;verify it: &lt;a href=&quot;http://java.com/en/download/installed.jsp&quot;&gt;click me&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/install-jdk7-in-ubuntu/verified-java-version.png&quot; alt=&quot;verified-java-version&quot; /&gt;&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>Some Interesting Terminal Command in Linux</title>
@@ -1039,49 +1095,6 @@ text：从前景内容的形状（比如文字）作为裁剪区域向外裁剪�
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;详细请参见：&lt;a href=&quot;http://tumble.sneak.co.nz/post/928998513/fixing-the-background-bleed&quot;&gt;Fixing the background 'bleed'&lt;/a&gt;&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>维护一个开源项目的小建议</title>
-     <link href="http://webcraft.malei.tk/articles/tips-for-maintaining-an-open-source-library"/>
-     <updated>2013-05-14T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/tips-for-maintaining-an-open-source-library</id>
-     <content type="html">&lt;p&gt;大约在五个月前我们团队通过Hacker News发布了我们自己的JavaScript库 &lt;a href=&quot;https://github.com/segmentio/analytics.js&quot;&gt;Analytics.js&lt;/a&gt;，在刚发布的几个小时内一只排名第一的好成绩，并且在一天里它的评分从最初的20星突破了1000星。从这件事上我们学到了非常多的管理开源项目的技巧。所以我想把其中一些有用的技巧分享给大家。&lt;/p&gt;
-
-&lt;p&gt;起初，我们对管理一个开源项目一无所知。甚至我认为我们在pull之前没有任何merge别人代码的资格。所以我们不得不快速学习。&lt;/p&gt;
-
-&lt;p&gt;从最初我们发布Analytics.js超过2000个星至今，非常多的人在开源社区做出了惊人的贡献。在此期间我们学会了很多关于如何保持高质量的pull以及如何为贡献者简化开发流程的技巧。&lt;/p&gt;
-
-&lt;h2&gt;保持编码风格的统一&lt;/h2&gt;
-
-&lt;p&gt;新的开发者将会从现有的代码库中学习如何为库增添新的功能，而这才是他们应该做的事情。所有的开发者都想按照代码库的规范去增加新的功能而不是他们自己的规范。你的主要工作就是使这种规范尽可能的简单。新的开发者将会从现有的代码库中学习如何为库增添新的功能，而这才是他们应该做的事情。所有的开发者都想按照代码库的规范去增加新的功能而不是他们自己的规范。作为一个开源项目的维护着主要工作就是使以上情况尽可能的简单。&lt;/p&gt;
-
-&lt;p&gt;当你的分支代码和核心代码表意含糊不清时无数的麻烦就来了，如果你在两个不同的地方用两种不同的方式做同一件事情，开发者怎么知道哪一种方式才是推荐的呢？答案是：他们不知道。&lt;/p&gt;
-
-&lt;p&gt;更糟糕的是由于你的编码风格不统一，开发者无从决定，那么也会编码不统一（按自己的偏好来）。&lt;/p&gt;
-
-&lt;p&gt;解决这个问题你需要花费很多的时间规范代码风格。作为一个准则，你不应该尝试在一个简单的开源库中用两种不同的方式。如果你一定要改变风格，那一定要迅速的在全球都改变。否则新人将无法区分你之前代码和现有代码的约定。&lt;/p&gt;
-
-&lt;p&gt;我们一开始用一种很差劲的方式处理这个问题，所有的代码在一个文件里面，函数没有一个良好的结构组织。（并且如果你检查我们的提交，就必须先理清代码）我们在设计代码规范统一上没有花时间，所以库里的代码编写风格混杂不堪。&lt;/p&gt;
-
-&lt;p&gt;当pull代码的时候我们每个人都与别人的代码发生冲突，因为每个人都修改了同一个文件，并且在他们想要介入新函数的地方加入自己的功能函数&lt;/p&gt;
-
-&lt;h2&gt;使用正确的方法，简单的方法&lt;/h2&gt;
-
-&lt;p&gt;最初我们构建代码的方式，导致在合并pull requests的时候遇到了许多问题：换句话说，刚开始我们的代码就没有结构。我们做出的改善代码结构的比较大的改变之一是使用 &lt;a href=&quot;https://github.com/component/component&quot;&gt;Component&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://segment.io/blog/posts/2013-05-09-tips-for-maintaining-an-open-source-library/component.png&quot; alt=&quot;Component&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;我们喜欢 Component 因为它消除了编码风格不统一的问题，减少了代码库的规模。Component 使用 &lt;a href=&quot;http://zh.wikipedia.org/wiki/CommonJS&quot;&gt;CommonJS&lt;/a&gt;，所以我们只需要在我们需要的地方，引入我们需要的模块即可。所有的事情都简单明了，这就意味着我们的代码对于新人来说更容易跟进。这是代码库维护者的梦想。&lt;/p&gt;
-
-&lt;p&gt;在进行切换期间，我们写了一堆自己的组件来替换已经附在全局对象 analytics 上的通用函数。现在，组件可以在库的任何地方很简单的包含进来和使用，pull requesters 只是默认使用他们。&lt;/p&gt;
-
-&lt;p&gt;自从我们发布了正确的方法，并且使他更加清晰，pull request 的代码质量获得了显著提升。&lt;/p&gt;
-
-&lt;p&gt;为了尽可能保持统一编码风格的延续，当有新的代码提交上来的时候，你必须积极主动。不要害怕给 pull request 的代码添加注释，即使看起来只是一处很小的更正，也不要害怕拒绝不必要的可能会搞乱你的 API 的 requests。&lt;/p&gt;
-
-&lt;p&gt;必须牢记的是，同样要严格要求自己的代码。如果在添加新特性时，自己开小差，懒得统一编码风格，为什么项目的贡献者不可以呢？总之。你的代码越干净，对于新手来说就有越多的例子学习。&lt;/p&gt;
 </content>
    </entry>
    
