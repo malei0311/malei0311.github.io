@@ -49,12 +49,24 @@ var Chocolate = {
             }
         }
     },
+    styleIndexIframe: function() {
+        var iframe = document.getElementById('index-iframe');
+        var iframeWindow = iframe.contentWindow;
+        iframeWindow.onload = function() {
+            var html = iframeWindow.document.documentElement;
+            var body = iframeWindow.document.body;
+            html.style.background = 'none';
+            body.style.background = 'none';
+            body.style.overflow = 'hidden';
+        }
+    },
     /**
      * @description DOM加载完成后的初始化
      */
     init: function() {
         Chocolate.killIE();
         Chocolate.highLightMenu();
+        Chocolate.styleIndexIframe();
     },
     /**
      * @description

@@ -1243,3 +1243,8 @@ div.footer-cnt a:hover{
 .padding10{
 	padding:10px;
 }
+
+#banner-bottom iframe {
+	height: 200px;
+	width: 100%;
+}
