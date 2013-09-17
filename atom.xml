@@ -4,13 +4,90 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-08-31T15:28:54+08:00</updated>
+   <updated>2013-09-17T18:44:46+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>Solve stdout：No space left on device && Error：watch ENOSPC</title>
+     <link href="http://webcraft.malei.tk/articles/ubuntu-boot-nospace-ENOSPC"/>
+     <updated>2013-09-17T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/ubuntu-boot-nospace-ENOSPC</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;今天遇到两个问题，列一下&lt;/p&gt;
+
+&lt;h2&gt;安装东西时&lt;/h2&gt;
+
+&lt;h3&gt;现象&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install ***
+
+gzip: stdout: No space left on device            
+E: mkinitramfs failure cpio 141 gzip 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;no space? 好吧，看一下空间&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;df -h
+
+文件系统                       容量   已用  可用   已用% 挂载点
+/dev/mapper/ubuntu--vg-root  451G   44G  384G   11% /
+none                         4.0K     0  4.0K    0% /sys/fs/cgroup
+udev                         3.7G   12K  3.7G    1% /dev
+tmpfs                        759M  948K  758M    1% /run
+none                         5.0M     0  5.0M    0% /run/lock
+none                         3.8G  2.8M  3.8G    1% /run/shm
+none                         100M   24K  100M    1% /run/user
+/dev/sda1                    228M  216M   12M   95% /boot
+/home/malei/.Private         451G   44G  384G   11% /home/malei
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;解决&lt;/h3&gt;
+
+&lt;p&gt;当更新 ubunbu 时，升级的内核会都存在 &lt;code&gt;/boot&lt;/code&gt; 下，时间长了，升级的次数多了，满了。。。，列出你已经安装的 kernel：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;aptitude search ~ilinux-image 
+
+uname -a // 可见你的当前的内核
+
+sudo apt-get autoremove linux-image-3.8.0-19-generic
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;remove one by one,don't remove packages such as &lt;code&gt;linux-image-generic&lt;/code&gt; and just the previous one of the kernel you are using&lt;/p&gt;
+
+&lt;h2&gt;Meteor&lt;/h2&gt;
+
+&lt;h3&gt;现象&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;meteor
+
+.meteor/tools/3cba50c44a/tools/run.js:425
+    throw e;
+          ^
+Error: watch ENOSPC
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;解决&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;amp;&amp;amp; sudo sysctl -p
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You have run out of watches: The system has a limit to how many files can be watched by a user.This command increases the maximum amount of watches a user can have.&lt;/p&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc&quot;&gt;问题1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://askubuntu.com/questions/223248/boot-low-on-disk-space&quot;&gt;问题2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
    
    <entry>
      <title>Installing NVIDIA Optimus Driver in Ubuntu</title>
@@ -964,78 +1041,6 @@ $ git review // wow, success!
 &lt;h2&gt;预览&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/articles/pure-css-camera/pure-css-camera.png&quot; alt=&quot;css-camera&quot; /&gt;&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
-     <title>Image 的用例</title>
-     <link href="http://webcraft.malei.tk/articles/image%27s-usage"/>
-     <updated>2013-07-25T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/image's-usage</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;貌似话说 image 的应用还挺多的，这里不自量力的试着总结一下，难免遗漏...isMap 和 useMap 这里不涉及&lt;/p&gt;
-
-&lt;h2&gt;属性 height &amp;amp;&amp;amp; width&lt;/h2&gt;
-
-&lt;p&gt;为图像指定 height 和 width 属性是一个好习惯。如果设置了这些属性，就可以在页面加载时为图像预留空间。如果没有这些属性，浏览器就无法了解图像的尺寸，也就无法为图像保留合适的空间，因此当图像加载时，页面的布局就会发生变化。&lt;/p&gt;
-
-&lt;p&gt;无论有没有指定 width 和 height，在 css 的作用下（重绘），img 的大小都会乖乖听 css 的，另外，如果只制定 height 和 width 的其中之一，他会按照您的意思等比例的缩放（无论是 css 中，还是 靠 height or width 属性，它都会听话）&lt;/p&gt;
-
-&lt;h2&gt;获取 Image 的真实大小&lt;/h2&gt;
-
-&lt;p&gt;前面说 image 能够缩放（虽然不推荐缩放），但是有时候我们并不知道 img 是否进行了缩放，并且我们很想知道他的真实大小。How to do ?&lt;/p&gt;
-
-&lt;h3&gt;惯用的、并且支持屌丝浏览器的做法&lt;/h3&gt;
-
-&lt;p&gt;用 Image 对象的方法，如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var preloadImg = function(url,callback) {
-  var img = new Image(); // HTML5 Constructor
-  img.src = url;
-  if(img.complete) {
-    callback(img);
-    return;
-  }
-  img.onload = function(){
-    callback(img); // callback 你就可以任意操作了
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;do you know naturalWidth and naturalHeight ?&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;// 等所有资源都下载完
-window.onload = function(){
-  var img = document.querySelector('#img-test');
-  console.log(img.naturalHeight,img.naturalWidth); // 图片本身的大小
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;Image 在 timeout 中的应用&lt;/h2&gt;
-
-&lt;p&gt;...&lt;/p&gt;
-
-&lt;h2&gt;Image ping ?&lt;/h2&gt;
-
-&lt;p&gt;...&lt;/p&gt;
-
-&lt;h2&gt;img src xss ?&lt;/h2&gt;
-
-&lt;p&gt;...&lt;/p&gt;
-
-&lt;h2&gt;Reference&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://bug257454.bugzilla.mozilla.org/attachment.cgi?id=157438&quot;&gt;test timeout mozilla&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://jsperf.com/smallest-timeout&quot; title=&quot;or add /2&quot;&gt;Smallest timeout value&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#timers&quot;&gt;WHATWG Timers&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement&quot;&gt;HTMLImageElement-MDN&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/wangxiao/jsping/blob/master/jsping.js&quot;&gt;js-ping&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/TomXu/archive/2011/12/31/2289423.html&quot; title=&quot;严重推荐 汤姆大叔 系列&quot;&gt;立即调用的函数表达式&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://sofish.de/2138&quot;&gt;通过 img URL 实施 XSS 的解决方案&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
 </content>
    </entry>
    
