@@ -4,13 +4,122 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-09-17T18:44:46+08:00</updated>
+   <updated>2013-09-29T21:33:55+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>css regular pentagon</title>
+     <link href="http://webcraft.malei.tk/articles/css-regular-pentagon"/>
+     <updated>2013-09-29T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/css-regular-pentagon</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;css-tricks.com 实现了不少的 css 形状，&lt;a href=&quot;http://css-tricks.com/examples/ShapesOfCSS/?=derp&quot;&gt;click me&lt;/a&gt;，但是很难说他们都是 正多边形，也许他们只是看着很正，但是经不住计算推敲。这里以 五边形 为例，进行详细的编码。&lt;/p&gt;
+
+&lt;h2&gt;CSS Tricks 上的五边形的栗子&lt;/h2&gt;
+
+&lt;h3&gt;预览&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-regular-pentagon/css-tricks-pentagon.png&quot; alt=&quot;css-tricks-pentagon&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;代码&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;#pentagon {
+    position: relative;
+    width: 54px;
+    border-width: 50px 18px 0;
+    border-style: solid;
+    border-color: red transparent;
+}
+#pentagon:before {
+    content: &quot;&quot;;
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: -85px;
+    left: -18px;
+    border-width: 0 45px 35px;
+    border-style: solid;
+    border-color: transparent transparent red;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;角度推敲&lt;/h3&gt;
+
+&lt;h4&gt;标注刻度一览&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-regular-pentagon/css-tricks-pentagon-1.png&quot; alt=&quot;css-tricks-pentagon-1&quot; /&gt;&lt;/p&gt;
+
+&lt;h4&gt;计算角度&lt;/h4&gt;
+
+&lt;p&gt;正五边形的每个角都是 &lt;code&gt;108&lt;/code&gt; 度，那让我们来计算一下上面栗子的角度，首先，回忆一下弧度与角度的公式：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;radian = degree / 360 * 2PI = degree * PI / 180
+degree = radian * 180 / PI
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;好，现在让我们来测一下上面图片的的右下角的度数：它应该是 108 (90  + 18)，我们只需要知道那个小角的角度就 ok 了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Math.atan(18/50)*180/Math.PI // 19.798876354524932
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可见，不是期望的 &lt;code&gt;18&lt;/code&gt; 度，其它角（方法同上）&lt;/p&gt;
+
+&lt;p&gt;当然，这种写法也可以给出精准的正五边形，但是必须满足，初始矩形(代码中的 width:54px 和 border-top:50px 组成的矩形)，假设宽为 a(这里 54)，高为 b(这里 50)，则有:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Math.cos(18 * Math.PI / 180) == b / a // 当然本例是不满足的
+
+// 即： 初始化时，只给 width，后面一律计算即可
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;不足&lt;/h3&gt;
+
+&lt;p&gt;虽然这种写法可以用一个元素写完，但是 border-width 不能用 百分比，所以写出来也是死的，inspector 里调试大小的时候，还要手动计算比例，不方便&lt;/p&gt;
+
+&lt;p&gt;下面，来一个闲的但疼的栗子，基于 CSS 的 transform&lt;/p&gt;
+
+&lt;h2&gt;基于 CSS3 transform 的一个栗子&lt;/h2&gt;
+
+&lt;p&gt;之所以选五边形，是因为这个用 CSS 的 transform 实现略复杂...&lt;/p&gt;
+
+&lt;h3&gt;先上步骤预览图&lt;/h3&gt;
+
+&lt;p&gt;当然你也可以移步这里看实例: &lt;a href=&quot;/codepen/css-pentagon/&quot;&gt;click me&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-regular-pentagon/transform-pentagon-1.png&quot; alt=&quot;transform-pentagon-1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-regular-pentagon/transform-pentagon-2.png&quot; alt=&quot;transform-pentagon-2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-regular-pentagon/transform-pentagon-3.png&quot; alt=&quot;transform-pentagon-3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-regular-pentagon/transform-pentagon-4.png&quot; alt=&quot;transform-pentagon-4&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;具体的计算方法，代码可见 &lt;a href=&quot;https://gist.github.com/malei0311/6752519&quot;&gt;click me&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;栗子使用 SCSS &amp;amp;&amp;amp; compass，如果不想用 compass，可以移步 &lt;a href=&quot;http://japborst.net/blog/sass-sines-and-cosines.html&quot;&gt;click me&lt;/a&gt; 自定义三角函数，话说个人项目中爱使用 SASS &amp;amp;&amp;amp; 2空格，当然，在团队开发中，会依照团队习惯，遵循团队标准。&lt;/p&gt;
+
+&lt;h3&gt;不足&lt;/h3&gt;
+
+&lt;p&gt;虽然这种写法解决了第一个栗子中，缩放不方便的问题，但是多加了一个元素&lt;/p&gt;
+
+&lt;h2&gt;一些 CSS 做图工具&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.samuelrossille.com/css-shape/#3247e3000000ffffff089000y16z-10z-14z20z0_17z0z-14z12z11z1_17z1z-13z9z9z2_16z3z-10z5z3_16z4z-9z3z1_16z-11z-14z11z1_16z-10z-13z9z2_16z-8z-10z5z3_16z-7z-9z3z1_0z-10z-3z20z14z0_10z-16z4z7z0_16z-18z10z4z0_0z-16z10z32z4z0_16z-21z-1z11z2_16z14z10z4z0_11z9z4z7z0_16z10z-1z11z2&quot;&gt;css shap generator 2D&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://tridiv.com/&quot;&gt;tridiv 3D&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;结语&lt;/h2&gt;
+
+&lt;p&gt;CSS 做这些东西可以说是剑走偏锋，但是足以说明 CSS 的强大，茶余饭后，稍微想个东西，实现一下，也是挺带感的。&lt;/p&gt;
+</content>
+   </entry>
    
    <entry>
      <title>Solve stdout：No space left on device && Error：watch ENOSPC</title>
@@ -1017,30 +1126,6 @@ $ git review // wow, success!
 &lt;li&gt;&lt;a href=&quot;http://sass-lang.com/docs/yardoc/_index.html&quot;&gt;SASS官方文档&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-</content>
-   </entry>
-   
-   <entry>
-     <title>A pure CSS demo Camera</title>
-     <link href="http://webcraft.malei.tk/articles/css-camera"/>
-     <updated>2013-07-28T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/css-camera</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;p&gt;用 pure css3 实现了一个相机，镜头会转动...&lt;/p&gt;
-
-&lt;h2&gt;demo&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/pure-css-camera/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6130923&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;在线调试: &lt;a href=&quot;http://codepen.io/malei0311/pen/gBpuq&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;h2&gt;预览&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/articles/pure-css-camera/pure-css-camera.png&quot; alt=&quot;css-camera&quot; /&gt;&lt;/p&gt;
 </content>
    </entry>
    

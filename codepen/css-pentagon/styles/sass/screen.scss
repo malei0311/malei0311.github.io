@@ -1,0 +1,365 @@
+@import "compass/reset";
+@import "compass/css3";
+
+body {
+  padding-top: 100px;
+}
+
+.clearfix {
+  *zoom: 1;
+
+  &::before,
+  &::after {
+    display: table;
+    line-height: 0;
+    content: "";
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+.playground {
+  width: 90%;
+  margin: 0 auto;
+  // border: 1px dashed rgba(0,0,0,.3);
+  padding: 10px 10px 0;
+}
+
+.playground-cell {
+  margin-bottom: 10px;
+  background-color: #ECF0F1;
+  @extend .clearfix;
+}
+
+@mixin cross-line($width: 1px, $color: rgba(0,0,0,.3)) {
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    z-index: 1;
+  }
+
+  &::before {
+    height: 100%;
+    width: 0;
+    border-left: #{$width} dashed #{$color};
+    left: calc(50% - #{$width} / 2);
+  }
+
+  &::after {
+    height: 0;
+    width: 100%;
+    border-top: #{$width} dashed #{$color};
+    top: calc(50% - #{$width} / 2);
+  }
+}
+
+.playground-demo-shadow {
+  $color: rgba(0,0,0,.3);
+  border: 1px dashed #{$color};
+  float: left;
+  position: relative;
+
+  @include cross-line(1px, $color);
+}
+
+[class^="demo"] {
+  // border: 1px solid #000;
+}
+
+.demo-hexagon {
+  position: relative;
+  height: 8em;
+  width: 8em;
+  overflow: hidden;
+  @include transform(skewX(30deg) scaleY(cos(30deg)));
+
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    background-color: #E67E22;
+    height: 100%;
+    @include transform(scaleY(1/cos(30deg)) skewX(-30deg) rotate(30deg) scaleX(cos(30deg)));  
+  }
+}
+
+.demo-triangle {
+  position: relative;
+  height: 8em;
+  width: 8em;
+  overflow: hidden;
+  @include transform(translateY(tan(30deg)/2*100%) rotate(60deg) skewX(30deg) scaleY(cos(30deg)));
+
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    background-color: #E67E22;
+    height: 100%;
+    @include transform(scaleY(1/cos(30deg)) skewX(-30deg) rotate(30deg) translateX(-50%));  
+  }
+}
+
+// 540deg 108deg 90 + 18
+.demo-pentagon {
+  position: relative;
+  height: 8em;
+  width: 8em;
+  overflow: hidden;
+  $translateY_zero: sin(18deg)/(tan(36deg)*(2*sin(18deg)+1))*100%;
+  @include transform(translateY(#{$translateY_zero}) rotate(-36deg) skewX(18deg) scaleY(cos(18deg)));
+
+  .demo-pentagon-inner {
+    $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
+    $translateY_two: 50% - $translateY_one;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    // background: red;
+    overflow: hidden;
+    @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) translateY(-#{$translateY_one}) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+  
+    &::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: green;
+      @include transform(scaleX(1/cos(54deg)) skewY(-54deg) rotate(-18deg) translateY(-#{$translateY_two}));
+    }
+  }
+}
+
+.demo-prism {
+  .triangle {
+    position: relative;
+    height: 8em;
+    width: 8em;
+    overflow: hidden;
+    @include transform(rotate(60deg) skewX(30deg) scaleY(cos(30deg)));
+
+    &::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      background-color: #E67E22;
+      height: 100%;
+      @include transform(scaleY(1/cos(30deg)) skewX(-30deg) rotate(30deg) translateX(-50%));  
+    }
+  }
+  .triangle-base {
+    // @include transform(translateY(50%) rotateX(-90deg) translateY(28.8%));
+    @include transform(translateY(50%));
+  }
+}
+
+.pentagon-series {
+
+  &.playground-cell {
+    background: none;
+  }
+
+  .group {
+    @extend .clearfix;
+    margin: 180px 0;
+  }
+
+  .playground-demo-shadow {
+    margin-left: 90px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    [class^="demo"] {
+      box-sizing: border-box;
+    }
+  }
+
+  .demo-pentagon-1 {
+    position: relative;
+    height: 8em;
+    width: 8em;
+    background-color: #2ECC71;
+  }
+
+  .demo-pentagon-2 {
+    $color: #2ECC71;
+    @extend .demo-pentagon-1;
+    background: none;
+    border: 2px dashed #{$color};
+    // 有 border 会撑大父元素，解决： 
+    // 1. 把五边形的演示步骤都加上 box-sizing: border-box(>=IE8)  2. 使用box-shadow(>=IE9)
+    // 话说 transform(>=IE9), 这里使用 box-sizing
+    @include cross-line(2px, $color);
+    @include transform( rotate(-36deg) skewX(18deg) scaleY(cos(18deg)));
+  }
+
+  .demo-pentagon-3 {
+    @extend .demo-pentagon-2;
+    z-index: 2;
+    .demo-pentagon-3-inner {
+      $color: #F1C40F;
+      background-color: #{$color};
+      position: relative;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .demo-pentagon-4 {
+    @extend .demo-pentagon-2;
+    
+    .demo-pentagon-4-inner {
+      $color: #F1C40F;
+      border: 2px dashed #{$color};
+      @include cross-line(2px,#{$color});
+      position: relative;
+      height: 100%;
+      width: 100%;
+      @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+    }
+  }
+  .demo-pentagon-5 {
+    @extend .demo-pentagon-2;
+    
+    .demo-pentagon-5-inner {
+      $color: #F1C40F;
+      $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
+      border: 2px dashed #{$color};
+      @include cross-line(2px,#{$color});
+      position: relative;
+      height: 100%;
+      width: 100%;
+      @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) translateY(-#{$translateY_one}) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+    }
+  }
+  .demo-pentagon-6 {
+    @extend .demo-pentagon-2;
+    z-index: 2;
+    .demo-pentagon-6-inner {
+      z-index: 3;
+      $color: #F1C40F;
+      $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
+      border: 2px dashed #{$color};
+      position: relative;
+      height: 100%;
+      width: 100%;
+      @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) translateY(-#{$translateY_one}) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+    
+      &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #E67E22;
+      }
+    }
+  }
+  .demo-pentagon-7 {
+    @extend .demo-pentagon-2;
+    z-index: 2;
+
+    .demo-pentagon-7-inner {
+      z-index: 3;
+      $color: #F1C40F;
+      $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
+      border: 2px dashed #{$color};
+      position: relative;
+      height: 100%;
+      width: 100%;
+      @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) translateY(-#{$translateY_one}) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+    
+      &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        border: 2px dashed #E67E22;
+        @include transform(scaleX(1/cos(54deg)) skewY(-54deg) rotate(-18deg) );
+      }
+    }
+  }
+  .demo-pentagon-8 {
+    @extend .demo-pentagon-2;
+
+    .demo-pentagon-8-inner {
+      $color: #F1C40F;
+      $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
+      $translateY_two: 50% - $translateY_one;
+      border: 2px dashed #{$color};
+      position: relative;
+      height: 100%;
+      width: 100%;
+      @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) translateY(-#{$translateY_one}) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+    
+      &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        border: 2px dashed #E67E22;
+        @include transform(scaleX(1/cos(54deg)) skewY(-54deg) rotate(-18deg) translateY(-#{$translateY_two}));
+      }
+    }
+  }
+
+  .demo-pentagon-9 {
+    @extend .demo-pentagon-2;
+    @include cross-line(0px,transparent);
+    border: none;
+    overflow: hidden;
+    
+    .demo-pentagon-9-inner {
+      $color: #F1C40F;
+      $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
+      $translateY_two: 50% - $translateY_one;
+      // border: 2px dashed #{$color};
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      width: 100%;
+      @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) translateY(-#{$translateY_one}) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+    
+      &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #E67E22;
+        @include transform(scaleX(1/cos(54deg)) skewY(-54deg) rotate(-18deg) translateY(-#{$translateY_two}));
+      }
+    }
+  }
+  .demo-pentagon-10 {
+    @extend .demo-pentagon-1;
+    overflow: hidden;
+    background: none;
+    $translateY_zero: sin(18deg)/(tan(36deg)*(2*sin(18deg)+1))*100%;
+    @include transform(translateY(#{$translateY_zero}) rotate(-36deg) skewX(18deg) scaleY(cos(18deg)));
+    
+    .demo-pentagon-10-inner {
+      $color: #F1C40F;
+      $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
+      $translateY_two: 50% - $translateY_one;
+      // border: 2px dashed #{$color};
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      width: 100%;
+      @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) translateY(-#{$translateY_one}) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+    
+      &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #E67E22;
+        @include transform(scaleX(1/cos(54deg)) skewY(-54deg) rotate(-18deg) translateY(-#{$translateY_two}));
+      }
+    }
+  }
+}
