@@ -179,9 +179,181 @@ degree = radian * 180 / PI
 
 <p>栗子使用 SCSS &amp;&amp; compass，如果不想用 compass，可以移步 <a href="http://japborst.net/blog/sass-sines-and-cosines.html">click me</a> 自定义三角函数，话说个人项目中爱使用 SASS &amp;&amp; 2空格，当然，在团队开发中，会依照团队习惯，遵循团队标准。</p>
 
+<h3>步骤图中的边框问题</h3>
+
+<p>因为边框使用的是 border，所以他会撑大父元素（也就是那个灰色的虚框），解决方法是 <code>box-sizing: border-box // (&gt;=IE8)</code> ，但是这样会发现，随着嵌套叠加，里面的元素会越来越小，对步骤效果展示产生几像素的偏差，不爽。</p>
+
+<p>接下来，想到的是 使用 <code>box-shadow:  0 0 0 npx {yourcolor} // (&gt;=IE9)</code> ，但是，<code>box-shadow</code> 貌似不能生成虚线吧。</p>
+
+<p>再然后，想到  <code>outline</code> ，这货还是可以的，我们可以光明正大的换掉 <code>border &amp;&amp; box-sizing</code> 了。不过使用 <code>outline</code> ， 当进行 <code>transform</code> 时，显得稍微的不平滑。</p>
+
+<p>上面的截图，还是 <code>border</code> 的虚线框，实例中已换 <code>outline</code>。下面给出变化比较明显的图：</p>
+
+<p><img src="/images/articles/css-regular-pentagon/transform-pentagon-outline.png" alt="transform-pentagon-outline" /></p>
+
+<p>稍微 perfect 点了..</p>
+
+<h3>本例中 transform 关键点</h3>
+
+<h4>时刻保持正多边形</h4>
+
+<p><img src="/images/articles/css-regular-pentagon/skew.png" alt="skew" /></p>
+
+<p>使用了变换 <code>skewX(18deg)</code>，它变成了平行四边形，但是，不是菱形。这里(上图)：</p>
+
+<pre><code>x: 变换之后的宽度，其实他没变，还是原来的配方，还是原来的味道。
+y: 变换之后的高度，这货变了，被拉伸了，原来 y == x 现在 y &gt; x
+θ: 扭曲的角度，这里 18
+</code></pre>
+
+<p>ps 上图中红线的长度一样，都是 x，我们要得到菱形，要在纵向上进行缩放。缩放到百分之多少？</p>
+
+<pre><code>树直的灰线 / 树直的红线
+focus 到右侧的小三角形中，也就是 cos(θ)
+
+这里的代码：scaleY(cos(18deg))
+</code></pre>
+
+<p>子元素会继承父元素的 transform，所以在对子元素进行变换时，为了便于控制子元素，我们需要先把资源素做逆变换，下面是 SCSS &amp;&amp; compass 代码:</p>
+
+<pre><code>// 下面分别对应步骤预览图中的 图2 和 图4
+@include transform( rotate(-36deg) skewX(18deg) scaleY(cos(18deg))); // 父元素
+@include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) rotate(18deg) skewY(54deg) scaleX(cos(54deg))); // 子元素，其中前三个是专门针对父元素做的逆变换
+</code></pre>
+
+<h4>三个平移的计算</h4>
+
+<p>在步骤预览图中：</p>
+
+<ul>
+<li>图4 黄框 -> 图5 黄框</li>
+<li>图7 橙框 -> 图8 橙框</li>
+<li>图9 橙五边形 -> 图10 橙五边形</li>
+</ul>
+
+
+<p><img src="/images/articles/css-regular-pentagon/pentagon-info.png" alt="pentagon-info" /></p>
+
+<h5>图4 黄框 -> 图5 黄框</h5>
+
+<p>也就是上图 绿点到黄点的距离:</p>
+
+<pre><code>k * sin(36deg)
+// 百分比
+k * sin(36deg) / l
+// 把 a 代入得：
+sin(36deg)/(2*sin(18deg)+1)*100%
+</code></pre>
+
+<h5>图7 橙框 -> 图8 橙框</h5>
+
+<p>也就是上图 黄点到橙点的距离:</p>
+
+<pre><code>50% - sin(36deg)/(2*sin(18deg)+1)*100%  // 图4 黄框 -&gt; 图5 黄框 得到的结果
+</code></pre>
+
+<h5>图9 橙五边形 -> 图10 橙五边形</h5>
+
+<p>也就是上图 蓝点到绿点的距离:</p>
+
+<p>蓝点很特殊，在正多边形中，中心、重心、垂心、内心、外心，交于一点，蓝点就是这样一个点：</p>
+
+<pre><code>// 蓝点到绿点的距离
+a / (2 * tan(36deg))
+// 百分比
+a / (2 * tan(36deg)) / l
+// 把 a 代入得：
+sin(18deg)/(tan(36deg)*(2*sin(18deg)+1))*100%
+</code></pre>
+
+<h3>最终代码</h3>
+
+<h4>HTML</h4>
+
+<pre><code>    &lt;div class="demo-pentagon"&gt; &lt;!-- pentagon 五边形 --&gt;
+      &lt;div class="demo-pentagon-inner"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+</code></pre>
+
+<h4>SCSS &amp;&amp; compass 版</h4>
+
+<pre><code>.demo-pentagon {
+  position: relative;
+  height: 8em;
+  width: 8em;
+  overflow: hidden;
+  $translateY_zero: sin(18deg)/(tan(36deg)*(2*sin(18deg)+1))*100%;
+  @include transform(translateY(#{$translateY_zero}) rotate(-36deg) skewX(18deg) scaleY(cos(18deg)));
+
+  .demo-pentagon-inner {
+    $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
+    $translateY_two: 50% - $translateY_one;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    @include transform(scaleY(1/cos(18deg)) skewX(-18deg) rotate(36deg) translateY(-#{$translateY_one}) rotate(18deg) skewY(54deg) scaleX(cos(54deg)));
+
+    &amp;::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: green;
+      @include transform(scaleX(1/cos(54deg)) skewY(-54deg) rotate(-18deg) translateY(-#{$translateY_two}));
+    }
+  }
+}
+</code></pre>
+
+<h4>CSS 版</h4>
+
+<p>就是上面代码，编译出来的:</p>
+
+<pre><code>/* line 107, ../sass/screen.scss */
+.demo-pentagon {
+  position: relative;
+  height: 8em;
+  width: 8em;
+  overflow: hidden;
+  -webkit-transform: translateY(26.28656%) rotate(-36deg) skewX(18deg) scaleY(0.95106);
+  -moz-transform: translateY(26.28656%) rotate(-36deg) skewX(18deg) scaleY(0.95106);
+  -ms-transform: translateY(26.28656%) rotate(-36deg) skewX(18deg) scaleY(0.95106);
+  -o-transform: translateY(26.28656%) rotate(-36deg) skewX(18deg) scaleY(0.95106);
+  transform: translateY(26.28656%) rotate(-36deg) skewX(18deg) scaleY(0.95106);
+}
+/* line 115, ../sass/screen.scss */
+.demo-pentagon .demo-pentagon-inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  -webkit-transform: scaleY(1.05146) skewX(-18deg) rotate(36deg) translateY(-36.32713%) rotate(18deg) skewY(54deg) scaleX(0.58779);
+  -moz-transform: scaleY(1.05146) skewX(-18deg) rotate(36deg) translateY(-36.32713%) rotate(18deg) skewY(54deg) scaleX(0.58779);
+  -ms-transform: scaleY(1.05146) skewX(-18deg) rotate(36deg) translateY(-36.32713%) rotate(18deg) skewY(54deg) scaleX(0.58779);
+  -o-transform: scaleY(1.05146) skewX(-18deg) rotate(36deg) translateY(-36.32713%) rotate(18deg) skewY(54deg) scaleX(0.58779);
+  transform: scaleY(1.05146) skewX(-18deg) rotate(36deg) translateY(-36.32713%) rotate(18deg) skewY(54deg) scaleX(0.58779);
+}
+/* line 125, ../sass/screen.scss */
+.demo-pentagon .demo-pentagon-inner::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: green;
+  -webkit-transform: scaleX(1.7013) skewY(-54deg) rotate(-18deg) translateY(-13.67287%);
+  -moz-transform: scaleX(1.7013) skewY(-54deg) rotate(-18deg) translateY(-13.67287%);
+  -ms-transform: scaleX(1.7013) skewY(-54deg) rotate(-18deg) translateY(-13.67287%);
+  -o-transform: scaleX(1.7013) skewY(-54deg) rotate(-18deg) translateY(-13.67287%);
+  transform: scaleX(1.7013) skewY(-54deg) rotate(-18deg) translateY(-13.67287%);
+}
+</code></pre>
+
+<p>都是百分比和角度，所以可以很方便的只更改 <code>width &amp;&amp; height</code> 就可以改变正五边形的大小。</p>
+
 <h3>不足</h3>
 
-<p>虽然这种写法解决了第一个栗子中，缩放不方便的问题，但是多加了一个元素</p>
+<p>虽然这种写法解决了第一个栗子中缩放不方便的问题，但是多加了一个元素</p>
 
 <h2>一些 CSS 做图工具</h2>
 
@@ -190,6 +362,10 @@ degree = radian * 180 / PI
 <li><a href="http://tridiv.com/">tridiv 3D</a></li>
 </ul>
 
+
+<p>如果你的 chrome 显示不了 tridiv 里的效果，例如：我在 ubuntu 里不可以，请移步 <code>chrome://flags/</code> 启用：</p>
+
+<p><img src="/images/articles/css-regular-pentagon/chrome-gpu.png" alt="chrome-gpu" /></p>
 
 <h2>结语</h2>
 

@@ -174,9 +174,9 @@ body {
       margin-left: 0;
     }
 
-    [class^="demo"] {
-      box-sizing: border-box;
-    }
+    // [class^="demo"] {
+    //   box-sizing: border-box;
+    // }
   }
 
   .demo-pentagon-1 {
@@ -190,10 +190,12 @@ body {
     $color: #2ECC71;
     @extend .demo-pentagon-1;
     background: none;
-    border: 2px dashed #{$color};
+    // border: 2px dashed #{$color};
+    // box-shadow: 0 0 0 2px dashed #{$color};
+    outline: 2px dashed #{$color};
     // 有 border 会撑大父元素，解决： 
-    // 1. 把五边形的演示步骤都加上 box-sizing: border-box(>=IE8)  2. 使用box-shadow(>=IE9)
-    // 话说 transform(>=IE9), 这里使用 box-sizing
+    // 1. 把五边形的演示步骤都加上 box-sizing: border-box(>=IE8)  2. 使用box-shadow(>=IE9) 3.使用 outline(>=IE8)
+    // 话说 transform(>=IE9), 这里使用 outline
     @include cross-line(2px, $color);
     @include transform( rotate(-36deg) skewX(18deg) scaleY(cos(18deg)));
   }
@@ -215,7 +217,9 @@ body {
     
     .demo-pentagon-4-inner {
       $color: #F1C40F;
-      border: 2px dashed #{$color};
+      // border: 2px dashed #{$color};
+      // box-shadow: 0 0 0 2px dashed #{$color};
+      outline: 2px dashed #{$color};
       @include cross-line(2px,#{$color});
       position: relative;
       height: 100%;
@@ -229,7 +233,9 @@ body {
     .demo-pentagon-5-inner {
       $color: #F1C40F;
       $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
-      border: 2px dashed #{$color};
+      // border: 2px dashed #{$color};
+      // box-shadow: 0 0 0 2px dashed #{$color};
+      outline: 2px dashed #{$color};
       @include cross-line(2px,#{$color});
       position: relative;
       height: 100%;
@@ -244,7 +250,9 @@ body {
       z-index: 3;
       $color: #F1C40F;
       $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
-      border: 2px dashed #{$color};
+      // border: 2px dashed #{$color};
+      // box-shadow: 0 0 0 2px dashed #{$color};
+      outline: 2px dashed #{$color};
       position: relative;
       height: 100%;
       width: 100%;
@@ -267,7 +275,9 @@ body {
       z-index: 3;
       $color: #F1C40F;
       $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
-      border: 2px dashed #{$color};
+      // border: 2px dashed #{$color};
+      // box-shadow: 0 0 0 2px dashed #{$color};
+      outline: 2px dashed #{$color};
       position: relative;
       height: 100%;
       width: 100%;
@@ -278,7 +288,7 @@ body {
         content: "";
         width: 100%;
         height: 100%;
-        border: 2px dashed #E67E22;
+        outline: 2px dashed #E67E22;
         @include transform(scaleX(1/cos(54deg)) skewY(-54deg) rotate(-18deg) );
       }
     }
@@ -290,7 +300,9 @@ body {
       $color: #F1C40F;
       $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
       $translateY_two: 50% - $translateY_one;
-      border: 2px dashed #{$color};
+      // border: 2px dashed #{$color};
+      // box-shadow: 0 0 0 2px dashed #{$color};
+      outline: 2px dashed #{$color};
       position: relative;
       height: 100%;
       width: 100%;
@@ -301,7 +313,7 @@ body {
         content: "";
         width: 100%;
         height: 100%;
-        border: 2px dashed #E67E22;
+        outline: 2px dashed #E67E22;
         @include transform(scaleX(1/cos(54deg)) skewY(-54deg) rotate(-18deg) translateY(-#{$translateY_two}));
       }
     }
@@ -310,14 +322,14 @@ body {
   .demo-pentagon-9 {
     @extend .demo-pentagon-2;
     @include cross-line(0px,transparent);
-    border: none;
+    outline: none;
     overflow: hidden;
+
     
     .demo-pentagon-9-inner {
       $color: #F1C40F;
       $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
       $translateY_two: 50% - $translateY_one;
-      // border: 2px dashed #{$color};
       overflow: hidden;
       position: relative;
       height: 100%;
@@ -345,7 +357,6 @@ body {
       $color: #F1C40F;
       $translateY_one: sin(36deg)/(2*sin(18deg)+1)*100%;
       $translateY_two: 50% - $translateY_one;
-      // border: 2px dashed #{$color};
       overflow: hidden;
       position: relative;
       height: 100%;
