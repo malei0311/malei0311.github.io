@@ -4,13 +4,118 @@
    <title>WebCraft</title>
    <link href="http://webcraft.malei.tk/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://webcraft.malei.tk" rel="alternate" type="text/html" />
-   <updated>2013-09-30T16:08:51+08:00</updated>
+   <updated>2013-10-11T17:15:21+08:00</updated>
    <id>http://webcraft.malei.tk</id>
    <author>
      <name>Lei Ma</name>
      <email>leiman0311@gmail.com</email>
    </author>
 
+   
+   <entry>
+     <title>css 3D</title>
+     <link href="http://webcraft.malei.tk/articles/css-3D"/>
+     <updated>2013-10-10T00:00:00+08:00</updated>
+     <id>http://webcraft.malei.tk/articles/css-3D</id>
+     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
+
+&lt;p&gt;CSS 3D 是个挺好玩的东西，闲暇的时候，可以稍微看看&lt;/p&gt;
+
+&lt;p&gt;在开始之前，请先看 Reference -&gt; my reference，那里有入门知识。&lt;/p&gt;
+
+&lt;h2&gt;CSS 3D 坐标系&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/articles/css-3D/coordinate-system.jpg&quot; alt=&quot;coordinate-system&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;rotateX&lt;/code&gt; &amp;amp;&amp;amp; &lt;code&gt;rotateY&lt;/code&gt; &amp;amp;&amp;amp; &lt;code&gt;rotateZ&lt;/code&gt; 的旋转方向，都是从每个坐标的正向看过去，顺时针的方向&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;translateX&lt;/code&gt; &amp;amp;&amp;amp; &lt;code&gt;translateY&lt;/code&gt; &amp;amp;&amp;amp; &lt;code&gt;translateZ&lt;/code&gt; 的平移方向，都顺着各个坐标的正向&lt;/p&gt;
+
+&lt;p&gt;当然，先 &lt;code&gt;rotate&lt;/code&gt; 和 先 &lt;code&gt;translate&lt;/code&gt; 不一样幺&lt;/p&gt;
+
+&lt;h2&gt;Tips&lt;/h2&gt;
+
+&lt;h3&gt;use GPU ?&lt;/h3&gt;
+
+&lt;p&gt;用 CSS 开启硬件加速来提高网站性能？ please see &lt;a href=&quot;http://blog.teamtreehouse.com/increase-your-sites-performance-with-hardware-accelerated-css&quot;&gt;Increase Your Site’s Performance with Hardware-Accelerated CSS&lt;/a&gt; or &lt;a href=&quot;http://www.urbaninsight.com/2013/01/04/improving-html5-app-performance-gpu-accelerated-css-transitions&quot;&gt;Improving HTML5 app performance with GPU accelerated CSS transitions&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;但是可能会有问题，发现这样做 伪对象 不听使唤了有木有，请看： &lt;a href=&quot;http://stackoverflow.com/questions/10814178/css-performance-relative-to-translatez0&quot;&gt;CSS performance relative to translateZ(0)&lt;/a&gt; &amp;amp;&amp;amp; &lt;a href=&quot;http://dabblet.com/gist/2463684&quot;&gt;a dabblet demo&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;translateZ percent ?&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;translateZ&lt;/code&gt; 不能使用 百分比，&lt;code&gt;translateX&lt;/code&gt; &amp;amp;&amp;amp; &lt;code&gt;translateY&lt;/code&gt; 可以，为什么呢，标准如此：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;[The percentage] refer[s] to the size of the element's box&lt;/li&gt;
+&lt;li&gt;Note that values are not allowed in the translateZ translation-value, and if present will cause the propery value to be invalid.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;3D menu&lt;/h3&gt;
+
+&lt;p&gt;下面两个是比较有意思的实现，第一个比较好想，它就是一个多面体的其中两面，做过正多面体的应该都清楚。第二个，更有意思一点...&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://davidwalsh.name/3d-menu&quot;&gt;3D menu 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jsfiddle.net/hakim/Ht6Ym/&quot;&gt;3D menu 2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;手动实践&lt;/h2&gt;
+
+&lt;h3&gt;实例&lt;/h3&gt;
+
+&lt;p&gt;just click &lt;a href=&quot;/playground/css3D/&quot;&gt;here&lt;/a&gt;，关于 css 2D 变换出正多边形，请看前一篇 &lt;a href=&quot;/articles/css-regular-pentagon/&quot;&gt;CSS Regular Pentagon&lt;/a&gt; &amp;amp;&amp;amp; &lt;a href=&quot;/codepen/css-pentagon/&quot;&gt;2D demo&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+
+&lt;h3&gt;my reference&lt;/h3&gt;
+
+&lt;p&gt;这两篇对理解 CSS 3D 很重要&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.w3.org/TR/css3-transforms/#transform-3d-rendering&quot;&gt;3D Transform Rendering&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://desandro.github.io/3dtransforms/&quot;&gt;Intro to CSS 3D transforms&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;此栏目下的，以下内容，与文章内容没有关系，只是一时心血来潮，简单的列了一下经常去的网站:&lt;/p&gt;
+
+&lt;h3&gt;some cool demos(not only 3D):&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://hakim.se/experiments&quot;&gt;hakim&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://cssdeck.com/&quot;&gt;cssDeck&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://codepen.io&quot;&gt;codepen&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://dabblet.com/&quot;&gt;dabblet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://tributary.io/&quot;&gt;tributary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;My favourite is codepen.&lt;/p&gt;
+
+&lt;h3&gt;or you may be curious about D3&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://christopheviau.com/d3list/&quot;&gt;d3list&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;or see examples on github&lt;/p&gt;
+
+&lt;h3&gt;or you may like these:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.csswinner.com/&quot;&gt;csswinner&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.awwwards.com/&quot;&gt;awwwards&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cssdesignawards.com/&quot;&gt;cssdesignawards&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.behance.net/&quot;&gt;behance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
    
    <entry>
      <title>css regular pentagon</title>
@@ -1124,182 +1229,6 @@ $ git review // wow, success!
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://billie66.github.io/TLCL/book/zh/chap07.html&quot;&gt;The Linux Command Line&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-</content>
-   </entry>
-   
-   <entry>
-     <title>CSS 预处理器  LESS vs SASS</title>
-     <link href="http://webcraft.malei.tk/articles/less-vs-sass"/>
-     <updated>2013-07-30T00:00:00+08:00</updated>
-     <id>http://webcraft.malei.tk/articles/less-vs-sass</id>
-     <content type="html">&lt;h2&gt;总述&lt;/h2&gt;
-
-&lt;h3&gt;SASS 的前世今生&lt;/h3&gt;
-
-&lt;p&gt;Sass是是一种基于ruby编写的CSS预处理器，诞生于2007年，是最早也是最成熟的一款CSS预处理器语言，它可以使用变量、嵌套、混入、继承，运算，函数等功能，使得CSS的开发，变得简单清晰可维护，同时也大大节省了设计者的时间，提高了效率。Sass最后还是会编译出合法的CSS让浏览器使用，也就是说它本身的语法并不太容易让浏览器识别，因为它不是标准的CSS格式，在它的语法内部可以使用动态变量等，所以它更像一种极简单的动态语言。&lt;/p&gt;
-
-&lt;p&gt;其实现在的Sass已经有了两套语法规则：一个依旧是用缩进作为分隔符来区分代码块的；另一套规则和CSS一样采用了大括号（｛｝）作为分隔符。后一种语法规则又名SCSS，在Sass3之后的版本都支持这种语法规则。&lt;/p&gt;
-
-&lt;p&gt;sass虽然是最早的，但是一开始还是不太好用，而且使用缩进作为分隔符，不符合css使用大括号的习惯，所以less以后起之秀的身份轻松赢得了人心，后来sass借鉴于less的一些思想，改进了自己的设计，并有了scss，然后经过几个版本的更新，特别版本3.2.0做了些革命性的更新，以使它从其他几个编译处理器中脱颖而出。&lt;/p&gt;
-
-&lt;p&gt;由上面可见，有时太激进了，用户是不领情的，“步子走大了，容易...”，你懂的。不过现在类 sass 的写法还挺受欢迎的：HAML，Slim，CoffeeScript，jade，styleus等...&lt;/p&gt;
-
-&lt;h3&gt;ㄟ(￣▽￣ㄟ)&lt;/h3&gt;
-
-&lt;p&gt;下面主要是自己在这段时间的使用中遇到的...&lt;/p&gt;
-
-&lt;h2&gt;比较&lt;/h2&gt;
-
-&lt;h3&gt;calc&lt;/h3&gt;
-
-&lt;p&gt;less 中使用 calc 有 bug，例如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;calc(100% - 8px);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;他会无情的给你解析成 92%，而在 sass 中没有问题。上一个比较 撮 的 demo：&lt;a href=&quot;http://codepen.io/malei0311/full/thAim&quot;&gt;click me&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;点击左下脚的 &lt;code&gt;edit&lt;/code&gt; ，把 calc() 法 中写在行内的 style calc，写入 less 中，靠，他变成 92%了&lt;/p&gt;
-
-&lt;h3&gt;循环&lt;/h3&gt;
-
-&lt;p&gt;虽然都能实现循环，但是 sass 使用起来更方便，例如 sass 中循环  for ，很简单，也方便。&lt;/p&gt;
-
-&lt;h4&gt;sass demo:&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/css-fibonacci/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6099394&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;在线调试: &lt;a href=&quot;http://codepen.io/malei0311/pen/IsfLm&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;&lt;img src=&quot;/images/articles/less-vs-sass/css-fibonacci.png&quot; alt=&quot;css-fibonacci&quot; /&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@for $i from 1 through $num {
-  $temp: $i / 2 + 0px;
-
-  .circle-#{$i} {  
-    width: $temp;
-
-    transform: rotate($i*137.5deg);
-    &amp;amp;:after{
-      animation-duration: 10s;
-      animation-delay: 0.01s * $i;
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4&gt;less demo:&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;demo 地址: &lt;a href=&quot;/codepen/css-animation/&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;demo 源码: &lt;a href=&quot;https://gist.github.com/malei0311/6093738&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;在线调试:  &lt;a href=&quot;http://codepen.io/malei0311/pen/eqyid&quot;&gt;click me&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;&lt;img src=&quot;/images/articles/less-vs-sass/css-animation-series-multi.png&quot; alt=&quot;css-animation-series-multi&quot; /&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.loopingClass (@index,@father) when (@index =&amp;lt; @particles) {
-  //这里需要一个恶心的 mixin + 关键字 when 实现一个条件判断，有木有 =。= !
-  .father(@father) when (@father = demo1){
-    .@{father} i:nth-child(@{index}) {
-
-      @angle: @index / @particles * 360;      
-      width: (@index * 14) + 0px;
-      height: (@index * 14) + 0px;
-      margin-top: -(@index * 14) / 2 + 0px;
-      margin-left: -(@index * 14) / 2 + 0px;
-      z-index: @particles - @index;
-      transform:rotate( @angle + 0deg );
-
-      transform-origin: 50% 50%;
-      animation-delay: @index * (2s / @particles);
-     }
-  }
-
-  .father(@father);
-  .loopingClass(@index + 1, @father);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;条件判断&lt;/h3&gt;
-
-&lt;p&gt;sass =&gt; if, less =&gt; when，下面两段代码，是 &lt;code&gt;上面循环&lt;/code&gt; 一节中 &lt;code&gt;less demo&lt;/code&gt; 的不同实现&lt;/p&gt;
-
-&lt;p&gt;sass:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@mixin paintChild($father) {
-  @for $i from 1 through $particles {
-    .#{$father} i:nth-child(#{$i}) {
-      @if $father == demo1 {
-        $angle: $i / $particles * 360;
-
-        width: ($i * 14) + px;
-        height: ($i * 14) + px;
-        margin-top: - ($i * 14) / 2 + px;
-        margin-left: - ($i * 14) / 2 + px;
-        z-index: $particles - $i;
-        transform:rotate( #{$angle}deg );
-
-        transform-origin: 50% 50%;
-        animation-delay: $i * (2s / $particles);  
-      } @else if $father == demo2 {
-        ... // your code
-      }
-    }
-  }
-}
-
-@include paintChild(demo1);
-@include paintChild(demo2);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;less:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.loopingClass (@index,@father) when (@index =&amp;lt; @particles) {
-  //这里需要一个恶心的 mixin + 关键字 when 实现一个条件判断，有木有 =。= !
-  .father(@father) when (@father = demo1){
-    .@{father} i:nth-child(@{index}) {
-
-      @angle: @index / @particles * 360;      
-      width: (@index * 14) + 0px;
-      height: (@index * 14) + 0px;
-      margin-top: -(@index * 14) / 2 + 0px;
-      margin-left: -(@index * 14) / 2 + 0px;
-      z-index: @particles - @index;
-      transform:rotate( @angle + 0deg );
-
-      transform-origin: 50% 50%;
-      animation-delay: @index * (2s / @particles);
-     }
-  }
-  .father(@father) when (@father = demo2){
-    ... // your code
-  }
-  .father(@father);
-  .loopingClass(@index + 1, @father);
-}
-
-.loopingClass (1, demo1);
-.loopingClass (1, demo2);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;less会重复写 &lt;code&gt;.father(@father) when (...&lt;/code&gt; 有木有，另外，注意他们的单位计算方式，负号与后面有没有空格，与单位相加时怎么处理。&lt;/p&gt;
-
-&lt;h2&gt;结语&lt;/h2&gt;
-
-&lt;p&gt;萝卜白菜，各有所爱，不过还是觉的 sass 在某些方面比较方便，另外 chrome 中还可以直接调试。其次，也要看项目历史原因、团队偏好，为了易维护性以及项目的一致性，怎么选，你懂的。&lt;/p&gt;
-
-&lt;h2&gt;Reference&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://css-tricks.com/sass-vs-less/&quot;&gt;sass-vs-less&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://sass-lang.com/docs/yardoc/_index.html&quot;&gt;SASS官方文档&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 </content>
