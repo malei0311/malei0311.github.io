@@ -1,3 +1,9 @@
-*.swp
+*.iml
+.idea/
 *~
-*.[oa]
+*.diff
+*.patch
+*.bak
+.DS_Store
+Thumb.db
+node_modules/
