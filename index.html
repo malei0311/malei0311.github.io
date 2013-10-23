@@ -1,7 +1,13 @@
 <!doctype html>
 <script>
-  var pathname = location.pathname;
+  var fullSearchArr = location.search.substr(1).split('&');
+  var length = fullSearchArr.length;
+  var resultObj = {};
+  for(var i = 0; i < length; i++) {
+    var tempArr = fullSearchArr[i].split('=');
+    resultObj[tempArr[0]] = tempArr[1];
+  }
   location.replace(
       'https://github.com/malei0311/malei0311.github.com/wiki' +
-          pathname);
+          (resultObj.note ? '/' + resultObj.note : ''));
 </script>
