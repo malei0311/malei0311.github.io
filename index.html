@@ -1,13 +1,28 @@
 <!doctype html>
-<script>
-  var fullSearchArr = location.search.substr(1).split('&');
-  var length = fullSearchArr.length;
-  var resultObj = {};
-  for(var i = 0; i < length; i++) {
-    var tempArr = fullSearchArr[i].split('=');
-    resultObj[tempArr[0]] = tempArr[1];
-  }
-  location.replace(
-      'https://github.com/malei0311/malei0311.github.com/wiki' +
-          (resultObj.note ? '/' + resultObj.note : ''));
-</script>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebCraft</title>
+  <script>
+    if(location.search){
+      var fullSearchArr = location.search.substr(1).split('&');
+      var length = fullSearchArr.length;
+      var resultObj = {};
+      for(var i = 0; i < length; i++) {
+        var tempArr = fullSearchArr[i].split('=');
+        resultObj[tempArr[0]] = tempArr[1];
+      }
+      if(resultObj.wiki) {
+        location.replace(
+            'https://github.com/malei0311/malei0311.github.com/wiki' +
+                (resultObj.wiki == 'home' ? '' : '/' + resultObj.wiki));
+      }
+    }
+  </script>
+</head>
+<body>
+  <p>
+    hello world! or you can see my <a href="?wiki=home">wiki</a>
+  </p>
+</body>
+</html>
