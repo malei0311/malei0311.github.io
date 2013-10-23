@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[webcraft]]></title>
+  <link href="http://malei0311.github.io/atom.xml" rel="self"/>
+  <link href="http://malei0311.github.io/"/>
+  <updated>2013-10-23T15:09:43+08:00</updated>
+  <id>http://malei0311.github.io/</id>
+  <author>
+    <name><![CDATA[malei0311]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
