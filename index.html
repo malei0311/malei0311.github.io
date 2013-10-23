@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>WebCraft</title>
   <script>
-    if(location.search){
+    if(location.search && (location.pathname === '/' || location.pathname === '/index.html')){
       var fullSearchArr = location.search.substr(1).split('&');
       var length = fullSearchArr.length;
       var resultObj = {};
