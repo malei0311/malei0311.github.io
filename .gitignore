@@ -1,6 +1,8 @@
 *.iml
 .idea/
 *~
+.sass-cache/
+_site/
 *.diff
 *.patch
 *.bak

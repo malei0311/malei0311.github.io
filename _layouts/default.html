@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="generator" content="Jekyll">
+  <meta name="author" content="{{ site.author.name }}">
+  <meta name="description" content="{{ page.description }} | {{ site.description }}">
+  <meta name="keywords" content="{{ page.keywords | join: ',' }},{{ site.keywords }}">
+</head>
+<body>
+  {{ content }}
+</body>
+</html>
