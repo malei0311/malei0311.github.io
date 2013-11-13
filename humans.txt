@@ -1,0 +1,16 @@
+# humanstxt.org/
+
+# AUTHOR
+
+  Name: malei0311
+  E-mail: leiman0311@gmail.com
+  From: Beijing, China
+
+# SITE
+
+  Create: 2013/11/11  
+  Last update: 2013/11/12
+  Doctype: HTML5
+  Technology: Normalize.css, jQuery, Modernizr, RequireJS, 
+  underscore.js, Grunt, SCSS, Compass
+  IDE: Sublime Text, Photoshop

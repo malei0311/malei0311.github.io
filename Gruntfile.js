@@ -26,13 +26,24 @@ module.exports = function(grunt) {
         dest: 'scripts/dist/<%= pkg.name %>.js'
       }
     },
+    // uglify: {
+    //   options: {
+    //     banner: '<%= banner %>'
+    //   },
+    //   dist: {
+    //     src: '<%= concat.dist.dest %>',
+    //     dest: 'scripts/<%= pkg.name %>.min.js'
+    //   }
+    // },
     uglify: {
-      options: {
-        banner: '<%= banner %>'
-      },
-      dist: {
-        src: '<%= concat.dist.dest %>',
-        dest: 'scripts/<%= pkg.name %>.min.js'
+      dynamic_mappings: {
+        files: [{
+          expand: true,
+          cwd: 'scripts/src/',
+          src: '*.js',
+          dest: 'scripts/dist',
+          ext: '.min.js'
+        }]
       }
     },
     compass: {
@@ -68,7 +79,7 @@ module.exports = function(grunt) {
     },
     watch: {
       css: {
-        file: 'sass/*.scss',
+        files: ['sass/**/*.scss','config.rb'],
         tasks: ['compass']
       },
       gruntfile: {
@@ -76,8 +87,8 @@ module.exports = function(grunt) {
         tasks: ['jshint:gruntfile']
       },
       scripts: {
-        files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:scripts','concat','uglify']
+        files: '<%= jshint.scripts.src %>',
+        tasks: ['jshint:scripts','uglify']
       }
     }
   });
@@ -90,6 +101,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
 
   // Default task.
-  grunt.registerTask('default', ['compass', 'jshint', 'concat', 'uglify']);
+  grunt.registerTask('default', ['compass', 'jshint', 'uglify']);
 
 };
