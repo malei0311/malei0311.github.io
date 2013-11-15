@@ -2,7 +2,7 @@ define([
   'jquery'
 ], function($) {
   return {
-    log: function(){
+    log: function() {
       if('console' in window && 'log' in console) {
         if(console.log.apply) {
           console.log.apply(console,[].slice.call(arguments));

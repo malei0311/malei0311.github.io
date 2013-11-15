@@ -1,0 +1,219 @@
+@import "compass/reset";
+@import "../src/normalize";
+@import "compass/css3";
+@import "../src/icons";
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+}
+
+
+*,
+*:before,
+*:after {
+  @include box-sizing(border-box);
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-size: 1em;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+@media print {
+
+  * {
+    color: #000 !important;
+    text-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page {
+    margin: 2cm .5cm;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  select {
+    background: #fff !important;
+  }
+}
+
+// media query mixin
+
+@mixin mediaQueryX1($media, $feature1, $value1) {
+  @media only #{$media} and ($feature1: $value1) {
+    @content;
+  }
+}
+
+@mixin mediaQueryX2($media, $feature1, $value1, $feature2, $value2) {
+  @media only #{$media} and ($feature1: $value1) and ($feature2: $value2) {
+    @content;
+  }
+}
+
+@mixin mediaQueryX3($media, $feature1, $value1, $feature2, $value2, $feature3, $value3) {
+  @media only #{$media} and ($feature1: $value1) and ($feature2: $value2) and ($feature3: $value3) {
+    @content;
+  }
+}
+
+// TODO: min-device-pixel-ratio
+
+// variables
+
+.wrapper {
+  @include transition(transform .2s ease);
+  @include transform(translateX(0px));
+  @include box-shadow(-2px 0 2px rgba(0, 0, 0, 0.3));
+  overflow: hidden;
+  position: relative;
+  background: #f4f4f4;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  .topbar {
+    height: 1 / 16 * 41 + em;
+    background: #1b1b1b;
+    background: linear-gradient(color-stops(#353535, #010101));
+    @include box-shadow(0 2px 2px -2px rgba(0, 0, 0, 0.8));
+    border-top: 1px solid #4A4A4A;
+    text-align: center;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+
+    .header-action {
+      font-size: 1 / 16 * 20 + em;
+      position: relative;
+      display: inline-block;
+      height: 1 / 20 * 40 + em;
+      line-height: 1 / 20 * 40;
+      color: #fff;
+      cursor: pointer;
+
+      .icon {
+        color: #fff; 
+        margin: 0;
+        width: 1 / 20 * 40 + em;
+        opacity: .9;
+      }
+    }
+
+    .burger {
+      left: 0;
+    }
+
+    .search {
+      right: 0;
+    }
+
+    .header {
+      font-weight: bold;
+      color: #fff;
+      display: inline-block;
+      font-size: 1 / 16 * 20 + em;
+      line-height: 1 / 20 * 40;
+
+      .index {
+        text-decoration: none;
+        font-size: 1em;
+        color: #fff;
+      }
+    }
+
+  }
+}
+
+.nav-base {
+  @include transition(opacity 0s ease 0.35s);
+  background: #1F1F1F;
+  width: 75%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.nav-base-open {
+  .wrapper {
+    @include transition(transform 0.2s ease 0.15s);
+    @include transform(translateX(75%));
+  }
+  .nav-base {
+    @include transition(opacity 0s linear 0s);
+    opacity: 1;
+  }
+}
+
+
+@include mediaQueryX1(screen, max-width, 603px) {
+  body {
+
+  }
+}
+
+@include mediaQueryX2(screen, min-width, 604px, max-width, 1024px) {
+  
+}

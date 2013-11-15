@@ -14,28 +14,63 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="generator" content="Jekyll">
   <meta name="author" content="{{ site.author.name }}">
   <meta name="description" content="{{ page.description }} | {{ site.description }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   <meta name="keywords" content="{{ page.keywords | join: ',' }},{{ site.keywords }}">
   <link type="text/plain" rel="author" href="humans.txt">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png">
   <!-- TODO: apple-touch-icon -->
-  <link href="styles/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <link href="/styles/styles.css" rel="stylesheet" type="text/css">
   <!--[if IE]>
-    <link href="styles/ie.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <link href="/styles/ie.css" rel="stylesheet" type="text/css">
   <![endif]-->
-  <link href="styles/print.css" media="print" rel="stylesheet" type="text/css">
-  <script src="scripts/lib/modernizr/modernizr.custom.min.js"></script>
-  <script data-main="scripts/dist/config.min" src="scripts/lib/requirejs/require.min.js"></script>
+  <script src="/scripts/lib/modernizr/modernizr.custom.min.js"></script>
+  <script src="/scripts/lib/requirejs/require.min.js"></script>
+  <script src="/scripts/dist/config.min.js"></script>
 </head>
 <body>
   <!--[if lt IE 8]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  {{ content }}
+  <div class="wrapper">
+    <div class="topbar">
+      <a class="header-action burger left" id="header-action-burger">
+        <i class="reorder icon"></i>
+      </a>  
+      <h1 class="header">
+        <a href="/" class="index">{{ site.title }}</a>
+      </h1>
+      <!-- <form class="header-action search" target="_blank" method="get" action="http://www.google.com/search">
+        <input id="search" type="text" name="q">
+        <input type="submit" name="btnG" value="" class="none">
+        <input type="hidden" name="oe" value="UTF-8">
+        <input type="hidden" name="ie" value="UTF-8">
+        <input type="hidden" name="newwindow" value="0">
+        <input type="hidden" name="sitesearch" value="{{ site.url }}">
+      </form> -->
+      <a class="header-action search right" id="header-action-search">
+        <i class="search icon"></i>
+      </a>
+    </div>
+    <div class="main-content">
+      {{ content }}
+    </div>
+  </div>
+  <nav class="nav-base">
+    <ul class="nav-items">
+      <li class="nav-item">item1</li>
+      <li class="nav-item">item2</li>
+      <li class="nav-item">item3</li>
+      <li class="nav-item">item4</li>
+      <li class="nav-item">item5</li>
+    </ul>
+  </nav>
+  
+  <script src="/scripts/dist/webcraft.min.js"></script>
   <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
     function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
