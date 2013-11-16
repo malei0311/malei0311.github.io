@@ -16,10 +16,15 @@ h1,h2,h3,h4,h5,h6 {
 
 html {
   font-size: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 body {
   font-size: 1em;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .left {
@@ -123,11 +128,13 @@ body {
 
 .wrapper {
   @include transition(transform .2s ease);
-  @include transform(translateX(0px));
+  @include transform(translate3d(0px, 0px, 0px));
   @include box-shadow(-2px 0 2px rgba(0, 0, 0, 0.3));
-  overflow: hidden;
+  @include backface-visibility(hidden);
+  overflow-x: hidden;
   position: relative;
   background: #f4f4f4;
+  height: 100%;
   top: 0;
   left: 0;
   z-index: 2;
@@ -187,19 +194,50 @@ body {
 }
 
 .nav-base {
+  @include transform(translate3d(0, 0, 0));
   @include transition(opacity 0s ease 0.35s);
   background: #1F1F1F;
   width: 75%;
+  min-height: 100%;
   position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
+
+  .nav-items {
+    .nav-item {
+      .nav-link {
+        color: #fff;
+        border-bottom: 1px solid #000;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        display: block;
+        height: 1 / 16 * 45 + em;
+        line-height: 1 / 16 * 45;
+        padding-left: 1 / 16 * 15 + em;
+        text-align: left;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        #author-avatar {
+          @include border-radius(50% 50%);
+          vertical-align: middle;
+          position: relative;
+          top: -0.25em;
+
+          border: 3px solid #f0f0f0;
+        }
+      }
+    }
+  }
 }
 
 .nav-base-open {
+
+  overflow: hidden;
+
   .wrapper {
     @include transition(transform 0.2s ease 0.15s);
-    @include transform(translateX(75%));
+    @include transform(translate3d(75%, 0px, 0px));
   }
   .nav-base {
     @include transition(opacity 0s linear 0s);
