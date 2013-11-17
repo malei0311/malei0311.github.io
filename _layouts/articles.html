@@ -1,0 +1,36 @@
+---
+layout: default
+isArticlesLayout: true
+---
+<section class="content-cnt">
+  <article class="article-main-content">
+    <div class="article-title">
+      <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
+      <div class="clearfix">
+        <div class="article-post-time right">
+          <span>&#8227;</span>
+          <time class="date" pubdate="{{ page.date | date_to_utc | date: '%Y-%m-%d' }}">{{ page.date | date_to_utc | date: "%Y-%m-%d" }}</time>
+        </div>
+      </div>
+    </div>
+    <p class="description">{{ page.description }}</p>
+    <div class="article-div-content">
+      {{ content }}
+    </div>
+    <div class="article-bottom-nav clearfix">
+      {% if page.previous %}
+        <a class="left" href="{{ page.previous.url }}" rel="bookmark" title="旧一篇">&laquo;&nbsp;{{ page.previous.title | truncatewords:5 }}</a>
+      {% endif %}
+      {% if page.next %}
+        <a class="right" href="{{ page.next.url }}" rel="bookmark" title="新一篇">{{ page.next.title | truncatewords:5 }}&nbsp;&raquo;</a>
+      {% endif %}
+    </div>
+    <div>
+      <h3>留下一句吧</h3>
+      <div id="disqus_thread"></div>
+    </div>
+  </article>
+  <aside id="menuIndex" class="right">
+
+  </aside>
+</section>

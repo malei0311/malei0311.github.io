@@ -35,6 +35,16 @@ body {
   float: right;
 }
 
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
 @media print {
 
   * {
