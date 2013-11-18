@@ -6,35 +6,35 @@ keywords: webcraft,github,jekyll,ruby,css,javascript,index
 ---
 
 <div class="content-cnt clearfix" id="articles-list">
-  <section id="articles-list-body">             
-    {% capture post_year_now %}{{ site.time | date: '%Y' }}{% endcapture %}
-    {% capture per_year_articles_id %}per-year-articles-{{ post_year_now }}{% endcapture %}
-    <div class="per-year-articles" id="{{ per_year_articles_id }}">
-      <h3 class="which-year">{{ post_year_now }}</h3>
-      {% for post in site.categories.articles %}
-        {% capture post_year_article %}{{ post.date | date: '%Y' }}{% endcapture %}
-        {% if post_year_now != post_year_article %}
-          {% assign post_year_now = post_year_article %}
-    </div>         
-    {% capture per_year_articles_id %}per-year-articles-{{ post_year_now }}{% endcapture %}
-    <div class="per-year-articles none" id="{{ per_year_articles_id }}">
-      <h3 class="which-year">{{ post_year_now }}</h3>
-        {% endif %}
-        <article>
-          <div class="article-head">
-            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-            <div class="clearfix">
-              <div class="article-post-time">
-                <span>&#8227;</span>
-                <time pubdate="{{ post.date | date: '%b %d, %Y' }}">{{ post.date | date: '%b %d' }}</time>
-              </div>
-            </div>
-          </div>
-          <div class="article-body">
-            <p>{{ post.description }}</p>
-          </div>
-        </article>
-      {% endfor %}
-    </div>            
-  </section>
+  {% assign post = site.categories.articles[0] %}
+  <article class="article-main-content">
+    <div class="article-title">
+      <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
+      <div class="clearfix">
+        <div class="article-post-time right">
+          <span>&#8227;</span>
+          <time class="date" pubdate="{{ post.date | date_to_utc | date: '%Y-%m-%d' }}">{{ post.date | date_to_utc | date: "%Y-%m-%d" }}</time>
+        </div>
+      </div>
+    </div>
+    <p class="description">{{ post.description }}</p>
+    <div class="article-div-content">
+      {{ post.content }}
+    </div>
+    <div class="article-bottom-nav clearfix">
+      {% if post.previous %}
+        <a class="left" href="{{ post.previous.url }}" rel="bookmark" title="旧一篇">&laquo;&nbsp;{{ post.previous.title | truncatewords:5 }}</a>
+      {% endif %}
+      {% if post.next %}
+        <a class="right" href="{{ post.next.url }}" rel="bookmark" title="新一篇">{{ post.next.title | truncatewords:5 }}&nbsp;&raquo;</a>
+      {% endif %}
+    </div>
+    <div>
+      <h3>留下一句吧</h3>
+      <div id="disqus_thread"></div>
+    </div>
+  </article>
+  <aside id="menuIndex" class="right">
+
+  </aside>
 </div>
