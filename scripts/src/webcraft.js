@@ -15,7 +15,7 @@ require([
     });
 
     $('#author-avatar').attr('src', Utils.getGravatar('leiman0311@gmail.com',{
-      s: 30
+      s: 100
     }));
     
   });
