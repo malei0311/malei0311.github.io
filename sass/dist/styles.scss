@@ -42,6 +42,7 @@ body {
   overflow: hidden;
   height: 100%;
   width: 100%;
+  color: #3b3b3b;
 }
 
 .left {
@@ -155,12 +156,12 @@ body {
 
 .wrapper {
   @include transition(transform .2s ease);
-  @include transform(translate3d(0px, 0px, 0px));
-  @include box-shadow(-2px 0 2px rgba(0, 0, 0, 0.3));
+  @include transform(translateX(0));
+  // @include box-shadow(-2px 0 2px rgba(0, 0, 0, 0.3));
   @include backface-visibility(hidden);
   overflow: hidden;
   position: relative;
-  background: #fff;
+  background: #f4f4f4;
   height: 100%;
   top: 0;
   left: 0;
@@ -237,6 +238,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
+  z-index: 1;
   opacity: 0;
 
   .nav-items {
@@ -289,7 +291,7 @@ body {
 
   .wrapper {
     @include transition(transform 0.2s ease 0.15s);
-    @include transform(translate3d(75%, 0px, 0px));
+    @include transform(translateX(75%));
   }
   .nav-base {
     @include transition(opacity 0s linear 0s);
@@ -297,13 +299,69 @@ body {
   }
 }
 
+.csstransforms3d {  // 如果支持 transform3d，优先 transform3d，这样会开启 GPU 加速
+  .wrapper {
+    @include transform(translate3d(0px, 0px, 0px));
+  }
 
-@include mediaQueryX1(screen, max-width, 603px) {
-  body {
-
+  .nav-base-open {
+    .wrapper {
+      @include transform(translate3d(75%, 0px, 0px));
+    }
   }
 }
 
-@include mediaQueryX2(screen, min-width, 604px, max-width, 1024px) {
-  
+@include mediaQueryX1(screen, max-width, 603px) {
+  html,body {
+    font-size: 14px;
+  }
+}
+
+@include mediaQueryX2(screen, min-width, 604px, max-width, 1000px) {
+  $width: 1 / 3 * 100%;
+  .nav-base {
+    width: $width;
+  }
+  .nav-base-open {
+    .wrapper {
+      @include transform(translateX(#{$width}));
+    }
+  }
+  .csstransforms3d {
+    .nav-base-open {
+      .wrapper {
+        @include transform(translate3d(#{$width}, 0px, 0px));
+      }
+    }
+  }
+}
+
+@include mediaQueryX1(screen, min-width, 1001px) {
+  .nav-base {
+    width: 1 / 16 * 200 + em;
+    opacity: 1;
+  }
+  .wrapper {
+    padding-left: 1 / 16 * 200 + em;
+    padding-top: 0;
+    z-index: 1;
+
+    .topbar {
+      display: none;
+    }
+  }
+
+  .nav-base-open {
+    .wrapper {
+      @include transform(translateX(0));
+    }
+  }
+
+  .csstransforms3d {
+    .nav-base-open {
+      .wrapper {
+        @include transform(translate3d(0px, 0px, 0px));
+      }
+    }
+  }  
 }
