@@ -22,20 +22,18 @@ module.exports = function(grunt) {
         }
       },
       dist: {
-        src: ['scripts/src/*.js'],
+        src: ['scripts/src/config.js', 'scripts/src/utils.js', 'scripts/src/*.js'],
         dest: 'scripts/dist/<%= pkg.name %>.js'
       }
     },
-    // uglify: {
-    //   options: {
-    //     banner: '<%= banner %>'
-    //   },
-    //   dist: {
-    //     src: '<%= concat.dist.dest %>',
-    //     dest: 'scripts/<%= pkg.name %>.min.js'
-    //   }
-    // },
     uglify: {
+      options: {
+        banner: '<%= banner %>'
+      },
+      dist: {
+        src: '<%= concat.dist.dest %>',
+        dest: 'scripts/<%= pkg.name %>.min.js'
+      },
       dynamic_mappings: {
         files: [{
           expand: true,
@@ -88,7 +86,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: '<%= jshint.scripts.src %>',
-        tasks: ['jshint:scripts','uglify']
+        tasks: ['jshint:scripts', 'concat', 'uglify']
       }
     }
   });
@@ -101,6 +99,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
 
   // Default task.
-  grunt.registerTask('default', ['compass', 'jshint', 'uglify']);
+  grunt.registerTask('default', ['compass', 'jshint', 'concat', 'uglify']);
 
 };

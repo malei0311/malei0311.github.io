@@ -1,4 +1,4 @@
-define([
+define('utils', [
   'jquery',
   'underscore',
   'cryptojs'
