@@ -7,9 +7,7 @@ require([
     Utils.log('helo modernizr', Modernizr);
 
     $('#header-action-burger').bind('click', function(e) {
-
       $('body').toggleClass('nav-base-open');
-
       e.preventDefault();
       e.stopPropagation();
     });

@@ -1,6 +1,7 @@
 @import "compass/reset";
 @import "../src/normalize";
 @import "compass/css3";
+@import "animation";
 @import "../src/icons";
 
 h1,h2,h3,h4,h5,h6 {
@@ -21,7 +22,8 @@ h1,h2,h3,h4,h5,h6 {
   min-height: 20px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0,0,0,0.3); 
+  // background: rgba(0,0,0,0.3); 
+  background: #1F1F1F;
 }
 
 *,
@@ -311,6 +313,112 @@ body {
   .nav-base-open {
     .wrapper {
       @include transform(translate3d(75%, 0px, 0px));
+    }
+  }
+}
+
+@include keyframes(rock404) {
+  100% {
+    // top: -20px;
+    @include transform(translateY(-1 * 1 / 150 * 15 + em));
+    @include text-shadow(0 1px 0 #326486, 
+      0 2px 0 #326486, 
+      0 3px 0 #326486,
+      0 4px 0 #326486,
+      0 5px 0 #326486,
+      0 6px 0 #326486,
+      0 7px 0 #326486,
+      0 8px 0 #326486,
+      0 9px 0 #326486,
+      0 50px 25px rgba(0, 0, 0, .2));
+  }
+}
+
+.page404 {
+  background: #E1E1E1;
+  overflow-y: auto;
+
+  .i-am-404 {
+    h1 {
+      font-size: 1 / 16 * 150 + em;
+      color: #183E5D;
+      text-align: center;
+      position: relative;
+
+      span {
+        // position: relative;
+        // top: 20px;
+        display: inline-block;
+        @include transform(translateY(1 / 150 * 15 + em));
+        @include text-shadow(0 1px 0 #326486,
+          0 2px 0 #326486,
+          0 3px 0 #326486,
+          0 4px 0 #326486,
+          0 5px 0 #326486,
+          0 6px 0 transparent,
+          0 7px 0 transparent,
+          0 8px 0 transparent,
+          0 9px 0 transparent,
+          0 10px 10px rgba(0, 0, 0, .4));
+        @include animation(rock404 .3s ease infinite alternate); 
+      }
+    }
+
+    .tip-wrap {
+      width: 1 / 16 * 400 + em;
+      margin: 0 auto;
+      position: relative;
+
+      .tip-suggest {
+        display: none;
+        text-align: center;
+        line-height: 2;
+        color: #183E5D;
+        position: absolute;
+        width: 100%;
+        background: rgba(255,255,255,.5);
+        top: 10px;
+      }
+
+      .tip-thanks {
+        display: none;
+        position: absolute;
+        right: 0;
+        bottom: 10%;
+        color: #183E5D;
+        padding: 0 10px;
+        line-height: 2;
+        background: rgba(255,255,255,.5);
+      }
+
+      &:hover {
+        .tip-suggest {
+          display: block;
+        }
+        .tip-thanks {
+          display: block;
+        }
+      }
+      
+      .swat-404 {
+        width: 1 / 16 * 400 + em;
+      }
+    }
+  }
+}
+
+@include mediaQueryX1(screen, max-width, 401px) {
+  .page404 {
+    .i-am-404 {
+      h1 {
+        font-size: 1 / 16 * 100 + em;
+      }
+      .tip-wrap {
+        width: 100%;
+        .swat-404 {
+          width: 100%;
+        }
+      }
     }
   }
 }

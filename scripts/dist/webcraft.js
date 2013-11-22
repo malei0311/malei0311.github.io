@@ -1,4 +1,4 @@
-/*! webcraft - v0.0.1 - 2013-11-21
+/*! webcraft - v0.0.1 - 2013-11-22
 * Copyright (c) 2013 ; Licensed  */
 
 
@@ -79,9 +79,7 @@ require([
     Utils.log('helo modernizr', Modernizr);
 
     $('#header-action-burger').bind('click', function(e) {
-
       $('body').toggleClass('nav-base-open');
-
       e.preventDefault();
       e.stopPropagation();
     });
