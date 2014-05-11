@@ -1,5 +1,5 @@
-/*! webcraft - v0.0.1 - 2013-12-02
-* Copyright (c) 2013 ; Licensed  */
+/*! webcraft - v0.0.1 - 2014-05-11
+* Copyright (c) 2014 ; Licensed  */
 
 
 // Source: scripts/src/config.js

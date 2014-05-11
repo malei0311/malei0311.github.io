@@ -1,11 +1,12 @@
 # Require any additional compass plugins here.
-require 'animation'
+# require 'animation' compass 1.0 has it
 
 # Set this to the root of your project when deployed:
 http_path = "/"
 css_dir = "styles"
 sass_dir = "sass/dist"
 images_dir = "images"
+fonts_dir = "styles/fonts"
 javascripts_dir = "scripts"
 environment = :production
 
@@ -14,7 +15,7 @@ environment = :production
 output_style = (environment == :production) ? :compressed : :expanded
 
 if environment != :production
-enable_sourcemaps = true
+sourcemap = true
 sass_options = {:sourcemap => true}
 end
 
